@@ -1,5 +1,12 @@
 package net.net63.codearcade.LSD.screens;
 
-public class MenuScreen {
+import net.net63.codearcade.LSD.LSD;
 
+
+public class MenuScreen extends AbstractScreen{
+	
+	public MenuScreen(LSD game) {
+		super(game);
+	}
+	
 }
