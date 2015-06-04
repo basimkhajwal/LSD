@@ -7,5 +7,6 @@ public class GameScreen extends AbstractScreen {
 	public GameScreen(LSD game) {
 		super(game);
 	}
+
 	
 }
