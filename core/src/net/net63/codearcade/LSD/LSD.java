@@ -1,6 +1,7 @@
 package net.net63.codearcade.LSD;
 
 import net.net63.codearcade.LSD.screens.MenuScreen;
+import net.net63.codearcade.LSD.utils.Assets;
 
 import com.badlogic.gdx.Game;
 
@@ -18,6 +19,7 @@ public class LSD extends Game {
 
 	@Override
 	public void create() {
+		Assets.loadAll();
 		this.setScreen(new MenuScreen(this));
 		
 	}
