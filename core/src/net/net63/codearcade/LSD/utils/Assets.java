@@ -4,6 +4,7 @@ import java.lang.reflect.Field;
 
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 
 /**
  * Class to load and handle all the assets 
@@ -15,6 +16,17 @@ public class Assets {
 	
 	public static class Images {
 		public static final String BACKGROUND = "images/bg.jpg";
+	}
+	
+	public static class Fonts {
+		public static final String DEFAULT = "fonts/DisplayOTF";
+	}
+	
+	public static class FontSizes {
+		public static final int TEN = 10;
+		public static final int TWENTY = 20;
+		public static final int FIFTY = 50;
+		public static final int HUNDRED = 100;
 	}
 	
 	private static AssetManager assetManager = new AssetManager();
@@ -36,6 +48,19 @@ public class Assets {
 			}
 		}
 		
+		for (Field font: Fonts.class.getDeclaredFields()) {
+			try {
+				String fontName = (String) font.get(null);
+				for (Field size: FontSizes.class.getDeclaredFields()) {
+					int fontSize = size.getInt(null);
+					assetManager.load(fontName + fontSize + ".fnt", BitmapFont.class);
+				}
+			} catch (Exception e) {
+				System.out.println("Invalid file name!!");
+				e.printStackTrace();
+			}
+		}
+		
 		assetManager.finishLoading();
 	}
 	
@@ -48,6 +73,17 @@ public class Assets {
 	 */
 	public static <T> T getAsset(String fileName, Class<T> type) {
 		return assetManager.get(fileName, type);
+	}
+	
+	/**
+	 * Returns a BitmapFont of the specified font and size
+	 * 
+	 * @param fontName	The font name
+	 * @param size	The size of the font 
+	 * @return The associated BitmapFont
+	 */
+	public static BitmapFont getFont(String fontName, int size) {
+		return assetManager.get(fontName + size + ".fnt", BitmapFont.class);
 	}
 	
 	/**
