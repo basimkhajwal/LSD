@@ -10,6 +10,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
+import com.badlogic.gdx.utils.viewport.FitViewport;
 
 
 /**
@@ -30,7 +31,7 @@ public class MenuScreen extends AbstractScreen{
 		super(game);
 		this.clear = new Color(1, 0, 0, 1);
 		
-		stage = new Stage();
+		stage = new Stage(new FitViewport(800, 400));
 		title = new Label("Little Sticky Destroyer", 
 				new LabelStyle(Assets.getFont(Assets.Fonts.DEFAULT, Assets.FontSizes.FIFTY), Color.ORANGE));
 		title.setX(100);
@@ -57,7 +58,7 @@ public class MenuScreen extends AbstractScreen{
 	public void resize(int width, int height) {
 		super.resize(width, height);
 		
-		stage.getViewport().setScreenSize(width, height);
+		stage.getViewport().update(width, height);
 		backgroundImage.setBounds(0, 0, width, height);
 		
 	}
