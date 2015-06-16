@@ -18,6 +18,8 @@ public class DesktopLauncher {
 		LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
 		
 		config.title = Constants.TITLE;
+		config.width = 800;
+		config.height = 480;
 		
 		new LwjglApplication(new LSD(), config);
 	}
