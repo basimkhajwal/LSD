@@ -51,14 +51,13 @@ public class MenuScreen extends AbstractScreen{
 		title = new Label("Little Sticky\nDestroyer", 
 				new LabelStyle(Assets.getFont(Assets.Fonts.DEFAULT, Assets.FontSizes.HUNDRED), Color.ORANGE));
 		title.setAlignment(Align.center);
-		title.setX(145);
-		title.setY(250);
+		title.setPosition((840 - title.getWidth()) / 2, 250);
 		
 		playButton = new TextButton("Play Game", new TextButtonStyle(null, null, null, 
 				Assets.getFont(Assets.Fonts.DEFAULT, Assets.FontSizes.FIFTY)));
 		playButton.getStyle().fontColor = Color.RED;
 		playButton.getStyle().overFontColor = Color.MAROON;
-		playButton.setPosition(250, 100);
+		playButton.setPosition((840 - playButton.getWidth()) / 2, 100);
 		
 		setupBackground();
 	}
