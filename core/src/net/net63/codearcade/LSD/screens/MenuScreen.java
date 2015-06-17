@@ -14,6 +14,9 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
+import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Scaling;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 
@@ -32,6 +35,7 @@ public class MenuScreen extends AbstractScreen{
 	private OrthographicCamera camera;
 	
 	private Image backgroundImage;
+	private TextButton playButton;
 	private Label title;
 	
 	public MenuScreen(LSD game) {
@@ -42,10 +46,19 @@ public class MenuScreen extends AbstractScreen{
 		batch = new SpriteBatch();
 		camera = new OrthographicCamera();
 		
-		title = new Label("Little Sticky Destroyer", 
-				new LabelStyle(Assets.getFont(Assets.Fonts.DEFAULT, Assets.FontSizes.FIFTY), Color.ORANGE));
-		title.setX(180);
-		title.setY(400);
+		Gdx.input.setInputProcessor(stage);
+		
+		title = new Label("Little Sticky\nDestroyer", 
+				new LabelStyle(Assets.getFont(Assets.Fonts.DEFAULT, Assets.FontSizes.HUNDRED), Color.ORANGE));
+		title.setAlignment(Align.center);
+		title.setX(145);
+		title.setY(250);
+		
+		playButton = new TextButton("Play Game", new TextButtonStyle(null, null, null, 
+				Assets.getFont(Assets.Fonts.DEFAULT, Assets.FontSizes.FIFTY)));
+		playButton.getStyle().fontColor = Color.RED;
+		playButton.getStyle().overFontColor = Color.MAROON;
+		playButton.setPosition(250, 100);
 		
 		setupBackground();
 	}
@@ -62,6 +75,7 @@ public class MenuScreen extends AbstractScreen{
 		super.show();
 		
 		stage.addActor(title);
+		stage.addActor(playButton);
 	}
 	
 	@Override
