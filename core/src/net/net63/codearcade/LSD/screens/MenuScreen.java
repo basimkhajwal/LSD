@@ -10,12 +10,14 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.Texture.TextureFilter;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Scaling;
 import com.badlogic.gdx.utils.viewport.FitViewport;
@@ -38,9 +40,13 @@ public class MenuScreen extends AbstractScreen{
 	private TextButton playButton;
 	private Label title;
 	
+	private boolean changing;
+	
 	public MenuScreen(LSD game) {
 		super(game);
 		this.clear = new Color(1, 0, 0, 1);
+		
+		changing = false;
 		
 		stage = new Stage(new FitViewport(840, 480));
 		batch = new SpriteBatch();
@@ -58,6 +64,15 @@ public class MenuScreen extends AbstractScreen{
 		playButton.getStyle().fontColor = Color.RED;
 		playButton.getStyle().overFontColor = Color.MAROON;
 		playButton.setPosition((840 - playButton.getWidth()) / 2, 100);
+		playButton.addListener(new ClickListener() {
+			
+			@Override
+			public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
+				super.touchUp(event, x, y, pointer, button);
+				
+				changing = true;
+			}
+		});
 		
 		setupBackground();
 	}
@@ -101,6 +116,10 @@ public class MenuScreen extends AbstractScreen{
 		stage.getViewport().apply();
 		stage.act(delta);
 		stage.draw();
+		
+		if (changing) {
+			game.setScreen(new GameScreen(game));
+		}
 	}
 	
 	@Override
