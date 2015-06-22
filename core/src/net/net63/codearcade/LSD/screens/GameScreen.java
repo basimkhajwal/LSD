@@ -17,7 +17,7 @@ public class GameScreen extends AbstractScreen {
 	public GameScreen(LSD game) {
 		super(game);
 		
-		stage = new Stage();
+		stage = new Stage();	
 	}
 
 	@Override
