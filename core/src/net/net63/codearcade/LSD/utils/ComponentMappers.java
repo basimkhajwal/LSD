@@ -3,6 +3,7 @@ package net.net63.codearcade.LSD.utils;
 import com.badlogic.ashley.core.ComponentMapper;
 import com.badlogic.ashley.core.Engine;
 import net.net63.codearcade.LSD.components.PlayerComponent;
+import net.net63.codearcade.LSD.components.WorldComponent;
 
 /**
  * Utility class to hold mappers that don't have to be re-created for every system
@@ -12,4 +13,5 @@ import net.net63.codearcade.LSD.components.PlayerComponent;
 public class ComponentMappers {
 
     public static ComponentMapper<PlayerComponent> playerMapper = ComponentMapper.getFor(PlayerComponent.class);
+    public static ComponentMapper<WorldComponent> worldMapper = ComponentMapper.getFor(WorldComponent.class);
 }
