@@ -8,6 +8,7 @@ import com.badlogic.gdx.physics.box2d.World;
  */
 public class WorldComponent extends Component{
 
+    public float accumulator = 0;
     public World world;
 
 }
