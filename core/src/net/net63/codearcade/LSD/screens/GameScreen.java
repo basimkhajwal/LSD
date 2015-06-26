@@ -25,7 +25,7 @@ public class GameScreen extends AbstractScreen {
         engine = new Engine();
         gameWorld = new GameWorld(engine);
 
-
+        gameWorld.setup();
 
 	}
 
