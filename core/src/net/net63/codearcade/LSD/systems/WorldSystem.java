@@ -12,19 +12,19 @@ import net.net63.codearcade.LSD.utils.Constants;
  */
 public class WorldSystem extends IteratingSystem {
 
-    private ComponentMapper<WorldComponent> wm;
+    private ComponentMapper<WorldComponent> worldMapper;
     private float step;
 
     public WorldSystem() {
-        super(Family.all(WorldComponent.class).get(), 1);
+        super(Family.all(WorldComponent.class).get(), Constants.SYSTEM_PRIORITIES.WORLD);
 
-        wm = ComponentMapper.getFor(WorldComponent.class);
+        worldMapper = ComponentMapper.getFor(WorldComponent.class);
         step = 1.0f / Constants.BOX2D_FPS;
     }
 
     @Override
     protected void processEntity(Entity entity, float deltaTime) {
-        WorldComponent worldComponent = wm.get(entity);
+        WorldComponent worldComponent = worldMapper.get(entity);
 
         worldComponent.accumulator += deltaTime;
 

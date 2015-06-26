@@ -27,4 +27,16 @@ public class Constants {
 
 
     public static final Vector2 WORLD_GRAVITY = new Vector2(0, -10);
+
+
+    // ------------- Entity System ------------
+
+    public static final class SYSTEM_PRIORITIES {
+
+        public static final int WORLD = 1;
+
+
+        public static final int DEBUG_RENDER = 10;
+
+    }
 }

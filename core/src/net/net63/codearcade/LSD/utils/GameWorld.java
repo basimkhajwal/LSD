@@ -3,12 +3,13 @@ package net.net63.codearcade.LSD.utils;
 import com.badlogic.ashley.core.Component;
 import com.badlogic.ashley.core.Engine;
 import com.badlogic.ashley.core.Entity;
-import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.World;
 import net.net63.codearcade.LSD.components.BodyComponent;
 import net.net63.codearcade.LSD.components.PlayerComponent;
 import net.net63.codearcade.LSD.components.WorldComponent;
+import net.net63.codearcade.LSD.systems.DebugRenderSystem;
+import net.net63.codearcade.LSD.systems.WorldSystem;
 
 /**
  * Created by Basim on 23/06/15.
@@ -28,16 +29,19 @@ public class GameWorld {
 
         createWorld();
         createPlayer();
+
+        engine.addSystem(new WorldSystem());
+        engine.addSystem(new DebugRenderSystem());
     }
 
-    public Entity createWorld() {
+    private Entity createWorld() {
         WorldComponent worldComponent = new WorldComponent();
         worldComponent.world = world;
 
         return createEntityFrom(worldComponent);
     }
 
-    public Entity createPlayer() {
+    private Entity createPlayer() {
 
         PlayerComponent playerComponent = new PlayerComponent();
         BodyComponent bodyComponent = new BodyComponent();
