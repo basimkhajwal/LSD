@@ -17,7 +17,8 @@ public class Constants {
 
     // --------------- UI / Window ------------
 
-
+    public static final int DEFAULT_SCREEN_WIDTH = 800;
+    public static final int DEFAULT_SCREEN_HEIGHT = 600;
 
     // -------------- Physics -----------------
 

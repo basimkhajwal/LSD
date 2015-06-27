@@ -26,7 +26,6 @@ public class GameScreen extends AbstractScreen {
         gameWorld = new GameWorld(engine);
 
         gameWorld.setup();
-
 	}
 
 	@Override
