@@ -6,6 +6,7 @@ import com.badlogic.ashley.core.Family;
 import com.badlogic.ashley.systems.IteratingSystem;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
+
 import net.net63.codearcade.LSD.components.WorldComponent;
 import net.net63.codearcade.LSD.utils.Constants;
 
@@ -20,7 +21,8 @@ public class DebugRenderSystem extends IteratingSystem {
 
     private ComponentMapper<WorldComponent> worldMapper;
 
-    public DebugRenderSystem() {
+    @SuppressWarnings("unchecked")
+	public DebugRenderSystem() {
         super(Family.all(WorldComponent.class).get(), Constants.SYSTEM_PRIORITIES.DEBUG_RENDER);
 
         debugRenderer = new Box2DDebugRenderer();
