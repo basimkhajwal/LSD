@@ -1,5 +1,6 @@
 package net.net63.codearcade.LSD.utils;
 
+import java.awt.*;
 import java.lang.reflect.Field;
 
 import com.badlogic.gdx.assets.AssetManager;
@@ -17,17 +18,20 @@ public class Assets {
 	public static class Images {
 		public static final String BACKGROUND = "images/bg.jpg";
 	}
+    private static final String[] _Images = { Images.BACKGROUND };
 	
 	public static class Fonts {
 		public static final String DEFAULT = "fonts/DisplayOTF";
 	}
+    private static final String[] _Fonts = { Fonts.DEFAULT };
 	
 	public static class FontSizes {
-		public static final int TEN = 10;
-		public static final int TWENTY = 20;
-		public static final int FIFTY = 50;
-		public static final int HUNDRED = 100;
-	}
+        public static final int TEN = 10;
+        public static final int TWENTY = 20;
+        public static final int FIFTY = 50;
+        public static final int HUNDRED = 100;
+    }
+    private static final int[] _FontSizes = { FontSizes.TEN, FontSizes.TWENTY, FontSizes.FIFTY, FontSizes.HUNDRED };
 	
 	private static AssetManager assetManager = new AssetManager();
 	
@@ -39,26 +43,14 @@ public class Assets {
 	 */
 	public static void loadAll() {
 		
-		for (Field image: Images.class.getDeclaredFields()) {
-			try {
-				assetManager.load((String) image.get(null), Texture.class);
-			} catch (Exception e) {
-				System.out.println("Invalid file name!!");
-				e.printStackTrace();
-			}
+		for (String image: _Images) {
+			assetManager.load(image, Texture.class);
 		}
 		
-		for (Field font: Fonts.class.getDeclaredFields()) {
-			try {
-				String fontName = (String) font.get(null);
-				for (Field size: FontSizes.class.getDeclaredFields()) {
-					int fontSize = size.getInt(null);
-					assetManager.load(fontName + fontSize + ".fnt", BitmapFont.class);
-				}
-			} catch (Exception e) {
-				System.out.println("Invalid file name!!");
-				e.printStackTrace();
-			}
+		for (String font: _Fonts) {
+            for (int size: _FontSizes) {
+                assetManager.load(font + size + ".fnt", BitmapFont.class);
+            }
 		}
 		
 		assetManager.finishLoading();
