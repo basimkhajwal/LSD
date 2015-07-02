@@ -29,7 +29,7 @@ public class Constants {
     public static final int BOX2D_VELOCITY_ITERATIONS = 6;
     public static final int BOX2D_POSITION_ITERATIONS = 2;
 
-    public static final Vector2 WORLD_GRAVITY = new Vector2(0, -10);
+    public static final Vector2 WORLD_GRAVITY = new Vector2(0, 0);
 
     // ------------- Entity System ------------
 

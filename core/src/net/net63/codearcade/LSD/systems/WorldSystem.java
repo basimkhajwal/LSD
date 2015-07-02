@@ -15,6 +15,7 @@ public class WorldSystem extends IteratingSystem {
     private ComponentMapper<WorldComponent> worldMapper;
     private float step;
 
+    @SuppressWarnings("unchecked")
     public WorldSystem() {
         super(Family.all(WorldComponent.class).get(), Constants.SYSTEM_PRIORITIES.WORLD);
 

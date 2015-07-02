@@ -3,7 +3,6 @@ package net.net63.codearcade.LSD.utils;
 import com.badlogic.ashley.core.Component;
 import com.badlogic.ashley.core.Engine;
 import com.badlogic.ashley.core.Entity;
-import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
@@ -52,11 +51,11 @@ public class GameWorld {
         BodyDef bodyDef = new BodyDef();
         bodyDef.type = BodyDef.BodyType.DynamicBody;
         bodyDef.fixedRotation = true;
-        bodyDef.position.set(100, 100);
+        bodyDef.position.set(4, 4);
 
         FixtureDef fixtureDef = new FixtureDef();
         fixtureDef.shape = new PolygonShape();
-        ((PolygonShape) fixtureDef.shape).setAsBox(10, 10);
+        ((PolygonShape) fixtureDef.shape).setAsBox(1f, 1.5f);
 
         bodyComponent.body = world.createBody(bodyDef);
         bodyComponent.body.createFixture(fixtureDef);
