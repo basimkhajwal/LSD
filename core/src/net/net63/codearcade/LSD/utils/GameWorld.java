@@ -43,6 +43,13 @@ public class GameWorld {
         return createEntityFrom(worldComponent);
     }
 
+    private Entity createSensor() {
+
+
+
+        return createEntityFrom();
+    }
+
     private Entity createPlayer() {
 
         PlayerComponent playerComponent = new PlayerComponent();
