@@ -9,6 +9,7 @@ import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 import net.net63.codearcade.LSD.components.BodyComponent;
 import net.net63.codearcade.LSD.components.PlayerComponent;
+import net.net63.codearcade.LSD.components.SensorComponent;
 import net.net63.codearcade.LSD.components.WorldComponent;
 import net.net63.codearcade.LSD.systems.DebugRenderSystem;
 import net.net63.codearcade.LSD.systems.WorldSystem;
@@ -31,6 +32,7 @@ public class GameWorld {
 
         createWorld();
         createPlayer();
+        createSensor(1, 1, 2.5f, 0.5f);
 
         engine.addSystem(new WorldSystem());
         engine.addSystem(new DebugRenderSystem());
@@ -43,11 +45,24 @@ public class GameWorld {
         return createEntityFrom(worldComponent);
     }
 
-    private Entity createSensor() {
+    private Entity createSensor(float x, float y, float width, float height) {
 
+        SensorComponent sensorComponent = new SensorComponent();
+        BodyComponent bodyComponent = new BodyComponent();
 
+        BodyDef bodyDef = new BodyDef();
+        bodyDef.type = BodyDef.BodyType.StaticBody;
+        bodyDef.fixedRotation = true;
+        bodyDef.position.set((width / 2) + x, (height / 2) + y);
 
-        return createEntityFrom();
+        FixtureDef fixtureDef = new FixtureDef();
+        fixtureDef.shape = new PolygonShape();
+        ((PolygonShape) fixtureDef.shape).setAsBox(width / 2, height / 2);
+
+        bodyComponent.body = world.createBody(bodyDef);
+        bodyComponent.body.createFixture(fixtureDef);
+
+        return createEntityFrom(sensorComponent, bodyComponent);
     }
 
     private Entity createPlayer() {
