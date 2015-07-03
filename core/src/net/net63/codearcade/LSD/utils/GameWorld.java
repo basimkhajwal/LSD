@@ -11,7 +11,9 @@ import net.net63.codearcade.LSD.components.BodyComponent;
 import net.net63.codearcade.LSD.components.PlayerComponent;
 import net.net63.codearcade.LSD.components.SensorComponent;
 import net.net63.codearcade.LSD.components.WorldComponent;
+import net.net63.codearcade.LSD.systems.CollisionSystem;
 import net.net63.codearcade.LSD.systems.DebugRenderSystem;
+import net.net63.codearcade.LSD.systems.RenderSystem;
 import net.net63.codearcade.LSD.systems.WorldSystem;
 
 /**
@@ -27,18 +29,24 @@ public class GameWorld {
     }
 
     public void setup() {
-
-        world = new World(Constants.WORLD_GRAVITY, true);
+        addSystems();
 
         createWorld();
         createPlayer();
         createSensor(1, 1, 2.5f, 0.5f);
+    }
 
+    private void addSystems() {
         engine.addSystem(new WorldSystem());
+        engine.addSystem(new CollisionSystem());
+        engine.addSystem(new RenderSystem());
         engine.addSystem(new DebugRenderSystem());
     }
 
     private Entity createWorld() {
+        world = new World(Constants.WORLD_GRAVITY, true);
+        world.setContactListener(engine.getSystem(CollisionSystem.class));
+
         WorldComponent worldComponent = new WorldComponent();
         worldComponent.world = world;
 
