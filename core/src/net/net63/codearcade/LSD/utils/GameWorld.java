@@ -3,6 +3,7 @@ package net.net63.codearcade.LSD.utils;
 import com.badlogic.ashley.core.Component;
 import com.badlogic.ashley.core.Engine;
 import com.badlogic.ashley.core.Entity;
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
@@ -24,8 +25,10 @@ public class GameWorld {
     private Engine engine;
     private World world;
 
-    public GameWorld (Engine engine) {
-        this.engine = engine;
+    private OrthographicCamera gameCamera;
+
+    public GameWorld () {
+        engine = new Engine();
     }
 
     public void setup() {
@@ -36,11 +39,25 @@ public class GameWorld {
         createSensor(1, 1, 2.5f, 0.5f);
     }
 
+    public void resize() {
+        setupCamera();
+    }
+
+    public void update(float delta) {
+        engine.update(delta);
+    }
+
     private void addSystems() {
         engine.addSystem(new WorldSystem());
         engine.addSystem(new CollisionSystem());
         engine.addSystem(new RenderSystem());
         engine.addSystem(new DebugRenderSystem());
+    }
+
+    private void setupCamera() {
+        gameCamera = new OrthographicCamera();
+        gameCamera.setToOrtho(false);
+        gameCamera.combined.scl(Constants.METRE_TO_PIXEL, Constants.METRE_TO_PIXEL, 0);
     }
 
     private Entity createWorld() {

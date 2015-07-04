@@ -16,22 +16,19 @@ public class GameScreen extends AbstractScreen {
 	
 	private Stage stage;
     private GameWorld gameWorld;
-    private Engine engine;
 	
 	public GameScreen(LSD game) {
 		super(game);
 
 		stage = new Stage();
-        engine = new Engine();
-        gameWorld = new GameWorld(engine);
-
-        gameWorld.setup();
+        gameWorld = new GameWorld();
 	}
 
 	@Override
 	public void resize(int width, int height) {
 		super.resize(width, height);
-		
+
+        gameWorld.resize();
 		stage.getViewport().update(width, height);
 	}
 	
@@ -39,6 +36,6 @@ public class GameScreen extends AbstractScreen {
 	public void render(float delta) {
 		super.render(delta);
 		
-		engine.update(delta);
+		gameWorld.update(delta);
 	}
 }

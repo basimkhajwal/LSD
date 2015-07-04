@@ -2,6 +2,7 @@ package net.net63.codearcade.LSD.systems;
 
 import com.badlogic.ashley.core.EntitySystem;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import net.net63.codearcade.LSD.utils.Constants;
 
@@ -38,7 +39,9 @@ public class CollisionSystem extends EntitySystem implements ContactListener {
         }
 
         if (dynBody != null) {
-            dynBody.applyForceToCenter(0, 100, true);
+            Gdx.app.log("Collision", "Force applied");
+            dynBody.applyLinearImpulse(new Vector2(0, 5), dynBody.getLocalCenter(), true);
+            //dynBody.applyForceToCenter(0, 100, true);
         }
     }
 
@@ -48,12 +51,8 @@ public class CollisionSystem extends EntitySystem implements ContactListener {
     }
 
     @Override
-    public void preSolve(Contact contact, Manifold oldManifold) {
-        Gdx.app.log("Collision", "Pre Solve");
-    }
+    public void preSolve(Contact contact, Manifold oldManifold) { }
 
     @Override
-    public void postSolve(Contact contact, ContactImpulse impulse) {
-        Gdx.app.log("Collision", "Post Solve");
-    }
+    public void postSolve(Contact contact, ContactImpulse impulse) { }
 }
