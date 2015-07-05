@@ -1,13 +1,13 @@
 package net.net63.codearcade.LSD.utils;
 
-import com.badlogic.ashley.core.Component;
-import com.badlogic.ashley.core.Engine;
-import com.badlogic.ashley.core.Entity;
+import com.badlogic.ashley.core.*;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
+import com.badlogic.gdx.utils.Disposable;
+import com.sun.media.jfxmediaimpl.MediaDisposer;
 import net.net63.codearcade.LSD.components.BodyComponent;
 import net.net63.codearcade.LSD.components.PlayerComponent;
 import net.net63.codearcade.LSD.components.SensorComponent;
@@ -20,7 +20,7 @@ import net.net63.codearcade.LSD.systems.WorldSystem;
 /**
  * Created by Basim on 23/06/15.
  */
-public class GameWorld {
+public class GameWorld implements Disposable{
 
     private Engine engine;
     private World world;
@@ -45,6 +45,24 @@ public class GameWorld {
 
     public void update(float delta) {
         engine.update(delta);
+    }
+
+    @Override
+    public void dispose() {
+
+        for (Entity box2dEntity: engine.getEntitiesFor(Family.all(BodyComponent.class).get())) {
+            
+        }
+
+        world.dispose();
+
+        for (EntitySystem entitySystem: engine.getSystems()) {
+            engine.removeSystem(entitySystem);
+
+            if (entitySystem instanceof Disposable) {
+                ((Disposable) entitySystem).dispose();
+            }
+        }
     }
 
     private void addSystems() {
