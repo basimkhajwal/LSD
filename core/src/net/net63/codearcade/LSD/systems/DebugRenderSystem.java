@@ -20,13 +20,11 @@ public class DebugRenderSystem extends IteratingSystem {
     private ComponentMapper<WorldComponent> worldMapper;
 
     @SuppressWarnings("unchecked")
-	public DebugRenderSystem() {
+	public DebugRenderSystem(OrthographicCamera camera) {
         super(Family.all(WorldComponent.class).get(), Constants.SYSTEM_PRIORITIES.DEBUG_RENDER);
 
+        this.camera = camera;
         debugRenderer = new Box2DDebugRenderer();
-        camera = new OrthographicCamera();
-        camera.setToOrtho(false);
-        camera.combined.scl(Constants.METRE_TO_PIXEL, Constants.METRE_TO_PIXEL, 0);
 
         worldMapper = ComponentMapper.getFor(WorldComponent.class);
     }
