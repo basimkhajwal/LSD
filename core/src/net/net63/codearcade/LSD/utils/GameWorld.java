@@ -50,8 +50,8 @@ public class GameWorld {
     private void addSystems() {
         engine.addSystem(new WorldSystem());
         engine.addSystem(new CollisionSystem());
-        engine.addSystem(new RenderSystem());
-        engine.addSystem(new DebugRenderSystem());
+        engine.addSystem(new RenderSystem(gameCamera));
+        engine.addSystem(new DebugRenderSystem(gameCamera));
     }
 
     private void setupCamera() {
