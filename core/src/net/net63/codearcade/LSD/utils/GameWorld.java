@@ -50,9 +50,7 @@ public class GameWorld implements Disposable{
     @Override
     public void dispose() {
 
-        for (Entity box2dEntity: engine.getEntitiesFor(Family.all(BodyComponent.class).get())) {
-            
-        }
+        // TODO Implement Box2d safe disposal
 
         world.dispose();
 
