@@ -4,6 +4,7 @@ import com.badlogic.ashley.core.ComponentMapper;
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.Family;
 import com.badlogic.ashley.systems.IteratingSystem;
+import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Disposable;
 import com.sun.media.jfxmediaimpl.MediaDisposer;
 import net.net63.codearcade.LSD.components.WorldComponent;
@@ -39,6 +40,8 @@ public class WorldSystem extends IteratingSystem implements Disposable{
 
     @Override
     public void dispose() {
-        
+        for (Entity entity: this.getEntities()) {
+            worldMapper.get(entity).world.dispose();
+        }
     }
 }
