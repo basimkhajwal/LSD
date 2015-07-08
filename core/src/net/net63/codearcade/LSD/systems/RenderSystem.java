@@ -6,14 +6,12 @@ import com.badlogic.ashley.core.Family;
 import com.badlogic.ashley.systems.IteratingSystem;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.Shape;
 import com.badlogic.gdx.utils.Disposable;
-import com.sun.media.jfxmediaimpl.MediaDisposer;
-import com.sun.xml.internal.ws.client.sei.ResponseBuilder;
 import net.net63.codearcade.LSD.components.BodyComponent;
 import net.net63.codearcade.LSD.components.RenderComponent;
 import net.net63.codearcade.LSD.utils.Constants;
@@ -22,6 +20,8 @@ import net.net63.codearcade.LSD.utils.Constants;
  * Created by Basim on 03/07/15.
  */
 public class RenderSystem extends IteratingSystem implements Disposable {
+
+    private Vector2 tmp;
 
     private OrthographicCamera camera;
     private SpriteBatch batch;
@@ -57,6 +57,9 @@ public class RenderSystem extends IteratingSystem implements Disposable {
         //Only render rectangle shapes as of yet
         if (fixture != null && fixture.getType() == Shape.Type.Polygon ) {
             PolygonShape shape = (PolygonShape) fixture.getShape();
+
+            shape.getVertex(0, tmp);
+            tmp = body.getPosition().cpy().add(tmp);
 
         }
     }
