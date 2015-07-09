@@ -22,6 +22,7 @@ import net.net63.codearcade.LSD.utils.Constants;
 public class RenderSystem extends IteratingSystem implements Disposable {
 
     private Vector2 tmp;
+    private Vector2 tmp2;
 
     private OrthographicCamera camera;
     private SpriteBatch batch;
@@ -36,6 +37,7 @@ public class RenderSystem extends IteratingSystem implements Disposable {
         batch = new SpriteBatch();
 
         renderMapper = ComponentMapper.getFor(RenderComponent.class);
+        bodyMapper = ComponentMapper.getFor(BodyComponent.class);
     }
 
     @Override
@@ -59,8 +61,12 @@ public class RenderSystem extends IteratingSystem implements Disposable {
             PolygonShape shape = (PolygonShape) fixture.getShape();
 
             shape.getVertex(0, tmp);
-            tmp = body.getPosition().cpy().add(tmp);
+            shape.getVertex(2, tmp2);
 
+            tmp2.sub(tmp);
+            tmp.add(body.getPosition());
+
+            batch.draw(renderMapper.get(entity).texture, tmp.x, tmp.y, tmp2.x, tmp2.y);
         }
     }
 
