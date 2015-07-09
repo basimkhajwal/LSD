@@ -2,7 +2,7 @@ package net.net63.codearcade.LSD.screens;
 
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import net.net63.codearcade.LSD.LSD;
-import net.net63.codearcade.LSD.utils.GameWorld;
+import net.net63.codearcade.LSD.world.GameWorld;
 
 /**
  * The main game screen class that holds the game logic

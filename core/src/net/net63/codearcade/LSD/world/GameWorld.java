@@ -1,4 +1,4 @@
-package net.net63.codearcade.LSD.utils;
+package net.net63.codearcade.LSD.world;
 
 import com.badlogic.ashley.core.Component;
 import com.badlogic.ashley.core.Engine;
@@ -18,6 +18,7 @@ import net.net63.codearcade.LSD.systems.CollisionSystem;
 import net.net63.codearcade.LSD.systems.DebugRenderSystem;
 import net.net63.codearcade.LSD.systems.RenderSystem;
 import net.net63.codearcade.LSD.systems.WorldSystem;
+import net.net63.codearcade.LSD.utils.Constants;
 
 /**
  * Created by Basim on 23/06/15.
