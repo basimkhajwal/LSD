@@ -24,8 +24,8 @@ public class DebugRenderSystem extends IteratingSystem implements Disposable{
         super(Family.all(WorldComponent.class).get(), Constants.SYSTEM_PRIORITIES.DEBUG_RENDER);
 
         this.camera = camera;
-        debugRenderer = new Box2DDebugRenderer();
 
+        debugRenderer = new Box2DDebugRenderer();
         worldMapper = ComponentMapper.getFor(WorldComponent.class);
     }
 

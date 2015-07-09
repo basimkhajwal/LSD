@@ -1,7 +1,6 @@
 package net.net63.codearcade.LSD.systems;
 
 import com.badlogic.ashley.core.EntitySystem;
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import net.net63.codearcade.LSD.utils.Constants;
@@ -17,38 +16,24 @@ public class CollisionSystem extends EntitySystem implements ContactListener {
     }
 
     @Override
-    public void update(float deltaTime) {
-
-    }
+    public void update(float deltaTime) { }
 
     @Override
     public void beginContact(Contact contact) {
-        Gdx.app.log("Collision", "Started");
-
         Body a = contact.getFixtureA().getBody();
         Body b = contact.getFixtureB().getBody();
-
         Body dynBody = null;
 
-        if (a.getType() == BodyDef.BodyType.DynamicBody) {
-            dynBody = a;
-        }
-
-        if (b.getType() == BodyDef.BodyType.DynamicBody) {
-            dynBody = b;
-        }
+        if (a.getType() == BodyDef.BodyType.DynamicBody) dynBody = a;
+        if (b.getType() == BodyDef.BodyType.DynamicBody) dynBody = b;
 
         if (dynBody != null) {
-            Gdx.app.log("Collision", "Force applied");
             dynBody.applyLinearImpulse(new Vector2(0, 5), dynBody.getLocalCenter(), true);
-            //dynBody.applyForceToCenter(0, 100, true);
         }
     }
 
     @Override
-    public void endContact(Contact contact) {
-        Gdx.app.log("Collision", "Ended");
-    }
+    public void endContact(Contact contact) { }
 
     @Override
     public void preSolve(Contact contact, Manifold oldManifold) { }

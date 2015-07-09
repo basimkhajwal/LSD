@@ -1,9 +1,7 @@
 package net.net63.codearcade.LSD.screens;
 
-import com.badlogic.ashley.core.Engine;
-import net.net63.codearcade.LSD.LSD;
-
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import net.net63.codearcade.LSD.LSD;
 import net.net63.codearcade.LSD.utils.GameWorld;
 
 /**
@@ -22,6 +20,7 @@ public class GameScreen extends AbstractScreen {
 
 		stage = new Stage();
         gameWorld = new GameWorld();
+        gameWorld.setup();
 	}
 
 	@Override

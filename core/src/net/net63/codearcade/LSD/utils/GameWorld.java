@@ -1,13 +1,15 @@
 package net.net63.codearcade.LSD.utils;
 
-import com.badlogic.ashley.core.*;
+import com.badlogic.ashley.core.Component;
+import com.badlogic.ashley.core.Engine;
+import com.badlogic.ashley.core.Entity;
+import com.badlogic.ashley.core.EntitySystem;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Disposable;
-import com.sun.media.jfxmediaimpl.MediaDisposer;
 import net.net63.codearcade.LSD.components.BodyComponent;
 import net.net63.codearcade.LSD.components.PlayerComponent;
 import net.net63.codearcade.LSD.components.SensorComponent;
@@ -28,6 +30,7 @@ public class GameWorld implements Disposable{
     private OrthographicCamera gameCamera;
 
     public GameWorld () {
+        gameCamera = new OrthographicCamera();
         engine = new Engine();
     }
 
@@ -66,7 +69,6 @@ public class GameWorld implements Disposable{
     }
 
     private void setupCamera() {
-        gameCamera = new OrthographicCamera();
         gameCamera.setToOrtho(false);
         gameCamera.combined.scl(Constants.METRE_TO_PIXEL, Constants.METRE_TO_PIXEL, 0);
     }

@@ -36,6 +36,9 @@ public class RenderSystem extends IteratingSystem implements Disposable {
         this.camera = camera;
         batch = new SpriteBatch();
 
+        tmp = new Vector2();
+        tmp2 = new Vector2();
+
         renderMapper = ComponentMapper.getFor(RenderComponent.class);
         bodyMapper = ComponentMapper.getFor(BodyComponent.class);
     }
@@ -52,11 +55,9 @@ public class RenderSystem extends IteratingSystem implements Disposable {
 
     @Override
     public void processEntity(Entity entity, float deltaTime) {
-
         Body body = bodyMapper.get(entity).body;
         Fixture fixture = body.getFixtureList().first();
 
-        //Only render rectangle shapes as of yet
         if (fixture != null && fixture.getType() == Shape.Type.Polygon ) {
             PolygonShape shape = (PolygonShape) fixture.getShape();
 
