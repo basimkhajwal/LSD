@@ -16,6 +16,8 @@ public class BodyRemovalListener implements EntityListener{
 
     public BodyRemovalListener(World world) {
         this.world = world;
+
+        bodyMapper = ComponentMapper.getFor(BodyComponent.class);
     }
 
     @Override
