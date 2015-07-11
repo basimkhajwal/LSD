@@ -11,6 +11,7 @@ import net.net63.codearcade.LSD.components.BodyComponent;
 import net.net63.codearcade.LSD.components.PlayerComponent;
 import net.net63.codearcade.LSD.components.SensorComponent;
 import net.net63.codearcade.LSD.components.WorldComponent;
+import net.net63.codearcade.LSD.utils.Constants;
 
 /**
  * Created by Basim on 10/07/15.
@@ -64,7 +65,7 @@ public class WorldBuilder {
 
         FixtureDef fixtureDef = new FixtureDef();
         fixtureDef.shape = new PolygonShape();
-        ((PolygonShape) fixtureDef.shape).setAsBox(1f, 1.5f);
+        ((PolygonShape) fixtureDef.shape).setAsBox(Constants.PLAYER_WIDTH / 2, Constants.PLAYER_HEIGHT / 2);
 
         bodyComponent.body = world.createBody(bodyDef);
         bodyComponent.body.createFixture(fixtureDef);

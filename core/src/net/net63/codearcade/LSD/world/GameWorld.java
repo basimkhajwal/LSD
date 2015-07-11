@@ -5,6 +5,7 @@ import com.badlogic.ashley.core.EntitySystem;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Disposable;
+import net.net63.codearcade.LSD.listeners.BodyRemovalListener;
 import net.net63.codearcade.LSD.systems.*;
 import net.net63.codearcade.LSD.utils.Constants;
 
@@ -28,6 +29,7 @@ public class GameWorld implements Disposable{
 
     public void setup() {
         addSystems();
+        addListeners();
 
         WorldBuilder.setup(engine, world);
         WorldBuilder.createWorld();
@@ -57,11 +59,14 @@ public class GameWorld implements Disposable{
     private void addSystems() {
         engine.addSystem(new WorldSystem());
         engine.addSystem(new CollisionSystem());
-        engine.addSystem(new BodyRemovalSystem());
         engine.addSystem(new RenderSystem(gameCamera));
         engine.addSystem(new DebugRenderSystem(gameCamera));
 
         world.setContactListener(engine.getSystem(CollisionSystem.class));
+    }
+
+    private void addListeners() {
+        engine.addEntityListener(new BodyRemovalListener(world));
     }
 
     private void setupCamera() {
