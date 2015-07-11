@@ -5,10 +5,7 @@ import com.badlogic.ashley.core.EntitySystem;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Disposable;
-import net.net63.codearcade.LSD.systems.CollisionSystem;
-import net.net63.codearcade.LSD.systems.DebugRenderSystem;
-import net.net63.codearcade.LSD.systems.RenderSystem;
-import net.net63.codearcade.LSD.systems.WorldSystem;
+import net.net63.codearcade.LSD.systems.*;
 import net.net63.codearcade.LSD.utils.Constants;
 
 /**
@@ -25,6 +22,8 @@ public class GameWorld implements Disposable{
         gameCamera = new OrthographicCamera();
         engine = new Engine();
         world = new World(Constants.WORLD_GRAVITY, true);
+
+        setup();
     }
 
     public void setup() {
@@ -58,6 +57,7 @@ public class GameWorld implements Disposable{
     private void addSystems() {
         engine.addSystem(new WorldSystem());
         engine.addSystem(new CollisionSystem());
+        engine.addSystem(new BodyRemovalSystem());
         engine.addSystem(new RenderSystem(gameCamera));
         engine.addSystem(new DebugRenderSystem(gameCamera));
 

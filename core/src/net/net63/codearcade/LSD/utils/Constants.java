@@ -44,6 +44,7 @@ public class Constants {
 
         public static final int RENDER = 9;
         public static final int DEBUG_RENDER = 10;
-
+        
+        public static final int BODY_REMOVAL = 20;
     }
 }

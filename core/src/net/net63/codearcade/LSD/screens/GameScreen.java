@@ -20,7 +20,6 @@ public class GameScreen extends AbstractScreen {
 
 		stage = new Stage();
         gameWorld = new GameWorld();
-        gameWorld.setup();
 	}
 
 	@Override
