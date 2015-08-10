@@ -35,7 +35,7 @@ public class Constants {
 
     public static final Vector2 WORLD_GRAVITY = new Vector2(0, -1);
 
-    // ------------- Entity System ------------
+    // ------------- Entity Systems ------------
 
     public static final class SYSTEM_PRIORITIES {
 

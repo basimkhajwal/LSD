@@ -3,10 +3,14 @@ package net.net63.codearcade.LSD.world;
 import com.badlogic.ashley.core.Engine;
 import com.badlogic.ashley.core.EntitySystem;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Disposable;
 import net.net63.codearcade.LSD.listeners.BodyRemovalListener;
-import net.net63.codearcade.LSD.systems.*;
+import net.net63.codearcade.LSD.systems.CollisionSystem;
+import net.net63.codearcade.LSD.systems.DebugRenderSystem;
+import net.net63.codearcade.LSD.systems.RenderSystem;
+import net.net63.codearcade.LSD.systems.WorldSystem;
 import net.net63.codearcade.LSD.utils.Constants;
 
 /**
@@ -17,12 +21,16 @@ public class GameWorld implements Disposable{
     private Engine engine;
     private World world;
 
+    private Vector2 aimPosition;
+
     private OrthographicCamera gameCamera;
 
     public GameWorld () {
         gameCamera = new OrthographicCamera();
         engine = new Engine();
         world = new World(Constants.WORLD_GRAVITY, true);
+
+        aimPosition = new Vector2();
 
         setup();
     }
@@ -45,15 +53,12 @@ public class GameWorld implements Disposable{
         engine.update(delta);
     }
 
-    @Override
-    public void dispose() {
-        for (EntitySystem entitySystem: engine.getSystems()) {
-            engine.removeSystem(entitySystem);
+    public void aimPlayer(int x, int y) {
+        aimPosition.set(x, y);
+    }
 
-            if (entitySystem instanceof Disposable) {
-                ((Disposable) entitySystem).dispose();
-            }
-        }
+    public void launchPlayer() {
+        
     }
 
     private void addSystems() {
@@ -72,5 +77,16 @@ public class GameWorld implements Disposable{
     private void setupCamera() {
         gameCamera.setToOrtho(false);
         gameCamera.combined.scl(Constants.METRE_TO_PIXEL, Constants.METRE_TO_PIXEL, 0);
+    }
+
+    @Override
+    public void dispose() {
+        for (EntitySystem entitySystem: engine.getSystems()) {
+            engine.removeSystem(entitySystem);
+
+            if (entitySystem instanceof Disposable) {
+                ((Disposable) entitySystem).dispose();
+            }
+        }
     }
 }

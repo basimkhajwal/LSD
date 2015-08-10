@@ -1,5 +1,9 @@
 package net.net63.codearcade.LSD.screens;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.scenes.scene2d.Event;
+import com.badlogic.gdx.scenes.scene2d.EventListener;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import net.net63.codearcade.LSD.LSD;
 import net.net63.codearcade.LSD.world.GameWorld;
@@ -10,8 +14,8 @@ import net.net63.codearcade.LSD.world.GameWorld;
  * @author Basim
  *
  */
-public class GameScreen extends AbstractScreen {
-	
+public class GameScreen extends AbstractScreen implements EventListener {
+
 	private Stage stage;
     private GameWorld gameWorld;
 	
@@ -20,6 +24,10 @@ public class GameScreen extends AbstractScreen {
 
 		stage = new Stage();
         gameWorld = new GameWorld();
+
+        stage.addListener(this);
+
+        Gdx.input.setInputProcessor(stage);
 	}
 
 	@Override
@@ -33,7 +41,36 @@ public class GameScreen extends AbstractScreen {
 	@Override
 	public void render(float delta) {
 		super.render(delta);
-		
+
 		gameWorld.update(delta);
 	}
+
+    @Override
+    public boolean handle(Event event) {
+        if (event instanceof InputEvent) {
+            InputEvent inputEvent = (InputEvent) event;
+
+
+
+
+            switch (inputEvent.getType()) {
+
+                case touchDown: case touchDragged:
+                    gameWorld.aimPlayer(Gdx.input.getX(), Gdx.input.getY());
+
+                    break;
+
+                case touchUp:
+                    gameWorld.launchPlayer();
+                    break;
+
+                default:
+                    return false;
+            }
+
+            return true;
+        }
+
+        return false;
+    }
 }
