@@ -50,9 +50,6 @@ public class GameScreen extends AbstractScreen implements EventListener {
         if (event instanceof InputEvent) {
             InputEvent inputEvent = (InputEvent) event;
 
-
-
-
             switch (inputEvent.getType()) {
 
                 case touchDown: case touchDragged:

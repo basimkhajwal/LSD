@@ -7,10 +7,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Disposable;
 import net.net63.codearcade.LSD.listeners.BodyRemovalListener;
-import net.net63.codearcade.LSD.systems.CollisionSystem;
-import net.net63.codearcade.LSD.systems.DebugRenderSystem;
-import net.net63.codearcade.LSD.systems.RenderSystem;
-import net.net63.codearcade.LSD.systems.WorldSystem;
+import net.net63.codearcade.LSD.systems.*;
 import net.net63.codearcade.LSD.utils.Constants;
 
 /**
@@ -58,12 +55,13 @@ public class GameWorld implements Disposable{
     }
 
     public void launchPlayer() {
-        
+
     }
 
     private void addSystems() {
         engine.addSystem(new WorldSystem());
         engine.addSystem(new CollisionSystem());
+        engine.addSystem(new PlayerSystem());
         engine.addSystem(new RenderSystem(gameCamera));
         engine.addSystem(new DebugRenderSystem(gameCamera));
 

@@ -42,6 +42,8 @@ public class Constants {
         public static final int WORLD = 1;
         public static final int COLLISION = 2;
 
+        public static final int PLAYER = 5;
+
         public static final int RENDER = 9;
         public static final int DEBUG_RENDER = 10;
     }
