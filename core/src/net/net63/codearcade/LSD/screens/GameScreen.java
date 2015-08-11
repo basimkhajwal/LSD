@@ -34,7 +34,7 @@ public class GameScreen extends AbstractScreen implements EventListener {
 	public void resize(int width, int height) {
 		super.resize(width, height);
 
-        gameWorld.resize();
+        gameWorld.resize(width, height);
 		stage.getViewport().update(width, height);
 	}
 	

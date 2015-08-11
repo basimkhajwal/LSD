@@ -2,10 +2,15 @@ package net.net63.codearcade.LSD.world;
 
 import com.badlogic.ashley.core.Engine;
 import com.badlogic.ashley.core.EntitySystem;
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Disposable;
+import com.badlogic.gdx.utils.viewport.FitViewport;
+import com.badlogic.gdx.utils.viewport.Viewport;
 import net.net63.codearcade.LSD.listeners.BodyRemovalListener;
 import net.net63.codearcade.LSD.systems.*;
 import net.net63.codearcade.LSD.utils.Constants;
@@ -21,13 +26,14 @@ public class GameWorld implements Disposable{
     private Vector2 aimPosition;
 
     private OrthographicCamera gameCamera;
+    private Viewport viewport;
 
     public GameWorld () {
-        gameCamera = new OrthographicCamera();
         engine = new Engine();
         world = new World(Constants.WORLD_GRAVITY, true);
-
-        aimPosition = new Vector2();
+        gameCamera = new OrthographicCamera();
+        viewport = new FitViewport(Constants.WORLD_WIDTH, Constants.WORLD_HEIGHT, gameCamera);
+        viewport.apply();
 
         setup();
     }
@@ -36,17 +42,47 @@ public class GameWorld implements Disposable{
         addSystems();
         addListeners();
 
+        aimPosition = new Vector2();
+
         WorldBuilder.setup(engine, world);
         WorldBuilder.createWorld();
         WorldBuilder.createPlayer();
         WorldBuilder.createSensor(1, 1, 2.5f, 0.5f);
     }
 
-    public void resize() {
-        setupCamera();
-    }
+    public void resize(int w, int h) { viewport.update(w, h, true); }
 
     public void update(float delta) {
+
+        // -- TEMP ---
+
+        if (Gdx.input.isKeyPressed(Input.Keys.UP)) {
+            gameCamera.translate(0, 1);
+        }
+
+        if (Gdx.input.isKeyPressed(Input.Keys.DOWN)) {
+            gameCamera.translate(0, -1);
+        }
+
+        if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
+            gameCamera.translate(-1, 0);
+        }
+
+        if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
+            gameCamera.translate(1, 0);
+        }
+
+        if (Gdx.input.isKeyPressed(Input.Keys.Q)) {
+            gameCamera.zoom += 0.02f;
+        }
+
+        if (Gdx.input.isKeyPressed(Input.Keys.W)) {
+            gameCamera.zoom -= 0.02f;
+        }
+
+        gameCamera.update();
+        viewport.apply();
+
         engine.update(delta);
     }
 
@@ -55,7 +91,10 @@ public class GameWorld implements Disposable{
     }
 
     public void launchPlayer() {
+        Vector3 worldPos = new Vector3(aimPosition.x, aimPosition.y, 0);
+        gameCamera.unproject(worldPos);
 
+        //engine.getSystem(PlayerSystem.class).launchPlayer(worldPos.x, worldPos.y);
     }
 
     private void addSystems() {
@@ -70,11 +109,6 @@ public class GameWorld implements Disposable{
 
     private void addListeners() {
         engine.addEntityListener(new BodyRemovalListener(world));
-    }
-
-    private void setupCamera() {
-        gameCamera.setToOrtho(false);
-        gameCamera.combined.scl(Constants.METRE_TO_PIXEL, Constants.METRE_TO_PIXEL, 0);
     }
 
     @Override

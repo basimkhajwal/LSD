@@ -26,6 +26,9 @@ public class Constants {
     public static final float METRE_TO_PIXEL = 40f;
     public static final float PIXEL_TO_METRE = 1 / METRE_TO_PIXEL;
 
+    public static final int WORLD_WIDTH  = (int) (DEFAULT_SCREEN_WIDTH * PIXEL_TO_METRE);
+    public static final int WORLD_HEIGHT = (int) (DEFAULT_SCREEN_HEIGHT * PIXEL_TO_METRE);
+
     public static final float BOX2D_FPS = 60.0f;
     public static final int BOX2D_VELOCITY_ITERATIONS = 6;
     public static final int BOX2D_POSITION_ITERATIONS = 2;
@@ -33,7 +36,7 @@ public class Constants {
     public static final float PLAYER_WIDTH = 0.5f;
     public static final float PLAYER_HEIGHT = 0.5f;
 
-    public static final Vector2 WORLD_GRAVITY = new Vector2(0, -1);
+    public static final Vector2 WORLD_GRAVITY = new Vector2(0, 0);
 
     // ------------- Entity Systems ------------
 
