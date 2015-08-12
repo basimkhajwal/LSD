@@ -2,6 +2,7 @@ package net.net63.codearcade.LSD.world;
 
 import com.badlogic.ashley.core.ComponentMapper;
 import com.badlogic.ashley.core.Engine;
+import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.EntitySystem;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
@@ -16,8 +17,6 @@ import net.net63.codearcade.LSD.components.BodyComponent;
 import net.net63.codearcade.LSD.listeners.BodyRemovalListener;
 import net.net63.codearcade.LSD.systems.*;
 import net.net63.codearcade.LSD.utils.Constants;
-
-import javax.swing.text.html.parser.Entity;
 
 /**
  * Created by Basim on 23/06/15.
@@ -104,18 +103,15 @@ public class GameWorld implements Disposable{
     public void aimPlayer(int x, int y) {
         Vector3 worldPos = new Vector3(x, y, 0);
         gameCamera.unproject(worldPos);
-
         aimPosition.set(worldPos.x, worldPos.y);
 
         engine.getSystem(EffectRenderSystem.class).setDrawPlayer(true);
-        engine.getSystem(EffectRenderSystem.class).updatePlayerProjection();
+        engine.getSystem(EffectRenderSystem.class).updatePlayerProjection(bodyMapper.get(player).body.getPosition(), aimPosition);
     }
 
     public void launchPlayer() {
-
-
         engine.getSystem(EffectRenderSystem.class).setDrawPlayer(false);
-        engine.getSystem(PlayerSystem.class).launchPlayer(worldPos.x, worldPos.y);
+        engine.getSystem(PlayerSystem.class).launchPlayer(aimPosition.x, aimPosition.y);
     }
 
     private void addSystems() {
