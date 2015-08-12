@@ -1,5 +1,6 @@
 package net.net63.codearcade.LSD.world;
 
+import com.badlogic.ashley.core.ComponentMapper;
 import com.badlogic.ashley.core.Engine;
 import com.badlogic.ashley.core.EntitySystem;
 import com.badlogic.gdx.Gdx;
@@ -11,9 +12,12 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Disposable;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
+import net.net63.codearcade.LSD.components.BodyComponent;
 import net.net63.codearcade.LSD.listeners.BodyRemovalListener;
 import net.net63.codearcade.LSD.systems.*;
 import net.net63.codearcade.LSD.utils.Constants;
+
+import javax.swing.text.html.parser.Entity;
 
 /**
  * Created by Basim on 23/06/15.
@@ -23,17 +27,24 @@ public class GameWorld implements Disposable{
     private Engine engine;
     private World world;
 
-    private Vector2 aimPosition;
-
     private OrthographicCamera gameCamera;
     private Viewport viewport;
+
+    private Vector2 aimPosition;
+
+    private Entity player;
+
+    private ComponentMapper<BodyComponent> bodyMapper;
 
     public GameWorld () {
         engine = new Engine();
         world = new World(Constants.WORLD_GRAVITY, true);
+
         gameCamera = new OrthographicCamera();
         viewport = new FitViewport(Constants.WORLD_WIDTH, Constants.WORLD_HEIGHT, gameCamera);
         viewport.apply();
+
+        bodyMapper = ComponentMapper.getFor(BodyComponent.class);
 
         setup();
     }
@@ -46,7 +57,11 @@ public class GameWorld implements Disposable{
 
         WorldBuilder.setup(engine, world);
         WorldBuilder.createWorld();
-        WorldBuilder.createPlayer();
+        player = WorldBuilder.createPlayer();
+
+        WorldBuilder.createSensor(6, 6, 0.5f, 2.5f);
+        WorldBuilder.createSensor(7, 1, 2.5f, 0.5f);
+        WorldBuilder.createSensor(5, 1, 2.5f, 0.5f);
         WorldBuilder.createSensor(1, 1, 2.5f, 0.5f);
     }
 
@@ -87,14 +102,20 @@ public class GameWorld implements Disposable{
     }
 
     public void aimPlayer(int x, int y) {
-        aimPosition.set(x, y);
+        Vector3 worldPos = new Vector3(x, y, 0);
+        gameCamera.unproject(worldPos);
+
+        aimPosition.set(worldPos.x, worldPos.y);
+
+        engine.getSystem(EffectRenderSystem.class).setDrawPlayer(true);
+        engine.getSystem(EffectRenderSystem.class).updatePlayerProjection();
     }
 
     public void launchPlayer() {
-        Vector3 worldPos = new Vector3(aimPosition.x, aimPosition.y, 0);
-        gameCamera.unproject(worldPos);
 
-        //engine.getSystem(PlayerSystem.class).launchPlayer(worldPos.x, worldPos.y);
+
+        engine.getSystem(EffectRenderSystem.class).setDrawPlayer(false);
+        engine.getSystem(PlayerSystem.class).launchPlayer(worldPos.x, worldPos.y);
     }
 
     private void addSystems() {
@@ -103,6 +124,7 @@ public class GameWorld implements Disposable{
         engine.addSystem(new PlayerSystem());
         engine.addSystem(new RenderSystem(gameCamera));
         engine.addSystem(new DebugRenderSystem(gameCamera));
+        engine.addSystem(new EffectRenderSystem(gameCamera));
 
         world.setContactListener(engine.getSystem(CollisionSystem.class));
     }

@@ -49,5 +49,6 @@ public class Constants {
 
         public static final int RENDER = 9;
         public static final int DEBUG_RENDER = 10;
+        public static final int EFFECT_RENDER = 11;
     }
 }
