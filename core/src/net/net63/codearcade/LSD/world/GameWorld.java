@@ -102,7 +102,7 @@ public class GameWorld implements Disposable{
 
     public void aimPlayer(int x, int y) {
         Vector3 worldPos = new Vector3(x, y, 0);
-        gameCamera.unproject(worldPos);
+        viewport.unproject(worldPos);
         aimPosition.set(worldPos.x, worldPos.y);
 
         engine.getSystem(EffectRenderSystem.class).setDrawPlayer(true);
