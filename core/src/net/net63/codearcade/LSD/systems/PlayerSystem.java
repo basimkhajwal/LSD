@@ -35,12 +35,21 @@ public class PlayerSystem extends IteratingSystem{
     }
 
     private Vector2 calculateLaunchImpulse(Vector2 currentPosition, Vector2 target) {
-        Vector2 impulse = new Vector2();
+        float t = 1.0f / Constants.BOX2D_FPS;
+        float stepGravity = Constants.WORLD_GRAVITY.y * t * t;
 
-        // TODO - Implement a better launching heuristic
-        impulse.set(target.cpy().sub(currentPosition)).scl(0.1f);
+        float a = 0.5f / stepGravity;
+        float b = 0.5f;
+        float c = target.y - currentPosition.y;
 
-        return impulse;
+        float quadraticSolution1 = ( -b - (float) Math.sqrt( b * b - 4 * a * c ) ) / (2*a);
+        float quadraticSolution2 = ( -b + (float) Math.sqrt(b * b - 4 * a * c) ) / (2*a);
+
+        float velocityUp = Math.max(quadraticSolution1, quadraticSolution2);
+        float timeToTop = -velocityUp / stepGravity - 1;
+        float velocityAcross = (target.x - currentPosition.x) / timeToTop;
+
+        return new Vector2(velocityAcross * Constants.BOX2D_FPS, velocityUp * Constants.BOX2D_FPS);
     }
 
     @Override
@@ -49,7 +58,8 @@ public class PlayerSystem extends IteratingSystem{
 
         if (launch) {
             log("Launching Player to: " + launchPoint.toString());
-
+            body.setTransform(3, 3, 0);
+            body.setLinearVelocity(0, 0);
             body.applyLinearImpulse(calculateLaunchImpulse(body.getPosition(), launchPoint), body.getWorldCenter(), true);
             launch = false;
         }
