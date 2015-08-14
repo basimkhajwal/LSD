@@ -65,7 +65,7 @@ public class WorldBuilder {
         bodyDef.position.set(4, 4);
 
         FixtureDef fixtureDef = new FixtureDef();
-        fixtureDef.restitution = 1.0f;
+        fixtureDef.restitution = 0.0f;
         fixtureDef.shape = new PolygonShape();
         ((PolygonShape) fixtureDef.shape).setAsBox(Constants.PLAYER_WIDTH / 2, Constants.PLAYER_HEIGHT / 2);
 

@@ -34,20 +34,33 @@ public class PlayerSystem extends IteratingSystem{
         Gdx.app.log(Constants.LOG, "PlayerSystem: " + message);
     }
 
-    private Vector2 calculateLaunchImpulse(Vector2 currentPosition, Vector2 target) {
+    private float calculateVerticalVelocity(float desiredHeight) {
+        if (desiredHeight <= 0) {
+            return 0;
+        }
+
         float t = 1.0f / Constants.BOX2D_FPS;
         float stepGravity = Constants.WORLD_GRAVITY.y * t * t;
 
         float a = 0.5f / stepGravity;
         float b = 0.5f;
-        float c = target.y - currentPosition.y;
+        float c = desiredHeight;
 
         float quadraticSolution1 = ( -b - (float) Math.sqrt( b * b - 4 * a * c ) ) / (2*a);
         float quadraticSolution2 = ( -b + (float) Math.sqrt(b * b - 4 * a * c) ) / (2*a);
 
-        float velocityUp = Math.max(quadraticSolution1, quadraticSolution2);
-        float timeToTop = -velocityUp / stepGravity - 1;
-        float velocityAcross = (target.x - currentPosition.x) / timeToTop;
+        return Math.max(quadraticSolution1, quadraticSolution2);
+    }
+
+    private float calculateFlightTime(float verticalVelocity) {
+        float stepGravity = Constants.WORLD_GRAVITY.y / (Constants.BOX2D_FPS * Constants.BOX2D_FPS);
+
+        return -verticalVelocity / stepGravity - 1;
+    }
+
+    private Vector2 calculateLaunchImpulse(Vector2 currentPosition, Vector2 target) {
+        float velocityUp = calculateVerticalVelocity(target.y - currentPosition.y);
+        float velocityAcross = (target.x - currentPosition.x) / calculateFlightTime(velocityUp);
 
         return new Vector2(velocityAcross * Constants.BOX2D_FPS, velocityUp * Constants.BOX2D_FPS);
     }
