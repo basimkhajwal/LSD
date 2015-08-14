@@ -27,7 +27,7 @@ public class CollisionSystem extends EntitySystem implements ContactListener {
         if (b.getType() == BodyDef.BodyType.DynamicBody) dynBody = b;
 
         if (dynBody != null) {
-            //dynBody.applyLinearImpulse(new Vector2(0, 5), dynBody.getLocalCenter(), true);
+            dynBody.setLinearVelocity(0, 0);
         }
     }
 
