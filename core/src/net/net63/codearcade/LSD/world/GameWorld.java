@@ -14,6 +14,8 @@ import com.badlogic.gdx.utils.Disposable;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import net.net63.codearcade.LSD.components.BodyComponent;
+import net.net63.codearcade.LSD.components.PlayerComponent;
+import net.net63.codearcade.LSD.components.StateComponent;
 import net.net63.codearcade.LSD.listeners.BodyRemovalListener;
 import net.net63.codearcade.LSD.systems.*;
 import net.net63.codearcade.LSD.utils.Constants;
@@ -34,6 +36,8 @@ public class GameWorld implements Disposable{
     private Entity player;
 
     private ComponentMapper<BodyComponent> bodyMapper;
+    private ComponentMapper<PlayerComponent> playerMapper;
+    private ComponentMapper<StateComponent> stateMapper;
 
     public GameWorld () {
         engine = new Engine();
@@ -44,6 +48,8 @@ public class GameWorld implements Disposable{
         viewport.apply();
 
         bodyMapper = ComponentMapper.getFor(BodyComponent.class);
+        playerMapper = ComponentMapper.getFor(PlayerComponent.class);
+        stateMapper = ComponentMapper.getFor(StateComponent.class);
 
         setup();
     }
@@ -105,13 +111,13 @@ public class GameWorld implements Disposable{
         viewport.unproject(worldPos);
         aimPosition.set(worldPos.x, worldPos.y);
 
-        engine.getSystem(EffectRenderSystem.class).setDrawPlayer(true);
-        engine.getSystem(EffectRenderSystem.class).updatePlayerProjection(bodyMapper.get(player).body.getPosition(), aimPosition);
+        stateMapper.get(player).set(PlayerComponent.STATE_AIMING);
+        playerMapper.get(player).aimPosition = aimPosition;
     }
 
     public void launchPlayer() {
-        engine.getSystem(EffectRenderSystem.class).setDrawPlayer(false);
-        engine.getSystem(PlayerSystem.class).launchPlayer(aimPosition.x, aimPosition.y);
+
+
     }
 
     private void addSystems() {
