@@ -36,6 +36,9 @@ public class Constants {
     public static final float PLAYER_WIDTH = 0.5f;
     public static final float PLAYER_HEIGHT = 0.5f;
 
+    public static final int NUM_TRAJECTORY_PROJECTIONS = 10;
+    public static final float TRAJECTORY_PROJECTION_TIME = 0.2f;
+
     public static final Vector2 WORLD_GRAVITY = new Vector2(0, -1);
 
     // ------------- Entity Systems ------------
