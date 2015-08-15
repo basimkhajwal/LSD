@@ -9,6 +9,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import net.net63.codearcade.LSD.components.BodyComponent;
 import net.net63.codearcade.LSD.components.PlayerComponent;
+import net.net63.codearcade.LSD.components.StateComponent;
 import net.net63.codearcade.LSD.utils.Constants;
 
 /**
@@ -17,17 +18,15 @@ import net.net63.codearcade.LSD.utils.Constants;
 public class PlayerSystem extends IteratingSystem{
 
     private ComponentMapper<BodyComponent> bodyMapper;
-
-    private Vector2 launchPoint;
-    private boolean launch;
+    private ComponentMapper<StateComponent> stateMapper;
+    private ComponentMapper<PlayerComponent> playerMapper;
 
     public PlayerSystem () {
         super(Family.all(PlayerComponent.class).get(), Constants.SYSTEM_PRIORITIES.PLAYER);
 
         bodyMapper = ComponentMapper.getFor(BodyComponent.class);
-
-        launchPoint = new Vector2();
-        launch = false;
+        stateMapper = ComponentMapper.getFor(StateComponent.class);
+        playerMapper = ComponentMapper.getFor(PlayerComponent.class);
     }
 
     private void log(String message) {
@@ -65,22 +64,39 @@ public class PlayerSystem extends IteratingSystem{
         return new Vector2(velocityAcross * Constants.BOX2D_FPS, velocityUp * Constants.BOX2D_FPS);
     }
 
+    private Vector2[] calculateTrajectoryPoints(Vector2 startPoint, Vector2 startingVelocity) {
+        Vector2[] points = new Vector2[Constants.NUM_TRAJECTORY_PROJECTIONS];
+
+        Vector2 stepVelocity = startingVelocity.cpy().scl(1 / Constants.BOX2D_FPS);
+        float stepGravity = Constants.WORLD_GRAVITY.y / (Constants.BOX2D_FPS * Constants.BOX2D_FPS);
+
+        for (int i = 0; i < points.length; i++) {
+            float t = (i + 1) * Constants.TRAJECTORY_PROJECTION_TIME;
+
+            points[i] = startPoint.cpy();
+            points[i].x += t * stepVelocity.x;
+            points[i].y += t * stepVelocity.y + 0.5f * (t*t+t) * stepGravity;
+        }
+
+        return points;
+    }
+
     @Override
     public void processEntity(Entity entity, float deltaTime) {
         Body body = bodyMapper.get(entity).body;
+        StateComponent state = stateMapper.get(entity);
+        PlayerComponent playerComponent = playerMapper.get(entity);
 
-        if (launch) {
-            log("Launching Player to: " + launchPoint.toString());
-            body.setTransform(3, 3, 0);
-            body.setLinearVelocity(0, 0);
-            body.applyLinearImpulse(calculateLaunchImpulse(body.getPosition(), launchPoint), body.getWorldCenter(), true);
-            launch = false;
+        if (state.get() == PlayerComponent.STATE_AIMING) {
+
+            playerComponent.launchImpulse = calculateLaunchImpulse(body.getPosition(), playerComponent.aimPosition);
+            playerComponent.trajectoryPoints = calculateTrajectoryPoints(body.getPosition(), playerComponent.launchImpulse);
+
+        } else if (state.get() == PlayerComponent.STATE_FIRING) {
+
+            body.applyLinearImpulse(playerComponent.launchImpulse, body.getWorldCenter(), true);
+            state.set(PlayerComponent.STATE_JUMPING);
         }
-    }
-
-    public void launchPlayer(float x, float y) {
-        launch = true;
-        launchPoint.set(x, y);
     }
 
 }
