@@ -1,11 +1,15 @@
 package net.net63.codearcade.LSD.systems;
 
-import com.badlogic.ashley.core.EntitySystem;
+import com.badlogic.ashley.core.*;
+import com.badlogic.ashley.utils.ImmutableArray;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Disposable;
+import net.net63.codearcade.LSD.components.BodyComponent;
+import net.net63.codearcade.LSD.components.PlayerComponent;
+import net.net63.codearcade.LSD.components.StateComponent;
 import net.net63.codearcade.LSD.utils.Constants;
 
 /**
@@ -16,9 +20,11 @@ public class EffectRenderSystem extends EntitySystem implements Disposable{
     private OrthographicCamera gameCamera;
     private ShapeRenderer shapeRenderer;
 
-    private Vector2 playerPos;
-    private Vector2 touchPos;
-    private boolean drawPlayer;
+    private ComponentMapper<PlayerComponent> playerMapper;
+    private ComponentMapper<BodyComponent> bodyMapper;
+    private ComponentMapper<StateComponent> stateMapper;
+
+    private ImmutableArray<Entity> playerEntities;
 
     public EffectRenderSystem (OrthographicCamera gameCamera) {
         super(Constants.SYSTEM_PRIORITIES.EFFECT_RENDER);
@@ -26,28 +32,35 @@ public class EffectRenderSystem extends EntitySystem implements Disposable{
         this.gameCamera = gameCamera;
         shapeRenderer = new ShapeRenderer();
 
-        drawPlayer = false;
+        stateMapper = ComponentMapper.getFor(StateComponent.class);
+        playerMapper = ComponentMapper.getFor(PlayerComponent.class);
+        bodyMapper = ComponentMapper.getFor(BodyComponent.class);
+    }
+
+    @Override
+    public void addedToEngine(Engine engine) {
+        super.addedToEngine(engine);
+
+        playerEntities = engine.getEntitiesFor(Family.all(PlayerComponent.class).get());
     }
 
     @Override
     public void update(float deltaTime) {
-        if (drawPlayer) {
+        Entity player = playerEntities.first();
+
+        if (stateMapper.get(player).get() == PlayerComponent.STATE_AIMING) {
+            Vector2 playerPos = bodyMapper.get(player).body.getPosition();
+            Vector2 aimPos = playerMapper.get(player).aimPosition;
+            Vector2[] trajectories = playerMapper.get(player).trajectoryPoints;
+
             shapeRenderer.setProjectionMatrix(gameCamera.combined);
-            shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
+            shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
             shapeRenderer.setColor(Color.RED);
-            shapeRenderer.line(playerPos.x, playerPos.y, touchPos.x, touchPos.y);
+            
+            //shapeRenderer.line(playerPos.x, playerPos.y, touchPos.x, touchPos.y);
             shapeRenderer.end();
         }
 
-    }
-
-    public void setDrawPlayer(boolean drawPlayer) {
-        this.drawPlayer = drawPlayer;
-    }
-
-    public void updatePlayerProjection(Vector2 playerPos, Vector2 touchPos) {
-        this.playerPos = playerPos;
-        this.touchPos = touchPos;
     }
 
     @Override
