@@ -80,6 +80,10 @@ public class WorldBuilder {
 
         for (Component component: components) {
             entity.add(component);
+
+            if (component instanceof BodyComponent) {
+                ((BodyComponent) component).body.setUserData(entity);
+            }
         }
 
         engine.addEntity(entity);
