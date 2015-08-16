@@ -1,7 +1,11 @@
 package net.net63.codearcade.LSD.systems;
 
+import com.badlogic.ashley.core.ComponentMapper;
+import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.EntitySystem;
 import com.badlogic.gdx.physics.box2d.*;
+import net.net63.codearcade.LSD.components.PlayerComponent;
+import net.net63.codearcade.LSD.components.StateComponent;
 import net.net63.codearcade.LSD.utils.Constants;
 
 /**
@@ -9,9 +13,14 @@ import net.net63.codearcade.LSD.utils.Constants;
  */
 public class CollisionSystem extends EntitySystem implements ContactListener {
 
+    private ComponentMapper<StateComponent> stateMapper;
+    private ComponentMapper<PlayerComponent> playerMapper;
 
     public CollisionSystem () {
         super(Constants.SYSTEM_PRIORITIES.COLLISION);
+
+        stateMapper = ComponentMapper.getFor(StateComponent.class);
+        playerMapper = ComponentMapper.getFor(PlayerComponent.class);
     }
 
     @Override
@@ -21,13 +30,14 @@ public class CollisionSystem extends EntitySystem implements ContactListener {
     public void beginContact(Contact contact) {
         Body a = contact.getFixtureA().getBody();
         Body b = contact.getFixtureB().getBody();
-        Body dynBody = null;
 
-        if (a.getType() == BodyDef.BodyType.DynamicBody) dynBody = a;
-        if (b.getType() == BodyDef.BodyType.DynamicBody) dynBody = b;
+        Body playerBody = null;
 
-        if (dynBody != null) {
-            dynBody.setLinearVelocity(0, 0);
+        if (playerMapper.has((Entity) a.getUserData())) playerBody = a;
+        if (playerMapper.has((Entity) b.getUserData())) playerBody = b;
+
+        if (playerBody != null) {
+
         }
     }
 

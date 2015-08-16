@@ -58,8 +58,6 @@ public class PlayerSystem extends IteratingSystem{
     }
 
     private float calculateFallTime(float height) {
-        log("Calculating fall time for height: " + height);
-
         float t = 1 / Constants.BOX2D_FPS;
         float stepGravity = Constants.WORLD_GRAVITY.y * t * t;
 
@@ -112,7 +110,9 @@ public class PlayerSystem extends IteratingSystem{
 
         } else if (state.get() == PlayerComponent.STATE_FIRING) {
 
+            body.setGravityScale(1.0f);
             body.applyLinearImpulse(playerComponent.launchImpulse, body.getWorldCenter(), true);
+
             state.set(PlayerComponent.STATE_JUMPING);
         }
     }
