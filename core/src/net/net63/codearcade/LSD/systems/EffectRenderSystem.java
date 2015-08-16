@@ -49,15 +49,16 @@ public class EffectRenderSystem extends EntitySystem implements Disposable{
         Entity player = playerEntities.first();
 
         if (stateMapper.get(player).get() == PlayerComponent.STATE_AIMING) {
-            Vector2 playerPos = bodyMapper.get(player).body.getPosition();
-            Vector2 aimPos = playerMapper.get(player).aimPosition;
             Vector2[] trajectories = playerMapper.get(player).trajectoryPoints;
 
             shapeRenderer.setProjectionMatrix(gameCamera.combined);
             shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
             shapeRenderer.setColor(Color.RED);
-            
-            //shapeRenderer.line(playerPos.x, playerPos.y, touchPos.x, touchPos.y);
+
+            for (Vector2 point: trajectories) {
+                shapeRenderer.rect(point.x, point.y, 0.1f, 0.1f);
+            }
+
             shapeRenderer.end();
         }
 
