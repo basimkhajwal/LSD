@@ -116,8 +116,7 @@ public class GameWorld implements Disposable{
     }
 
     public void launchPlayer() {
-
-
+        stateMapper.get(player).set(PlayerComponent.STATE_FIRING);
     }
 
     private void addSystems() {
