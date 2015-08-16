@@ -57,9 +57,27 @@ public class PlayerSystem extends IteratingSystem{
         return -verticalVelocity / stepGravity - 1;
     }
 
+    private float calculateFallTime(float height) {
+        log("Calculating fall time for height: " + height);
+
+        float t = 1 / Constants.BOX2D_FPS;
+        float stepGravity = Constants.WORLD_GRAVITY.y * t * t;
+
+        float a = 1.0f;
+        float b = 1.0f;
+        float c = 2 * height / stepGravity;
+
+        float quadraticSolution1 = ( -b - (float) Math.sqrt( b * b - 4 * a * c ) ) / (2*a);
+        float quadraticSolution2 = ( -b + (float) Math.sqrt(b * b - 4 * a * c) ) / (2*a);
+
+        return Math.max(quadraticSolution1, quadraticSolution2);
+    }
+
     private Vector2 calculateLaunchImpulse(Vector2 currentPosition, Vector2 target) {
         float velocityUp = calculateVerticalVelocity(target.y - currentPosition.y);
-        float velocityAcross = (target.x - currentPosition.x) / calculateFlightTime(velocityUp);
+        float velocityAcross = (velocityUp <= 0) ?
+                ((target.x - currentPosition.x) / calculateFallTime(currentPosition.y - target.y)) :
+                ((target.x - currentPosition.x) / calculateFlightTime(velocityUp));
 
         return new Vector2(velocityAcross * Constants.BOX2D_FPS, velocityUp * Constants.BOX2D_FPS);
     }
@@ -71,7 +89,7 @@ public class PlayerSystem extends IteratingSystem{
         float stepGravity = Constants.WORLD_GRAVITY.y / (Constants.BOX2D_FPS * Constants.BOX2D_FPS);
 
         for (int i = 0; i < points.length; i++) {
-            float t = (i + 1) * Constants.TRAJECTORY_PROJECTION_TIME;
+            float t = (i + 1) * Constants.TRAJECTORY_PROJECTION_STEPS;
 
             points[i] = startPoint.cpy();
             points[i].x += t * stepVelocity.x;
