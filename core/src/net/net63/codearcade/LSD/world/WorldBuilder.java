@@ -7,10 +7,7 @@ import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
-import net.net63.codearcade.LSD.components.BodyComponent;
-import net.net63.codearcade.LSD.components.PlayerComponent;
-import net.net63.codearcade.LSD.components.SensorComponent;
-import net.net63.codearcade.LSD.components.WorldComponent;
+import net.net63.codearcade.LSD.components.*;
 import net.net63.codearcade.LSD.utils.Constants;
 
 /**
@@ -57,12 +54,13 @@ public class WorldBuilder {
     public static Entity createPlayer() {
 
         PlayerComponent playerComponent = new PlayerComponent();
+        StateComponent stateComponent = new StateComponent();
         BodyComponent bodyComponent = new BodyComponent();
 
         BodyDef bodyDef = new BodyDef();
         bodyDef.type = BodyDef.BodyType.DynamicBody;
         bodyDef.fixedRotation = true;
-        bodyDef.position.set(4, 4);
+        bodyDef.position.set(2.5f, 4);
 
         FixtureDef fixtureDef = new FixtureDef();
         fixtureDef.restitution = 0.0f;
@@ -72,7 +70,7 @@ public class WorldBuilder {
         bodyComponent.body = world.createBody(bodyDef);
         bodyComponent.body.createFixture(fixtureDef);
 
-        return createEntityFrom(playerComponent, bodyComponent);
+        return createEntityFrom(playerComponent, bodyComponent, stateComponent);
     }
 
     private static Entity createEntityFrom(Component... components) {
