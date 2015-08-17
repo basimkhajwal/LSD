@@ -37,7 +37,8 @@ public class CollisionSystem extends EntitySystem implements ContactListener {
         if (playerMapper.has((Entity) b.getUserData())) playerBody = b;
 
         if (playerBody != null) {
-
+            StateComponent state = stateMapper.get((Entity) playerBody.getUserData());
+            if (state.get() == PlayerComponent.STATE_JUMPING) state.set(PlayerComponent.STATE_HITTING);
         }
     }
 
