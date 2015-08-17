@@ -103,17 +103,30 @@ public class PlayerSystem extends IteratingSystem{
         StateComponent state = stateMapper.get(entity);
         PlayerComponent playerComponent = playerMapper.get(entity);
 
-        if (state.get() == PlayerComponent.STATE_AIMING) {
 
-            playerComponent.launchImpulse = calculateLaunchImpulse(body.getPosition(), playerComponent.aimPosition);
-            playerComponent.trajectoryPoints = calculateTrajectoryPoints(body.getPosition(), playerComponent.launchImpulse);
+        switch (state.get()) {
 
-        } else if (state.get() == PlayerComponent.STATE_FIRING) {
+            case PlayerComponent.STATE_AIMING:
 
-            body.setGravityScale(1.0f);
-            body.applyLinearImpulse(playerComponent.launchImpulse, body.getWorldCenter(), true);
+                playerComponent.launchImpulse = calculateLaunchImpulse(body.getPosition(), playerComponent.aimPosition);
+                playerComponent.trajectoryPoints = calculateTrajectoryPoints(body.getPosition(), playerComponent.launchImpulse);
+                break;
 
-            state.set(PlayerComponent.STATE_JUMPING);
+            case PlayerComponent.STATE_FIRING:
+
+                body.setGravityScale(1.0f);
+                body.applyLinearImpulse(playerComponent.launchImpulse, body.getWorldCenter(), true);
+
+                state.set(PlayerComponent.STATE_JUMPING);
+                break;
+
+            case PlayerComponent.STATE_HITTING:
+
+                body.setGravityScale(0f);
+                body.setLinearVelocity(0, 0);
+
+                state.set(PlayerComponent.STATE_STILL);
+                break;
         }
     }
 

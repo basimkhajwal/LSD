@@ -99,11 +99,13 @@ public class GameWorld implements Disposable{
     }
 
     public void aimPlayer(int x, int y) {
-        if (stateMapper.get(player).get() == PlayerComponent.STATE_STILL) {
+        StateComponent state = stateMapper.get(player);
+
+        if (state.get() == PlayerComponent.STATE_STILL || state.get() == PlayerComponent.STATE_AIMING) {
             Vector2 worldPos = new Vector2(x, y);
             viewport.unproject(worldPos);
 
-            stateMapper.get(player).set(PlayerComponent.STATE_AIMING);
+            state.set(PlayerComponent.STATE_AIMING);
             playerMapper.get(player).aimPosition = worldPos;
         }
     }
