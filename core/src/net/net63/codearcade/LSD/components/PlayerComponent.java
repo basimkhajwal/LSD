@@ -12,6 +12,7 @@ public class PlayerComponent extends Component{
     public static final int STATE_AIMING    = 1;
     public static final int STATE_FIRING    = 2;
     public static final int STATE_JUMPING   = 3;
+    public static final int STATE_HITTING   = 4;
 
     public Vector2 aimPosition;
     public Vector2 launchImpulse;
