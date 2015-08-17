@@ -8,12 +8,10 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Disposable;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
-import net.net63.codearcade.LSD.components.BodyComponent;
 import net.net63.codearcade.LSD.components.PlayerComponent;
 import net.net63.codearcade.LSD.components.StateComponent;
 import net.net63.codearcade.LSD.listeners.BodyRemovalListener;
@@ -31,11 +29,8 @@ public class GameWorld implements Disposable{
     private OrthographicCamera gameCamera;
     private Viewport viewport;
 
-    private Vector2 aimPosition;
-
     private Entity player;
 
-    private ComponentMapper<BodyComponent> bodyMapper;
     private ComponentMapper<PlayerComponent> playerMapper;
     private ComponentMapper<StateComponent> stateMapper;
 
@@ -47,7 +42,6 @@ public class GameWorld implements Disposable{
         viewport = new FitViewport(Constants.WORLD_WIDTH, Constants.WORLD_HEIGHT, gameCamera);
         viewport.apply();
 
-        bodyMapper = ComponentMapper.getFor(BodyComponent.class);
         playerMapper = ComponentMapper.getFor(PlayerComponent.class);
         stateMapper = ComponentMapper.getFor(StateComponent.class);
 
@@ -57,8 +51,6 @@ public class GameWorld implements Disposable{
     public void setup() {
         addSystems();
         addListeners();
-
-        aimPosition = new Vector2();
 
         WorldBuilder.setup(engine, world);
         WorldBuilder.createWorld();
@@ -107,16 +99,19 @@ public class GameWorld implements Disposable{
     }
 
     public void aimPlayer(int x, int y) {
-        Vector3 worldPos = new Vector3(x, y, 0);
-        viewport.unproject(worldPos);
-        aimPosition.set(worldPos.x, worldPos.y);
+        if (stateMapper.get(player).get() == PlayerComponent.STATE_STILL) {
+            Vector2 worldPos = new Vector2(x, y);
+            viewport.unproject(worldPos);
 
-        stateMapper.get(player).set(PlayerComponent.STATE_AIMING);
-        playerMapper.get(player).aimPosition = aimPosition;
+            stateMapper.get(player).set(PlayerComponent.STATE_AIMING);
+            playerMapper.get(player).aimPosition = worldPos;
+        }
     }
 
     public void launchPlayer() {
-        stateMapper.get(player).set(PlayerComponent.STATE_FIRING);
+        if (stateMapper.get(player).get() == PlayerComponent.STATE_AIMING) {
+            stateMapper.get(player).set(PlayerComponent.STATE_FIRING);
+        }
     }
 
     private void addSystems() {
