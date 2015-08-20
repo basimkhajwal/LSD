@@ -3,10 +3,7 @@ package net.net63.codearcade.LSD.world;
 import com.badlogic.ashley.core.Component;
 import com.badlogic.ashley.core.Engine;
 import com.badlogic.ashley.core.Entity;
-import com.badlogic.gdx.physics.box2d.BodyDef;
-import com.badlogic.gdx.physics.box2d.FixtureDef;
-import com.badlogic.gdx.physics.box2d.PolygonShape;
-import com.badlogic.gdx.physics.box2d.World;
+import com.badlogic.gdx.physics.box2d.*;
 import net.net63.codearcade.LSD.components.*;
 import net.net63.codearcade.LSD.utils.Constants;
 
@@ -64,8 +61,9 @@ public class WorldBuilder {
 
         FixtureDef fixtureDef = new FixtureDef();
         fixtureDef.restitution = 0.0f;
-        fixtureDef.shape = new PolygonShape();
-        ((PolygonShape) fixtureDef.shape).setAsBox(Constants.PLAYER_WIDTH / 2, Constants.PLAYER_HEIGHT / 2);
+        fixtureDef.shape = new CircleShape();
+        fixtureDef.shape.setRadius(Constants.PLAYER_WIDTH / 2.0f);
+        //((PolygonShape) fixtureDef.shape).setAsBox(Constants.PLAYER_WIDTH / 2, Constants.PLAYER_HEIGHT / 2);
 
         bodyComponent.body = world.createBody(bodyDef);
         bodyComponent.body.createFixture(fixtureDef);

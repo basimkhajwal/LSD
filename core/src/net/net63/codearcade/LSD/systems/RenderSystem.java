@@ -10,7 +10,6 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
-import com.badlogic.gdx.physics.box2d.Shape;
 import com.badlogic.gdx.utils.Disposable;
 import net.net63.codearcade.LSD.components.BodyComponent;
 import net.net63.codearcade.LSD.components.RenderComponent;
@@ -58,16 +57,35 @@ public class RenderSystem extends IteratingSystem implements Disposable {
         Body body = bodyMapper.get(entity).body;
         Fixture fixture = body.getFixtureList().first();
 
-        if (fixture != null && fixture.getType() == Shape.Type.Polygon ) {
-            PolygonShape shape = (PolygonShape) fixture.getShape();
+        if (fixture != null) {
+            boolean rendering  = true;
 
-            shape.getVertex(0, tmp);
-            shape.getVertex(2, tmp2);
+            switch (fixture.getType()) {
 
-            tmp2.sub(tmp);
-            tmp.add(body.getPosition());
+                case Polygon:
+                    PolygonShape polygon = (PolygonShape) fixture.getShape();
 
-            batch.draw(renderMapper.get(entity).texture, tmp.x, tmp.y, tmp2.x, tmp2.y);
+                    polygon.getVertex(0, tmp);
+                    polygon.getVertex(2, tmp2);
+
+                    tmp2.sub(tmp);
+                    tmp.add(body.getPosition());
+
+                    break;
+
+                case Circle:
+                    float radius = fixture.getShape().getRadius();
+
+                    tmp.set(body.getPosition()).sub(radius, radius);
+                    tmp2.set(body.getPosition()).add(radius, radius);
+
+                    break;
+
+                default:
+                    rendering = false;
+            }
+
+            if (rendering) batch.draw(renderMapper.get(entity).texture, tmp.x, tmp.y, tmp2.x, tmp2.y);
         }
     }
 
