@@ -1,6 +1,7 @@
 package net.net63.codearcade.LSD.systems;
 
 import com.badlogic.ashley.core.ComponentMapper;
+import com.badlogic.ashley.core.Engine;
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.Family;
 import com.badlogic.ashley.systems.IteratingSystem;
@@ -19,7 +20,6 @@ public class DebugRenderSystem extends IteratingSystem implements Disposable{
     private OrthographicCamera camera;
     private ComponentMapper<WorldComponent> worldMapper;
 
-    @SuppressWarnings("unchecked")
 	public DebugRenderSystem(OrthographicCamera camera) {
         super(Family.all(WorldComponent.class).get(), Constants.SYSTEM_PRIORITIES.DEBUG_RENDER);
 
@@ -30,12 +30,13 @@ public class DebugRenderSystem extends IteratingSystem implements Disposable{
     }
 
     @Override
+    public void addedToEngine(Engine engine) { super.addedToEngine(engine); }
+
+    @Override
     protected void processEntity(Entity entity, float deltaTime) {
         debugRenderer.render(worldMapper.get(entity).world, camera.combined);
     }
 
     @Override
-    public void dispose() {
-        debugRenderer.dispose();
-    }
+    public void dispose() { debugRenderer.dispose(); }
 }
