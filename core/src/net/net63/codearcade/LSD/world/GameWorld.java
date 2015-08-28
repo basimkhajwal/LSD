@@ -51,7 +51,6 @@ public class GameWorld implements Disposable{
         stateMapper = ComponentMapper.getFor(StateComponent.class);
 
         rayHandler = new RayHandler(world);
-        //rayHandler.useCustomViewport(0, 0, 100, viewport.getScreenHeight());
         new PointLight(rayHandler, 1000, Color.CYAN, 100, 5.0f, 5.0f);
 
         setup();
@@ -74,6 +73,7 @@ public class GameWorld implements Disposable{
     public void resize(int w, int h) {
         viewport.update(w, h, true);
         rayHandler.setCombinedMatrix(gameCamera.combined);
+        rayHandler.useCustomViewport(viewport.getScreenX(), viewport.getScreenY(), viewport.getScreenWidth(), viewport.getScreenHeight());
     }
 
     public void update(float delta) {
