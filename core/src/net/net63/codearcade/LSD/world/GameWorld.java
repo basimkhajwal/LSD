@@ -1,14 +1,11 @@
 package net.net63.codearcade.LSD.world;
 
-import box2dLight.PointLight;
-import box2dLight.RayHandler;
 import com.badlogic.ashley.core.ComponentMapper;
 import com.badlogic.ashley.core.Engine;
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.EntitySystem;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
@@ -37,8 +34,6 @@ public class GameWorld implements Disposable{
     private ComponentMapper<PlayerComponent> playerMapper;
     private ComponentMapper<StateComponent> stateMapper;
 
-    private RayHandler rayHandler;
-
     public GameWorld () {
         engine = new Engine();
         world = new World(Constants.WORLD_GRAVITY, true);
@@ -49,9 +44,6 @@ public class GameWorld implements Disposable{
 
         playerMapper = ComponentMapper.getFor(PlayerComponent.class);
         stateMapper = ComponentMapper.getFor(StateComponent.class);
-
-        rayHandler = new RayHandler(world);
-        new PointLight(rayHandler, 1000, Color.CYAN, 100, 5.0f, 5.0f);
 
         setup();
     }
@@ -72,8 +64,6 @@ public class GameWorld implements Disposable{
 
     public void resize(int w, int h) {
         viewport.update(w, h, true);
-        rayHandler.setCombinedMatrix(gameCamera.combined);
-        rayHandler.useCustomViewport(viewport.getScreenX(), viewport.getScreenY(), viewport.getScreenWidth(), viewport.getScreenHeight());
     }
 
     public void update(float delta) {
@@ -108,8 +98,6 @@ public class GameWorld implements Disposable{
         viewport.apply();
 
         engine.update(delta);
-
-        rayHandler.updateAndRender();
     }
 
     public void aimPlayer(int x, int y) {
