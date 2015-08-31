@@ -52,6 +52,7 @@ public class WorldBuilder {
 
         PlayerComponent playerComponent = new PlayerComponent();
         StateComponent stateComponent = new StateComponent();
+        AnimationComponent animationComponent = new AnimationComponent();
         BodyComponent bodyComponent = new BodyComponent();
 
         BodyDef bodyDef = new BodyDef();
@@ -63,12 +64,11 @@ public class WorldBuilder {
         fixtureDef.restitution = 0.0f;
         fixtureDef.shape = new CircleShape();
         fixtureDef.shape.setRadius(Constants.PLAYER_WIDTH / 2.0f);
-        //((PolygonShape) fixtureDef.shape).setAsBox(Constants.PLAYER_WIDTH / 2, Constants.PLAYER_HEIGHT / 2);
 
         bodyComponent.body = world.createBody(bodyDef);
         bodyComponent.body.createFixture(fixtureDef);
 
-        return createEntityFrom(playerComponent, bodyComponent, stateComponent);
+        return createEntityFrom(playerComponent, bodyComponent, stateComponent, animationComponent);
     }
 
     private static Entity createEntityFrom(Component... components) {
