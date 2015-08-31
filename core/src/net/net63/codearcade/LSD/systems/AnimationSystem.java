@@ -1,5 +1,6 @@
 package net.net63.codearcade.LSD.systems;
 
+import com.badlogic.ashley.core.ComponentMapper;
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.Family;
 import com.badlogic.ashley.systems.IteratingSystem;
@@ -13,8 +14,16 @@ import net.net63.codearcade.LSD.utils.Constants;
  */
 public class AnimationSystem extends IteratingSystem {
 
+    private ComponentMapper<AnimationComponent> animMapper;
+    private ComponentMapper<RenderComponent> renderMapper;
+    private ComponentMapper<StateComponent> stateMapper;
+
     public AnimationSystem() {
         super(Family.all(AnimationComponent.class, RenderComponent.class, StateComponent.class).get(), Constants.SYSTEM_PRIORITIES.ANIMATION);
+
+        animMapper = ComponentMapper.getFor(AnimationComponent.class);
+        renderMapper = ComponentMapper.getFor(RenderComponent.class);
+        stateMapper = ComponentMapper.getFor(StateComponent.class);
     }
 
 
