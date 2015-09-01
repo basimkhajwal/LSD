@@ -120,13 +120,12 @@ public class GameWorld implements Disposable{
 
     private void addSystems() {
         engine.addSystem(new WorldSystem());
-        engine.addSystem(new CollisionSystem());
         engine.addSystem(new PlayerSystem());
         engine.addSystem(new RenderSystem(gameCamera));
         engine.addSystem(new DebugRenderSystem(gameCamera));
         engine.addSystem(new EffectRenderSystem(gameCamera));
 
-        world.setContactListener(engine.getSystem(CollisionSystem.class));
+        world.setContactListener(engine.getSystem(PlayerSystem.class));
     }
 
     private void addListeners() {

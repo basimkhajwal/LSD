@@ -6,7 +6,7 @@ import com.badlogic.ashley.core.Family;
 import com.badlogic.ashley.systems.IteratingSystem;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.Body;
+import com.badlogic.gdx.physics.box2d.*;
 import net.net63.codearcade.LSD.components.BodyComponent;
 import net.net63.codearcade.LSD.components.PlayerComponent;
 import net.net63.codearcade.LSD.components.StateComponent;
@@ -15,7 +15,7 @@ import net.net63.codearcade.LSD.utils.Constants;
 /**
  * Created by Basim on 10/08/15.
  */
-public class PlayerSystem extends IteratingSystem{
+public class PlayerSystem extends IteratingSystem implements ContactListener {
 
     private ComponentMapper<BodyComponent> bodyMapper;
     private ComponentMapper<StateComponent> stateMapper;
@@ -129,5 +129,30 @@ public class PlayerSystem extends IteratingSystem{
                 break;
         }
     }
+
+    /* ---------- BOX 2D Contact Stuff */
+
+    @Override
+    public void beginContact(Contact contact) {
+        Body a = contact.getFixtureA().getBody();
+        Body b = contact.getFixtureB().getBody();
+
+        Body playerBody = null;
+
+        if (playerMapper.has((Entity) a.getUserData())) playerBody = a;
+        if (playerMapper.has((Entity) b.getUserData())) playerBody = b;
+
+        if (playerBody != null) {
+            StateComponent state = stateMapper.get((Entity) playerBody.getUserData());
+            if (state.get() == PlayerComponent.STATE_JUMPING) state.set(PlayerComponent.STATE_HITTING);
+        }
+    }
+
+    @Override
+    public void endContact(Contact contact) { }
+    @Override
+    public void preSolve(Contact contact, Manifold oldManifold) { }
+    @Override
+    public void postSolve(Contact contact, ContactImpulse impulse) { }
 
 }
