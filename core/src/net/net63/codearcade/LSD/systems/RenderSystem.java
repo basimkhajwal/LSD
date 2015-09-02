@@ -55,6 +55,7 @@ public class RenderSystem extends IteratingSystem implements Disposable {
     @Override
     public void processEntity(Entity entity, float deltaTime) {
         Body body = bodyMapper.get(entity).body;
+        RenderComponent renderComponent = renderMapper.get(entity);
         Fixture fixture = body.getFixtureList().first();
 
         if (fixture != null) {
@@ -85,7 +86,27 @@ public class RenderSystem extends IteratingSystem implements Disposable {
                     rendering = false;
             }
 
-            if (rendering) batch.draw(renderMapper.get(entity).texture, tmp.x, tmp.y, tmp2.x, tmp2.y);
+            if (rendering) {
+                if (renderComponent.tileToSize) {
+                    float tileWidth = renderComponent.texture.getRegionWidth() * Constants.PIXEL_TO_METRE;
+                    float tileHeight = renderComponent.texture.getRegionHeight() * Constants.PIXEL_TO_METRE;
+
+                    int tilesAcross = (int) Math.ceil(tmp2.x / tileWidth);
+                    int tilesUp = (int) Math.ceil(tmp2.y / tileHeight);
+
+                    for (int row = 0; row < tilesUp; row++) {
+                        for (int col = 0; col < tilesAcross; col++) {
+                            batch.draw(renderComponent.texture,
+                                    tmp.x + col * tileWidth,
+                                    tmp.y + row * tileHeight,
+                                    tileWidth, tileHeight);
+                        }
+                    }
+
+                } else {
+                    batch.draw(renderComponent.texture, tmp.x, tmp.y, tmp2.x, tmp2.y);
+                }
+            }
         }
     }
 
