@@ -3,8 +3,10 @@ package net.net63.codearcade.LSD.world;
 import com.badlogic.ashley.core.Component;
 import com.badlogic.ashley.core.Engine;
 import com.badlogic.ashley.core.Entity;
+import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.physics.box2d.*;
 import net.net63.codearcade.LSD.components.*;
+import net.net63.codearcade.LSD.utils.Assets;
 import net.net63.codearcade.LSD.utils.Constants;
 
 /**
@@ -66,8 +68,20 @@ public class WorldBuilder {
         fixtureDef.shape = new CircleShape();
         fixtureDef.shape.setRadius(Constants.PLAYER_WIDTH / 2.0f);
 
+        Animation still = Assets.getAnimation(Assets.Animations.PLAYER_STILL);
+        Animation jumping = Assets.getAnimation(Assets.Animations.PLAYER_JUMPING);
 
+        still.setPlayMode(Animation.PlayMode.LOOP);
+        jumping.setPlayMode(Animation.PlayMode.LOOP);
 
+        still.setFrameDuration(0.1f);
+        jumping.setFrameDuration(0.1f);
+
+        animationComponent.animations.put(PlayerComponent.STATE_STILL, still);
+        animationComponent.animations.put(PlayerComponent.STATE_AIMING, still);
+        animationComponent.animations.put(PlayerComponent.STATE_FIRING, still);
+        animationComponent.animations.put(PlayerComponent.STATE_HITTING, still);
+        animationComponent.animations.put(PlayerComponent.STATE_JUMPING, jumping);
 
         stateComponent.set(PlayerComponent.STATE_STILL);
         renderComponent.texture = animationComponent.animations.get(stateComponent.get()).getKeyFrame(0);
