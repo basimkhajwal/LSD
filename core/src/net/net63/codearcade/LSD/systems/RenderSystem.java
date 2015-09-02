@@ -74,10 +74,12 @@ public class RenderSystem extends IteratingSystem implements Disposable {
                     break;
 
                 case Circle:
+                    System.out.println("CIRCLE RENDER");
+
                     float radius = fixture.getShape().getRadius();
 
                     tmp.set(body.getPosition()).sub(radius, radius);
-                    tmp2.set(body.getPosition()).add(radius, radius);
+                    tmp2.set(radius * 2, radius * 2);
 
                     break;
 
