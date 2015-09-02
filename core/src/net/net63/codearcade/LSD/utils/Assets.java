@@ -17,8 +17,9 @@ public class Assets {
 	
 	public static class Images {
 		public static final String BACKGROUND = "images/bg.jpg";
+        public static final String SENSOR_TILE = "images/quad_grey.png";
 	}
-    private static final String[] _Images = { Images.BACKGROUND };
+    private static final String[] _Images = { Images.BACKGROUND, Images.SENSOR_TILE };
 	
 	public static class Fonts {
 		public static final String DEFAULT = "fonts/DisplayOTF";
