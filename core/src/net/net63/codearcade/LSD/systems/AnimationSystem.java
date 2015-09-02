@@ -4,6 +4,7 @@ import com.badlogic.ashley.core.ComponentMapper;
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.Family;
 import com.badlogic.ashley.systems.IteratingSystem;
+import com.badlogic.gdx.graphics.g2d.Animation;
 import net.net63.codearcade.LSD.components.AnimationComponent;
 import net.net63.codearcade.LSD.components.RenderComponent;
 import net.net63.codearcade.LSD.components.StateComponent;
@@ -29,7 +30,12 @@ public class AnimationSystem extends IteratingSystem {
 
     @Override
     public void processEntity(Entity entity, float deltaTime) {
+        StateComponent state = stateMapper.get(entity);
 
+        Animation currentAnimation = animMapper.get(entity).animations.get(state.get());
+        renderMapper.get(entity).texture = currentAnimation.getKeyFrame(state.time);
+
+        state.time += deltaTime;
     }
 
 }
