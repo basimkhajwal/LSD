@@ -3,7 +3,9 @@ package net.net63.codearcade.LSD.world;
 import com.badlogic.ashley.core.Component;
 import com.badlogic.ashley.core.Engine;
 import com.badlogic.ashley.core.Entity;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.physics.box2d.*;
 import net.net63.codearcade.LSD.components.*;
 import net.net63.codearcade.LSD.utils.Assets;
@@ -32,6 +34,7 @@ public class WorldBuilder {
     public static Entity createSensor(float x, float y, float width, float height) {
 
         SensorComponent sensorComponent = new SensorComponent();
+        RenderComponent renderComponent = new RenderComponent();
         BodyComponent bodyComponent = new BodyComponent();
 
         BodyDef bodyDef = new BodyDef();
@@ -47,7 +50,10 @@ public class WorldBuilder {
         bodyComponent.body = world.createBody(bodyDef);
         bodyComponent.body.createFixture(fixtureDef);
 
-        return createEntityFrom(sensorComponent, bodyComponent);
+        renderComponent.texture = new TextureRegion(Assets.getAsset(Assets.Images.SENSOR_TILE, Texture.class));
+        renderComponent.tileToSize = true;
+
+        return createEntityFrom(sensorComponent, bodyComponent, renderComponent);
     }
 
     public static Entity createPlayer() {
