@@ -1,11 +1,11 @@
 package net.net63.codearcade.LSD.utils;
 
-import java.awt.*;
-import java.lang.reflect.Field;
-
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.utils.ArrayMap;
 
 /**
  * Class to load and handle all the assets 
@@ -32,7 +32,16 @@ public class Assets {
         public static final int HUNDRED = 100;
     }
     private static final int[] _FontSizes = { FontSizes.TEN, FontSizes.TWENTY, FontSizes.FIFTY, FontSizes.HUNDRED };
-	
+
+    public static class Animations {
+
+        public static final String PLAYER_STILL = "images/ball_anim.png";
+        public static final String PLAYER_JUMPING = "images/ball_anim_jump.png";
+
+    }
+    public static final ArrayMap<String, Animation> animationList = new ArrayMap<String, Animation>();
+    private static final String[] _Animations = { Animations.PLAYER_STILL, Animations.PLAYER_JUMPING };
+
 	private static AssetManager assetManager = new AssetManager();
 	
 	//Private constructor to prevent instantiation
@@ -43,17 +52,24 @@ public class Assets {
 	 */
 	public static void loadAll() {
 		
-		for (String image: _Images) {
-			assetManager.load(image, Texture.class);
-		}
-		
+		for (String image: _Images) assetManager.load(image, Texture.class);
+        for (String animation: _Animations) assetManager.load(animation, Texture.class);
+
 		for (String font: _Fonts) {
             for (int size: _FontSizes) {
                 assetManager.load(font + size + ".fnt", BitmapFont.class);
             }
 		}
-		
+
 		assetManager.finishLoading();
+
+        //Setup the animations
+        for (String animation: _Animations) {
+            TextureRegion texture = new TextureRegion(assetManager.get(animation, Texture.class));
+            TextureRegion[] regions = texture.split(24, 24)[0];
+
+            animationList.put(animation, new Animation(0.1f, regions));
+        }
 	}
 	
 	/**
@@ -77,7 +93,12 @@ public class Assets {
 	public static BitmapFont getFont(String fontName, int size) {
 		return assetManager.get(fontName + size + ".fnt", BitmapFont.class);
 	}
-	
+
+
+    public static Animation getAnimation(String animation) {
+        return animationList.get(animation);
+    }
+
 	/**
 	 * Dispose all the assets but the Asset Manager still remains (re-usable)
 	 */

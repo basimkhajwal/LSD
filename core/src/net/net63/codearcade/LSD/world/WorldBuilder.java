@@ -53,6 +53,7 @@ public class WorldBuilder {
         PlayerComponent playerComponent = new PlayerComponent();
         StateComponent stateComponent = new StateComponent();
         AnimationComponent animationComponent = new AnimationComponent();
+        RenderComponent renderComponent = new RenderComponent();
         BodyComponent bodyComponent = new BodyComponent();
 
         BodyDef bodyDef = new BodyDef();
@@ -65,10 +66,16 @@ public class WorldBuilder {
         fixtureDef.shape = new CircleShape();
         fixtureDef.shape.setRadius(Constants.PLAYER_WIDTH / 2.0f);
 
+
+
+
+        stateComponent.set(PlayerComponent.STATE_STILL);
+        renderComponent.texture = animationComponent.animations.get(stateComponent.get()).getKeyFrame(0);
+
         bodyComponent.body = world.createBody(bodyDef);
         bodyComponent.body.createFixture(fixtureDef);
 
-        return createEntityFrom(playerComponent, bodyComponent, stateComponent, animationComponent);
+        return createEntityFrom(playerComponent, bodyComponent, stateComponent, animationComponent, renderComponent);
     }
 
     private static Entity createEntityFrom(Component... components) {
