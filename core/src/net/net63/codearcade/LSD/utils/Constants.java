@@ -49,7 +49,9 @@ public class Constants {
 
         public static final int PLAYER = 5;
 
-        public static final int ANIMATION = 8;
+
+        public static final int ANIMATION = 7;
+        public static final int BACKGROUND_RENDER = 8;
         public static final int RENDER = 9;
         public static final int DEBUG_RENDER = 10;
         public static final int EFFECT_RENDER = 11;
