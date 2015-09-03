@@ -123,6 +123,8 @@ public class GameWorld implements Disposable{
         engine.addSystem(new PlayerSystem());
 
         engine.addSystem(new AnimationSystem());
+
+        engine.addSystem(new BackgroundRenderSystem());
         engine.addSystem(new RenderSystem(gameCamera));
         engine.addSystem(new DebugRenderSystem(gameCamera));
         engine.addSystem(new EffectRenderSystem(gameCamera));
