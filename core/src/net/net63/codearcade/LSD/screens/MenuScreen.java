@@ -1,8 +1,5 @@
 package net.net63.codearcade.LSD.screens;
 
-import net.net63.codearcade.LSD.LSD;
-import net.net63.codearcade.LSD.utils.Assets;
-
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -20,7 +17,9 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Scaling;
-import com.badlogic.gdx.utils.viewport.FitViewport;
+import com.badlogic.gdx.utils.viewport.ExtendViewport;
+import net.net63.codearcade.LSD.LSD;
+import net.net63.codearcade.LSD.utils.Assets;
 
 
 /**
@@ -48,7 +47,7 @@ public class MenuScreen extends AbstractScreen{
 		
 		changing = false;
 		
-		stage = new Stage(new FitViewport(840, 480));
+		stage = new Stage(new ExtendViewport(840, 480));
 		batch = new SpriteBatch();
 		camera = new OrthographicCamera();
 		
@@ -106,8 +105,7 @@ public class MenuScreen extends AbstractScreen{
 	@Override
 	public void render(float delta) {
 		super.render(delta);
-		
-		Gdx.gl.glViewport(0, 0, (int)camera.viewportWidth, (int)camera.viewportHeight);
+        
 		batch.setProjectionMatrix(camera.combined);
 		batch.begin();
 		backgroundImage.draw((Batch) batch, 1.0f);
