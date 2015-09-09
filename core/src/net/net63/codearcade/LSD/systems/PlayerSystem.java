@@ -1,6 +1,7 @@
 package net.net63.codearcade.LSD.systems;
 
 import com.badlogic.ashley.core.ComponentMapper;
+import com.badlogic.ashley.core.Engine;
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.Family;
 import com.badlogic.ashley.systems.IteratingSystem;
@@ -9,8 +10,11 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import net.net63.codearcade.LSD.components.BodyComponent;
 import net.net63.codearcade.LSD.components.PlayerComponent;
+import net.net63.codearcade.LSD.components.SensorComponent;
 import net.net63.codearcade.LSD.components.StateComponent;
 import net.net63.codearcade.LSD.utils.Constants;
+
+import java.util.ArrayList;
 
 /**
  * Created by Basim on 10/08/15.
@@ -19,14 +23,28 @@ public class PlayerSystem extends IteratingSystem implements ContactListener {
 
     private ComponentMapper<BodyComponent> bodyMapper;
     private ComponentMapper<StateComponent> stateMapper;
+    private ComponentMapper<SensorComponent> sensorMapper;
     private ComponentMapper<PlayerComponent> playerMapper;
+
+    private ArrayList<Entity> removing;
+    private Engine engine;
 
     public PlayerSystem () {
         super(Family.all(PlayerComponent.class).get(), Constants.SYSTEM_PRIORITIES.PLAYER);
 
+        removing = new ArrayList<Entity>();
+
         bodyMapper = ComponentMapper.getFor(BodyComponent.class);
         stateMapper = ComponentMapper.getFor(StateComponent.class);
         playerMapper = ComponentMapper.getFor(PlayerComponent.class);
+        sensorMapper = ComponentMapper.getFor(SensorComponent.class);
+    }
+
+    @Override
+    public void addedToEngine(Engine engine) {
+        super.addedToEngine(engine);
+
+        this.engine = engine;
     }
 
     private void log(String message) {
@@ -98,11 +116,18 @@ public class PlayerSystem extends IteratingSystem implements ContactListener {
     }
 
     @Override
+    public void update(float deltaTime) {
+        super.update(deltaTime);
+
+        for (Entity entity : removing) engine.removeEntity(entity);
+        removing.clear();
+    }
+
+    @Override
     public void processEntity(Entity entity, float deltaTime) {
         Body body = bodyMapper.get(entity).body;
         StateComponent state = stateMapper.get(entity);
         PlayerComponent playerComponent = playerMapper.get(entity);
-
 
         switch (state.get()) {
 
@@ -149,7 +174,28 @@ public class PlayerSystem extends IteratingSystem implements ContactListener {
     }
 
     @Override
-    public void endContact(Contact contact) { }
+    public void endContact(Contact contact) {
+        Body a = contact.getFixtureA().getBody();
+        Body b = contact.getFixtureB().getBody();
+
+        Body playerBody = null;
+        Body sensorBody = null;
+
+        if (playerMapper.has((Entity) a.getUserData()) && sensorMapper.has((Entity) b.getUserData())) {
+            playerBody = a;
+            sensorBody = b;
+        }
+
+        if (playerMapper.has((Entity) b.getUserData()) && sensorMapper.has((Entity) a.getUserData())) {
+            playerBody = b;
+            sensorBody = a;
+        }
+
+        if (playerBody != null && sensorBody != null ) {
+            removing.add((Entity) sensorBody.getUserData());
+        }
+    }
+
     @Override
     public void preSolve(Contact contact, Manifold oldManifold) { }
     @Override
