@@ -1,11 +1,14 @@
 package net.net63.codearcade.LSD.screens;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.Event;
 import com.badlogic.gdx.scenes.scene2d.EventListener;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import net.net63.codearcade.LSD.LSD;
+import net.net63.codearcade.LSD.utils.Assets;
 import net.net63.codearcade.LSD.world.GameWorld;
 
 /**
@@ -18,17 +21,25 @@ public class GameScreen extends AbstractScreen implements EventListener {
 
 	private Stage stage;
     private GameWorld gameWorld;
-	
+
+    private Label scoreLabel;
+
 	public GameScreen(LSD game) {
 		super(game);
 
 		stage = new Stage();
         gameWorld = new GameWorld();
 
-        stage.addListener(this);
+        setupUI();
 
+        stage.addListener(this);
         Gdx.input.setInputProcessor(stage);
 	}
+
+    private void setupUI() {
+        scoreLabel = new Label("Test", new Label.LabelStyle(Assets.getFont(Assets.Fonts.DEFAULT, Assets.FontSizes.FIFTY), Color.YELLOW));
+        stage.addActor(scoreLabel);
+    }
 
 	@Override
 	public void resize(int width, int height) {
@@ -43,6 +54,10 @@ public class GameScreen extends AbstractScreen implements EventListener {
 		super.render(delta);
 
 		gameWorld.update(delta);
+
+        stage.getViewport().apply();
+        stage.act(delta);
+        stage.draw();
 	}
 
     @Override

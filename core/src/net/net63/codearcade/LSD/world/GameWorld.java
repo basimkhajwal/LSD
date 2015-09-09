@@ -100,7 +100,6 @@ public class GameWorld implements Disposable, EntityListener {
             gameCamera.zoom -= 0.02f;
         }
 
-
         gameCamera.update();
         viewport.apply();
         engine.update(delta);
