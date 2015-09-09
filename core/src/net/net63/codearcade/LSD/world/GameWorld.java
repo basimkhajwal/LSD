@@ -1,9 +1,6 @@
 package net.net63.codearcade.LSD.world;
 
-import com.badlogic.ashley.core.ComponentMapper;
-import com.badlogic.ashley.core.Engine;
-import com.badlogic.ashley.core.Entity;
-import com.badlogic.ashley.core.EntitySystem;
+import com.badlogic.ashley.core.*;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -13,6 +10,7 @@ import com.badlogic.gdx.utils.Disposable;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import net.net63.codearcade.LSD.components.PlayerComponent;
+import net.net63.codearcade.LSD.components.SensorComponent;
 import net.net63.codearcade.LSD.components.StateComponent;
 import net.net63.codearcade.LSD.listeners.BodyRemovalListener;
 import net.net63.codearcade.LSD.systems.*;
@@ -21,7 +19,7 @@ import net.net63.codearcade.LSD.utils.Constants;
 /**
  * Created by Basim on 23/06/15.
  */
-public class GameWorld implements Disposable{
+public class GameWorld implements Disposable, EntityListener {
 
     private Engine engine;
     private World world;
@@ -31,8 +29,12 @@ public class GameWorld implements Disposable{
 
     private Entity player;
 
+    private int sensorCount;
+    private int sensorsDestroyed;
+
     private ComponentMapper<PlayerComponent> playerMapper;
     private ComponentMapper<StateComponent> stateMapper;
+    private ComponentMapper<SensorComponent> sensorMapper;
 
     public GameWorld () {
         engine = new Engine();
@@ -44,6 +46,7 @@ public class GameWorld implements Disposable{
 
         playerMapper = ComponentMapper.getFor(PlayerComponent.class);
         stateMapper = ComponentMapper.getFor(StateComponent.class);
+        sensorMapper = ComponentMapper.getFor(SensorComponent.class);
 
         setup();
     }
@@ -60,6 +63,9 @@ public class GameWorld implements Disposable{
         WorldBuilder.createSensor(7, 1, 2.5f, 0.5f);
         WorldBuilder.createSensor(5, 1, 2.5f, 0.5f);
         WorldBuilder.createSensor(1, 1, 2.5f, 0.5f);
+
+        sensorCount = 4;
+        sensorsDestroyed = 0;
     }
 
     public void resize(int w, int h) {
@@ -136,9 +142,20 @@ public class GameWorld implements Disposable{
         engine.addEntityListener(new BodyRemovalListener(world));
     }
 
+
+    @Override
+    public void entityAdded(Entity entity) { }
+
+    @Override
+    public void entityRemoved(Entity entity) {
+        if (sensorMapper.has(entity)) {
+            sensorsDestroyed += 1;
+        }
+    }
+
     @Override
     public void dispose() {
-        for (EntitySystem entitySystem: engine.getSystems()) {
+        for (EntitySystem entitySystem : engine.getSystems()) {
             engine.removeSystem(entitySystem);
 
             if (entitySystem instanceof Disposable) {

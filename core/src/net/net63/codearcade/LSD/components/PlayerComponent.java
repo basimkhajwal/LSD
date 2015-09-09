@@ -18,4 +18,5 @@ public class PlayerComponent extends Component{
     public Vector2 launchImpulse;
     public Vector2[] trajectoryPoints;
 
+    public boolean isDead;
 }

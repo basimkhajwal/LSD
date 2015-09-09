@@ -5,7 +5,6 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.Texture.TextureFilter;
-import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -108,7 +107,7 @@ public class MenuScreen extends AbstractScreen{
         
 		batch.setProjectionMatrix(camera.combined);
 		batch.begin();
-		backgroundImage.draw((Batch) batch, 1.0f);
+		backgroundImage.draw(batch, 1.0f);
 		batch.end();
 		
 		stage.getViewport().apply();
