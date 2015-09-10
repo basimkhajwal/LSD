@@ -152,6 +152,10 @@ public class PlayerSystem extends IteratingSystem implements ContactListener {
 
                 state.set(PlayerComponent.STATE_STILL);
                 break;
+
+            case PlayerComponent.STATE_JUMPING:
+                
+                break;
         }
     }
 
