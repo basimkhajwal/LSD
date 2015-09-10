@@ -139,8 +139,8 @@ public class GameWorld implements Disposable, EntityListener {
 
     private void addListeners() {
         engine.addEntityListener(new BodyRemovalListener(world));
+        engine.addEntityListener(this);
     }
-
 
     @Override
     public void entityAdded(Entity entity) { }
@@ -150,6 +150,10 @@ public class GameWorld implements Disposable, EntityListener {
         if (sensorMapper.has(entity)) {
             sensorsDestroyed += 1;
         }
+    }
+
+    public String getScore() {
+        return sensorsDestroyed + "/" + sensorCount;
     }
 
     @Override

@@ -7,6 +7,7 @@ import com.badlogic.gdx.scenes.scene2d.EventListener;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.utils.viewport.StretchViewport;
 import net.net63.codearcade.LSD.LSD;
 import net.net63.codearcade.LSD.utils.Assets;
 import net.net63.codearcade.LSD.world.GameWorld;
@@ -27,7 +28,7 @@ public class GameScreen extends AbstractScreen implements EventListener {
 	public GameScreen(LSD game) {
 		super(game);
 
-		stage = new Stage();
+		stage = new Stage(new StretchViewport(800, 600));
         gameWorld = new GameWorld();
 
         setupUI();
@@ -37,7 +38,9 @@ public class GameScreen extends AbstractScreen implements EventListener {
 	}
 
     private void setupUI() {
-        scoreLabel = new Label("Test", new Label.LabelStyle(Assets.getFont(Assets.Fonts.DEFAULT, Assets.FontSizes.FIFTY), Color.YELLOW));
+        scoreLabel = new Label("", new Label.LabelStyle(Assets.getFont(Assets.Fonts.DEFAULT, Assets.FontSizes.FIFTY), Color.YELLOW));
+        scoreLabel.setPosition((800 - scoreLabel.getWidth()) / 2.0f , 550 - scoreLabel.getHeight());
+
         stage.addActor(scoreLabel);
     }
 
@@ -55,10 +58,16 @@ public class GameScreen extends AbstractScreen implements EventListener {
 
 		gameWorld.update(delta);
 
+        updateScore();
+
         stage.getViewport().apply();
         stage.act(delta);
         stage.draw();
 	}
+
+    private void updateScore() {
+        scoreLabel.setText(gameWorld.getScore());
+    }
 
     @Override
     public boolean handle(Event event) {
