@@ -5,8 +5,8 @@ package net.net63.codearcade.LSD.utils;
  */
 public class LevelLoader {
 
-    public static void loadLevel(String fileName) {
-        
+    public static void loadLevel(TiledMap map) {
+
     }
 
 

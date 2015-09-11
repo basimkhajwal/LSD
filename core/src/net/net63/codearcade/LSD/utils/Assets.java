@@ -1,10 +1,13 @@
 package net.net63.codearcade.LSD.utils;
 
 import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.assets.loaders.resolvers.InternalFileHandleResolver;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.maps.tiled.TiledMap;
+import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.utils.ArrayMap;
 
 /**
@@ -35,13 +38,16 @@ public class Assets {
     private static final int[] _FontSizes = { FontSizes.TEN, FontSizes.TWENTY, FontSizes.FIFTY, FontSizes.HUNDRED };
 
     public static class Animations {
-
         public static final String PLAYER_STILL = "images/ball_anim.png";
         public static final String PLAYER_JUMPING = "images/ball_anim_jump.png";
-
     }
     public static final ArrayMap<String, Animation> animationList = new ArrayMap<String, Animation>();
     private static final String[] _Animations = { Animations.PLAYER_STILL, Animations.PLAYER_JUMPING };
+
+    public static class LevelMaps {
+        public static final String TEST = "levels/test.tmx";
+    }
+    private static final String[] _LevelMaps = { LevelMaps.TEST };
 
 	private static AssetManager assetManager = new AssetManager();
 	
@@ -52,9 +58,13 @@ public class Assets {
 	 *  Static method that loads all the assets in the asset classes
 	 */
 	public static void loadAll() {
-		
+
+        //Add loaders
+        assetManager.setLoader(TiledMap.class, new TmxMapLoader(new InternalFileHandleResolver()));
+
 		for (String image: _Images) assetManager.load(image, Texture.class);
         for (String animation: _Animations) assetManager.load(animation, Texture.class);
+        for (String levelMap: _LevelMaps) assetManager.load(levelMap, TiledMap.class);
 
 		for (String font: _Fonts) {
             for (int size: _FontSizes) {
@@ -83,7 +93,17 @@ public class Assets {
 	public static <T> T getAsset(String fileName, Class<T> type) {
 		return assetManager.get(fileName, type);
 	}
-	
+
+
+    /**
+     *
+     * Returns a loaded tiled map based on the map's filename
+     *
+     * @param fileName The tiled map file name
+     * @return The respective tiled map
+     */
+    public static TiledMap getTiledMap(String fileName) { return getAsset(fileName, TiledMap.class); }
+
 	/**
 	 * Returns a BitmapFont of the specified font and size
 	 * 
@@ -91,9 +111,7 @@ public class Assets {
 	 * @param size	The size of the font 
 	 * @return The associated BitmapFont
 	 */
-	public static BitmapFont getFont(String fontName, int size) {
-		return assetManager.get(fontName + size + ".fnt", BitmapFont.class);
-	}
+	public static BitmapFont getFont(String fontName, int size) { return getAsset(fontName + size + ".fnt", BitmapFont.class); }
 
 
     public static Animation getAnimation(String animation) {
