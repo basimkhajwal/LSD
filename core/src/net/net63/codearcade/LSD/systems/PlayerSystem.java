@@ -154,7 +154,7 @@ public class PlayerSystem extends IteratingSystem implements ContactListener {
                 break;
 
             case PlayerComponent.STATE_JUMPING:
-                
+
                 break;
         }
     }
