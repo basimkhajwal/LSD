@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" renderorder="right-up" width="80" height="60" tilewidth="10" tileheight="10" nextobjectid="9">
+ <objectgroup name="sensors">
+  <object id="1" x="40" y="570" width="70" height="10"/>
+  <object id="3" x="120" y="520" width="20" height="50"/>
+  <object id="4" x="50" y="420" width="60" height="10"/>
+  <object id="5" x="190" y="450" width="80" height="10"/>
+  <object id="6" x="160" y="340" width="10" height="60"/>
+  <object id="7" x="320" y="390" width="10" height="70"/>
+  <object id="8" x="240" y="540" width="70" height="10"/>
+ </objectgroup>
+</map>
