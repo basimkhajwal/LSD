@@ -45,7 +45,7 @@ public class Assets {
     private static final String[] _Animations = { Animations.PLAYER_STILL, Animations.PLAYER_JUMPING };
 
     public static class LevelMaps {
-        public static final String TEST = "levels/test.tmx";
+        public static final String TEST = "maps/test.tmx";
     }
     private static final String[] _LevelMaps = { LevelMaps.TEST };
 

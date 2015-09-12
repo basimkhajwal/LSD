@@ -14,6 +14,7 @@ import net.net63.codearcade.LSD.components.SensorComponent;
 import net.net63.codearcade.LSD.components.StateComponent;
 import net.net63.codearcade.LSD.listeners.BodyRemovalListener;
 import net.net63.codearcade.LSD.systems.*;
+import net.net63.codearcade.LSD.utils.Assets;
 import net.net63.codearcade.LSD.utils.Constants;
 
 /**
@@ -54,13 +55,9 @@ public class GameWorld implements Disposable, EntityListener {
         addListeners();
 
         WorldBuilder.setup(engine, world);
-        WorldBuilder.createWorld();
         player = WorldBuilder.createPlayer();
 
-        WorldBuilder.createSensor(6, 6, 0.5f, 2.5f);
-        WorldBuilder.createSensor(7, 1, 2.5f, 0.5f);
-        WorldBuilder.createSensor(5, 1, 2.5f, 0.5f);
-        WorldBuilder.createSensor(1, 1, 2.5f, 0.5f);
+        WorldBuilder.loadFromMap(Assets.getTiledMap(Assets.LevelMaps.TEST));
     }
 
     public void resize(int w, int h) {

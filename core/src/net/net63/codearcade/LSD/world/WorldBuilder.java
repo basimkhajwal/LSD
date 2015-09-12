@@ -31,6 +31,7 @@ public class WorldBuilder {
     public static LevelDescriptor loadFromMap(TiledMap map) {
         LevelDescriptor descriptor = new LevelDescriptor();
 
+        createWorld();
         loadSensors(descriptor, map.getLayers().get("sensors"));
 
         return descriptor;
