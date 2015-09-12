@@ -27,10 +27,8 @@ public class GameWorld implements Disposable, EntityListener {
     private OrthographicCamera gameCamera;
     private Viewport viewport;
 
+    private LevelDescriptor levelDescriptor;
     private Entity player;
-
-    private int sensorCount;
-    private int sensorsDestroyed;
 
     private ComponentMapper<PlayerComponent> playerMapper;
     private ComponentMapper<StateComponent> stateMapper;
@@ -63,9 +61,6 @@ public class GameWorld implements Disposable, EntityListener {
         WorldBuilder.createSensor(7, 1, 2.5f, 0.5f);
         WorldBuilder.createSensor(5, 1, 2.5f, 0.5f);
         WorldBuilder.createSensor(1, 1, 2.5f, 0.5f);
-
-        sensorCount = 4;
-        sensorsDestroyed = 0;
     }
 
     public void resize(int w, int h) {
@@ -148,12 +143,12 @@ public class GameWorld implements Disposable, EntityListener {
     @Override
     public void entityRemoved(Entity entity) {
         if (sensorMapper.has(entity)) {
-            sensorsDestroyed += 1;
+            levelDescriptor.sensorsDestroyed += 1;
         }
     }
 
     public String getScore() {
-        return sensorsDestroyed + "/" + sensorCount;
+        return levelDescriptor.sensorsDestroyed + "/" + levelDescriptor.sensorCount;
     }
 
     @Override
