@@ -6,6 +6,7 @@ import com.badlogic.ashley.core.Entity;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.physics.box2d.*;
 import net.net63.codearcade.LSD.components.*;
 import net.net63.codearcade.LSD.utils.Assets;
@@ -22,6 +23,10 @@ public class WorldBuilder {
     public static void setup(Engine engine, World world) {
         WorldBuilder.engine = engine;
         WorldBuilder.world = world;
+    }
+
+    public static void loadFromMap(TiledMap map) {
+
     }
 
     public static Entity createWorld() {
