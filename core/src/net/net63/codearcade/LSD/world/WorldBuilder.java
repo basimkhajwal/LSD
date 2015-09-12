@@ -7,6 +7,8 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.maps.MapLayer;
+import com.badlogic.gdx.maps.MapObject;
+import com.badlogic.gdx.maps.MapProperties;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.physics.box2d.*;
 import net.net63.codearcade.LSD.components.*;
@@ -35,7 +37,28 @@ public class WorldBuilder {
     }
 
     private static void loadSensors(LevelDescriptor descriptor, MapLayer sensorLayer) {
+        for (MapObject sensor: sensorLayer.getObjects()) {
+            float[] dimensions = getDimensions(sensor);
 
+            if (dimensions != null) {
+                createSensor(dimensions[0], dimensions[1], dimensions[2], dimensions[3]);
+                descriptor.sensorCount++;
+            }
+        }
+    }
+
+    private static float[] getDimensions(MapObject mapObject) {
+        MapProperties properties = mapObject.getProperties();
+
+        String[] keys = { "x", "y", "width", "height" };
+        float[] values = new float[keys.length];
+
+        for (int i = 0; i < keys.length; i++) {
+            if (! properties.containsKey(keys[i])) return null;
+            values[i] = properties.get(keys[i], Float.class).floatValue();
+        }
+
+        return values;
     }
 
     public static Entity createWorld() {
