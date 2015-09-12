@@ -6,6 +6,7 @@ import com.badlogic.ashley.core.Entity;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.maps.MapLayer;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.physics.box2d.*;
 import net.net63.codearcade.LSD.components.*;
@@ -25,7 +26,15 @@ public class WorldBuilder {
         WorldBuilder.world = world;
     }
 
-    public static void loadFromMap(TiledMap map) {
+    public static LevelDescriptor loadFromMap(TiledMap map) {
+        LevelDescriptor descriptor = new LevelDescriptor();
+
+        loadSensors(descriptor, map.getLayers().get("sensors"));
+
+        return descriptor;
+    }
+
+    private static void loadSensors(LevelDescriptor descriptor, MapLayer sensorLayer) {
 
     }
 
