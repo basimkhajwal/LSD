@@ -56,7 +56,7 @@ public class WorldBuilder {
 
         for (int i = 0; i < keys.length; i++) {
             if (! properties.containsKey(keys[i])) return null;
-            values[i] = properties.get(keys[i], Float.class).floatValue();
+            values[i] = Constants.PIXEL_TO_METRE * properties.get(keys[i], Float.class).floatValue();
         }
 
         return values;
