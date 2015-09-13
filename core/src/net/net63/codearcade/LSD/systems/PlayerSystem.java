@@ -118,9 +118,6 @@ public class PlayerSystem extends IteratingSystem implements ContactListener {
     @Override
     public void update(float deltaTime) {
         super.update(deltaTime);
-
-        for (Entity entity : removing) engine.removeEntity(entity);
-        removing.clear();
     }
 
     @Override
@@ -141,6 +138,11 @@ public class PlayerSystem extends IteratingSystem implements ContactListener {
 
                 body.setGravityScale(1.0f);
                 body.applyLinearImpulse(playerComponent.launchImpulse, body.getWorldCenter(), true);
+
+                if (playerComponent.sensorEntity != null) {
+                    engine.removeEntity(playerComponent.sensorEntity);
+                    playerComponent.sensorEntity = null;
+                }
 
                 state.set(PlayerComponent.STATE_JUMPING);
                 break;
@@ -166,39 +168,27 @@ public class PlayerSystem extends IteratingSystem implements ContactListener {
         Body a = contact.getFixtureA().getBody();
         Body b = contact.getFixtureB().getBody();
 
-        Body playerBody = null;
+        Entity entityA = (Entity) a.getUserData();
+        Entity entityB = (Entity) b.getUserData();
+        Entity playerEntity = null;
 
-        if (playerMapper.has((Entity) a.getUserData())) playerBody = a;
-        if (playerMapper.has((Entity) b.getUserData())) playerBody = b;
+        if (playerMapper.has(entityA)) playerEntity = entityA;
+        if (playerMapper.has(entityB)) playerEntity = entityB;
 
-        if (playerBody != null) {
-            StateComponent state = stateMapper.get((Entity) playerBody.getUserData());
+        Entity other = entityA == playerEntity ? entityA : entityB;
+
+        if (playerEntity != null) {
+            StateComponent state = stateMapper.get(playerEntity);
             if (state.get() == PlayerComponent.STATE_JUMPING) state.set(PlayerComponent.STATE_HITTING);
+
+            if (sensorMapper.has(other)) {
+                playerMapper.get(playerEntity).sensorEntity = other;
+            }
         }
     }
 
     @Override
-    public void endContact(Contact contact) {
-        Body a = contact.getFixtureA().getBody();
-        Body b = contact.getFixtureB().getBody();
-
-        Body playerBody = null;
-        Body sensorBody = null;
-
-        if (playerMapper.has((Entity) a.getUserData()) && sensorMapper.has((Entity) b.getUserData())) {
-            playerBody = a;
-            sensorBody = b;
-        }
-
-        if (playerMapper.has((Entity) b.getUserData()) && sensorMapper.has((Entity) a.getUserData())) {
-            playerBody = b;
-            sensorBody = a;
-        }
-
-        if (playerBody != null && sensorBody != null ) {
-            removing.add((Entity) sensorBody.getUserData());
-        }
-    }
+    public void endContact(Contact contact) { }
 
     @Override
     public void preSolve(Contact contact, Manifold oldManifold) { }

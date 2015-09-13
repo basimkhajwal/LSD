@@ -1,6 +1,7 @@
 package net.net63.codearcade.LSD.components;
 
 import com.badlogic.ashley.core.Component;
+import com.badlogic.ashley.core.Entity;
 import com.badlogic.gdx.math.Vector2;
 
 /**
@@ -17,6 +18,8 @@ public class PlayerComponent extends Component{
     public Vector2 aimPosition;
     public Vector2 launchImpulse;
     public Vector2[] trajectoryPoints;
+
+    public Entity sensorEntity = null;
 
     public boolean isDead = false;
 }
