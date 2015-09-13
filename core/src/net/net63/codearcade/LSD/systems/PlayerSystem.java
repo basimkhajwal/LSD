@@ -14,8 +14,6 @@ import net.net63.codearcade.LSD.components.SensorComponent;
 import net.net63.codearcade.LSD.components.StateComponent;
 import net.net63.codearcade.LSD.utils.Constants;
 
-import java.util.ArrayList;
-
 /**
  * Created by Basim on 10/08/15.
  */
@@ -26,14 +24,11 @@ public class PlayerSystem extends IteratingSystem implements ContactListener {
     private ComponentMapper<SensorComponent> sensorMapper;
     private ComponentMapper<PlayerComponent> playerMapper;
 
-    private ArrayList<Entity> removing;
     private Engine engine;
 
     public PlayerSystem () {
         super(Family.all(PlayerComponent.class).get(), Constants.SYSTEM_PRIORITIES.PLAYER);
-
-        removing = new ArrayList<Entity>();
-
+        
         bodyMapper = ComponentMapper.getFor(BodyComponent.class);
         stateMapper = ComponentMapper.getFor(StateComponent.class);
         playerMapper = ComponentMapper.getFor(PlayerComponent.class);
