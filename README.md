@@ -13,7 +13,7 @@ This is a port of the original game idea (which was written in Lua) but this one
 - [x] Platform count / destroyed
 - [x] Player moves accurately and the aim is precise enough
 
-### TODO:
+#### TODO:
 - [ ] Implement player death when reaching map boundaries
 - [ ] Create solid blocks the player has to avoid
 - [ ] Implement player death with solid blocks
