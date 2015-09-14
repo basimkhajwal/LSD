@@ -25,6 +25,7 @@ They should all work but only desktop and HTML5 builds have currenly been tested
 
 #### TODO:
 - [ ] Implement player death when reaching map boundaries
+- [ ] Add moving down jump animation
 - [ ] Create solid blocks the player has to avoid
 - [ ] Implement player death with solid blocks
 - [ ] Create camera movement to follow the player
