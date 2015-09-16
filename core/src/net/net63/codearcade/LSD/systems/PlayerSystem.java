@@ -1,9 +1,6 @@
 package net.net63.codearcade.LSD.systems;
 
-import com.badlogic.ashley.core.ComponentMapper;
-import com.badlogic.ashley.core.Engine;
-import com.badlogic.ashley.core.Entity;
-import com.badlogic.ashley.core.Family;
+import com.badlogic.ashley.core.*;
 import com.badlogic.ashley.systems.IteratingSystem;
 import com.badlogic.gdx.physics.box2d.*;
 import net.net63.codearcade.LSD.components.BodyComponent;
@@ -89,7 +86,7 @@ public class PlayerSystem extends IteratingSystem implements ContactListener {
         if (playerMapper.has(entityA)) playerEntity = entityA;
         if (playerMapper.has(entityB)) playerEntity = entityB;
 
-        Entity other = entityA == playerEntity ? entityA : entityB;
+        Entity other = (entityA == playerEntity) ? entityB : entityA;
 
         if (playerEntity != null) {
             StateComponent state = stateMapper.get(playerEntity);
