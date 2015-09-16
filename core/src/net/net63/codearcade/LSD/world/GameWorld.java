@@ -65,33 +65,18 @@ public class GameWorld implements Disposable, EntityListener {
         viewport.update(w, h, true);
     }
 
+    private void debugInput() {
+        if (Gdx.input.isKeyPressed(Input.Keys.UP)) gameCamera.translate(0, 1);
+        if (Gdx.input.isKeyPressed(Input.Keys.DOWN)) gameCamera.translate(0, -1);
+        if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) gameCamera.translate(-1, 0);
+        if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) gameCamera.translate(1, 0);
+
+        if (Gdx.input.isKeyPressed(Input.Keys.Q)) gameCamera.zoom += 0.02f;
+        if (Gdx.input.isKeyPressed(Input.Keys.W)) gameCamera.zoom -= 0.02f;
+    }
+
     public void update(float delta) {
-
-        // -- TEMP ---
-
-        if (Gdx.input.isKeyPressed(Input.Keys.UP)) {
-            gameCamera.translate(0, 1);
-        }
-
-        if (Gdx.input.isKeyPressed(Input.Keys.DOWN)) {
-            gameCamera.translate(0, -1);
-        }
-
-        if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
-            gameCamera.translate(-1, 0);
-        }
-
-        if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
-            gameCamera.translate(1, 0);
-        }
-
-        if (Gdx.input.isKeyPressed(Input.Keys.Q)) {
-            gameCamera.zoom += 0.02f;
-        }
-
-        if (Gdx.input.isKeyPressed(Input.Keys.W)) {
-            gameCamera.zoom -= 0.02f;
-        }
+        debugInput();
 
         gameCamera.update();
         viewport.apply();
