@@ -139,12 +139,12 @@ public class GameWorld implements Disposable, EntityListener {
     @Override
     public void entityRemoved(Entity entity) {
         if (sensorMapper.has(entity)) {
-            levelDescriptor.sensorsDestroyed += 1;
+            levelDescriptor.setSensorsDestroyed(levelDescriptor.getSensorsDestroyed() + 1);
         }
     }
 
     public String getScore() {
-        return levelDescriptor.sensorsDestroyed + "/" + levelDescriptor.sensorCount;
+        return levelDescriptor.getSensorsDestroyed() + "/" + levelDescriptor.getSensorCount();
     }
 
     @Override

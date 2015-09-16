@@ -5,8 +5,21 @@ package net.net63.codearcade.LSD.world;
  */
 public class LevelDescriptor {
 
-    public int sensorCount = 0;
-    public int sensorsDestroyed = 0;
-
     public LevelDescriptor () { }
+
+    private int sensorCount = 0;
+    private int sensorsDestroyed = 0;
+
+    public int getSensorsDestroyed() {
+        return sensorsDestroyed;
+    }
+
+    public void setSensorsDestroyed(int sensorsDestroyed) {
+        this.sensorsDestroyed = sensorsDestroyed;
+    }
+
+    public int getSensorCount() {
+        return sensorCount;
+    }
+
 }

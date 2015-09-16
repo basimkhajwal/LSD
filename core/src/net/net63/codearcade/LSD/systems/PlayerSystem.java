@@ -28,7 +28,7 @@ public class PlayerSystem extends IteratingSystem implements ContactListener {
 
     public PlayerSystem () {
         super(Family.all(PlayerComponent.class).get(), Constants.SYSTEM_PRIORITIES.PLAYER);
-        
+
         bodyMapper = ComponentMapper.getFor(BodyComponent.class);
         stateMapper = ComponentMapper.getFor(StateComponent.class);
         playerMapper = ComponentMapper.getFor(PlayerComponent.class);
