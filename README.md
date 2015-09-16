@@ -13,7 +13,7 @@ It can compile to the following platforms:
 
 A compiled (but not regularly updated) HTML5 version is at: [basimkhajwal.freeoda.com/games/LSD] (http://basimkhajwal.freeoda.com/games/LSD)
 
-They should all work but only desktop and HTML5 builds have currenly been tested. For the latest version, download this repository and run the gradle-based projects on your computer -- more [here](https://github.com/libgdx/libgdx/wiki/Gradle-on-the-Commandline).
+They should all work but only desktop and HTML5 builds have currently been tested. For the latest version, download this repository and run the gradle-based projects on your computer -- more [here](https://github.com/libgdx/libgdx/wiki/Gradle-on-the-Commandline).
 
 ### Development:
 
@@ -29,3 +29,4 @@ They should all work but only desktop and HTML5 builds have currenly been tested
 - [ ] Create solid blocks the player has to avoid
 - [ ] Implement player death with solid blocks
 - [ ] Create camera movement to follow the player
+- [ ] Add ability to progress from level to level
