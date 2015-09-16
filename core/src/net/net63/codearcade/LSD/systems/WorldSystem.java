@@ -16,7 +16,6 @@ public class WorldSystem extends IntervalIteratingSystem implements Disposable{
     private ComponentMapper<WorldComponent> worldMapper;
     private float step;
 
-    @SuppressWarnings("unchecked")
     public WorldSystem() {
         super(Family.all(WorldComponent.class).get(), 1.0f / Constants.BOX2D_FPS, Constants.SYSTEM_PRIORITIES.WORLD);
 
