@@ -54,8 +54,10 @@ public class GameWorld implements Disposable, EntityListener {
         addSystems();
         addListeners();
 
-        WorldBuilder.setup(engine, world);
-        levelDescriptor = WorldBuilder.loadFromMap(Assets.getTiledMap(Assets.LevelMaps.TEST));
+        levelDescriptor = new LevelDescriptor();
+
+        WorldBuilder.setup(engine, world, levelDescriptor);
+        WorldBuilder.loadFromMap(Assets.getTiledMap(Assets.LevelMaps.TEST));
         player = WorldBuilder.createPlayer();
     }
 
@@ -116,7 +118,7 @@ public class GameWorld implements Disposable, EntityListener {
 
     private void addSystems() {
         engine.addSystem(new WorldSystem());
-        engine.addSystem(new PlayerSystem());
+        engine.addSystem(new PlayerSystem(levelDescriptor));
 
         engine.addSystem(new AnimationSystem());
 
