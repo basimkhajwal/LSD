@@ -13,6 +13,7 @@ import net.net63.codearcade.LSD.components.PlayerComponent;
 import net.net63.codearcade.LSD.components.SensorComponent;
 import net.net63.codearcade.LSD.components.StateComponent;
 import net.net63.codearcade.LSD.utils.Constants;
+import net.net63.codearcade.LSD.world.LevelDescriptor;
 
 /**
  * Created by Basim on 10/08/15.
@@ -24,10 +25,13 @@ public class PlayerSystem extends IteratingSystem implements ContactListener {
     private ComponentMapper<SensorComponent> sensorMapper;
     private ComponentMapper<PlayerComponent> playerMapper;
 
+    private LevelDescriptor levelDescriptor;
     private Engine engine;
 
-    public PlayerSystem () {
+    public PlayerSystem (LevelDescriptor levelDescriptor) {
         super(Family.all(PlayerComponent.class).get(), Constants.SYSTEM_PRIORITIES.PLAYER);
+
+        this.levelDescriptor = levelDescriptor;
 
         bodyMapper = ComponentMapper.getFor(BodyComponent.class);
         stateMapper = ComponentMapper.getFor(StateComponent.class);
@@ -152,6 +156,8 @@ public class PlayerSystem extends IteratingSystem implements ContactListener {
 
             case PlayerComponent.STATE_JUMPING:
 
+
+
                 break;
         }
     }
@@ -184,7 +190,6 @@ public class PlayerSystem extends IteratingSystem implements ContactListener {
 
     @Override
     public void endContact(Contact contact) { }
-
     @Override
     public void preSolve(Contact contact, Manifold oldManifold) { }
     @Override
