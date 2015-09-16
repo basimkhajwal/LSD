@@ -10,6 +10,10 @@ public class LevelDescriptor {
     private int sensorCount = 0;
     private int sensorsDestroyed = 0;
 
+    public void setSensorCount(int sensorCount) {
+        this.sensorCount = sensorCount;
+    }
+
     public int getSensorsDestroyed() {
         return sensorsDestroyed;
     }

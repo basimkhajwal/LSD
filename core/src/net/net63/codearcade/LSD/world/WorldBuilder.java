@@ -32,20 +32,25 @@ public class WorldBuilder {
         LevelDescriptor descriptor = new LevelDescriptor();
 
         createWorld();
-        loadSensors(descriptor, map.getLayers().get("sensors"));
+        descriptor.setSensorCount(loadSensors(map.getLayers().get("sensors")));
 
         return descriptor;
     }
 
-    private static void loadSensors(LevelDescriptor descriptor, MapLayer sensorLayer) {
+    private static int loadSensors(MapLayer sensorLayer) {
+
+        int sensorCount = 0;
+
         for (MapObject sensor: sensorLayer.getObjects()) {
             float[] dimensions = getDimensions(sensor);
 
             if (dimensions != null) {
                 createSensor(dimensions[0], dimensions[1], dimensions[2], dimensions[3]);
-                descriptor.sensorCount++;
+                sensorCount++;
             }
         }
+
+        return sensorCount;
     }
 
     private static float[] getDimensions(MapObject mapObject) {
