@@ -47,10 +47,10 @@ public class Constants {
 
         public static final int WORLD = 1;
 
+
         public static final int PLAYER_AIM = 4;
         public static final int PLAYER = 5;
-
-
+        public static final int CAMERA_MOVEMENT = 6;
         public static final int ANIMATION = 7;
         public static final int BACKGROUND_RENDER = 8;
         public static final int RENDER = 9;
