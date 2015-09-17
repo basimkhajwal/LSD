@@ -10,6 +10,7 @@ import com.badlogic.gdx.maps.MapLayer;
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.MapProperties;
 import com.badlogic.gdx.maps.tiled.TiledMap;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.physics.box2d.*;
 import net.net63.codearcade.LSD.components.*;
 import net.net63.codearcade.LSD.utils.Assets;
@@ -24,6 +25,8 @@ public class WorldBuilder {
     private static World world;
     private static LevelDescriptor levelDescriptor;
 
+    private static Rectangle bounds = new Rectangle();
+
     public static void setup(Engine engine, World world, LevelDescriptor levelDescriptor) {
         WorldBuilder.engine = engine;
         WorldBuilder.world = world;
@@ -34,6 +37,8 @@ public class WorldBuilder {
         createWorld();
 
         levelDescriptor.setSensorCount(loadSensors(map.getLayers().get("sensors")));
+
+        levelDescriptor.setWorldBounds(bounds);
     }
 
     private static int loadSensors(MapLayer sensorLayer) {
@@ -50,6 +55,11 @@ public class WorldBuilder {
         }
 
         return sensorCount;
+    }
+
+    private static void addBoundedBody(float x, float y, float width, float height) {
+        bounds.merge(x, y);
+        bounds.merge(x + width, y + height);
     }
 
     private static float[] getDimensions(MapObject mapObject) {
@@ -74,6 +84,8 @@ public class WorldBuilder {
     }
 
     public static Entity createSensor(float x, float y, float width, float height) {
+
+        addBoundedBody(x, y, width, height);
 
         SensorComponent sensorComponent = new SensorComponent();
         RenderComponent renderComponent = new RenderComponent();
