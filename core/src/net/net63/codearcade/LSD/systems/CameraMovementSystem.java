@@ -15,6 +15,8 @@ public class CameraMovementSystem extends EntitySystem {
 
     private OrthographicCamera camera;
 
+    private Vector2 oldPos;
+
     private ImmutableArray<Entity> players;
     private ComponentMapper<BodyComponent> bodyMapper;
 
@@ -29,7 +31,6 @@ public class CameraMovementSystem extends EntitySystem {
     @Override
     public void addedToEngine(Engine engine) {
         super.addedToEngine(engine);
-
         players = engine.getEntitiesFor(Family.all(PlayerComponent.class).get());
     }
 
@@ -39,7 +40,10 @@ public class CameraMovementSystem extends EntitySystem {
         if (player == null) return;
 
         Vector2 pos = bodyMapper.get(player).body.getPosition();
-        camera.position.set(pos.x + camera.viewportWidth / 2.0f, pos.y + camera.viewportHeight / 2.0f, camera.position.z);
+        if (!pos.equals(oldPos)) {
+            camera.position.set(pos.x, pos.y, camera.position.z);
+            oldPos = pos.cpy();
+        }
     }
 
 
