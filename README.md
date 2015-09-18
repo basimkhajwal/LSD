@@ -21,12 +21,15 @@ They should all work but only desktop and HTML5 builds have currently been teste
 - [x] Platforms are loaded from a Tiled map (.tmx) format
 - [x] Platforms destroy correctly when player launched off them
 - [x] Platform count / destroyed
-- [x] Player moves accurately and the aim is precise enough
+- [x] Player moves accurately and the aim is precise
+- [x] Camera movement to follow the player
 
 #### TODO:
 - [ ] Implement player death when reaching map boundaries
 - [ ] Add moving down jump animation
 - [ ] Create solid blocks the player has to avoid
 - [ ] Implement player death with solid blocks
-- [ ] Create camera movement to follow the player
+- [ ] Create a player died menu
+- [ ] Add ability to restart the level
+- [ ] Create a level finished menu
 - [ ] Add ability to progress from level to level
