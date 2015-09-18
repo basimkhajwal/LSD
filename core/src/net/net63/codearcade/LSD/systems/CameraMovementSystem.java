@@ -42,6 +42,7 @@ public class CameraMovementSystem extends EntitySystem {
         Vector2 pos = bodyMapper.get(player).body.getPosition();
         if (!pos.equals(oldPos)) {
             camera.position.set(pos.x, pos.y, camera.position.z);
+            camera.update();
             oldPos = pos.cpy();
         }
     }
