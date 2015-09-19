@@ -1,7 +1,6 @@
 package net.net63.codearcade.LSD.systems;
 
 import com.badlogic.ashley.core.ComponentMapper;
-import com.badlogic.ashley.core.Engine;
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.Family;
 import com.badlogic.ashley.systems.IteratingSystem;
@@ -28,9 +27,6 @@ public class DebugRenderSystem extends IteratingSystem implements Disposable{
         debugRenderer = new Box2DDebugRenderer();
         worldMapper = ComponentMapper.getFor(WorldComponent.class);
     }
-
-    @Override
-    public void addedToEngine(Engine engine) { super.addedToEngine(engine); }
 
     @Override
     protected void processEntity(Entity entity, float deltaTime) {

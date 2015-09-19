@@ -5,7 +5,7 @@ import com.badlogic.ashley.core.Component;
 /**
  * Created by Basim on 15/08/15.
  */
-public class StateComponent extends Component{
+public class StateComponent implements Component{
 
     private int state = 0;
     public float time = 0f;

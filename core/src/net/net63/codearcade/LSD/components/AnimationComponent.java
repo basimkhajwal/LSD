@@ -7,7 +7,7 @@ import com.badlogic.gdx.utils.ArrayMap;
 /**
  * Created by Basim on 31/08/15.
  */
-public class AnimationComponent extends Component {
+public class AnimationComponent implements Component {
 
     public ArrayMap<Integer, Animation> animations = new ArrayMap<Integer, Animation>();
 

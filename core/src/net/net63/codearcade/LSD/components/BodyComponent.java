@@ -6,6 +6,6 @@ import com.badlogic.gdx.physics.box2d.Body;
 /**
  * Created by Basim on 24/06/15.
  */
-public class BodyComponent extends Component{
+public class BodyComponent implements Component{
     public Body body;
 }

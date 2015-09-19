@@ -5,7 +5,7 @@ import com.badlogic.ashley.core.Component;
 /**
  * Created by Basim on 03/07/15.
  */
-public class SensorComponent extends Component{
+public class SensorComponent implements Component{
 
 
 }

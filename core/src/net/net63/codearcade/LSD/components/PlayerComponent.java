@@ -7,7 +7,7 @@ import com.badlogic.gdx.math.Vector2;
 /**
  * Created by Basim on 23/06/15.
  */
-public class PlayerComponent extends Component{
+public class PlayerComponent implements Component{
 
     public static final int STATE_STILL     = 0;
     public static final int STATE_AIMING    = 1;
