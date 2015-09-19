@@ -48,15 +48,15 @@ public class GameWorld implements Disposable, EntityListener {
         stateMapper = ComponentMapper.getFor(StateComponent.class);
         sensorMapper = ComponentMapper.getFor(SensorComponent.class);
 
-        addSystems();
-        addListeners();
-
         setup(Assets.getTiledMap(Assets.LevelMaps.TEST));
     }
 
     private void setup(TiledMap newMap) {
         world = new World(Constants.WORLD_GRAVITY, true);
         levelDescriptor = new LevelDescriptor();
+
+        addSystems();
+        addListeners();
 
         WorldBuilder.setup(engine, world, levelDescriptor);
         WorldBuilder.loadFromMap(newMap);
@@ -114,13 +114,13 @@ public class GameWorld implements Disposable, EntityListener {
         engine.addSystem(new RenderSystem(gameCamera));
         engine.addSystem(new DebugRenderSystem(gameCamera));
         engine.addSystem(new EffectRenderSystem(gameCamera));
-
-        world.setContactListener(engine.getSystem(PlayerSystem.class));
     }
 
     private void addListeners() {
         engine.addEntityListener(new BodyRemovalListener(world));
         engine.addEntityListener(this);
+
+        world.setContactListener(engine.getSystem(PlayerSystem.class));
     }
 
     @Override

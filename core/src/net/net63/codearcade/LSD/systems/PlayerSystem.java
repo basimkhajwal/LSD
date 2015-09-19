@@ -21,7 +21,6 @@ public class PlayerSystem extends IteratingSystem implements ContactListener {
     private ComponentMapper<PlayerComponent> playerMapper;
 
     private LevelDescriptor levelDescriptor;
-    private Engine engine;
 
     public PlayerSystem (LevelDescriptor levelDescriptor) {
         super(Family.all(PlayerComponent.class).get(), Constants.SYSTEM_PRIORITIES.PLAYER);
@@ -32,13 +31,6 @@ public class PlayerSystem extends IteratingSystem implements ContactListener {
         stateMapper = ComponentMapper.getFor(StateComponent.class);
         playerMapper = ComponentMapper.getFor(PlayerComponent.class);
         sensorMapper = ComponentMapper.getFor(SensorComponent.class);
-    }
-
-    @Override
-    public void addedToEngine(Engine engine) {
-        super.addedToEngine(engine);
-
-        this.engine = engine;
     }
 
     @Override
@@ -55,7 +47,7 @@ public class PlayerSystem extends IteratingSystem implements ContactListener {
                 body.applyLinearImpulse(playerComponent.launchImpulse, body.getWorldCenter(), true);
 
                 if (playerComponent.sensorEntity != null) {
-                    engine.removeEntity(playerComponent.sensorEntity);
+                    getEngine().removeEntity(playerComponent.sensorEntity);
                     playerComponent.sensorEntity = null;
                 }
 
@@ -76,6 +68,7 @@ public class PlayerSystem extends IteratingSystem implements ContactListener {
 
     @Override
     public void beginContact(Contact contact) {
+
         Body a = contact.getFixtureA().getBody();
         Body b = contact.getFixtureB().getBody();
 
