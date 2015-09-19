@@ -41,6 +41,11 @@ public class Constants {
 
     public static final Vector2 WORLD_GRAVITY = new Vector2(0, -5);
 
+    // -------------- World Settings -----------
+
+    public static final float BOUNDS_BUFFER_X = 2.0f;
+    public static final float BOUNDS_BUFFER_Y = 2.0f;
+
     // ------------- Entity Systems ------------
 
     public static final class SYSTEM_PRIORITIES {
