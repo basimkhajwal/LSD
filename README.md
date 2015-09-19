@@ -23,13 +23,13 @@ They should all work but only desktop and HTML5 builds have currently been teste
 - [x] Platform count / destroyed
 - [x] Player moves accurately and the aim is precise
 - [x] Camera movement to follow the player
+- [x] Add ability to restart the level
+- [x] Implement player death when reaching map boundaries
+- [x] Add moving down jump animation
 
 #### TODO:
-- [ ] Implement player death when reaching map boundaries
-- [ ] Add moving down jump animation
 - [ ] Create solid blocks the player has to avoid
 - [ ] Implement player death with solid blocks
 - [ ] Create a player died menu
-- [ ] Add ability to restart the level
 - [ ] Create a level finished menu
 - [ ] Add ability to progress from level to level
