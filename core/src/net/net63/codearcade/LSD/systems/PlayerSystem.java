@@ -48,6 +48,8 @@ public class PlayerSystem extends IteratingSystem implements ContactListener {
 
                 if (playerComponent.sensorEntity != null) {
                     getEngine().removeEntity(playerComponent.sensorEntity);
+
+                    playerComponent.isFlying = true;
                     playerComponent.sensorEntity = null;
                 }
 
@@ -61,6 +63,21 @@ public class PlayerSystem extends IteratingSystem implements ContactListener {
 
                 state.set(PlayerComponent.STATE_STILL);
                 break;
+
+            case PlayerComponent.STATE_JUMPING:
+
+                if (body.getLinearVelocity().y < 0) {
+                    state.set(PlayerComponent.STATE_FALLING);
+                }
+
+                break;
+        }
+
+        if (playerComponent.isFlying) {
+            if (! levelDescriptor.getWorldBounds().contains(body.getPosition()) ) {
+                playerComponent.isDead = true;
+                System.out.println("Player died");
+            }
         }
     }
 
@@ -83,10 +100,15 @@ public class PlayerSystem extends IteratingSystem implements ContactListener {
 
         if (playerEntity != null) {
             StateComponent state = stateMapper.get(playerEntity);
-            if (state.get() == PlayerComponent.STATE_JUMPING) state.set(PlayerComponent.STATE_HITTING);
+            PlayerComponent playerComponent = playerMapper.get(playerEntity);
+
+            if (playerComponent.isFlying) {
+                playerComponent.isFlying = false;
+                state.set(PlayerComponent.STATE_HITTING);
+            }
 
             if (sensorMapper.has(other)) {
-                playerMapper.get(playerEntity).sensorEntity = other;
+                playerComponent.sensorEntity = other;
             }
         }
     }

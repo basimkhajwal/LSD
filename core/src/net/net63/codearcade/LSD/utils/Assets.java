@@ -40,9 +40,10 @@ public class Assets {
     public static class Animations {
         public static final String PLAYER_STILL = "images/ball_anim.png";
         public static final String PLAYER_JUMPING = "images/ball_anim_jump.png";
+        public static final String PLAYER_FALLING = "images/ball_anim_fall.png";
     }
     public static final ArrayMap<String, Animation> animationList = new ArrayMap<String, Animation>();
-    private static final String[] _Animations = { Animations.PLAYER_STILL, Animations.PLAYER_JUMPING };
+    private static final String[] _Animations = { Animations.PLAYER_STILL, Animations.PLAYER_JUMPING, Animations.PLAYER_FALLING };
 
     public static class LevelMaps {
         public static final String TEST = "maps/test.tmx";

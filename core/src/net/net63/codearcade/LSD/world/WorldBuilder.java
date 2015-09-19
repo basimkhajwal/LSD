@@ -132,6 +132,7 @@ public class WorldBuilder {
 
         Animation still = Assets.getAnimation(Assets.Animations.PLAYER_STILL);
         Animation jumping = Assets.getAnimation(Assets.Animations.PLAYER_JUMPING);
+        Animation falling = Assets.getAnimation(Assets.Animations.PLAYER_FALLING);
 
         still.setPlayMode(Animation.PlayMode.LOOP);
         jumping.setPlayMode(Animation.PlayMode.LOOP);
