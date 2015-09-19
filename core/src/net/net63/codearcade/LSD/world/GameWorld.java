@@ -15,7 +15,6 @@ import net.net63.codearcade.LSD.components.SensorComponent;
 import net.net63.codearcade.LSD.components.StateComponent;
 import net.net63.codearcade.LSD.listeners.BodyRemovalListener;
 import net.net63.codearcade.LSD.systems.*;
-import net.net63.codearcade.LSD.utils.Assets;
 import net.net63.codearcade.LSD.utils.Constants;
 
 /**
@@ -36,19 +35,19 @@ public class GameWorld implements Disposable, EntityListener {
     private ComponentMapper<StateComponent> stateMapper;
     private ComponentMapper<SensorComponent> sensorMapper;
 
-    public GameWorld () {
+    public GameWorld (TiledMap map) {
         engine = new Engine();
         world = new World(Constants.WORLD_GRAVITY, true);
 
         gameCamera = new OrthographicCamera();
         viewport = new ExtendViewport(Constants.WORLD_WIDTH, Constants.WORLD_HEIGHT, gameCamera);
-        viewport.apply();
 
         playerMapper = ComponentMapper.getFor(PlayerComponent.class);
         stateMapper = ComponentMapper.getFor(StateComponent.class);
         sensorMapper = ComponentMapper.getFor(SensorComponent.class);
 
-        setup(Assets.getTiledMap(Assets.LevelMaps.TEST));
+        resize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        setup(map);
     }
 
     private void setup(TiledMap newMap) {

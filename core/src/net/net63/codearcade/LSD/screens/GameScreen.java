@@ -2,6 +2,7 @@ package net.net63.codearcade.LSD.screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.scenes.scene2d.Event;
 import com.badlogic.gdx.scenes.scene2d.EventListener;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
@@ -23,25 +24,27 @@ public class GameScreen extends AbstractScreen implements EventListener {
 	private Stage stage;
     private GameWorld gameWorld;
 
+    private TiledMap gameMap;
     private Label scoreLabel;
 
 	public GameScreen(LSD game) {
 		super(game);
 
-		stage = new Stage(new StretchViewport(800, 600));
-        gameWorld = new GameWorld();
+        gameMap = Assets.getTiledMap(Assets.LevelMaps.TEST);
 
+        gameWorld = new GameWorld(gameMap);
         setupUI();
-
-        stage.addListener(this);
-        Gdx.input.setInputProcessor(stage);
 	}
 
     private void setupUI() {
         scoreLabel = new Label("", new Label.LabelStyle(Assets.getFont(Assets.Fonts.DEFAULT, Assets.FontSizes.FIFTY), Color.YELLOW));
         scoreLabel.setPosition((800 - scoreLabel.getWidth()) / 2.0f , 550 - scoreLabel.getHeight());
 
+        stage = new Stage(new StretchViewport(800, 600));
         stage.addActor(scoreLabel);
+
+        stage.addListener(this);
+        Gdx.input.setInputProcessor(stage);
     }
 
 	@Override
@@ -56,13 +59,17 @@ public class GameScreen extends AbstractScreen implements EventListener {
 	public void render(float delta) {
 		super.render(delta);
 
-		gameWorld.update(delta);
-
+        gameWorld.update(delta);
         updateScore();
 
         stage.getViewport().apply();
         stage.act(delta);
         stage.draw();
+
+        if (gameWorld.isGameOver()) {
+            gameWorld.dispose();
+            gameWorld = new GameWorld(gameMap);
+        }
 	}
 
     private void updateScore() {

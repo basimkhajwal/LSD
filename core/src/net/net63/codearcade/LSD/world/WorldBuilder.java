@@ -24,13 +24,14 @@ public class WorldBuilder {
     private static Engine engine;
     private static World world;
     private static LevelDescriptor levelDescriptor;
-
-    private static Rectangle bounds = new Rectangle();
+    private static Rectangle bounds;
 
     public static void setup(Engine engine, World world, LevelDescriptor levelDescriptor) {
         WorldBuilder.engine = engine;
         WorldBuilder.world = world;
         WorldBuilder.levelDescriptor = levelDescriptor;
+
+        bounds = new Rectangle();
     }
 
     public static void loadFromMap(TiledMap map) {
