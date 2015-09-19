@@ -76,7 +76,6 @@ public class PlayerSystem extends IteratingSystem implements ContactListener {
         if (playerComponent.isFlying) {
             if (! levelDescriptor.getWorldBounds().contains(body.getPosition()) ) {
                 playerComponent.isDead = true;
-                System.out.println("Player died");
             }
         }
     }
