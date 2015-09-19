@@ -136,15 +136,18 @@ public class WorldBuilder {
 
         still.setPlayMode(Animation.PlayMode.LOOP);
         jumping.setPlayMode(Animation.PlayMode.LOOP);
+        falling.setPlayMode(Animation.PlayMode.LOOP);
 
         still.setFrameDuration(0.1f);
         jumping.setFrameDuration(0.1f);
+        falling.setFrameDuration(0.1f);
 
         animationComponent.animations.put(PlayerComponent.STATE_STILL, still);
         animationComponent.animations.put(PlayerComponent.STATE_AIMING, still);
         animationComponent.animations.put(PlayerComponent.STATE_FIRING, still);
         animationComponent.animations.put(PlayerComponent.STATE_HITTING, still);
         animationComponent.animations.put(PlayerComponent.STATE_JUMPING, jumping);
+        animationComponent.animations.put(PlayerComponent.STATE_FALLING, falling);
 
         stateComponent.set(PlayerComponent.STATE_STILL);
         renderComponent.texture = animationComponent.animations.get(stateComponent.get()).getKeyFrame(0);
