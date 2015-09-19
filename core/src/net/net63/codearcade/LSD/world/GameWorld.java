@@ -4,6 +4,7 @@ import com.badlogic.ashley.core.*;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Disposable;
@@ -47,17 +48,18 @@ public class GameWorld implements Disposable, EntityListener {
         stateMapper = ComponentMapper.getFor(StateComponent.class);
         sensorMapper = ComponentMapper.getFor(SensorComponent.class);
 
-        setup();
-    }
-
-    public void setup() {
         addSystems();
         addListeners();
 
+        setup(Assets.getTiledMap(Assets.LevelMaps.TEST));
+    }
+
+    private void setup(TiledMap newMap) {
+        world = new World(Constants.WORLD_GRAVITY, true);
         levelDescriptor = new LevelDescriptor();
 
         WorldBuilder.setup(engine, world, levelDescriptor);
-        WorldBuilder.loadFromMap(Assets.getTiledMap(Assets.LevelMaps.TEST));
+        WorldBuilder.loadFromMap(newMap);
         player = WorldBuilder.createPlayer();
     }
 

@@ -7,7 +7,6 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Disposable;
-import net.net63.codearcade.LSD.components.BodyComponent;
 import net.net63.codearcade.LSD.components.PlayerComponent;
 import net.net63.codearcade.LSD.components.StateComponent;
 import net.net63.codearcade.LSD.utils.Constants;
@@ -21,7 +20,6 @@ public class EffectRenderSystem extends EntitySystem implements Disposable{
     private ShapeRenderer shapeRenderer;
 
     private ComponentMapper<PlayerComponent> playerMapper;
-    private ComponentMapper<BodyComponent> bodyMapper;
     private ComponentMapper<StateComponent> stateMapper;
 
     private ImmutableArray<Entity> playerEntities;
@@ -34,7 +32,6 @@ public class EffectRenderSystem extends EntitySystem implements Disposable{
 
         stateMapper = ComponentMapper.getFor(StateComponent.class);
         playerMapper = ComponentMapper.getFor(PlayerComponent.class);
-        bodyMapper = ComponentMapper.getFor(BodyComponent.class);
     }
 
     @Override
