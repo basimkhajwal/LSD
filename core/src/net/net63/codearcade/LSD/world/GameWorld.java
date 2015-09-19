@@ -137,6 +137,10 @@ public class GameWorld implements Disposable, EntityListener {
         return levelDescriptor.getSensorsDestroyed() + "/" + levelDescriptor.getSensorCount();
     }
 
+    public boolean isPlayerDead() { return playerMapper.get(player).isDead; }
+    public boolean isGameWon() { return levelDescriptor.getSensorsDestroyed() == levelDescriptor.getSensorCount(); }
+    public boolean isGameOver() { return isPlayerDead() || isGameWon(); }
+
     @Override
     public void dispose() {
         for (EntitySystem entitySystem : engine.getSystems()) {
