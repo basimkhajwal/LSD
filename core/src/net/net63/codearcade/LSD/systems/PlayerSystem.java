@@ -1,7 +1,11 @@
 package net.net63.codearcade.LSD.systems;
 
-import com.badlogic.ashley.core.*;
+import com.badlogic.ashley.core.ComponentMapper;
+import com.badlogic.ashley.core.Entity;
+import com.badlogic.ashley.core.Family;
 import com.badlogic.ashley.systems.IteratingSystem;
+import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import net.net63.codearcade.LSD.components.BodyComponent;
 import net.net63.codearcade.LSD.components.PlayerComponent;
@@ -38,6 +42,7 @@ public class PlayerSystem extends IteratingSystem implements ContactListener {
         Body body = bodyMapper.get(entity).body;
         StateComponent state = stateMapper.get(entity);
         PlayerComponent playerComponent = playerMapper.get(entity);
+        Vector2 position = body.getPosition();
 
         switch (state.get()) {
 
@@ -74,7 +79,9 @@ public class PlayerSystem extends IteratingSystem implements ContactListener {
         }
 
         if (playerComponent.isFlying) {
-            if (! levelDescriptor.getWorldBounds().contains(body.getPosition()) ) {
+            Rectangle bounds = levelDescriptor.getWorldBounds();
+
+            if ((!bounds.contains(position)) &&  (bounds.y + bounds.height) > position.y) {
                 playerComponent.isDead = true;
             }
         }
