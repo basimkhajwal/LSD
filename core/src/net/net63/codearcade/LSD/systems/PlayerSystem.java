@@ -7,10 +7,7 @@ import com.badlogic.ashley.systems.IteratingSystem;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
-import net.net63.codearcade.LSD.components.BodyComponent;
-import net.net63.codearcade.LSD.components.PlayerComponent;
-import net.net63.codearcade.LSD.components.SensorComponent;
-import net.net63.codearcade.LSD.components.StateComponent;
+import net.net63.codearcade.LSD.components.*;
 import net.net63.codearcade.LSD.utils.Constants;
 import net.net63.codearcade.LSD.world.LevelDescriptor;
 
@@ -23,6 +20,7 @@ public class PlayerSystem extends IteratingSystem implements ContactListener {
     private ComponentMapper<StateComponent> stateMapper;
     private ComponentMapper<SensorComponent> sensorMapper;
     private ComponentMapper<PlayerComponent> playerMapper;
+    private ComponentMapper<WallComponent> wallMapper;
 
     private LevelDescriptor levelDescriptor;
 
@@ -35,6 +33,7 @@ public class PlayerSystem extends IteratingSystem implements ContactListener {
         stateMapper = ComponentMapper.getFor(StateComponent.class);
         playerMapper = ComponentMapper.getFor(PlayerComponent.class);
         sensorMapper = ComponentMapper.getFor(SensorComponent.class);
+        wallMapper = ComponentMapper.getFor(WallComponent.class);
     }
 
     @Override
@@ -116,6 +115,11 @@ public class PlayerSystem extends IteratingSystem implements ContactListener {
             if (sensorMapper.has(other)) {
                 playerComponent.sensorEntity = other;
             }
+
+            if (wallMapper.has(other)) {
+                playerComponent.isDead = true;
+            }
+
         }
     }
 

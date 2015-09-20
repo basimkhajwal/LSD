@@ -39,7 +39,7 @@ public class Constants {
     public static final int NUM_TRAJECTORY_PROJECTIONS = 25;
     public static final int TRAJECTORY_PROJECTION_STEPS = 7;
 
-    public static final Vector2 WORLD_GRAVITY = new Vector2(0, -5);
+    public static final Vector2 WORLD_GRAVITY = new Vector2(0, -10);
 
     // -------------- World Settings -----------
 
