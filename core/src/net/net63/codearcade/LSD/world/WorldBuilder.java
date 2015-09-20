@@ -113,6 +113,34 @@ public class WorldBuilder {
         return createEntityFrom(sensorComponent, bodyComponent, renderComponent);
     }
 
+    public static Entity createWall(float x, float y, float width, float height) {
+
+        addBoundedBody(x, y, width, height);
+
+        WallComponent wallComponent = new WallComponent();
+        RenderComponent renderComponent = new RenderComponent();
+        BodyComponent bodyComponent = new BodyComponent();
+
+        BodyDef bodyDef = new BodyDef();
+        bodyDef.type = BodyDef.BodyType.StaticBody;
+        bodyDef.fixedRotation = true;
+        bodyDef.position.set((width / 2) + x, (height / 2) + y);
+
+        FixtureDef fixtureDef = new FixtureDef();
+        fixtureDef.restitution = 0.0f;
+        fixtureDef.shape = new PolygonShape();
+        ((PolygonShape) fixtureDef.shape).setAsBox(width / 2, height / 2);
+
+        bodyComponent.body = world.createBody(bodyDef);
+        bodyComponent.body.createFixture(fixtureDef);
+
+        renderComponent.texture = new TextureRegion(Assets.getAsset(Assets.Images.WALL_TILE, Texture.class));
+        renderComponent.tileToSize = true;
+
+        return createEntityFrom(wallComponent, bodyComponent, renderComponent);
+
+    }
+
     public static Entity createPlayer() {
 
         PlayerComponent playerComponent = new PlayerComponent();
