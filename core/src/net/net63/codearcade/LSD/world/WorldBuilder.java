@@ -38,6 +38,7 @@ public class WorldBuilder {
         createWorld();
 
         levelDescriptor.setSensorCount(loadSensors(map.getLayers().get("sensors")));
+        loadWalls(map.getLayers().get("walls"));
 
         bounds.setPosition(bounds.x - Constants.BOUNDS_BUFFER_X, bounds.y - Constants.BOUNDS_BUFFER_Y);
         bounds.setSize(bounds.width + Constants.BOUNDS_BUFFER_X, bounds.height + Constants.BOUNDS_BUFFER_Y);
@@ -58,6 +59,18 @@ public class WorldBuilder {
         }
 
         return sensorCount;
+    }
+
+    private static void loadWalls(MapLayer wallLayer) {
+
+        for (MapObject wallObject: wallLayer.getObjects()) {
+            float[] dimensions = getDimensions(wallObject);
+
+            if (dimensions != null) {
+                createWall(dimensions[0], dimensions[1], dimensions[2], dimensions[3]);
+            }
+        }
+
     }
 
     private static void addBoundedBody(float x, float y, float width, float height) {
