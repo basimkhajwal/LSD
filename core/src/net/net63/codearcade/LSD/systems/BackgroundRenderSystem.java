@@ -38,7 +38,5 @@ public class BackgroundRenderSystem extends EntitySystem implements Disposable {
     }
 
     @Override
-    public void dispose() {
-        batch.dispose();
-    }
+    public void dispose() { batch.dispose(); }
 }

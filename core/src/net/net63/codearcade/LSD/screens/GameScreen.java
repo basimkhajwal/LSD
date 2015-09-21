@@ -8,7 +8,7 @@ import com.badlogic.gdx.scenes.scene2d.EventListener;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.utils.viewport.StretchViewport;
+import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import net.net63.codearcade.LSD.LSD;
 import net.net63.codearcade.LSD.utils.Assets;
 import net.net63.codearcade.LSD.world.GameWorld;
@@ -40,7 +40,7 @@ public class GameScreen extends AbstractScreen implements EventListener {
         scoreLabel = new Label("", new Label.LabelStyle(Assets.getFont(Assets.Fonts.DEFAULT, Assets.FontSizes.FIFTY), Color.YELLOW));
         scoreLabel.setPosition((800 - scoreLabel.getWidth()) / 2.0f , 550 - scoreLabel.getHeight());
 
-        stage = new Stage(new StretchViewport(800, 600));
+        stage = new Stage(new ExtendViewport(800, 600));
         stage.addActor(scoreLabel);
 
         stage.addListener(this);
