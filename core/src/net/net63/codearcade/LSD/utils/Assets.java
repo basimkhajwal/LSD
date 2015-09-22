@@ -26,9 +26,12 @@ public class Assets {
     private static final String[] _Images = { Images.BACKGROUND, Images.SENSOR_TILE, Images.WALL_TILE };
 	
 	public static class Fonts {
-		public static final String DEFAULT = "fonts/DisplayOTF";
+        public static final String DIN_ALT = "fonts/DINAlternate";
+        public static final String DISPLAY_OTF = "fonts/DisplayOTF";
+
+		public static final String DEFAULT = DIN_ALT;
 	}
-    private static final String[] _Fonts = { Fonts.DEFAULT };
+    private static final String[] _Fonts = { Fonts.DIN_ALT, Fonts.DISPLAY_OTF };
 	
 	public static class FontSizes {
         public static final int TEN = 10;
