@@ -26,10 +26,12 @@ They should all work but only desktop and HTML5 builds have currently been teste
 - [x] Add ability to restart the level
 - [x] Implement player death when reaching map boundaries
 - [x] Add moving down jump animation
+- [x] Create solid blocks the player has to avoid
+- [x] Implement player death with solid blocks
 
 #### TODO:
-- [ ] Create solid blocks the player has to avoid
-- [ ] Implement player death with solid blocks
+- [ ] Update the GUI and create a flat theme
+- [ ] Add better buttons and make the menu screen more attractive
 - [ ] Create a player died menu
 - [ ] Create a level finished menu
 - [ ] Add ability to progress from level to level
