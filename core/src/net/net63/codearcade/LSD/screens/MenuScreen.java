@@ -6,14 +6,15 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.Texture.TextureFilter;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Scaling;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
@@ -39,7 +40,7 @@ public class MenuScreen extends AbstractScreen{
 	private OrthographicCamera camera;
 	
 	private Image backgroundImage;
-	private TextButton playButton;
+	private ImageButton playButton;
 	private Label topTitle;
     private Label bottomTitle;
 	
@@ -66,19 +67,23 @@ public class MenuScreen extends AbstractScreen{
                 new LabelStyle(Assets.getFont(Assets.Fonts.DEFAULT, Assets.FontSizes.HUNDRED), BOTTOM_TITLE));
         bottomTitle.setAlignment(Align.center);
         bottomTitle.setPosition((840 - bottomTitle.getWidth()) / 2, topTitle.getY() - bottomTitle.getHeight());
-		
-		playButton = new TextButton("Play Game", new TextButtonStyle(null, null, null, 
-				Assets.getFont(Assets.Fonts.DEFAULT, Assets.FontSizes.FIFTY)));
-		playButton.getStyle().fontColor = Color.BLACK;
-		playButton.getStyle().overFontColor = Color.MAROON;
-		playButton.setPosition((840 - playButton.getWidth()) / 2, 100);
+
+        TextureRegionDrawable btn = new TextureRegionDrawable(new TextureRegion(Assets.getAsset(Assets.Images.PLAY_BUTTON, Texture.class)));
+        TextureRegionDrawable btnDown = new TextureRegionDrawable(new TextureRegion(Assets.getAsset(Assets.Images.PLAY_BUTTON_DOWN, Texture.class)));
+        TextureRegionDrawable btnChecked = new TextureRegionDrawable(new TextureRegion(Assets.getAsset(Assets.Images.PLAY_BUTTON_HOVER, Texture.class)));
+
+		playButton = new ImageButton(btn, btnDown, btnChecked);
+		playButton.setSize(140f, 140f);
+		playButton.setPosition((840 - playButton.getWidth()) / 2.0f, 60);
 		playButton.addListener(new ClickListener() {
 			
 			@Override
 			public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
 				super.touchUp(event, x, y, pointer, button);
-				
-				changing = true;
+
+                if (this.inTapSquare()) {
+                    changing = true;
+                }
 			}
 		});
 		
