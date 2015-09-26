@@ -22,8 +22,13 @@ public class Assets {
 		public static final String BACKGROUND = "images/bg.jpg";
         public static final String SENSOR_TILE = "images/quad_grey.png";
         public static final String WALL_TILE = "images/quad.png";
+
+        public static final String PLAY_BUTTON = "images/play_button.png";
+        public static final String PLAY_BUTTON_DOWN = "images/play_button_down.png";
+        public static final String PLAY_BUTTON_HOVER = "images/play_button_hover.png";
 	}
-    private static final String[] _Images = { Images.BACKGROUND, Images.SENSOR_TILE, Images.WALL_TILE };
+    private static final String[] _Images = { Images.BACKGROUND, Images.SENSOR_TILE, Images.WALL_TILE,
+                                              Images.PLAY_BUTTON, Images.PLAY_BUTTON_DOWN, Images.PLAY_BUTTON_HOVER};
 	
 	public static class Fonts {
         public static final String DIN_ALT = "fonts/DINAlternate";
