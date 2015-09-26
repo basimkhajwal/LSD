@@ -29,14 +29,19 @@ import net.net63.codearcade.LSD.utils.Assets;
  *
  */
 public class MenuScreen extends AbstractScreen{
-	
+
+    // Constants
+    private static final Color TOP_TITLE = new Color(220 / 255.0f, 80 / 255.0f, 0f, 1f);
+    private static final Color BOTTOM_TITLE = new Color(150 / 255.0f, 30 / 255.0f, 0f, 1f);
+
 	private Stage stage;
 	private SpriteBatch batch;
 	private OrthographicCamera camera;
 	
 	private Image backgroundImage;
 	private TextButton playButton;
-	private Label title;
+	private Label topTitle;
+    private Label bottomTitle;
 	
 	private boolean changing;
 	
@@ -52,14 +57,19 @@ public class MenuScreen extends AbstractScreen{
 		
 		Gdx.input.setInputProcessor(stage);
 		
-		title = new Label("Little Sticky\nDestroyer", 
-				new LabelStyle(Assets.getFont(Assets.Fonts.DEFAULT, Assets.FontSizes.HUNDRED), Color.ORANGE));
-		title.setAlignment(Align.center);
-		title.setPosition((840 - title.getWidth()) / 2, 250);
+		topTitle = new Label("Little Sticky",
+				new LabelStyle(Assets.getFont(Assets.Fonts.DEFAULT, Assets.FontSizes.HUNDRED), TOP_TITLE));
+		topTitle.setAlignment(Align.center);
+		topTitle.setPosition((840 - topTitle.getWidth()) / 2, 350);
+
+        bottomTitle = new Label("Destroyer",
+                new LabelStyle(Assets.getFont(Assets.Fonts.DEFAULT, Assets.FontSizes.HUNDRED), BOTTOM_TITLE));
+        bottomTitle.setAlignment(Align.center);
+        bottomTitle.setPosition((840 - bottomTitle.getWidth()) / 2, topTitle.getY() - bottomTitle.getHeight());
 		
 		playButton = new TextButton("Play Game", new TextButtonStyle(null, null, null, 
 				Assets.getFont(Assets.Fonts.DEFAULT, Assets.FontSizes.FIFTY)));
-		playButton.getStyle().fontColor = Color.RED;
+		playButton.getStyle().fontColor = Color.BLACK;
 		playButton.getStyle().overFontColor = Color.MAROON;
 		playButton.setPosition((840 - playButton.getWidth()) / 2, 100);
 		playButton.addListener(new ClickListener() {
@@ -86,7 +96,8 @@ public class MenuScreen extends AbstractScreen{
 	public void show() {
 		super.show();
 		
-		stage.addActor(title);
+		stage.addActor(topTitle);
+        stage.addActor(bottomTitle);
 		stage.addActor(playButton);
 	}
 	
