@@ -9,12 +9,13 @@ import com.badlogic.gdx.math.Vector2;
  */
 public class PlayerComponent implements Component{
 
-    public static final int STATE_STILL     = 0;
-    public static final int STATE_AIMING    = 1;
-    public static final int STATE_FIRING    = 2;
-    public static final int STATE_JUMPING   = 3;
-    public static final int STATE_FALLING   = 4;
-    public static final int STATE_HITTING   = 5;
+    public static final int STATE_INIT      = 0;
+    public static final int STATE_STILL     = 1;
+    public static final int STATE_AIMING    = 2;
+    public static final int STATE_FIRING    = 3;
+    public static final int STATE_JUMPING   = 4;
+    public static final int STATE_FALLING   = 5;
+    public static final int STATE_HITTING   = 6;
 
     public Vector2 aimPosition;
     public Vector2 launchImpulse;
@@ -22,6 +23,6 @@ public class PlayerComponent implements Component{
 
     public Entity sensorEntity = null;
 
-    public boolean isFlying = false;
+    public boolean isFlying = true;
     public boolean isDead = false;
 }
