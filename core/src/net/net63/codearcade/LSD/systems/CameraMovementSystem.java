@@ -20,6 +20,8 @@ public class CameraMovementSystem extends EntitySystem {
     private ImmutableArray<Entity> players;
     private ComponentMapper<BodyComponent> bodyMapper;
 
+    private boolean forcedUpdate = true;
+
     public CameraMovementSystem(OrthographicCamera camera) {
         super(Constants.SYSTEM_PRIORITIES.CAMERA_MOVEMENT);
 
@@ -40,12 +42,15 @@ public class CameraMovementSystem extends EntitySystem {
         if (player == null) return;
 
         Vector2 pos = bodyMapper.get(player).body.getPosition();
-        if (!pos.equals(oldPos)) {
+        if (!pos.equals(oldPos) || forcedUpdate) {
             camera.position.set(pos.x, pos.y, camera.position.z);
             camera.update();
             oldPos = pos.cpy();
+
+            forcedUpdate = false;
         }
     }
 
+    public void forceUpdate() { forcedUpdate = true; }
 
 }

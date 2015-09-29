@@ -64,6 +64,9 @@ public class GameWorld implements Disposable, EntityListener {
 
     public void resize(int w, int h) {
         viewport.update(w, h, true);
+        CameraMovementSystem cam = engine.getSystem(CameraMovementSystem.class);
+
+        if (cam != null) cam.forceUpdate();
     }
 
     private void debugInput() {
@@ -102,6 +105,22 @@ public class GameWorld implements Disposable, EntityListener {
         }
     }
 
+    public void pauseLogic() {
+        engine.getSystem(WorldSystem.class).setProcessing(false);
+        engine.getSystem(PlayerAimSystem.class).setProcessing(false);
+        engine.getSystem(PlayerSystem.class).setProcessing(false);
+        engine.getSystem(AnimationSystem.class).setProcessing(false);
+        engine.getSystem(CameraMovementSystem.class).setProcessing(false);
+    }
+
+    public void resumeLogic() {
+        engine.getSystem(WorldSystem.class).setProcessing(true);
+        engine.getSystem(PlayerAimSystem.class).setProcessing(true);
+        engine.getSystem(PlayerSystem.class).setProcessing(true);
+        engine.getSystem(AnimationSystem.class).setProcessing(true);
+        engine.getSystem(CameraMovementSystem.class).setProcessing(true);
+    }
+
     private void addSystems() {
         engine.addSystem(new WorldSystem());
         engine.addSystem(new PlayerAimSystem());
@@ -109,6 +128,7 @@ public class GameWorld implements Disposable, EntityListener {
 
         engine.addSystem(new AnimationSystem());
         engine.addSystem(new CameraMovementSystem(gameCamera));
+
         engine.addSystem(new BackgroundRenderSystem());
         engine.addSystem(new RenderSystem(gameCamera));
         engine.addSystem(new DebugRenderSystem(gameCamera));
