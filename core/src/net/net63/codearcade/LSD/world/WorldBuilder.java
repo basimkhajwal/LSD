@@ -37,7 +37,8 @@ public class WorldBuilder {
     public static void loadFromMap(TiledMap map) {
         createWorld();
 
-        levelDescriptor.setSensorCount(loadSensors(map.getLayers().get("sensors")));
+        loadMeta(map.getLayers().get("meta"));
+        loadSensors(map.getLayers().get("sensors"));
         loadWalls(map.getLayers().get("walls"));
 
         bounds.setPosition(bounds.x - Constants.BOUNDS_BUFFER_X, bounds.y - Constants.BOUNDS_BUFFER_Y);
@@ -45,7 +46,15 @@ public class WorldBuilder {
         levelDescriptor.setWorldBounds(bounds);
     }
 
-    private static int loadSensors(MapLayer sensorLayer) {
+    private static void loadMeta(MapLayer metaLayer) {
+        MapObject playerPosition = metaLayer.getObjects().get("player-position");
+        float[] dimensions = getDimensions(playerPosition);
+        float posX = dimensions[0] + dimensions[2] / 2.0f;
+        float posY = dimensions[1] + dimensions[3] / 2.0f;
+        createPlayer(posX, posY);
+    }
+
+    private static void loadSensors(MapLayer sensorLayer) {
 
         int sensorCount = 0;
 
@@ -58,7 +67,7 @@ public class WorldBuilder {
             }
         }
 
-        return sensorCount;
+        levelDescriptor.setSensorCount(sensorCount);
     }
 
     private static void loadWalls(MapLayer wallLayer) {
@@ -154,7 +163,7 @@ public class WorldBuilder {
 
     }
 
-    public static Entity createPlayer() {
+    public static Entity createPlayer(float x, float y) {
 
         PlayerComponent playerComponent = new PlayerComponent();
         StateComponent stateComponent = new StateComponent();
@@ -165,7 +174,7 @@ public class WorldBuilder {
         BodyDef bodyDef = new BodyDef();
         bodyDef.type = BodyDef.BodyType.DynamicBody;
         bodyDef.fixedRotation = true;
-        bodyDef.position.set(2.5f, 4);
+        bodyDef.position.set(x, y);
 
         FixtureDef fixtureDef = new FixtureDef();
         fixtureDef.restitution = 0.0f;

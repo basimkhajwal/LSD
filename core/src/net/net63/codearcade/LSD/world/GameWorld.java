@@ -59,7 +59,8 @@ public class GameWorld implements Disposable, EntityListener {
 
         WorldBuilder.setup(engine, world, levelDescriptor);
         WorldBuilder.loadFromMap(newMap);
-        player = WorldBuilder.createPlayer();
+
+        player = engine.getEntitiesFor(Family.all(PlayerComponent.class).get()).first();
     }
 
     public void resize(int w, int h) {
