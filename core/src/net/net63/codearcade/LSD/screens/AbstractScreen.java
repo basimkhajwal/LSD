@@ -35,10 +35,7 @@ public abstract class AbstractScreen implements Screen{
 	}
 
 	@Override
-	public void hide(){
-		Gdx.app.log( Constants.LOG, "Hiding screen: " + getName() );
-		dispose();
-	}
+	public void hide(){ Gdx.app.log( Constants.LOG, "Hiding screen: " + getName() ); }
 	
 	@Override
 	public void show(){ Gdx.app.log( Constants.LOG, "Showing screen: " + getName() ); }
