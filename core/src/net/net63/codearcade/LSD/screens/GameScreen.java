@@ -39,11 +39,13 @@ public class GameScreen extends AbstractScreen implements EventListener {
         setupUI();
 	}
 
+    @Override
     public void pauseLogic() {
         if (!logicPaused) gameWorld.pauseLogic();
         logicPaused = true;
     }
 
+    @Override
     public void resumeLogic() {
         if (logicPaused) gameWorld.resumeLogic();
         logicPaused = false;

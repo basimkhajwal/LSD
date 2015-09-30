@@ -34,6 +34,9 @@ public abstract class AbstractScreen implements Screen{
 		Gdx.gl.glClear( GL20.GL_COLOR_BUFFER_BIT );
 	}
 
+    public void pauseLogic() { }
+    public void resumeLogic() { }
+
 	@Override
 	public void hide(){ Gdx.app.log( Constants.LOG, "Hiding screen: " + getName() ); }
 	
