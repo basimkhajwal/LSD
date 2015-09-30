@@ -37,4 +37,7 @@ They should all work but only desktop and HTML5 builds have currently been teste
 - [ ] Implement background music and sounds for player death, jump etc.
 - [ ] Create a player died menu
 - [ ] Create a level finished menu
+- [ ] Add JSON read/write for a persistent Settings value
+- [ ] Add particle effects when platform is destroyed
+- [ ] Add camera shake effect when platform is destroyed
 - [ ] Add ability to progress from level to level
