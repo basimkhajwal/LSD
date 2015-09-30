@@ -91,7 +91,8 @@ public class GameScreen extends AbstractScreen implements EventListener {
 
     @Override
     public boolean handle(Event event) {
-        if (event instanceof InputEvent) {
+
+        if (!logicPaused && event instanceof InputEvent) {
             InputEvent inputEvent = (InputEvent) event;
 
             switch (inputEvent.getType()) {
