@@ -56,8 +56,9 @@ public class Assets {
 
     public static class LevelMaps {
         public static final String TEST = "maps/test.tmx";
+        public static final String TEST2 = "maps/test2.tmx";
     }
-    private static final String[] _LevelMaps = { LevelMaps.TEST };
+    private static final String[] _LevelMaps = { LevelMaps.TEST, LevelMaps.TEST2 };
 
 	private static AssetManager assetManager = new AssetManager();
 	
