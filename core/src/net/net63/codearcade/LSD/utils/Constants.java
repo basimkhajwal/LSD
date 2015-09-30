@@ -16,6 +16,13 @@ public class Constants {
 	public static final String TITLE = "Little Sticky Destroyer";
     public static final boolean DEBUG = true;
 
+    // ---------------- Game Content ----------
+
+    public static final String[] LEVELS = {
+            Assets.LevelMaps.TEST,
+            Assets.LevelMaps.TEST2
+    };
+
     // --------------- UI / Window ------------
 
     public static final int DEFAULT_SCREEN_WIDTH = 800;
