@@ -69,7 +69,13 @@ public class GameScreen extends AbstractScreen implements EventListener {
         gameWorld.resize(width, height);
 		stage.getViewport().update(width, height);
 	}
-	
+
+    @Override
+    public void show() { if (logicPaused) resumeLogic(); }
+
+    @Override
+    public void hide() { pauseLogic(); }
+
 	@Override
 	public void render(float delta) {
 		super.render(delta);
