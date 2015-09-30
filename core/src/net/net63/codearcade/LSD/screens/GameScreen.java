@@ -2,7 +2,6 @@ package net.net63.codearcade.LSD.screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.scenes.scene2d.Event;
 import com.badlogic.gdx.scenes.scene2d.EventListener;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
@@ -10,6 +9,8 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import net.net63.codearcade.LSD.LSD;
+import net.net63.codearcade.LSD.screens.transitions.GameOverScreen;
+import net.net63.codearcade.LSD.screens.transitions.LevelCompleteScreen;
 import net.net63.codearcade.LSD.utils.Assets;
 import net.net63.codearcade.LSD.utils.Constants;
 import net.net63.codearcade.LSD.world.GameWorld;
@@ -25,17 +26,17 @@ public class GameScreen extends AbstractScreen implements EventListener {
     private Stage stage;
     private GameWorld gameWorld;
 
-    private TiledMap gameMap;
     private Label scoreLabel;
 
+    private int levelId;
     private boolean logicPaused = false;
 
 	public GameScreen(LSD game, int levelId) {
 		super(game);
 
-        gameMap = Assets.getTiledMap(Constants.LEVELS[levelId]);
+        this.levelId = levelId;
 
-        gameWorld = new GameWorld(gameMap);
+        gameWorld = new GameWorld(Assets.getTiledMap(Constants.LEVELS[levelId]));
         setupUI();
 	}
 
@@ -50,6 +51,8 @@ public class GameScreen extends AbstractScreen implements EventListener {
         if (logicPaused) gameWorld.resumeLogic();
         logicPaused = false;
     }
+
+    public int getLevelId() { return levelId; }
 
     private void setupUI() {
         scoreLabel = new Label("", new Label.LabelStyle(Assets.getFont(Assets.Fonts.DEFAULT, Assets.FontSizes.FIFTY), Color.YELLOW));
@@ -88,10 +91,23 @@ public class GameScreen extends AbstractScreen implements EventListener {
         stage.draw();
 
         if (gameWorld.isGameOver()) {
-            gameWorld.dispose();
-            gameWorld = new GameWorld(gameMap);
+
+            if (gameWorld.isGameWon()) {
+                game.setScreen(new LevelCompleteScreen(game));
+            } else {
+                game.setScreen(new GameOverScreen(game));
+            }
+
         }
 	}
+
+    @Override
+    public void dispose() {
+        super.dispose();
+
+        gameWorld.dispose();
+        stage.dispose();
+    }
 
     private void updateScore() {
         scoreLabel.setText(gameWorld.getScore());
