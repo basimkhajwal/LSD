@@ -35,6 +35,8 @@ public class GameWorld implements Disposable, EntityListener {
     private ComponentMapper<StateComponent> stateMapper;
     private ComponentMapper<SensorComponent> sensorMapper;
 
+    private boolean logicPaused = false;
+
     public GameWorld (TiledMap map) {
         engine = new Engine();
         world = new World(Constants.WORLD_GRAVITY, true);
@@ -81,7 +83,7 @@ public class GameWorld implements Disposable, EntityListener {
     }
 
     public void update(float delta) {
-        debugInput();
+        if (!logicPaused) debugInput();
 
         gameCamera.update();
         viewport.apply();
@@ -107,19 +109,27 @@ public class GameWorld implements Disposable, EntityListener {
     }
 
     public void pauseLogic() {
+        if (logicPaused) return;
+
         engine.getSystem(WorldSystem.class).setProcessing(false);
         engine.getSystem(PlayerAimSystem.class).setProcessing(false);
         engine.getSystem(PlayerSystem.class).setProcessing(false);
         engine.getSystem(AnimationSystem.class).setProcessing(false);
         engine.getSystem(CameraMovementSystem.class).setProcessing(false);
+
+        logicPaused = true;
     }
 
     public void resumeLogic() {
+        if (!logicPaused) return;
+
         engine.getSystem(WorldSystem.class).setProcessing(true);
         engine.getSystem(PlayerAimSystem.class).setProcessing(true);
         engine.getSystem(PlayerSystem.class).setProcessing(true);
         engine.getSystem(AnimationSystem.class).setProcessing(true);
         engine.getSystem(CameraMovementSystem.class).setProcessing(true);
+
+        logicPaused = false;
     }
 
     private void addSystems() {
