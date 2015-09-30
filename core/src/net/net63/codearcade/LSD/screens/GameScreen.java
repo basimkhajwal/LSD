@@ -11,6 +11,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import net.net63.codearcade.LSD.LSD;
 import net.net63.codearcade.LSD.utils.Assets;
+import net.net63.codearcade.LSD.utils.Constants;
 import net.net63.codearcade.LSD.world.GameWorld;
 
 /**
@@ -21,20 +22,32 @@ import net.net63.codearcade.LSD.world.GameWorld;
  */
 public class GameScreen extends AbstractScreen implements EventListener {
 
-	private Stage stage;
+    private Stage stage;
     private GameWorld gameWorld;
 
     private TiledMap gameMap;
     private Label scoreLabel;
 
-	public GameScreen(LSD game) {
+    private boolean logicPaused = false;
+
+	public GameScreen(LSD game, int levelId) {
 		super(game);
 
-        gameMap = Assets.getTiledMap(Assets.LevelMaps.TEST);
+        gameMap = Assets.getTiledMap(Constants.LEVELS[levelId]);
 
         gameWorld = new GameWorld(gameMap);
         setupUI();
 	}
+
+    public void pauseLogic() {
+        if (!logicPaused) gameWorld.pauseLogic();
+        logicPaused = true;
+    }
+
+    public void resumeLogic() {
+        if (logicPaused) gameWorld.resumeLogic();
+        logicPaused = false;
+    }
 
     private void setupUI() {
         scoreLabel = new Label("", new Label.LabelStyle(Assets.getFont(Assets.Fonts.DEFAULT, Assets.FontSizes.FIFTY), Color.YELLOW));
