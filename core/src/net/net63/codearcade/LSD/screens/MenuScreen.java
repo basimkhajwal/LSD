@@ -18,6 +18,7 @@ import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import net.net63.codearcade.LSD.LSD;
 import net.net63.codearcade.LSD.utils.Assets;
+import net.net63.codearcade.LSD.utils.Constants;
 
 
 /**
@@ -43,7 +44,7 @@ public class MenuScreen extends AbstractScreen{
 		
 		changingScreen = false;
 		
-		stage = new Stage(new ExtendViewport(840, 480));
+		stage = new Stage(new ExtendViewport(Constants.DEFAULT_SCREEN_WIDTH, Constants.DEFAULT_SCREEN_HEIGHT));
 		Gdx.input.setInputProcessor(stage);
 		
 		setupUI();
@@ -53,12 +54,12 @@ public class MenuScreen extends AbstractScreen{
         Label topTitle = new Label("Little Sticky",
                 new Label.LabelStyle(Assets.getFont(Assets.Fonts.DEFAULT, Assets.FontSizes.HUNDRED), TOP_TITLE));
         topTitle.setAlignment(Align.center);
-        topTitle.setPosition((840 - topTitle.getWidth()) / 2, 350);
+        topTitle.setPosition((800 - topTitle.getWidth()) / 2, 450);
 
         Label bottomTitle = new Label("Destroyer",
                 new Label.LabelStyle(Assets.getFont(Assets.Fonts.DEFAULT, Assets.FontSizes.HUNDRED), BOTTOM_TITLE));
         bottomTitle.setAlignment(Align.center);
-        bottomTitle.setPosition((840 - bottomTitle.getWidth()) / 2, topTitle.getY() - bottomTitle.getHeight());
+        bottomTitle.setPosition((800 - bottomTitle.getWidth()) / 2, topTitle.getY() - bottomTitle.getHeight());
 
         TextureRegionDrawable btn = new TextureRegionDrawable(new TextureRegion(Assets.getAsset(Assets.Images.PLAY_BUTTON, Texture.class)));
         TextureRegionDrawable btnDown = new TextureRegionDrawable(new TextureRegion(Assets.getAsset(Assets.Images.PLAY_BUTTON_DOWN, Texture.class)));
@@ -66,7 +67,7 @@ public class MenuScreen extends AbstractScreen{
 
         ImageButton playButton = new ImageButton(btn, btnDown, btnChecked);
         playButton.setSize(140f, 140f);
-        playButton.setPosition((840 - playButton.getWidth()) / 2.0f, 60);
+        playButton.setPosition((800 - playButton.getWidth()) / 2.0f, 100);
         playButton.addListener(new ClickListener() {
 
             @Override

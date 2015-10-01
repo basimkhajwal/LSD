@@ -3,6 +3,7 @@ package net.net63.codearcade.LSD.screens.transitions;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import net.net63.codearcade.LSD.LSD;
 import net.net63.codearcade.LSD.screens.AbstractScreen;
+import net.net63.codearcade.LSD.screens.GameScreen;
 
 /**
  * Created by Basim on 30/09/15.
@@ -12,11 +13,13 @@ public class GameOverScreen extends AbstractScreen {
     private LSD game;
 
     private Stage stage;
+    private GameScreen previousGame;
 
-    public GameOverScreen(LSD game) {
+    public GameOverScreen(LSD game, GameScreen previousGame) {
         super(game);
 
         this.game = game;
+        this.previousGame = previousGame;
 
         stage = new Stage();
     }
@@ -36,6 +39,8 @@ public class GameOverScreen extends AbstractScreen {
     @Override
     public void render(float delta) {
         super.render(delta);
+
+        previousGame.render(delta);
     }
 
     @Override
@@ -47,5 +52,7 @@ public class GameOverScreen extends AbstractScreen {
     @Override
     public void dispose() {
         super.dispose();
+
+        stage.dispose();
     }
 }

@@ -58,7 +58,7 @@ public class GameScreen extends AbstractScreen implements EventListener {
         scoreLabel = new Label("", new Label.LabelStyle(Assets.getFont(Assets.Fonts.DEFAULT, Assets.FontSizes.FIFTY), Color.YELLOW));
         scoreLabel.setPosition((800 - scoreLabel.getWidth()) / 2.0f , 550 - scoreLabel.getHeight());
 
-        stage = new Stage(new ExtendViewport(800, 600));
+        stage = new Stage(new ExtendViewport(Constants.DEFAULT_SCREEN_WIDTH, Constants.DEFAULT_SCREEN_HEIGHT));
         stage.addActor(scoreLabel);
 
         stage.addListener(this);
@@ -90,14 +90,14 @@ public class GameScreen extends AbstractScreen implements EventListener {
         stage.act(delta);
         stage.draw();
 
-        if (gameWorld.isGameOver()) {
+        if (!logicPaused && gameWorld.isGameOver()) {
+            pauseLogic();
 
             if (gameWorld.isGameWon()) {
                 game.setScreen(new LevelCompleteScreen(game));
             } else {
-                game.setScreen(new GameOverScreen(game));
+                game.setScreen(new GameOverScreen(game, this));
             }
-
         }
 	}
 
