@@ -7,7 +7,7 @@ import com.badlogic.gdx.graphics.Texture;
 /**
  * Created by Basim on 02/10/15.
  */
-public class VectorImageFactory {
+public class VectorFactory {
 
     private static final boolean EXTEND_UP = true;
 
@@ -34,7 +34,7 @@ public class VectorImageFactory {
         return drawMenuPlayButton(grayColor(circle), grayColor(triangle));
     }
 
-    public static Texture drawMenuPlayButton(Color circleColour, Color triangleColour) {
+    private static Texture drawMenuPlayButton(Color circleColour, Color triangleColour) {
         final int WIDTH = (int) (156 * scale);
         final int HEIGHT = (int) (156 * scale);
 
