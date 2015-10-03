@@ -87,6 +87,8 @@ project(":html") {
 project(":core") {
     apply plugin: "java"
 
+    project.targetCompatibility= '1.6'
+    project.sourceCompatibility = "1.6"
 
     dependencies {
         compile "com.badlogicgames.gdx:gdx:$gdxVersion"
