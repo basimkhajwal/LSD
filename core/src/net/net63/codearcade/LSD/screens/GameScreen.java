@@ -93,11 +93,8 @@ public class GameScreen extends AbstractScreen implements EventListener {
         if (!logicPaused && gameWorld.isGameOver()) {
             pauseLogic();
 
-            if (gameWorld.isGameWon()) {
-                game.setScreen(new LevelCompleteScreen(game));
-            } else {
-                game.setScreen(new GameOverScreen(game, this));
-            }
+            if (gameWorld.isGameWon()) game.setScreen(new LevelCompleteScreen(game, this));
+            else game.setScreen(new GameOverScreen(game, this));
         }
 	}
 
