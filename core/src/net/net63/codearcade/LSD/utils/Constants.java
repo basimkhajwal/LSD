@@ -30,7 +30,7 @@ public class Constants {
 
     // -------------- Physics -----------------
 
-    public static final float METRE_TO_PIXEL = 40f;
+    public static final float METRE_TO_PIXEL = 70f;
     public static final float PIXEL_TO_METRE = 1 / METRE_TO_PIXEL;
 
     public static final int WORLD_WIDTH  = (int) (DEFAULT_SCREEN_WIDTH * PIXEL_TO_METRE);

@@ -19,6 +19,7 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import net.net63.codearcade.LSD.LSD;
 import net.net63.codearcade.LSD.utils.Assets;
 import net.net63.codearcade.LSD.utils.Constants;
+import net.net63.codearcade.LSD.utils.VectorImageFactory;
 
 
 /**
@@ -36,19 +37,19 @@ public class MenuScreen extends AbstractScreen{
 
 	private Stage stage;
     private Image backgroundImage;
-	
-	private boolean changingScreen;
-	
-	public MenuScreen(LSD game) {
-		super(game);
-		
-		changingScreen = false;
-		
-		stage = new Stage(new ExtendViewport(Constants.DEFAULT_SCREEN_WIDTH, Constants.DEFAULT_SCREEN_HEIGHT));
-		Gdx.input.setInputProcessor(stage);
-		
-		setupUI();
-	}
+
+    private boolean changingScreen;
+
+    public MenuScreen(LSD game) {
+        super(game);
+
+        changingScreen = false;
+
+        stage = new Stage(new ExtendViewport(Constants.DEFAULT_SCREEN_WIDTH, Constants.DEFAULT_SCREEN_HEIGHT));
+        Gdx.input.setInputProcessor(stage);
+
+        setupUI();
+    }
 
     private void setupUI() {
         Label topTitle = new Label("Little Sticky",
@@ -61,9 +62,13 @@ public class MenuScreen extends AbstractScreen{
         bottomTitle.setAlignment(Align.center);
         bottomTitle.setPosition((800 - bottomTitle.getWidth()) / 2, topTitle.getY() - bottomTitle.getHeight());
 
-        TextureRegionDrawable btn = new TextureRegionDrawable(new TextureRegion(Assets.getAsset(Assets.Images.PLAY_BUTTON, Texture.class)));
-        TextureRegionDrawable btnDown = new TextureRegionDrawable(new TextureRegion(Assets.getAsset(Assets.Images.PLAY_BUTTON_DOWN, Texture.class)));
-        TextureRegionDrawable btnChecked = new TextureRegionDrawable(new TextureRegion(Assets.getAsset(Assets.Images.PLAY_BUTTON_HOVER, Texture.class)));
+        Texture txt = VectorImageFactory.drawMenuPlayButton(VectorImageFactory.ButtonType.NORMAL);
+        Texture txtDwn = VectorImageFactory.drawMenuPlayButton(VectorImageFactory.ButtonType.DOWN);
+        Texture txtHover = VectorImageFactory.drawMenuPlayButton(VectorImageFactory.ButtonType.HOVER);
+
+        TextureRegionDrawable btn = new TextureRegionDrawable(new TextureRegion(txt));
+        TextureRegionDrawable btnDown = new TextureRegionDrawable(new TextureRegion(txtDwn));
+        TextureRegionDrawable btnChecked = new TextureRegionDrawable(new TextureRegion(txtHover));
 
         ImageButton playButton = new ImageButton(btn, btnDown, btnChecked);
         playButton.setSize(140f, 140f);
@@ -102,6 +107,8 @@ public class MenuScreen extends AbstractScreen{
 
 		backgroundImage.setPosition(zero.x, zero.y);
 		backgroundImage.setSize(viewport.getWorldWidth(), viewport.getWorldHeight());
+
+        VectorImageFactory.setup(width, height);
 	}
 	
 	@Override
@@ -110,7 +117,7 @@ public class MenuScreen extends AbstractScreen{
 
 		stage.act(delta);
 		stage.draw();
-		
+
 		if (changingScreen) {
             dispose();
             game.setScreen(new GameScreen(game, 0));

@@ -18,33 +18,48 @@ public class VectorImageFactory {
                           : (screenWidth * 1.0f / Constants.DEFAULT_SCREEN_WIDTH);
     }
 
-    public static Texture drawMenuPlayButton() {
-        final int WIDTH = (int) (150 * scale);
-        final int HEIGHT = (int) (150 * scale);
+    public static enum ButtonType {
+        NORMAL, HOVER, DOWN
+    }
+
+    public static Texture drawMenuPlayButton(ButtonType type) {
+        int circle, triangle;
+
+        if (type == ButtonType.HOVER) circle = 255;
+        else if (type == ButtonType.DOWN) circle = 181;
+        else circle = 235;
+
+        triangle =  66;
+
+        return drawMenuPlayButton(grayColor(circle), grayColor(triangle));
+    }
+
+    public static Texture drawMenuPlayButton(Color circleColour, Color triangleColour) {
+        final int WIDTH = (int) (156 * scale);
+        final int HEIGHT = (int) (156 * scale);
 
         final int[] TR_POS = {
                 //x                 y
-                (3 * WIDTH) / 8,    HEIGHT / 4,
-                (3 * WIDTH) / 8,    3 * (HEIGHT / 4),
-                3 * (WIDTH / 4),    HEIGHT / 2
+                (3 * WIDTH) / 10,   HEIGHT / 4,
+                (3 * WIDTH) / 10,   (4 * HEIGHT) / 5,
+                (4 * WIDTH) /  5,   HEIGHT / 2
         };
-
-        final Color CIRCLE_COLOUR = new Color(181 / 255f, 181 / 255f, 181 / 255f, 1f);
-        final Color TRIANGLE_COLOUR = new Color(66 / 255f, 66 / 255f, 66 / 255f, 1f);
 
         Pixmap pixmap = emptyPixmap(WIDTH, HEIGHT);
 
-        pixmap.setColor(CIRCLE_COLOUR);
+        pixmap.setColor(circleColour);
         pixmap.fillCircle(WIDTH / 2, HEIGHT / 2, WIDTH / 2);
 
-        pixmap.setColor(TRIANGLE_COLOUR);
+        pixmap.setColor(triangleColour);
         pixmap.fillTriangle(TR_POS[0], TR_POS[1], TR_POS[2], TR_POS[3], TR_POS[4], TR_POS[5]);
 
-        pixmap.setColor(Color.RED);
-        pixmap.drawLine(WIDTH/2, 0, WIDTH/2, HEIGHT);
-        pixmap.drawLine(0, HEIGHT/2, WIDTH, HEIGHT/2);
-
         return textureFromPixmap(pixmap);
+    }
+
+    // ------------------ Helper Methods -----------------------
+
+    private static Color grayColor(int grayAmount) {
+        return new Color(grayAmount / 255.0f, grayAmount / 255.0f, grayAmount / 255.0f, 1.0f);
     }
 
     private static Pixmap emptyPixmap(int width, int height) {
