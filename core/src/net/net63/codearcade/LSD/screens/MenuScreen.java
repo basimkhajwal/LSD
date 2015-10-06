@@ -19,7 +19,6 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import net.net63.codearcade.LSD.LSD;
 import net.net63.codearcade.LSD.utils.Assets;
 import net.net63.codearcade.LSD.utils.Constants;
-import net.net63.codearcade.LSD.utils.VectorFactory;
 
 
 /**
@@ -62,9 +61,9 @@ public class MenuScreen extends AbstractScreen{
         bottomTitle.setAlignment(Align.center);
         bottomTitle.setPosition((800 - bottomTitle.getWidth()) / 2, topTitle.getY() - bottomTitle.getHeight());
 
-        Texture txt = VectorFactory.drawMenuPlayButton(VectorFactory.ButtonType.NORMAL);
-        Texture txtDwn = VectorFactory.drawMenuPlayButton(VectorFactory.ButtonType.DOWN);
-        Texture txtHover = VectorFactory.drawMenuPlayButton(VectorFactory.ButtonType.HOVER);
+        Texture txt = Assets.getAsset(Assets.Images.PLAY_BUTTON, Texture.class);
+        Texture txtDwn = Assets.getAsset(Assets.Images.PLAY_BUTTON_DOWN, Texture.class);
+        Texture txtHover = Assets.getAsset(Assets.Images.PLAY_BUTTON_HOVER, Texture.class);
 
         TextureRegionDrawable btn = new TextureRegionDrawable(new TextureRegion(txt));
         TextureRegionDrawable btnDown = new TextureRegionDrawable(new TextureRegion(txtDwn));
@@ -107,8 +106,6 @@ public class MenuScreen extends AbstractScreen{
 
 		backgroundImage.setPosition(zero.x, zero.y);
 		backgroundImage.setSize(viewport.getWorldWidth(), viewport.getWorldHeight());
-
-        VectorFactory.setup(width, height);
 	}
 	
 	@Override
