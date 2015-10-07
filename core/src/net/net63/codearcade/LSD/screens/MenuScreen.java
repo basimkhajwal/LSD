@@ -3,7 +3,6 @@ package net.net63.codearcade.LSD.screens;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -11,7 +10,6 @@ import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
-import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Scaling;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
@@ -61,15 +59,7 @@ public class MenuScreen extends AbstractScreen{
         bottomTitle.setAlignment(Align.center);
         bottomTitle.setPosition((800 - bottomTitle.getWidth()) / 2, topTitle.getY() - bottomTitle.getHeight());
 
-        Texture txt = Assets.getAsset(Assets.Images.PLAY_BUTTON, Texture.class);
-        Texture txtDwn = Assets.getAsset(Assets.Images.PLAY_BUTTON_DOWN, Texture.class);
-        Texture txtHover = Assets.getAsset(Assets.Images.PLAY_BUTTON_HOVER, Texture.class);
-
-        TextureRegionDrawable btn = new TextureRegionDrawable(new TextureRegion(txt));
-        TextureRegionDrawable btnDown = new TextureRegionDrawable(new TextureRegion(txtDwn));
-        TextureRegionDrawable btnChecked = new TextureRegionDrawable(new TextureRegion(txtHover));
-
-        ImageButton playButton = new ImageButton(btn, btnDown, btnChecked);
+        ImageButton playButton = Assets.createButton(Assets.Buttons.MENU_PLAY);
         playButton.setSize(140f, 140f);
         playButton.setPosition((800 - playButton.getWidth()) / 2.0f, 100);
         playButton.addListener(new ClickListener() {

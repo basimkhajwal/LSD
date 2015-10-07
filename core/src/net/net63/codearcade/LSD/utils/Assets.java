@@ -8,6 +8,8 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
+import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.ArrayMap;
 
 /**
@@ -22,14 +24,15 @@ public class Assets {
 		public static final String BACKGROUND = "images/bg.jpg";
         public static final String SENSOR_TILE = "images/quad_grey.png";
         public static final String WALL_TILE = "images/quad.png";
-
-        public static final String PLAY_BUTTON = "images/play_button.png";
-        public static final String PLAY_BUTTON_DOWN = "images/play_button_down.png";
-        public static final String PLAY_BUTTON_HOVER = "images/play_button_hover.png";
 	}
-    private static final String[] _Images = { Images.BACKGROUND, Images.SENSOR_TILE, Images.WALL_TILE,
-                                              Images.PLAY_BUTTON, Images.PLAY_BUTTON_DOWN, Images.PLAY_BUTTON_HOVER};
-	
+    private static final String[] _Images = { Images.BACKGROUND, Images.SENSOR_TILE, Images.WALL_TILE };
+
+    public static class Buttons {
+        public static final String MENU_PLAY = "images/play_button";
+    }
+    private static final String[] _Buttons = { Buttons.MENU_PLAY };
+
+
 	public static class Fonts {
         public static final String DIN_ALT = "fonts/DINAlternate";
         public static final String DISPLAY_OTF = "fonts/DisplayOTF";
@@ -83,6 +86,12 @@ public class Assets {
             }
 		}
 
+        for (String button: _Buttons) {
+            assetManager.load(button + ".png", Texture.class);
+            assetManager.load(button + "_hover.png", Texture.class);
+            assetManager.load(button + "_down.png", Texture.class);
+        }
+
 		assetManager.finishLoading();
 
         //Setup the animations
@@ -128,6 +137,20 @@ public class Assets {
     public static Animation getAnimation(String animation) {
         return animationList.get(animation);
     }
+
+
+    public static ImageButton createButton(String button) {
+        Texture txt = getAsset(button + ".png", Texture.class);
+        Texture txtDwn = getAsset(button + "_down.png", Texture.class);
+        Texture txtHover = getAsset(button + "_hover.png", Texture.class);
+
+        TextureRegionDrawable btn = new TextureRegionDrawable(new TextureRegion(txt));
+        TextureRegionDrawable btnDown = new TextureRegionDrawable(new TextureRegion(txtDwn));
+        TextureRegionDrawable btnChecked = new TextureRegionDrawable(new TextureRegion(txtHover));
+
+        return new ImageButton(btn, btnDown, btnChecked);
+    }
+
 
 	/**
 	 * Dispose all the assets but the Asset Manager still remains (re-usable)
