@@ -28,7 +28,7 @@ public class Assets {
     private static final String[] _Images = { Images.BACKGROUND, Images.SENSOR_TILE, Images.WALL_TILE };
 
     public static class Buttons {
-        public static final String MENU_PLAY = "images/play_button";
+        public static final String MENU_PLAY = "buttons/menu_play";
     }
     private static final String[] _Buttons = { Buttons.MENU_PLAY };
 
