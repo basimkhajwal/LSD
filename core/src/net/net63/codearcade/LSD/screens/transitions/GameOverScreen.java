@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.utils.Scaling;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import net.net63.codearcade.LSD.LSD;
 import net.net63.codearcade.LSD.screens.AbstractScreen;
@@ -45,7 +46,7 @@ public class GameOverScreen extends AbstractScreen {
 
     private void setupUI() {
         overlay = new Image(overlayTexture);
-
+        overlay.setScaling(Scaling.stretch);
 
         stage.addActor(overlay);
     }
@@ -54,6 +55,7 @@ public class GameOverScreen extends AbstractScreen {
     public void resize(int width, int height) {
         super.resize(width, height);
 
+        previousGame.resize(width, height);
         stage.getViewport().update(width, height);
 
         overlay.setPosition(0, 0);
@@ -65,6 +67,7 @@ public class GameOverScreen extends AbstractScreen {
         super.render(delta);
         previousGame.render(delta);
 
+        stage.getViewport().apply();
         stage.act(delta);
         stage.draw();
     }
