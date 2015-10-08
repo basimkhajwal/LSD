@@ -1,16 +1,20 @@
 package net.net63.codearcade.LSD.screens.transitions;
 
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.utils.Scaling;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import net.net63.codearcade.LSD.LSD;
 import net.net63.codearcade.LSD.screens.AbstractScreen;
 import net.net63.codearcade.LSD.screens.GameScreen;
+import net.net63.codearcade.LSD.utils.Assets;
 import net.net63.codearcade.LSD.utils.Constants;
 
 /**
@@ -50,7 +54,16 @@ public class GameOverScreen extends AbstractScreen {
         overlay = new Image(overlayTexture);
         overlay.setScaling(Scaling.stretch);
 
+        BitmapFont fontFifty = Assets.getFont(Assets.Fonts.DEFAULT, Assets.FontSizes.FIFTY);
+
+        int width = Constants.DEFAULT_SCREEN_WIDTH;
+        int height = Constants.DEFAULT_SCREEN_HEIGHT;
+
+        Label gameOverLabel = new Label("Game Over", new Label.LabelStyle(fontFifty, Color.ORANGE));
+        gameOverLabel.setPosition((width - gameOverLabel.getWidth()) / 2, (4 * height) / 5);
+
         stage.addActor(overlay);
+        //stage.addActor(gameOverLabel);
     }
 
     @Override
