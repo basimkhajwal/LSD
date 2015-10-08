@@ -69,7 +69,7 @@ public class GameWorld implements Disposable, EntityListener {
         viewport.update(w, h, true);
         CameraMovementSystem cam = engine.getSystem(CameraMovementSystem.class);
 
-        if (cam != null) cam.forceUpdate();
+        if (cam != null && !logicPaused) cam.forceUpdate();
     }
 
     private void debugInput() {

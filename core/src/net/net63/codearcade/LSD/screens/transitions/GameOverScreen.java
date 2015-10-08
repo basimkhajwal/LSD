@@ -4,9 +4,11 @@ import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import net.net63.codearcade.LSD.LSD;
 import net.net63.codearcade.LSD.screens.AbstractScreen;
 import net.net63.codearcade.LSD.screens.GameScreen;
+import net.net63.codearcade.LSD.utils.Constants;
 
 /**
  * Created by Basim on 30/09/15.
@@ -18,6 +20,7 @@ public class GameOverScreen extends AbstractScreen {
     private Stage stage;
 
     private Texture overlayTexture;
+
     private Image overlay;
 
     private GameScreen previousGame;
@@ -28,7 +31,7 @@ public class GameOverScreen extends AbstractScreen {
         this.game = game;
         this.previousGame = previousGame;
 
-        stage = new Stage();
+        stage = new Stage(new ExtendViewport(Constants.DEFAULT_SCREEN_WIDTH, Constants.DEFAULT_SCREEN_HEIGHT));
 
         Pixmap overlay = new Pixmap(1, 1, Pixmap.Format.RGBA8888);
         overlay.setColor(0, 0, 0, 0.5f);
@@ -76,6 +79,7 @@ public class GameOverScreen extends AbstractScreen {
     public void dispose() {
         super.dispose();
 
+        overlayTexture.dispose();
         stage.dispose();
     }
 }
