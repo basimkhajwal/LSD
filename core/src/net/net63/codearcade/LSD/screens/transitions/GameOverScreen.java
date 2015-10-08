@@ -2,10 +2,12 @@ package net.net63.codearcade.LSD.screens.transitions;
 
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.utils.Scaling;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
+import com.badlogic.gdx.utils.viewport.Viewport;
 import net.net63.codearcade.LSD.LSD;
 import net.net63.codearcade.LSD.screens.AbstractScreen;
 import net.net63.codearcade.LSD.screens.GameScreen;
@@ -56,10 +58,15 @@ public class GameOverScreen extends AbstractScreen {
         super.resize(width, height);
 
         previousGame.resize(width, height);
-        stage.getViewport().update(width, height);
 
-        overlay.setPosition(0, 0);
-        overlay.setSize(width, height);
+        Viewport viewport = stage.getViewport();
+        viewport.update(width, height);
+
+        Vector2 zero = new Vector2(0, height - 1);
+        viewport.unproject(zero);
+
+        overlay.setPosition(zero.x, zero.y);
+        overlay.setSize(viewport.getWorldWidth(), viewport.getWorldHeight());
     }
 
     @Override
