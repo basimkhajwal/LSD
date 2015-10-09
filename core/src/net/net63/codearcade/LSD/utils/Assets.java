@@ -24,6 +24,7 @@ public class Assets {
 		public static final String BACKGROUND = "images/bg.jpg";
         public static final String SENSOR_TILE = "images/quad_grey.png";
         public static final String WALL_TILE = "images/quad.png";
+        public static final String TRANSITION_BACKGROUND = "images/transition-bg.png";
 	}
     private static final String[] _Images = { Images.BACKGROUND, Images.SENSOR_TILE, Images.WALL_TILE };
 

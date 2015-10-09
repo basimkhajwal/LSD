@@ -63,7 +63,7 @@ public class GameOverScreen extends AbstractScreen {
         gameOverLabel.setPosition((width - gameOverLabel.getWidth()) / 2, (4 * height) / 5);
 
         stage.addActor(overlay);
-        //stage.addActor(gameOverLabel);
+        stage.addActor(gameOverLabel);
     }
 
     @Override
