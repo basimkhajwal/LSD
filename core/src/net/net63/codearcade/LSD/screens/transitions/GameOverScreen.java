@@ -74,6 +74,10 @@ public class GameOverScreen extends AbstractScreen {
         replayLevelButton.setSize(120, 90);
         replayLevelButton.setPosition(340, 90);
 
+        ImageButton backMenuButton = Assets.createButton(Assets.Buttons.BACK_MENU);
+        backMenuButton.setSize(120, 90);
+        backMenuButton.setPosition(200, 90);
+
         stage.addActor(overlay);
         stage.addActor(backingImage);
         stage.addActor(gameOverLabel);
