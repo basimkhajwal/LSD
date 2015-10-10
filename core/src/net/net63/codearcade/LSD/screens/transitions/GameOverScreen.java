@@ -70,12 +70,15 @@ public class GameOverScreen extends AbstractScreen {
         nextLevelButton.setSize(120, 90);
         nextLevelButton.setPosition(480, 90);
 
-        
+        ImageButton replayLevelButton = Assets.createButton(Assets.Buttons.REPLAY_LEVEL);
+        replayLevelButton.setSize(120, 90);
+        replayLevelButton.setPosition(340, 90);
 
         stage.addActor(overlay);
         stage.addActor(backingImage);
         stage.addActor(gameOverLabel);
         stage.addActor(nextLevelButton);
+        stage.addActor(replayLevelButton);
     }
 
     @Override
