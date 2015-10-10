@@ -59,10 +59,15 @@ public class GameOverScreen extends AbstractScreen {
         int width = Constants.DEFAULT_SCREEN_WIDTH;
         int height = Constants.DEFAULT_SCREEN_HEIGHT;
 
+        Image backingImage = new Image(Assets.getAsset(Assets.Images.TRANSITION_BACKGROUND, Texture.class));
+        backingImage.setSize(400, 320);
+        backingImage.setPosition(200, 140);
+
         Label gameOverLabel = new Label("Game Over", new Label.LabelStyle(fontFifty, Color.ORANGE));
         gameOverLabel.setPosition((width - gameOverLabel.getWidth()) / 2, (4 * height) / 5);
 
         stage.addActor(overlay);
+        stage.addActor(backingImage);
         stage.addActor(gameOverLabel);
     }
 
