@@ -30,8 +30,9 @@ public class Assets {
 
     public static class Buttons {
         public static final String MENU_PLAY = "buttons/menu_play";
+        public static final String NEXT_LEVEL = "buttons/next_level";
     }
-    private static final String[] _Buttons = { Buttons.MENU_PLAY };
+    private static final String[] _Buttons = { Buttons.MENU_PLAY, Buttons.NEXT_LEVEL };
 
 
 	public static class Fonts {
