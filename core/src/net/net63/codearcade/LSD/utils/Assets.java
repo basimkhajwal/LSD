@@ -26,7 +26,7 @@ public class Assets {
         public static final String WALL_TILE = "images/quad.png";
         public static final String TRANSITION_BACKGROUND = "images/transition-bg.png";
 	}
-    private static final String[] _Images = { Images.BACKGROUND, Images.SENSOR_TILE, Images.WALL_TILE };
+    private static final String[] _Images = { Images.BACKGROUND, Images.SENSOR_TILE, Images.WALL_TILE, Images.TRANSITION_BACKGROUND };
 
     public static class Buttons {
         public static final String MENU_PLAY = "buttons/menu_play";
