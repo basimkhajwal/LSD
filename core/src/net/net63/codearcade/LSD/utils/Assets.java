@@ -34,7 +34,7 @@ public class Assets {
         public static final String REPLAY_LEVEL = "buttons/replay_level";
         public static final String BACK_MENU = "buttons/back_menu";
     }
-    private static final String[] _Buttons = { Buttons.MENU_PLAY, Buttons.NEXT_LEVEL, Buttons.REPLAY_LEVEL };
+    private static final String[] _Buttons = { Buttons.MENU_PLAY, Buttons.NEXT_LEVEL, Buttons.REPLAY_LEVEL, Buttons.BACK_MENU };
 
 
 	public static class Fonts {
