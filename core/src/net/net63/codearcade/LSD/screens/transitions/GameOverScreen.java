@@ -20,6 +20,7 @@ import net.net63.codearcade.LSD.utils.Assets;
 public class GameOverScreen extends TransitionScreen {
 
     private boolean replaying = false;
+
     private Array<ImageButton> buttons;
 
     public GameOverScreen(LSD game, GameScreen previousGame) {
