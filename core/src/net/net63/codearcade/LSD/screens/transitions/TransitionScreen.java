@@ -44,9 +44,12 @@ public abstract class TransitionScreen extends AbstractScreen {
         stage.addActor(overlay);
 
         overlayPix.dispose();
+
+        setupUI(stage);
     }
 
     public abstract void setupUI(Stage stage);
+    public abstract void checkChange();
 
     @Override
     public void resize(int width, int height) {
@@ -72,6 +75,8 @@ public abstract class TransitionScreen extends AbstractScreen {
         stage.getViewport().apply();
         stage.act(deltaTime);
         stage.draw();
+
+        checkChange();
     }
 
     @Override
@@ -84,6 +89,7 @@ public abstract class TransitionScreen extends AbstractScreen {
     public void dispose() {
         super.dispose();
 
+        previousGame.dispose();
         ((TextureRegionDrawable) overlay.getDrawable()).getRegion().getTexture().dispose();
         stage.dispose();
     }

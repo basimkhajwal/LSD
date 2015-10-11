@@ -34,6 +34,7 @@ public class MenuScreen extends AbstractScreen{
 
 	private Stage stage;
     private Image backgroundImage;
+    private ImageButton playButton;
 
     private boolean changingScreen;
 
@@ -59,7 +60,7 @@ public class MenuScreen extends AbstractScreen{
         bottomTitle.setAlignment(Align.center);
         bottomTitle.setPosition((800 - bottomTitle.getWidth()) / 2, topTitle.getY() - bottomTitle.getHeight());
 
-        ImageButton playButton = Assets.createButton(Assets.Buttons.MENU_PLAY);
+        playButton = Assets.createButton(Assets.Buttons.MENU_PLAY);
         playButton.setSize(140f, 140f);
         playButton.setPosition((800 - playButton.getWidth()) / 2.0f, 100);
         playButton.addListener(new ClickListener() {
@@ -103,6 +104,7 @@ public class MenuScreen extends AbstractScreen{
 		super.render(delta);
 
 		stage.act(delta);
+        playButton.setChecked(playButton.isOver());
 		stage.draw();
 
 		if (changingScreen) {
