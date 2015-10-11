@@ -24,8 +24,6 @@ public class GameOverScreen extends TransitionScreen {
 
     public GameOverScreen(LSD game, GameScreen previousGame) {
         super(game, previousGame);
-
-        buttons = new Array<ImageButton>();
     }
 
     @Override
@@ -60,6 +58,7 @@ public class GameOverScreen extends TransitionScreen {
         backMenuButton.setSize(120, 90);
         backMenuButton.setPosition(200, 90);
 
+        buttons = new Array<ImageButton>();
         buttons.add(nextLevelButton);
         buttons.add(backMenuButton);
         buttons.add(replayLevelButton);
