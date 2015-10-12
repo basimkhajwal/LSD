@@ -8,8 +8,6 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
-import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
-import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.ArrayMap;
 
 /**
@@ -39,19 +37,21 @@ public class Assets {
 
 	public static class Fonts {
         public static final String DIN_ALT = "fonts/DINAlternate";
-        public static final String DISPLAY_OTF = "fonts/DisplayOTF";
+        //public static final String DISPLAY_OTF = "fonts/DisplayOTF";
 
 		public static final String DEFAULT = DIN_ALT;
 	}
-    private static final String[] _Fonts = { Fonts.DIN_ALT, Fonts.DISPLAY_OTF };
+    private static final int FONT_FILE_SIZE = 200;
+    private static final String[] _Fonts = { Fonts.DIN_ALT };
 	
 	public static class FontSizes {
         public static final int TEN = 10;
         public static final int TWENTY = 20;
         public static final int FIFTY = 50;
         public static final int HUNDRED = 100;
+        public static final int TWO_HUNDRED = 200;
     }
-    private static final int[] _FontSizes = { FontSizes.TEN, FontSizes.TWENTY, FontSizes.FIFTY, FontSizes.HUNDRED };
+    private static final int[] _FontSizes = { FontSizes.TEN, FontSizes.TWENTY, FontSizes.FIFTY, FontSizes.HUNDRED, FontSizes.TWO_HUNDRED };
 
     public static class Animations {
         public static final String PLAYER_STILL = "images/ball_anim.png";
@@ -133,23 +133,15 @@ public class Assets {
 	public static BitmapFont getFont(String fontName, int size) { return getAsset(fontName + size + ".fnt", BitmapFont.class); }
 
 
+    /**
+     * Get an animation that has already been loaded and cached
+     *
+     * @param animation
+     * @return The given animation corresponding to the string
+     */
     public static Animation getAnimation(String animation) {
         return animationList.get(animation);
     }
-
-
-    public static ImageButton createButton(String button) {
-        Texture txt = getAsset(button + ".png", Texture.class);
-        Texture txtDwn = getAsset(button + "_down.png", Texture.class);
-        Texture txtHover = getAsset(button + "_hover.png", Texture.class);
-
-        TextureRegionDrawable btn = new TextureRegionDrawable(new TextureRegion(txt));
-        TextureRegionDrawable btnDown = new TextureRegionDrawable(new TextureRegion(txtDwn));
-        TextureRegionDrawable btnChecked = new TextureRegionDrawable(new TextureRegion(txtHover));
-
-        return new ImageButton(btn, btnDown, btnChecked);
-    }
-
 
 	/**
 	 * Dispose all the assets but the Asset Manager still remains (re-usable)
