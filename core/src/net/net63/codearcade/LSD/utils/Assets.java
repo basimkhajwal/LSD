@@ -17,7 +17,13 @@ import com.badlogic.gdx.utils.ArrayMap;
  *
  */
 public class Assets {
-	
+
+    /* Global constants */
+
+    public static final int FONT_FILE_SIZE = 200;
+
+    /*-----------------*/
+
 	public static class Images {
 		public static final String BACKGROUND = "images/bg.jpg";
         public static final String SENSOR_TILE = "images/quad_grey.png";
@@ -36,22 +42,12 @@ public class Assets {
 
 
 	public static class Fonts {
-        public static final String DIN_ALT = "fonts/DINAlternate";
+        public static final String DIN_ALT = "fonts/DINAlternate.fnt";
         //public static final String DISPLAY_OTF = "fonts/DisplayOTF";
 
 		public static final String DEFAULT = DIN_ALT;
 	}
-    private static final int FONT_FILE_SIZE = 200;
     private static final String[] _Fonts = { Fonts.DIN_ALT };
-	
-	public static class FontSizes {
-        public static final int TEN = 10;
-        public static final int TWENTY = 20;
-        public static final int FIFTY = 50;
-        public static final int HUNDRED = 100;
-        public static final int TWO_HUNDRED = 200;
-    }
-    private static final int[] _FontSizes = { FontSizes.TEN, FontSizes.TWENTY, FontSizes.FIFTY, FontSizes.HUNDRED, FontSizes.TWO_HUNDRED };
 
     public static class Animations {
         public static final String PLAYER_STILL = "images/ball_anim.png";
@@ -83,7 +79,7 @@ public class Assets {
 		for (String image: _Images) assetManager.load(image, Texture.class);
         for (String animation: _Animations) assetManager.load(animation, Texture.class);
         for (String levelMap: _LevelMaps) assetManager.load(levelMap, TiledMap.class);
-		for (String font: _Fonts) assetManager.load(font + ".fnt", BitmapFont.class);
+		for (String font: _Fonts) assetManager.load(font, BitmapFont.class);
 
         for (String button: _Buttons) {
             assetManager.load(button + ".png", Texture.class);
@@ -124,13 +120,12 @@ public class Assets {
     public static TiledMap getTiledMap(String fileName) { return getAsset(fileName, TiledMap.class); }
 
 	/**
-	 * Returns a BitmapFont of the specified font and size
+	 * Returns a BitmapFont of the specified font
 	 * 
 	 * @param fontName	The font name
-	 * @param size	The size of the font 
 	 * @return The associated BitmapFont
 	 */
-	public static BitmapFont getFont(String fontName, int size) { return getAsset(fontName + size + ".fnt", BitmapFont.class); }
+	public static BitmapFont getFont(String fontName) { return getAsset(fontName, BitmapFont.class); }
 
 
     /**
