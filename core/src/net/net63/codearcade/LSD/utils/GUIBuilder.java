@@ -1,8 +1,10 @@
 package net.net63.codearcade.LSD.utils;
 
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 
 /**
@@ -24,4 +26,10 @@ public class GUIBuilder {
         return new ImageButton(btn, btnDown, btnChecked);
     }
 
+    public static Label createLabel(String text, int size, Color color) {
+        Label label = new Label(text, new Label.LabelStyle(Assets.getFont(Assets.Fonts.DEFAULT), color));
+        label.setFontScale(size * (1f / Assets.FONT_FILE_SIZE));
+
+        return label;
+    }
 }
