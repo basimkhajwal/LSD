@@ -83,12 +83,7 @@ public class Assets {
 		for (String image: _Images) assetManager.load(image, Texture.class);
         for (String animation: _Animations) assetManager.load(animation, Texture.class);
         for (String levelMap: _LevelMaps) assetManager.load(levelMap, TiledMap.class);
-
-		for (String font: _Fonts) {
-            for (int size: _FontSizes) {
-                assetManager.load(font + size + ".fnt", BitmapFont.class);
-            }
-		}
+		for (String font: _Fonts) assetManager.load(font + ".fnt", BitmapFont.class);
 
         for (String button: _Buttons) {
             assetManager.load(button + ".png", Texture.class);
