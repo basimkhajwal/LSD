@@ -27,9 +27,6 @@ public class GUIBuilder {
     }
 
     public static Label createLabel(String text, int size, Color color) {
-        Label label = new Label(text, new Label.LabelStyle(Assets.getFont(Assets.Fonts.DEFAULT, size), color));
-        //label.setFontScale(size * (1f / Assets.FONT_FILE_SIZE));
-        //label.getWidth();
-        return label;
+        return new Label(text, new Label.LabelStyle(Assets.getFont(Assets.Fonts.DEFAULT, size), color));
     }
 }
