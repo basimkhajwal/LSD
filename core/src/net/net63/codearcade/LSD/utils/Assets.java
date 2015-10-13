@@ -1,5 +1,6 @@
 package net.net63.codearcade.LSD.utils;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.assets.loaders.resolvers.InternalFileHandleResolver;
 import com.badlogic.gdx.graphics.Texture;
@@ -40,14 +41,21 @@ public class Assets {
     }
     private static final String[] _Buttons = { Buttons.MENU_PLAY, Buttons.NEXT_LEVEL, Buttons.REPLAY_LEVEL, Buttons.BACK_MENU };
 
+    public static class FontSizes {
+        public static final int TEN = 10;
+        public static final int TWENTY = 20;
+        public static final int FIFTY = 50;
+        public static final int HUNDRED = 100;
+    }
+    private static final int[] _FontSizes = { FontSizes.TEN, FontSizes.TWENTY, FontSizes.FIFTY, FontSizes.HUNDRED };
 
 	public static class Fonts {
-        public static final String DIN_ALT = "fonts/DINAlternate.fnt";
-        //public static final String DISPLAY_OTF = "fonts/DisplayOTF";
+        public static final String DIN_ALT = "fonts/DINAlternate";
 
 		public static final String DEFAULT = DIN_ALT;
 	}
     private static final String[] _Fonts = { Fonts.DIN_ALT };
+    private static final ArrayMap<String, ArrayMap<Integer, BitmapFont>> fontCache = new ArrayMap<String, ArrayMap<Integer, BitmapFont>>();
 
     public static class Animations {
         public static final String PLAYER_STILL = "images/ball_anim.png";
@@ -79,7 +87,6 @@ public class Assets {
 		for (String image: _Images) assetManager.load(image, Texture.class);
         for (String animation: _Animations) assetManager.load(animation, Texture.class);
         for (String levelMap: _LevelMaps) assetManager.load(levelMap, TiledMap.class);
-		for (String font: _Fonts) assetManager.load(font, BitmapFont.class);
 
         for (String button: _Buttons) {
             assetManager.load(button + ".png", Texture.class);
@@ -88,6 +95,20 @@ public class Assets {
         }
 
 		assetManager.finishLoading();
+
+        //Load fonts separately
+        for (String fontName: _Fonts) {
+            ArrayMap<Integer, BitmapFont> localCache = new ArrayMap<Integer, BitmapFont>();
+
+            for (int i = 0; i < _FontSizes.length; i++) {
+                BitmapFont font = new BitmapFont(Gdx.files.internal(fontName + ".fnt"), false);
+                font.getData().setScale((1.0f * _FontSizes[i]) / FONT_FILE_SIZE);
+
+                localCache.put(_FontSizes[i], font);
+            }
+
+            fontCache.put(fontName, localCache);
+        }
 
         //Setup the animations
         for (String animation: _Animations) {
@@ -125,7 +146,7 @@ public class Assets {
 	 * @param fontName	The font name
 	 * @return The associated BitmapFont
 	 */
-	public static BitmapFont getFont(String fontName) { return getAsset(fontName, BitmapFont.class); }
+	public static BitmapFont getFont(String fontName, int size) { return fontCache.get(fontName).get(size); }
 
 
     /**
@@ -143,6 +164,7 @@ public class Assets {
 	 */
 	public static void clear() {
 		assetManager.clear();
+        for (ArrayMap<Integer, BitmapFont> caches: fontCache.values()) for (BitmapFont font: caches.values()) font.dispose();
 	}
 	
 	/**
@@ -150,6 +172,7 @@ public class Assets {
 	 */
 	public static void dispose() {
 		assetManager.dispose();
+        for (ArrayMap<Integer, BitmapFont> caches: fontCache.values()) for (BitmapFont font: caches.values()) font.dispose();
 	}
 	
 }
