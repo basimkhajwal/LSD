@@ -1,4 +1,4 @@
-package net.net63.codearcade.LSD.screens.transitions;
+package net.net63.codearcade.LSD.screens.overlays;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
@@ -17,13 +17,13 @@ import net.net63.codearcade.LSD.utils.GUIBuilder;
 /**
  * Created by Basim on 30/09/15.
  */
-public class LevelCompleteScreen extends TransitionScreen {
+public class GameOverScreen extends AbstractOverlay {
 
     private boolean replaying = false;
 
     private Array<ImageButton> buttons;
 
-    public LevelCompleteScreen(LSD game, GameScreen previousGame) {
+    public GameOverScreen(LSD game, GameScreen previousGame) {
         super(game, previousGame);
     }
 
@@ -33,13 +33,13 @@ public class LevelCompleteScreen extends TransitionScreen {
         backingImage.setSize(400, 320);
         backingImage.setPosition(200, 200);
 
-        Label gameOverLabel = GUIBuilder.createLabel("Level Complete", 50, Color.ORANGE);
+        Label gameOverLabel = GUIBuilder.createLabel("Game Over", Assets.FontSizes.FIFTY, Color.ORANGE);
         gameOverLabel.setPosition((800 - gameOverLabel.getWidth()) / 2, 440);
 
-        Label levelLabel = GUIBuilder.createLabel("Level", Assets.FontSizes.FOURTY, Color.GREEN);
+        Label levelLabel = GUIBuilder.createLabel("Level", Assets.FontSizes.FOURTY, Color.MAROON);
         levelLabel.setPosition((800 - levelLabel.getWidth()) / 2, 390);
 
-        Label levelIDLabel = GUIBuilder.createLabel((previousGame.getLevelId() + 1) + "", Assets.FontSizes.TWO_HUNDRED, Color.GREEN);
+        Label levelIDLabel = GUIBuilder.createLabel((previousGame.getLevelId() + 1) + "", Assets.FontSizes.TWO_HUNDRED, Color.MAROON);
         levelIDLabel.setPosition((800 - levelIDLabel.getWidth()) / 2, 195);
 
         ImageButton nextLevelButton = GUIBuilder.createButton(Assets.Buttons.NEXT_LEVEL);
@@ -83,6 +83,5 @@ public class LevelCompleteScreen extends TransitionScreen {
 
         if (replaying) game.setScreen(new GameScreen(game, previousGame.getLevelId()));
     }
-
 
 }

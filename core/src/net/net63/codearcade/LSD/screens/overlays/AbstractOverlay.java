@@ -1,4 +1,4 @@
-package net.net63.codearcade.LSD.screens.transitions;
+package net.net63.codearcade.LSD.screens.overlays;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Pixmap;
@@ -18,7 +18,7 @@ import net.net63.codearcade.LSD.utils.Constants;
 /**
  * Created by Basim on 10/10/15.
  */
-public abstract class TransitionScreen extends AbstractScreen {
+public abstract class AbstractOverlay extends AbstractScreen {
 
     protected GameScreen previousGame;
     protected LSD game;
@@ -26,7 +26,7 @@ public abstract class TransitionScreen extends AbstractScreen {
     private Stage stage;
     private Image overlay;
 
-    public TransitionScreen(LSD game, GameScreen previousGame) {
+    public AbstractOverlay(LSD game, GameScreen previousGame) {
         super(game);
 
         this.game = game;
