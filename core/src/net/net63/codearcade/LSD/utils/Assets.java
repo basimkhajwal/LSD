@@ -42,12 +42,12 @@ public class Assets {
     private static final String[] _Buttons = { Buttons.MENU_PLAY, Buttons.NEXT_LEVEL, Buttons.REPLAY_LEVEL, Buttons.BACK_MENU };
 
     public static class FontSizes {
-        public static final int TEN = 10;
         public static final int TWENTY = 20;
         public static final int FIFTY = 50;
         public static final int HUNDRED = 100;
+        public static final int TWO_HUNDRED = 200;
     }
-    private static final int[] _FontSizes = { FontSizes.TEN, FontSizes.TWENTY, FontSizes.FIFTY, FontSizes.HUNDRED };
+    private static final int[] _FontSizes = { FontSizes.TWENTY, FontSizes.FIFTY, FontSizes.HUNDRED, FontSizes.TWO_HUNDRED };
 
 	public static class Fonts {
         public static final String DIN_ALT = "fonts/DINAlternate";
