@@ -14,6 +14,7 @@ import net.net63.codearcade.LSD.components.PlayerComponent;
 import net.net63.codearcade.LSD.components.SensorComponent;
 import net.net63.codearcade.LSD.components.StateComponent;
 import net.net63.codearcade.LSD.listeners.BodyRemovalListener;
+import net.net63.codearcade.LSD.listeners.SensorDestroyListener;
 import net.net63.codearcade.LSD.systems.*;
 import net.net63.codearcade.LSD.utils.Constants;
 
@@ -145,8 +146,9 @@ public class GameWorld implements Disposable, EntityListener {
     }
 
     private void addListeners() {
-        engine.addEntityListener(new BodyRemovalListener(world));
-        engine.addEntityListener(this);
+        engine.addEntityListener(0, new SensorDestroyListener());
+        engine.addEntityListener(1, this);
+        engine.addEntityListener(2, new BodyRemovalListener(world));
 
         world.setContactListener(engine.getSystem(PlayerSystem.class));
     }
