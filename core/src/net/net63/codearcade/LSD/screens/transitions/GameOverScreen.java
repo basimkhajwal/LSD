@@ -33,8 +33,14 @@ public class GameOverScreen extends TransitionScreen {
         backingImage.setSize(400, 320);
         backingImage.setPosition(200, 200);
 
-        Label gameOverLabel = GUIBuilder.createLabel("Game Over", 50, Color.ORANGE);
+        Label gameOverLabel = GUIBuilder.createLabel("Game Over", Assets.FontSizes.FIFTY, Color.ORANGE);
         gameOverLabel.setPosition((800 - gameOverLabel.getWidth()) / 2, 440);
+
+        Label levelLabel = GUIBuilder.createLabel("Level", Assets.FontSizes.FOURTY, Color.MAROON);
+        levelLabel.setPosition((800 - levelLabel.getWidth()) / 2, 390);
+
+        Label levelIDLabel = GUIBuilder.createLabel((previousGame.getLevelId() + 1) + "", Assets.FontSizes.TWO_HUNDRED, Color.MAROON);
+        levelIDLabel.setPosition((800 - levelIDLabel.getWidth()) / 2, 195);
 
         ImageButton nextLevelButton = GUIBuilder.createButton(Assets.Buttons.NEXT_LEVEL);
         nextLevelButton.setSize(120, 90);
@@ -64,6 +70,8 @@ public class GameOverScreen extends TransitionScreen {
 
         stage.addActor(backingImage);
         stage.addActor(gameOverLabel);
+        stage.addActor(levelLabel);
+        stage.addActor(levelIDLabel);
         stage.addActor(nextLevelButton);
         stage.addActor(replayLevelButton);
         stage.addActor(backMenuButton);

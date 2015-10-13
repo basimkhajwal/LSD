@@ -43,11 +43,12 @@ public class Assets {
 
     public static class FontSizes {
         public static final int TWENTY = 20;
+        public static final int FOURTY = 40;
         public static final int FIFTY = 50;
         public static final int HUNDRED = 100;
         public static final int TWO_HUNDRED = 200;
     }
-    private static final int[] _FontSizes = { FontSizes.TWENTY, FontSizes.FIFTY, FontSizes.HUNDRED, FontSizes.TWO_HUNDRED };
+    private static final int[] _FontSizes = { FontSizes.TWENTY, FontSizes.FOURTY, FontSizes.FIFTY, FontSizes.HUNDRED, FontSizes.TWO_HUNDRED };
 
 	public static class Fonts {
         public static final String DIN_ALT = "fonts/DINAlternate";

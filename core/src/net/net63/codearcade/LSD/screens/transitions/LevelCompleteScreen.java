@@ -36,6 +36,12 @@ public class LevelCompleteScreen extends TransitionScreen {
         Label gameOverLabel = GUIBuilder.createLabel("Level Complete", 50, Color.ORANGE);
         gameOverLabel.setPosition((800 - gameOverLabel.getWidth()) / 2, 440);
 
+        Label levelLabel = GUIBuilder.createLabel("Level", Assets.FontSizes.FOURTY, Color.GREEN);
+        levelLabel.setPosition((800 - levelLabel.getWidth()) / 2, 390);
+
+        Label levelIDLabel = GUIBuilder.createLabel((previousGame.getLevelId() + 1) + "", Assets.FontSizes.TWO_HUNDRED, Color.GREEN);
+        levelIDLabel.setPosition((800 - levelIDLabel.getWidth()) / 2, 195);
+
         ImageButton nextLevelButton = GUIBuilder.createButton(Assets.Buttons.NEXT_LEVEL);
         nextLevelButton.setSize(120, 90);
         nextLevelButton.setPosition(480, 90);
@@ -64,6 +70,8 @@ public class LevelCompleteScreen extends TransitionScreen {
 
         stage.addActor(backingImage);
         stage.addActor(gameOverLabel);
+        stage.addActor(levelLabel);
+        stage.addActor(levelIDLabel);
         stage.addActor(nextLevelButton);
         stage.addActor(replayLevelButton);
         stage.addActor(backMenuButton);
