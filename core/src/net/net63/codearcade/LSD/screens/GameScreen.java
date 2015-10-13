@@ -13,6 +13,7 @@ import net.net63.codearcade.LSD.screens.transitions.GameOverScreen;
 import net.net63.codearcade.LSD.screens.transitions.LevelCompleteScreen;
 import net.net63.codearcade.LSD.utils.Assets;
 import net.net63.codearcade.LSD.utils.Constants;
+import net.net63.codearcade.LSD.utils.GUIBuilder;
 import net.net63.codearcade.LSD.world.GameWorld;
 
 /**
@@ -55,7 +56,7 @@ public class GameScreen extends AbstractScreen implements EventListener {
     public int getLevelId() { return levelId; }
 
     private void setupUI() {
-        scoreLabel = new Label("", new Label.LabelStyle(Assets.getFont(Assets.Fonts.DEFAULT, Assets.FontSizes.FIFTY), Color.YELLOW));
+        scoreLabel = GUIBuilder.createLabel("", 50, Color.YELLOW);
         scoreLabel.setPosition((800 - scoreLabel.getWidth()) / 2.0f , 550 - scoreLabel.getHeight());
 
         stage = new Stage(new ExtendViewport(Constants.DEFAULT_SCREEN_WIDTH, Constants.DEFAULT_SCREEN_HEIGHT));

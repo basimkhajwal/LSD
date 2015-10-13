@@ -17,6 +17,7 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import net.net63.codearcade.LSD.LSD;
 import net.net63.codearcade.LSD.utils.Assets;
 import net.net63.codearcade.LSD.utils.Constants;
+import net.net63.codearcade.LSD.utils.GUIBuilder;
 
 
 /**
@@ -50,17 +51,15 @@ public class MenuScreen extends AbstractScreen{
     }
 
     private void setupUI() {
-        Label topTitle = new Label("Little Sticky",
-                new Label.LabelStyle(Assets.getFont(Assets.Fonts.DEFAULT, Assets.FontSizes.HUNDRED), TOP_TITLE));
+        Label topTitle = GUIBuilder.createLabel("Little Sticky", 100, TOP_TITLE);
         topTitle.setAlignment(Align.center);
         topTitle.setPosition((800 - topTitle.getWidth()) / 2, 450);
 
-        Label bottomTitle = new Label("Destroyer",
-                new Label.LabelStyle(Assets.getFont(Assets.Fonts.DEFAULT, Assets.FontSizes.HUNDRED), BOTTOM_TITLE));
+        Label bottomTitle = GUIBuilder.createLabel("Destroyer", 100, BOTTOM_TITLE);
         bottomTitle.setAlignment(Align.center);
         bottomTitle.setPosition((800 - bottomTitle.getWidth()) / 2, topTitle.getY() - bottomTitle.getHeight());
 
-        playButton = Assets.createButton(Assets.Buttons.MENU_PLAY);
+        playButton = GUIBuilder.createButton(Assets.Buttons.MENU_PLAY);
         playButton.setSize(140f, 140f);
         playButton.setPosition((800 - playButton.getWidth()) / 2.0f, 100);
         playButton.addListener(new ClickListener() {
