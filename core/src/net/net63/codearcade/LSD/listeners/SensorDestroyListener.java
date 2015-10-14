@@ -15,7 +15,7 @@ import net.net63.codearcade.LSD.components.SensorComponent;
  */
 public class SensorDestroyListener implements EntityListener {
 
-    private static final float PARTICLE_SIZE = 0.2f;
+    private static final float PARTICLE_SIZE = 0.1f;
 
     private ComponentMapper<SensorComponent> sensorMapper;
     private ComponentMapper<BodyComponent> bodyMapper;

@@ -30,13 +30,13 @@ They should all work but only desktop and HTML5 builds have currently been teste
 - [x] Implement player death with solid blocks
 - [x] Update the GUI and create a flat theme
 - [x] Add better buttons and make the menu screen more attractive
+- [x] Change the font rendering to BitmapFontData scale rather than many pre-loaded image files
+- [x] Create a player died menu
+- [x] Create a level finished menu
 
 #### TODO:
-- [ ] Change the font rendering to BitmapFontData scale rather than many pre-loaded image files
 - [ ] Add a sound manager
 - [ ] Implement background music and sounds for player death, jump etc.
-- [ ] Create a player died menu
-- [ ] Create a level finished menu
 - [ ] Add JSON read/write for a persistent Settings value
 - [ ] Add particle effects when platform is destroyed
 - [ ] Add camera shake effect when platform is destroyed
