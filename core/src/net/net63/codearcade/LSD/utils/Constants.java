@@ -67,6 +67,7 @@ public class Constants {
         public static final int BACKGROUND_RENDER = 8;
         public static final int RENDER = 9;
         public static final int DEBUG_RENDER = 10;
-        public static final int EFFECT_RENDER = 11;
+        public static final int PARTICLE_RENDER = 11;
+        public static final int EFFECT_RENDER = 12;
     }
 }
