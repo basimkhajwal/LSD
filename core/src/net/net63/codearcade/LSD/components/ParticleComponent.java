@@ -7,7 +7,7 @@ import com.badlogic.gdx.utils.Array;
 /**
  * Created by Basim on 13/10/15.
  */
-public class PhysicsParticleComponent implements Component {
+public class ParticleComponent implements Component {
 
     public Array<Body> particles = new Array<Body>();
 
