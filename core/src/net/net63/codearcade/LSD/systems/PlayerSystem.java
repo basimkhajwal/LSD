@@ -98,6 +98,8 @@ public class PlayerSystem extends IteratingSystem implements ContactListener {
         Entity entityB = (Entity) b.getUserData();
         Entity playerEntity = null;
 
+        if (entityA == null || entityB == null) return;
+
         if (playerMapper.has(entityA)) playerEntity = entityA;
         if (playerMapper.has(entityB)) playerEntity = entityB;
 
