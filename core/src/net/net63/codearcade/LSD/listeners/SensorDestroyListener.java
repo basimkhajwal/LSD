@@ -17,7 +17,6 @@ import net.net63.codearcade.LSD.components.SensorComponent;
 public class SensorDestroyListener implements EntityListener {
 
     private static final float PARTICLE_SIZE = 0.1f;
-    private static final float BLAST_POWER = 10;
 
     private ComponentMapper<SensorComponent> sensorMapper;
     private ComponentMapper<BodyComponent> bodyMapper;
@@ -60,30 +59,16 @@ public class SensorDestroyListener implements EntityListener {
                 for (int i = 0; i < particlesAcross; i++) {
                     Body particleBody = createParticle(bottomLeft.x + i * PARTICLE_SIZE, bottomLeft.y + j * PARTICLE_SIZE);
 
-                    particleBody.applyLinearImpulse(new Vector2(MathUtils.random(20, 50), MathUtils.random(20, 50)), particleBody.getWorldCenter(), true);
+                    particleBody.applyLinearImpulse(new Vector2(MathUtils.random(-10, 10), MathUtils.random(-10, 10)), particleBody.getWorldCenter(), true);
 
                     particleComponent.particles.add(particleBody);
                 }
             }
 
-
-
             Entity particleEntity = new Entity();
             particleEntity.add(particleComponent);
             engine.addEntity(particleEntity);
         }
-    }
-
-    private void applyBlastImpulse(Body body, Vector2 blastCentre, Vector2 applyPoint) {
-        Vector2 blastDir = applyPoint.cpy().sub(blastCentre);
-        float distance = blastDir.len();
-
-        if (distance == 0) return;
-
-        float invDistance = 1 / distance;
-        float impulseMag = BLAST_POWER * invDistance * invDistance;
-
-        body.applyLinearImpulse(blastDir.scl(impulseMag), applyPoint, true);
     }
 
     private Body createParticle(float x, float y) {
