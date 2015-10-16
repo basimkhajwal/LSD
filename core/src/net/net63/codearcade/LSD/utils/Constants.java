@@ -48,6 +48,25 @@ public class Constants {
 
     public static final Vector2 WORLD_GRAVITY = new Vector2(0, -10);
 
+    // ---------------- Collision Masks --------
+
+    public static class CategoryBits {
+
+        public static final short PLAYER      = 0x0001;
+        public static final short PARTICLE    = 0x0002;
+        public static final short WALL        = 0x0004;
+        public static final short SENSOR      = 0x0008;
+
+    }
+
+    public static class MaskBits {
+
+        public static final short PLAYER      = 0xFFF;
+        public static final short PARTICLE    = CategoryBits.WALL | CategoryBits.SENSOR;
+
+    }
+
+
     // -------------- World Settings -----------
 
     public static final float BOUNDS_BUFFER_X = 2.0f;
