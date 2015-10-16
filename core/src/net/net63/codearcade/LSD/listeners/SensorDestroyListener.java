@@ -61,6 +61,7 @@ public class SensorDestroyListener implements EntityListener {
                     Body particleBody = createParticle(bottomLeft.x + i * PARTICLE_SIZE, bottomLeft.y + j * PARTICLE_SIZE);
 
                     particleBody.applyLinearImpulse(new Vector2(MathUtils.random(-10, 10), MathUtils.random(-10, 10)), particleBody.getWorldCenter(), true);
+                    particleBody.setAngularVelocity(MathUtils.random(-10, 10));
 
                     particleComponent.particles.add(particleBody);
                 }
@@ -82,6 +83,7 @@ public class SensorDestroyListener implements EntityListener {
 
         PolygonShape shape = new PolygonShape();
         shape.setAsBox(PARTICLE_SIZE / 2, PARTICLE_SIZE / 2);
+        fixtureDef.restitution = 0.8f;
         fixtureDef.shape = shape;
         fixtureDef.filter.categoryBits = Constants.CategoryBits.PARTICLE;
         fixtureDef.filter.maskBits = Constants.MaskBits.PARTICLE;
