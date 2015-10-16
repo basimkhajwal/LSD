@@ -10,6 +10,7 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
+import com.badlogic.gdx.physics.box2d.Transform;
 import com.badlogic.gdx.utils.Disposable;
 import net.net63.codearcade.LSD.components.ParticleComponent;
 import net.net63.codearcade.LSD.utils.Constants;
@@ -47,19 +48,24 @@ public class ParticleRenderSystem extends IteratingSystem implements Disposable 
     protected void processEntity(Entity entity, float deltaTime) {
         ParticleComponent component = particleMapper.get(entity);
 
-        Vector2 bottomLeft = new Vector2();
-        Vector2 dimensions = new Vector2();
+        Vector2 vertex = new Vector2();
+        float[] vertices = new float[8];
 
         for (Body particle: component.particles) {
             PolygonShape shape = (PolygonShape) particle.getFixtureList().first().getShape();
+            Transform transform = particle.getTransform();
 
-            shape.getVertex(2, dimensions);
-            bottomLeft.set(particle.getPosition()).sub(dimensions);
+            for (int i = 0; i < 4; i++) {
+                shape.getVertex(i, vertex);
+                transform.mul(vertex);
 
-            dimensions.scl(2);
+                vertices[i*2] = vertex.x;
+                vertices[i*2 + 1] = vertex.y;
+            }
 
             shapeRenderer.setColor(Color.RED);
-            shapeRenderer.rect(bottomLeft.x, bottomLeft.y, dimensions.x, dimensions.y, Color.RED, Color.RED, Color.RED, Color.RED);
+            shapeRenderer.triangle(vertices[0], vertices[1], vertices[2], vertices[3], vertices[4], vertices[5]);
+            shapeRenderer.triangle(vertices[4], vertices[5], vertices[6], vertices[7], vertices[0], vertices[1]);
         }
     }
 
