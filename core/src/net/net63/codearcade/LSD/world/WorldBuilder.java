@@ -124,6 +124,8 @@ public class WorldBuilder {
         FixtureDef fixtureDef = new FixtureDef();
         fixtureDef.restitution = 0.0f;
         fixtureDef.shape = new PolygonShape();
+        fixtureDef.filter.categoryBits = Constants.CategoryBits.SENSOR;
+
         ((PolygonShape) fixtureDef.shape).setAsBox(width / 2, height / 2);
 
         bodyComponent.body = world.createBody(bodyDef);
@@ -151,6 +153,8 @@ public class WorldBuilder {
         FixtureDef fixtureDef = new FixtureDef();
         fixtureDef.restitution = 0.0f;
         fixtureDef.shape = new PolygonShape();
+        fixtureDef.filter.categoryBits = Constants.CategoryBits.WALL;
+
         ((PolygonShape) fixtureDef.shape).setAsBox(width / 2, height / 2);
 
         bodyComponent.body = world.createBody(bodyDef);
@@ -180,6 +184,8 @@ public class WorldBuilder {
         fixtureDef.restitution = 0.0f;
         fixtureDef.shape = new CircleShape();
         fixtureDef.shape.setRadius(Constants.PLAYER_WIDTH / 2.0f);
+        fixtureDef.filter.maskBits = Constants.MaskBits.PLAYER;
+        fixtureDef.filter.categoryBits = Constants.CategoryBits.PLAYER;
 
         Animation still = Assets.getAnimation(Assets.Animations.PLAYER_STILL);
         Animation jumping = Assets.getAnimation(Assets.Animations.PLAYER_JUMPING);

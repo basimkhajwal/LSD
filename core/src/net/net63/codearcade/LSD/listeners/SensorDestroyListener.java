@@ -10,6 +10,7 @@ import com.badlogic.gdx.physics.box2d.*;
 import net.net63.codearcade.LSD.components.BodyComponent;
 import net.net63.codearcade.LSD.components.ParticleComponent;
 import net.net63.codearcade.LSD.components.SensorComponent;
+import net.net63.codearcade.LSD.utils.Constants;
 
 /**
  * Created by Basim on 13/10/15.
@@ -82,6 +83,8 @@ public class SensorDestroyListener implements EntityListener {
         PolygonShape shape = new PolygonShape();
         shape.setAsBox(PARTICLE_SIZE / 2, PARTICLE_SIZE / 2);
         fixtureDef.shape = shape;
+        fixtureDef.filter.categoryBits = Constants.CategoryBits.PARTICLE;
+        fixtureDef.filter.maskBits = Constants.MaskBits.PARTICLE;
 
         Body body = world.createBody(bodyDef);
         body.createFixture(fixtureDef);
