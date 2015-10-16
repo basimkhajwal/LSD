@@ -62,7 +62,7 @@ public class Constants {
     public static class MaskBits {
 
         public static final short PLAYER      = 0xFFF;
-        public static final short PARTICLE    = CategoryBits.WALL | CategoryBits.SENSOR;
+        public static final short PARTICLE    = CategoryBits.PARTICLE | CategoryBits.WALL | CategoryBits.SENSOR;
 
     }
 
