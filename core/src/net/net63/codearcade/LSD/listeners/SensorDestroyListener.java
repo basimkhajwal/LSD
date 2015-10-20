@@ -58,7 +58,7 @@ public class SensorDestroyListener implements EntityListener {
             particleComponent.colors = new Color[PARTICLE_NUM];
 
             particleComponent.currentTime = 0;
-            particleComponent.finalTime = MathUtils.random(3f, 5f);
+            particleComponent.finalTime = 3;
 
             for (int i = 0; i < PARTICLE_NUM; i++) {
                 Body particleBody = createParticle(

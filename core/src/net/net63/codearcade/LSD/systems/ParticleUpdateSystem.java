@@ -40,7 +40,7 @@ public class ParticleUpdateSystem extends IteratingSystem {
         ParticleComponent component = particleMapper.get(entity);
 
         component.currentTime += deltaTime;
-
+        
         if (component.currentTime >= component.finalTime) {
             for (Body body : component.particles) world.destroyBody(body);
             engine.removeEntity(entity);

@@ -4,7 +4,9 @@ import com.badlogic.ashley.core.ComponentMapper;
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.Family;
 import com.badlogic.ashley.systems.IteratingSystem;
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
@@ -36,12 +38,14 @@ public class ParticleRenderSystem extends IteratingSystem implements Disposable 
 
     @Override
     public void update(float deltaTime) {
+        Gdx.gl.glEnable(GL20.GL_BLEND);
         shapeRenderer.setProjectionMatrix(gameCamera.combined);
         shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
 
         super.update(deltaTime);
 
         shapeRenderer.end();
+        Gdx.gl.glDisable(GL20.GL_BLEND);
     }
 
     @Override
@@ -66,7 +70,7 @@ public class ParticleRenderSystem extends IteratingSystem implements Disposable 
                 vertices[i*2 + 1] = vertex.y;
             }
 
-            shapeRenderer.setColor(color.r, color.g, color.b, 1 - component.currentTime / component.finalTime);
+            shapeRenderer.setColor(color.r, color.g, color.b, 1 - (component.currentTime / component.finalTime) );
             shapeRenderer.triangle(vertices[0], vertices[1], vertices[2], vertices[3], vertices[4], vertices[5]);
             shapeRenderer.triangle(vertices[4], vertices[5], vertices[6], vertices[7], vertices[0], vertices[1]);
         }
