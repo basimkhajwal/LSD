@@ -18,6 +18,7 @@ import net.net63.codearcade.LSD.utils.Constants;
 public class SensorDestroyListener implements EntityListener {
 
     private static final float PARTICLE_SIZE = 0.1f;
+    private static final int PARTICLE_NUM = 80;
 
     private ComponentMapper<SensorComponent> sensorMapper;
     private ComponentMapper<BodyComponent> bodyMapper;
@@ -48,23 +49,19 @@ public class SensorDestroyListener implements EntityListener {
             shape.getVertex(2, dimensions);
 
             Vector2 bottomLeft = body.getPosition().cpy().sub(dimensions);
-
             dimensions.scl(2);
-
-            int particlesAcross = (int) (dimensions.x / PARTICLE_SIZE);
-            int particlesDown = (int) (dimensions.y / PARTICLE_SIZE);
 
             ParticleComponent particleComponent = new ParticleComponent();
 
-            for (int j = 0; j < particlesDown; j++) {
-                for (int i = 0; i < particlesAcross; i++) {
-                    Body particleBody = createParticle(bottomLeft.x + i * PARTICLE_SIZE, bottomLeft.y + j * PARTICLE_SIZE);
+            for (int i = 0; i < PARTICLE_NUM; i++) {
+                    Body particleBody = createParticle(
+                            bottomLeft.x + MathUtils.random(0, dimensions.x),
+                            bottomLeft.y + MathUtils.random(0, dimensions.y));
 
                     particleBody.applyLinearImpulse(new Vector2(MathUtils.random(-10, 10), MathUtils.random(-10, 10)), particleBody.getWorldCenter(), true);
                     particleBody.setAngularVelocity(MathUtils.random(-10, 10));
 
                     particleComponent.particles.add(particleBody);
-                }
             }
 
             Entity particleEntity = new Entity();
