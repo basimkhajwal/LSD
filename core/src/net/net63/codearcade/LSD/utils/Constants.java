@@ -76,17 +76,18 @@ public class Constants {
 
     public static final class SYSTEM_PRIORITIES {
 
-        public static final int WORLD = 1;
+        public static final int WORLD                   = 1;
 
 
-        public static final int PLAYER_AIM = 4;
-        public static final int PLAYER = 5;
-        public static final int CAMERA_MOVEMENT = 6;
-        public static final int ANIMATION = 7;
-        public static final int BACKGROUND_RENDER = 8;
-        public static final int RENDER = 9;
-        public static final int DEBUG_RENDER = 10;
-        public static final int PARTICLE_RENDER = 11;
-        public static final int EFFECT_RENDER = 12;
+        public static final int PLAYER_AIM              = 4;
+        public static final int PLAYER                  = 5;
+        public static final int PARTICLE_UPDATE         = 6;
+        public static final int CAMERA_MOVEMENT         = 7;
+        public static final int ANIMATION               = 8;
+        public static final int BACKGROUND_RENDER       = 9;
+        public static final int RENDER                  = 10;
+        public static final int DEBUG_RENDER            = 11;
+        public static final int PARTICLE_RENDER         = 12;
+        public static final int EFFECT_RENDER           = 13;
     }
 }
