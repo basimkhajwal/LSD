@@ -4,6 +4,7 @@ import com.badlogic.ashley.core.ComponentMapper;
 import com.badlogic.ashley.core.Engine;
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.EntityListener;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
@@ -52,16 +53,20 @@ public class SensorDestroyListener implements EntityListener {
             dimensions.scl(2);
 
             ParticleComponent particleComponent = new ParticleComponent();
+            particleComponent.numParticles = PARTICLE_NUM;
+            particleComponent.particles = new Body[PARTICLE_NUM];
+            particleComponent.colors = new Color[PARTICLE_NUM];
 
             for (int i = 0; i < PARTICLE_NUM; i++) {
-                    Body particleBody = createParticle(
-                            bottomLeft.x + MathUtils.random(0, dimensions.x),
-                            bottomLeft.y + MathUtils.random(0, dimensions.y));
+                Body particleBody = createParticle(
+                        bottomLeft.x + MathUtils.random(0, dimensions.x),
+                        bottomLeft.y + MathUtils.random(0, dimensions.y));
 
-                    particleBody.applyLinearImpulse(new Vector2(MathUtils.random(-20, 20), MathUtils.random(0, 30)), particleBody.getWorldCenter(), true);
-                    particleBody.setAngularVelocity(MathUtils.random(-10, 10));
+                particleBody.applyLinearImpulse(new Vector2(MathUtils.random(-20, 20), MathUtils.random(0, 30)), particleBody.getWorldCenter(), true);
+                particleBody.setAngularVelocity(MathUtils.random(-10, 10));
 
-                    particleComponent.particles.add(particleBody);
+                particleComponent.particles[i] = particleBody;
+                particleComponent.colors[i] = new Color(MathUtils.random(), MathUtils.random(), MathUtils.random(), 1.0f);
             }
 
             Entity particleEntity = new Entity();

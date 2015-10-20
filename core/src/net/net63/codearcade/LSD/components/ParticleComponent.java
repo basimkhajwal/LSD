@@ -12,7 +12,7 @@ public class ParticleComponent implements Component {
     public int numParticles;
     public Body[] particles;
     public Color[] colors;
-    
+
     public float finalTime = 0f;
     public float currentTime = 0f;
 
