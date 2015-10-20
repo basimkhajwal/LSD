@@ -58,7 +58,7 @@ public class SensorDestroyListener implements EntityListener {
                             bottomLeft.x + MathUtils.random(0, dimensions.x),
                             bottomLeft.y + MathUtils.random(0, dimensions.y));
 
-                    particleBody.applyLinearImpulse(new Vector2(MathUtils.random(-10, 10), MathUtils.random(-10, 10)), particleBody.getWorldCenter(), true);
+                    particleBody.applyLinearImpulse(new Vector2(MathUtils.random(-20, 20), MathUtils.random(0, 30)), particleBody.getWorldCenter(), true);
                     particleBody.setAngularVelocity(MathUtils.random(-10, 10));
 
                     particleComponent.particles.add(particleBody);
