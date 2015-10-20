@@ -51,7 +51,10 @@ public class ParticleRenderSystem extends IteratingSystem implements Disposable 
         Vector2 vertex = new Vector2();
         float[] vertices = new float[8];
 
-        for (Body particle: component.particles) {
+        for (int n = 0; n < component.numParticles; n++) {
+            Body particle = component.particles[n];
+            Color color = component.colors[n];
+
             PolygonShape shape = (PolygonShape) particle.getFixtureList().first().getShape();
             Transform transform = particle.getTransform();
 
@@ -63,7 +66,7 @@ public class ParticleRenderSystem extends IteratingSystem implements Disposable 
                 vertices[i*2 + 1] = vertex.y;
             }
 
-            shapeRenderer.setColor(Color.RED);
+            shapeRenderer.setColor(color.r, color.g, color.b, 1 - component.currentTime / component.finalTime);
             shapeRenderer.triangle(vertices[0], vertices[1], vertices[2], vertices[3], vertices[4], vertices[5]);
             shapeRenderer.triangle(vertices[4], vertices[5], vertices[6], vertices[7], vertices[0], vertices[1]);
         }
