@@ -18,7 +18,7 @@ import net.net63.codearcade.LSD.utils.Constants;
  */
 public class SensorDestroyListener implements EntityListener {
 
-    private static final float PARTICLE_SIZE = 0.1f;
+    private static final float PARTICLE_SIZE = 0.08f;
     private static final int PARTICLE_NUM = 80;
 
     private ComponentMapper<SensorComponent> sensorMapper;
@@ -57,12 +57,15 @@ public class SensorDestroyListener implements EntityListener {
             particleComponent.particles = new Body[PARTICLE_NUM];
             particleComponent.colors = new Color[PARTICLE_NUM];
 
+            particleComponent.currentTime = 0;
+            particleComponent.finalTime = MathUtils.random(3f, 5f);
+
             for (int i = 0; i < PARTICLE_NUM; i++) {
                 Body particleBody = createParticle(
                         bottomLeft.x + MathUtils.random(0, dimensions.x),
                         bottomLeft.y + MathUtils.random(0, dimensions.y));
 
-                particleBody.applyLinearImpulse(new Vector2(MathUtils.random(-20, 20), MathUtils.random(0, 30)), particleBody.getWorldCenter(), true);
+                particleBody.applyLinearImpulse(new Vector2(MathUtils.random(-20, 20), MathUtils.random(-10, 20)), particleBody.getWorldCenter(), true);
                 particleBody.setAngularVelocity(MathUtils.random(-10, 10));
 
                 particleComponent.particles[i] = particleBody;
@@ -85,7 +88,7 @@ public class SensorDestroyListener implements EntityListener {
 
         PolygonShape shape = new PolygonShape();
         shape.setAsBox(PARTICLE_SIZE / 2, PARTICLE_SIZE / 2);
-        fixtureDef.restitution = 0.8f;
+        fixtureDef.restitution = 0.6f;
         fixtureDef.shape = shape;
         fixtureDef.filter.categoryBits = Constants.CategoryBits.PARTICLE;
         fixtureDef.filter.maskBits = Constants.MaskBits.PARTICLE;
