@@ -33,11 +33,11 @@ They should all work but only desktop and HTML5 builds have currently been teste
 - [x] Change the font rendering to BitmapFontData scale rather than many pre-loaded image files
 - [x] Create a player died menu
 - [x] Create a level finished menu
+- [x] Add particle effects when platform is destroyed
 
 #### TODO:
 - [ ] Add a sound manager
 - [ ] Implement background music and sounds for player death, jump etc.
 - [ ] Add JSON read/write for a persistent Settings value
-- [ ] Add particle effects when platform is destroyed
 - [ ] Add camera shake effect when platform is destroyed
 - [ ] Add ability to progress from level to level
