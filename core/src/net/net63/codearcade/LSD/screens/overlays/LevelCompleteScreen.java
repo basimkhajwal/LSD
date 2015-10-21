@@ -19,6 +19,9 @@ import net.net63.codearcade.LSD.utils.GUIBuilder;
  */
 public class LevelCompleteScreen extends AbstractOverlay {
 
+    private static final Color TITLE_COLOUR = new Color(71f / 255f, 104f / 255f, 33f / 255f, 1f);
+    private static final Color TEXT_COLOUR = new Color(120f / 255f, 169f / 255f, 66f / 255f, 1f);
+
     private boolean replaying = false;
 
     private Array<ImageButton> buttons;
@@ -33,13 +36,13 @@ public class LevelCompleteScreen extends AbstractOverlay {
         backingImage.setSize(400, 320);
         backingImage.setPosition(200, 200);
 
-        Label gameOverLabel = GUIBuilder.createLabel("Level Complete", 50, Color.ORANGE);
+        Label gameOverLabel = GUIBuilder.createLabel("Level Complete", 50, TITLE_COLOUR);
         gameOverLabel.setPosition((800 - gameOverLabel.getWidth()) / 2, 440);
 
-        Label levelLabel = GUIBuilder.createLabel("Level", Assets.FontSizes.FOURTY, Color.GREEN);
+        Label levelLabel = GUIBuilder.createLabel("Level", Assets.FontSizes.FOURTY, TEXT_COLOUR);
         levelLabel.setPosition((800 - levelLabel.getWidth()) / 2, 390);
 
-        Label levelIDLabel = GUIBuilder.createLabel((previousGame.getLevelId() + 1) + "", Assets.FontSizes.TWO_HUNDRED, Color.GREEN);
+        Label levelIDLabel = GUIBuilder.createLabel((previousGame.getLevelId() + 1) + "", Assets.FontSizes.TWO_HUNDRED, TEXT_COLOUR);
         levelIDLabel.setPosition((800 - levelIDLabel.getWidth()) / 2, 195);
 
         ImageButton nextLevelButton = GUIBuilder.createButton(Assets.Buttons.NEXT_LEVEL);
