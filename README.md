@@ -41,3 +41,4 @@ They should all work but only desktop and HTML5 builds have currently been teste
 - [ ] Add JSON read/write for a persistent Settings value
 - [ ] Add camera shake effect when platform is destroyed
 - [ ] Add ability to progress from level to level
+- [ ] Create a loader to load levels from the previous version of LSD
