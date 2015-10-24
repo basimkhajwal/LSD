@@ -55,8 +55,6 @@ public abstract class AbstractOverlay extends AbstractScreen {
     public void resize(int width, int height) {
         super.resize(width, height);
 
-        previousGame.resize(width, height);
-
         Viewport viewport = stage.getViewport();
         viewport.update(width, height);
 
@@ -65,6 +63,8 @@ public abstract class AbstractOverlay extends AbstractScreen {
 
         overlay.setPosition(zero.x, zero.y);
         overlay.setSize(viewport.getWorldWidth(), viewport.getWorldHeight());
+
+        previousGame.resize(width, height);
     }
 
     @Override
