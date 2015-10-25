@@ -56,7 +56,7 @@ public abstract class AbstractOverlay extends AbstractScreen {
         super.resize(width, height);
 
         Viewport viewport = stage.getViewport();
-        viewport.update(width, height);
+        viewport.update(width, height, false);
 
         Vector2 zero = new Vector2(0, height - 1);
         viewport.unproject(zero);
