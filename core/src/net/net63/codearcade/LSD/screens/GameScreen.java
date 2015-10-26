@@ -1,6 +1,7 @@
 package net.net63.codearcade.LSD.screens;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.Event;
 import com.badlogic.gdx.scenes.scene2d.EventListener;
@@ -72,6 +73,11 @@ public class GameScreen extends AbstractScreen implements EventListener {
 
         gameWorld.resize(width, height);
 		stage.getViewport().update(width, height);
+
+        Camera stageCam = stage.getViewport().getCamera();
+        stageCam.position.x = Constants.DEFAULT_SCREEN_WIDTH / 2;
+        stageCam.position.y = Constants.DEFAULT_SCREEN_HEIGHT / 2;
+        stageCam.update();
 	}
 
     @Override

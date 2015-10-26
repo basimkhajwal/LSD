@@ -1,6 +1,7 @@
 package net.net63.codearcade.LSD.screens;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Vector2;
@@ -90,6 +91,11 @@ public class MenuScreen extends AbstractScreen{
 
         Viewport viewport = stage.getViewport();
 		viewport.update(width, height);
+
+        Camera stageCam = stage.getViewport().getCamera();
+        stageCam.position.x = Constants.DEFAULT_SCREEN_WIDTH / 2;
+        stageCam.position.y = Constants.DEFAULT_SCREEN_HEIGHT / 2;
+        stageCam.update();
 
         Vector2 zero = new Vector2(0, height - 1);
         viewport.unproject(zero);
