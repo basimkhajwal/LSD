@@ -88,7 +88,9 @@ public class GameWorld implements Disposable, EntityListener {
 
         viewport.apply();
         gameCamera.update();
+
         engine.update(delta);
+        engine.getSystem(CameraShakeSystem.class).restoreCamera();
     }
 
     public void aimPlayer(int x, int y) {
@@ -111,6 +113,8 @@ public class GameWorld implements Disposable, EntityListener {
 
     public void pauseLogic() {
         if (logicPaused) return;
+
+        engine.getSystem(CameraShakeSystem.class).stopShake();
 
         engine.getSystem(WorldSystem.class).setProcessing(false);
         engine.getSystem(PlayerAimSystem.class).setProcessing(false);
@@ -138,6 +142,7 @@ public class GameWorld implements Disposable, EntityListener {
 
         engine.addSystem(new AnimationSystem());
         engine.addSystem(new CameraMovementSystem(gameCamera));
+        engine.addSystem(new CameraShakeSystem(gameCamera));
         engine.addSystem(new ParticleUpdateSystem(world));
 
         engine.addSystem(new BackgroundRenderSystem());
@@ -162,6 +167,8 @@ public class GameWorld implements Disposable, EntityListener {
     public void entityRemoved(Entity entity) {
         if (sensorMapper.has(entity)) {
             levelDescriptor.setSensorsDestroyed(levelDescriptor.getSensorsDestroyed() + 1);
+
+            engine.getSystem(CameraShakeSystem.class).applyShake(0.5f);
         }
     }
 
