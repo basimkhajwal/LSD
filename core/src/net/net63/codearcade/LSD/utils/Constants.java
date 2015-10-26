@@ -83,11 +83,12 @@ public class Constants {
         public static final int PLAYER                  = 5;
         public static final int PARTICLE_UPDATE         = 6;
         public static final int CAMERA_MOVEMENT         = 7;
-        public static final int ANIMATION               = 8;
-        public static final int BACKGROUND_RENDER       = 9;
-        public static final int RENDER                  = 10;
-        public static final int DEBUG_RENDER            = 11;
-        public static final int PARTICLE_RENDER         = 12;
-        public static final int EFFECT_RENDER           = 13;
+        public static final int CAMERA_SHAKE            = 8;
+        public static final int ANIMATION               = 9;
+        public static final int BACKGROUND_RENDER       = 10;
+        public static final int RENDER                  = 11;
+        public static final int DEBUG_RENDER            = 12;
+        public static final int PARTICLE_RENDER         = 13;
+        public static final int EFFECT_RENDER           = 14;
     }
 }
