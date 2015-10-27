@@ -34,11 +34,11 @@ They should all work but only desktop and HTML5 builds have currently been teste
 - [x] Create a player died menu
 - [x] Create a level finished menu
 - [x] Add particle effects when platform is destroyed
+- [x] Add camera shake effect when platform is destroyed
 
 #### TODO:
 - [ ] Add a sound manager
 - [ ] Implement background music and sounds for player death, jump etc.
 - [ ] Add JSON read/write for a persistent Settings value
-- [ ] Add camera shake effect when platform is destroyed
 - [ ] Add ability to progress from level to level
 - [ ] Create a loader to load levels from the previous version of LSD
