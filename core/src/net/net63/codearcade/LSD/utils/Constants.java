@@ -40,8 +40,8 @@ public class Constants {
     public static final int BOX2D_VELOCITY_ITERATIONS = 6;
     public static final int BOX2D_POSITION_ITERATIONS = 2;
 
-    public static final float PLAYER_WIDTH = 0.5f;
-    public static final float PLAYER_HEIGHT = 0.5f;
+    public static final float PLAYER_WIDTH = 0.45f;
+    public static final float PLAYER_HEIGHT = 0.45f;
 
     public static final int NUM_TRAJECTORY_PROJECTIONS = 25;
     public static final int TRAJECTORY_PROJECTION_STEPS = 7;
