@@ -37,6 +37,7 @@ They should all work but only desktop and HTML5 builds have currently been teste
 - [x] Add camera shake effect when platform is destroyed
 
 #### TODO:
+- [ ] Comment out code
 - [ ] Add a sound manager
 - [ ] Implement background music and sounds for player death, jump etc.
 - [ ] Add JSON read/write for a persistent Settings value
