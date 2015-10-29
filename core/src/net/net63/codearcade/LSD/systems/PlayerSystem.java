@@ -9,6 +9,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import net.net63.codearcade.LSD.components.*;
 import net.net63.codearcade.LSD.utils.Constants;
+import net.net63.codearcade.LSD.utils.SoundManager;
 import net.net63.codearcade.LSD.world.LevelDescriptor;
 
 /**
@@ -81,6 +82,7 @@ public class PlayerSystem extends IteratingSystem implements ContactListener {
             Rectangle bounds = levelDescriptor.getWorldBounds();
 
             if ((!bounds.contains(position)) &&  (bounds.y + bounds.height) > position.y) {
+                SoundManager.playSound(SoundManager.Sounds.PLAYER_DEATH);
                 playerComponent.isDead = true;
             }
         }
@@ -120,6 +122,7 @@ public class PlayerSystem extends IteratingSystem implements ContactListener {
 
             if (wallMapper.has(other)) {
                 playerComponent.isDead = true;
+                SoundManager.playSound(SoundManager.Sounds.PLAYER_DEATH);
             }
 
         }
