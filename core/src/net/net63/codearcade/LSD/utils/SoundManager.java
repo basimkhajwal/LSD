@@ -14,7 +14,7 @@ import com.badlogic.gdx.utils.ArrayMap;
 public class SoundManager {
 
     //Background music
-    private static final String BACKGROUND_MUSIC = "sounds/music.wav";
+    private static final String BACKGROUND_MUSIC = "sounds/music.mp3";
     private static Music backgroundMusic;
 
     //Sound effects
