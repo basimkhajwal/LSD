@@ -21,6 +21,7 @@ public class SoundManager {
     }
     private static final String[] _Sounds = {Sounds.PLAYER_DEATH, Sounds.EXPLOSION };
     private static final ArrayMap<String, Sound> sounds = new ArrayMap<String, Sound>();
+    
 
     public static void loadAll() {
         backgroundMusic = Gdx.audio.newMusic(Gdx.files.internal(BACKGROUND_MUSIC));
@@ -39,10 +40,13 @@ public class SoundManager {
         backgroundMusic.pause();
     }
 
-    public static int playSound(String sound) {
+    public static long playSound(String sound) {
 
-        int soundId = sounds.get(sound).play();
+        long soundId = sounds.get(sound).play(1.0f);
 
+
+
+        return soundId;
     }
 
     public static void stopSounds() {
