@@ -17,6 +17,16 @@ They should all work but only desktop and HTML5 builds have currently been teste
 
 ### Development:
 
+#### TODO:
+- [ ] Comment out code
+- [ ] Add JSON read/write for a persistent Settings value
+- [ ] Add ability to progress from level to level
+- [ ] Create a sub-menu / level selection screen
+- [ ] Create a settings screen
+- [ ] Add custom shaders and tweens for the background
+- [ ] Add parallax effect for the game
+- [ ] Create a loader to load levels from the previous version of LSD
+
 #### Currently Working:
 - [x] Platforms are loaded from a Tiled map (.tmx) format
 - [x] Platforms destroy correctly when player launched off them
@@ -35,11 +45,5 @@ They should all work but only desktop and HTML5 builds have currently been teste
 - [x] Create a level finished menu
 - [x] Add particle effects when platform is destroyed
 - [x] Add camera shake effect when platform is destroyed
-
-#### TODO:
-- [ ] Comment out code
-- [ ] Add a sound manager
-- [ ] Implement background music and sounds for player death, jump etc.
-- [ ] Add JSON read/write for a persistent Settings value
-- [ ] Add ability to progress from level to level
-- [ ] Create a loader to load levels from the previous version of LSD
+- [x] Add a sound manager
+- [x] Implement background music and sounds for player death, jump etc.
