@@ -30,8 +30,9 @@ public class Assets {
         public static final String SENSOR_TILE = "images/quad_grey.png";
         public static final String WALL_TILE = "images/quad.png";
         public static final String TRANSITION_BACKGROUND = "images/transition-bg.png";
+        public static final String TRAJECTORY = "images/trajectory.png";
 	}
-    private static final String[] _Images = { Images.BACKGROUND, Images.SENSOR_TILE, Images.WALL_TILE, Images.TRANSITION_BACKGROUND };
+    private static final String[] _Images = { Images.BACKGROUND, Images.SENSOR_TILE, Images.WALL_TILE, Images.TRANSITION_BACKGROUND, Images.TRAJECTORY };
 
     public static class Buttons {
         public static final String MENU_PLAY = "buttons/menu_play";
