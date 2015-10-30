@@ -19,6 +19,9 @@ They should all work but only desktop and HTML5 builds have currently been teste
 
 #### TODO:
 - [ ] Comment out code
+- [ ] Different sized particles
+- [ ] Particles for player death
+- [ ] Slow-motion level complete / player death
 - [ ] Add JSON read/write for a persistent Settings value
 - [ ] Add ability to progress from level to level
 - [ ] Create a sub-menu / level selection screen
