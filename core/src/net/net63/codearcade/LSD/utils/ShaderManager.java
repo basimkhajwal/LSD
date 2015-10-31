@@ -5,9 +5,13 @@ import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 import com.badlogic.gdx.utils.ArrayMap;
 
 /**
+ * Manager class to handle loading and acessing
+ * shaders and shader programs globally
+ *
  * Created by Basim on 31/10/15.
  */
 public class ShaderManager {
+
 
     public static class Shaders {
 
@@ -17,6 +21,9 @@ public class ShaderManager {
     private static final String[] _Shaders = { Shaders.MENU };
     private static final ArrayMap<String, String> shaderCache = new ArrayMap<String, String>();
 
+    /**
+     * Loads all the shader strings
+     */
     public static void loadAll() {
 
         for (String shaderName: _Shaders) {
@@ -30,14 +37,33 @@ public class ShaderManager {
 
     }
 
+    /**
+     * Get the cached vertex shader
+     *
+     * @param shaderName The shader name
+     * @return The vertex shader string
+     */
     public static String getVertexShader(String shaderName) {
         return shaderCache.get(shaderName + "_vertex.glsl");
     }
 
+    /**
+     * Get the cached fragment shader
+     *
+     * @param shaderName The shader name
+     * @return The fragment shader string
+     */
     public static String getFragmentShader(String shaderName) {
         return shaderCache.get(shaderName + "_fragment.glsl");
     }
 
+    /**
+     * Utility function to merge the vertex and the fragment
+     * shaders into one shader program
+     *
+     * @param shaderName The specified shader to get
+     * @return The shader program with the vertex and fragment shader
+     */
     public static ShaderProgram getShader(String shaderName) {
         return new ShaderProgram(getVertexShader(shaderName), getFragmentShader(shaderName));
     }
