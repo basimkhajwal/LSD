@@ -6,6 +6,7 @@ import net.net63.codearcade.LSD.utils.Assets;
 
 import com.badlogic.gdx.Game;
 import net.net63.codearcade.LSD.utils.Constants;
+import net.net63.codearcade.LSD.utils.ShaderManager;
 import net.net63.codearcade.LSD.utils.SoundManager;
 
 /**
@@ -28,6 +29,8 @@ public class LSD extends Game {
 	public void create() {
 		Assets.loadAll();
         SoundManager.loadAll();
+        ShaderManager.loadAll();
+
         SoundManager.playMusic();
 
 		this.setScreen(new MenuScreen(this));
