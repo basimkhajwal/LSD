@@ -121,7 +121,6 @@ public class MenuScreen extends AbstractScreen{
         batch.draw(backgroundTexture, 0, 0, backgroundSize.x, backgroundSize.y);
         batch.end();
 
-
 		stage.act(delta);
         playButton.setChecked(playButton.isOver());
 		stage.draw();
@@ -138,6 +137,7 @@ public class MenuScreen extends AbstractScreen{
 
         batch.dispose();
 		stage.dispose();
+        shaderProgram.dispose();
 	}
 	
 }
