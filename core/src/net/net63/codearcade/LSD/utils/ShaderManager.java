@@ -1,6 +1,7 @@
 package net.net63.codearcade.LSD.utils;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 import com.badlogic.gdx.utils.ArrayMap;
 
 /**
@@ -37,4 +38,7 @@ public class ShaderManager {
         return shaderCache.get(shaderName + "_fragment.glsl");
     }
 
+    public static ShaderProgram getShader(String shaderName) {
+        return new ShaderProgram(getVertexShader(shaderName), getFragmentShader(shaderName));
+    }
 }
