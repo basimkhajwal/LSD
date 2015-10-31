@@ -3,22 +3,24 @@ package net.net63.codearcade.LSD.screens;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
-import com.badlogic.gdx.utils.Scaling;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import net.net63.codearcade.LSD.LSD;
 import net.net63.codearcade.LSD.utils.Assets;
 import net.net63.codearcade.LSD.utils.Constants;
 import net.net63.codearcade.LSD.utils.GUIBuilder;
+import net.net63.codearcade.LSD.utils.ShaderManager;
 
 
 /**
@@ -35,8 +37,13 @@ public class MenuScreen extends AbstractScreen{
     private static final Color BOTTOM_TITLE = new Color(150 / 255.0f, 30 / 255.0f, 0f, 1f);
 
 	private Stage stage;
-    private Image backgroundImage;
     private ImageButton playButton;
+
+    private SpriteBatch batch;
+    private OrthographicCamera camera;
+    private Texture backgroundTexture;
+    private Vector2 backgroundSize = new Vector2();
+    private ShaderProgram shaderProgram;
 
     private boolean changingScreen;
 
@@ -45,8 +52,15 @@ public class MenuScreen extends AbstractScreen{
 
         changingScreen = false;
 
+        batch = new SpriteBatch();
+        camera = new OrthographicCamera();
+
         stage = new Stage(new ExtendViewport(Constants.DEFAULT_SCREEN_WIDTH, Constants.DEFAULT_SCREEN_HEIGHT));
         Gdx.input.setInputProcessor(stage);
+
+        shaderProgram = ShaderManager.getShader(ShaderManager.Shaders.MENU);
+        shaderProgram.pedantic = false;
+        batch.setShader(shaderProgram);
 
         setupUI();
     }
@@ -73,13 +87,9 @@ public class MenuScreen extends AbstractScreen{
             }
         });
 
-        Texture backgroundTexture = Assets.getAsset(Assets.Images.BACKGROUND, Texture.class);
+        backgroundTexture = Assets.getAsset(Assets.Images.BACKGROUND, Texture.class);
         backgroundTexture.setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
 
-        backgroundImage = new Image(backgroundTexture);
-        backgroundImage.setScaling(Scaling.stretch);
-
-        stage.addActor(backgroundImage);
         stage.addActor(topTitle);
         stage.addActor(bottomTitle);
         stage.addActor(playButton);
@@ -97,16 +107,20 @@ public class MenuScreen extends AbstractScreen{
         stageCam.position.y = Constants.DEFAULT_SCREEN_HEIGHT / 2;
         stageCam.update();
 
-        Vector2 zero = new Vector2(0, height - 1);
-        viewport.unproject(zero);
+        camera.setToOrtho(false, width, height);
 
-		backgroundImage.setPosition(zero.x, zero.y);
-		backgroundImage.setSize(viewport.getWorldWidth(), viewport.getWorldHeight());
+        backgroundSize.set(width, height);
 	}
 	
 	@Override
 	public void render(float delta) {
 		super.render(delta);
+
+        batch.setProjectionMatrix(camera.combined);
+        batch.begin();
+        batch.draw(backgroundTexture, 0, 0, backgroundSize.x, backgroundSize.y);
+        batch.end();
+
 
 		stage.act(delta);
         playButton.setChecked(playButton.isOver());
@@ -122,6 +136,7 @@ public class MenuScreen extends AbstractScreen{
 	public void dispose() {
 		super.dispose();
 
+        batch.dispose();
 		stage.dispose();
 	}
 	
