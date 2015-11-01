@@ -9,6 +9,9 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 public class RenderComponent implements Component {
 
     public TextureRegion texture;
+
+    public float tileWidth;
+    public float tileHeight;
     public boolean tileToSize = false;
 
 }
