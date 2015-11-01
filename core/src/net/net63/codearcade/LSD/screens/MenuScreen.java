@@ -44,6 +44,7 @@ public class MenuScreen extends AbstractScreen{
     private Texture backgroundTexture;
     private Vector2 backgroundSize = new Vector2();
     private ShaderProgram shaderProgram;
+    private float time = 0;
 
     private boolean changingScreen;
 
@@ -89,6 +90,7 @@ public class MenuScreen extends AbstractScreen{
 
         backgroundTexture = Assets.getAsset(Assets.Images.BACKGROUND, Texture.class);
         backgroundTexture.setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
+        shaderProgram.setUniform2fv("invScreenSize", new float[]{1.0f/backgroundTexture.getWidth(), 1.0f/backgroundTexture.getHeight() }, 0, 2);
 
         stage.addActor(topTitle);
         stage.addActor(bottomTitle);
@@ -115,6 +117,12 @@ public class MenuScreen extends AbstractScreen{
 	@Override
 	public void render(float delta) {
 		super.render(delta);
+
+        time += delta;
+        while (time > 1) time -= 1;
+
+        shaderProgram.setUniformf("time", time);
+        batch.setShader(shaderProgram);
 
         batch.setProjectionMatrix(camera.combined);
         batch.begin();
