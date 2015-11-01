@@ -132,6 +132,8 @@ public class WorldBuilder {
         bodyComponent.body.createFixture(fixtureDef);
 
         renderComponent.texture = new TextureRegion(Assets.getAsset(Assets.Images.SENSOR_TILE, Texture.class));
+        renderComponent.tileWidth = renderComponent.texture.getRegionWidth();
+        renderComponent.tileHeight = renderComponent.texture.getRegionHeight();
         renderComponent.tileToSize = true;
 
         return createEntityFrom(sensorComponent, bodyComponent, renderComponent);
@@ -161,6 +163,8 @@ public class WorldBuilder {
         bodyComponent.body.createFixture(fixtureDef);
 
         renderComponent.texture = new TextureRegion(Assets.getAsset(Assets.Images.WALL_TILE, Texture.class));
+        renderComponent.tileWidth = renderComponent.texture.getRegionWidth();
+        renderComponent.tileHeight = renderComponent.texture.getRegionHeight();
         renderComponent.tileToSize = true;
 
         return createEntityFrom(wallComponent, bodyComponent, renderComponent);

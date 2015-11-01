@@ -88,8 +88,8 @@ public class RenderSystem extends IteratingSystem implements Disposable {
 
             if (rendering) {
                 if (renderComponent.tileToSize) {
-                    float tileWidth = renderComponent.texture.getRegionWidth() * Constants.PIXEL_TO_METRE;
-                    float tileHeight = renderComponent.texture.getRegionHeight() * Constants.PIXEL_TO_METRE;
+                    float tileWidth = renderComponent.tileWidth * Constants.PIXEL_TO_METRE;
+                    float tileHeight = renderComponent.tileHeight * Constants.PIXEL_TO_METRE;
 
                     int tilesAcross = (int) Math.ceil(tmp2.x / tileWidth);
                     int tilesUp = (int) Math.ceil(tmp2.y / tileHeight);

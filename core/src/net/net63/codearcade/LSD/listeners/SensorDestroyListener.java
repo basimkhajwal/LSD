@@ -18,7 +18,8 @@ import net.net63.codearcade.LSD.utils.Constants;
  */
 public class SensorDestroyListener implements EntityListener {
 
-    private static final float PARTICLE_SIZE = 0.08f;
+    private static final float MAX_PARTICLE_SIZE = 0.09f;
+    private static final float MIN_PARTICLE_SIZE = 0.05f;
     private static final int PARTICLE_NUM = 80;
 
     private ComponentMapper<SensorComponent> sensorMapper;
@@ -86,8 +87,10 @@ public class SensorDestroyListener implements EntityListener {
         bodyDef.fixedRotation = false;
         bodyDef.type = BodyDef.BodyType.DynamicBody;
 
+        float size = MathUtils.random(MIN_PARTICLE_SIZE, MAX_PARTICLE_SIZE);
+
         PolygonShape shape = new PolygonShape();
-        shape.setAsBox(PARTICLE_SIZE / 2, PARTICLE_SIZE / 2);
+        shape.setAsBox(size / 2, size / 2);
         fixtureDef.restitution = 0.6f;
         fixtureDef.shape = shape;
         fixtureDef.filter.categoryBits = Constants.CategoryBits.PARTICLE;
