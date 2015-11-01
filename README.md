@@ -19,7 +19,6 @@ They should all work but only desktop and HTML5 builds have currently been teste
 
 #### TODO:
 - [ ] Comment out code
-- [ ] Different sized particles
 - [ ] Particles for player death
 - [ ] Slow-motion level complete / player death
 - [ ] Add JSON read/write for a persistent Settings value
@@ -50,3 +49,4 @@ They should all work but only desktop and HTML5 builds have currently been teste
 - [x] Add camera shake effect when platform is destroyed
 - [x] Add a sound manager
 - [x] Implement background music and sounds for player death, jump etc.
+- [x] Different sized particles

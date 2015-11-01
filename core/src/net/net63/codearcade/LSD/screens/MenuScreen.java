@@ -119,13 +119,12 @@ public class MenuScreen extends AbstractScreen{
 		super.render(delta);
 
         time += delta;
-        while (time > 1) time -= 1;
 
-        shaderProgram.setUniformf("time", time);
         batch.setShader(shaderProgram);
 
         batch.setProjectionMatrix(camera.combined);
         batch.begin();
+        shaderProgram.setUniformf("time", time);
         batch.draw(backgroundTexture, 0, 0, backgroundSize.x, backgroundSize.y);
         batch.end();
 

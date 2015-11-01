@@ -21,8 +21,10 @@ void main() {
 
     float ratio = 1.0 / 3.0;
 
-    vec4 noise = vec4(rand(v_texCoords)) * vec4(1,1,1,time);
+    vec4 noise = vec4(rand(v_texCoords)) * 2.0 * time;
 
     gl_FragColor = noise * 0.1 + (left + middle + right) * ratio ;
     gl_FragColor *= vec4(1,1,1,0.95);
+
+    gl_FragColor = vec4(1,time,1,1);
 }
