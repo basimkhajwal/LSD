@@ -90,7 +90,7 @@ public class MenuScreen extends AbstractScreen{
 
         backgroundTexture = Assets.getAsset(Assets.Images.BACKGROUND, Texture.class);
         backgroundTexture.setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
-        shaderProgram.setUniform2fv("invScreenSize", new float[]{1.0f/backgroundTexture.getWidth(), 1.0f/backgroundTexture.getHeight() }, 0, 2);
+        shaderProgram.setUniformf("invScreenSize", 1.0f/backgroundTexture.getWidth(), 1.0f/backgroundTexture.getHeight());
 
         stage.addActor(topTitle);
         stage.addActor(bottomTitle);
@@ -110,6 +110,9 @@ public class MenuScreen extends AbstractScreen{
         stageCam.update();
 
         camera.setToOrtho(false, width, height);
+        shaderProgram.begin();
+        shaderProgram.setUniformf("screenSize", width, height);
+        shaderProgram.end();
 
         backgroundSize.set(width, height);
 	}
