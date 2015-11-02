@@ -14,6 +14,12 @@ float rand(vec2 co){
     return fract(sin(dot(co.xy ,vec2(12.9898,78.233))) * 43758.5453);
 }
 
+//RADIUS of our vignette, where 0.5 results in a circle fitting the screen
+const float RADIUS = 0.75;
+
+//softness of our vignette, between 0.0 and 1.0
+const float SOFTNESS = 0.45;
+
 void main() {
     //1. APPLY BLUR
     vec2 stepX = vec2(invScreenSize.x, 0);
@@ -33,13 +39,17 @@ void main() {
     gl_FragColor += noise * vec4(0.2, 0.2, 0.2, 0.1);
 
     //3. VIGNETTE
-    //gl_FragColor *= vec4(1,1,1,0.85);
+    gl_FragColor.a *= 0.8;
+
     vec2 position = (gl_FragCoord.xy / screenSize.xy) - vec2(0.5);
-    position.x *= screenSize.x / screenSize.y;
 
     //determine the vector length of the center position
     float len = length(position);
 
+
+    //our vignette effect, using smoothstep
+    float vignette = smoothstep(RADIUS, RADIUS-SOFTNESS, len);
+
     //Apply
-    gl_FragColor *= vec4( vec3(0.8 - len), 1.0 );
+    gl_FragColor.rgb = mix(gl_FragColor.rgb, gl_FragColor.rgb * vignette, 0.5);
 }
