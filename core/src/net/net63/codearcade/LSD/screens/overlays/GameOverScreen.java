@@ -64,7 +64,6 @@ public class GameOverScreen extends AbstractOverlay {
         backMenuButton.setPosition(200, 90);
 
         buttons = new Array<ImageButton>();
-        buttons.add(nextLevelButton);
         buttons.add(backMenuButton);
         buttons.add(replayLevelButton);
 
