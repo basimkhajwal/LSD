@@ -12,6 +12,7 @@ import com.badlogic.gdx.utils.Array;
 import net.net63.codearcade.LSD.LSD;
 import net.net63.codearcade.LSD.screens.GameScreen;
 import net.net63.codearcade.LSD.utils.Assets;
+import net.net63.codearcade.LSD.utils.Constants;
 import net.net63.codearcade.LSD.utils.GUIBuilder;
 
 /**
@@ -23,6 +24,7 @@ public class LevelCompleteScreen extends AbstractOverlay {
     private static final Color TEXT_COLOUR = new Color(120f / 255f, 169f / 255f, 66f / 255f, 1f);
 
     private boolean replaying = false;
+    private boolean nextLevel = false;
 
     private Array<ImageButton> buttons;
 
@@ -48,6 +50,15 @@ public class LevelCompleteScreen extends AbstractOverlay {
         ImageButton nextLevelButton = GUIBuilder.createButton(Assets.Buttons.NEXT_LEVEL);
         nextLevelButton.setSize(120, 90);
         nextLevelButton.setPosition(480, 90);
+        nextLevelButton.addListener(new ClickListener() {
+
+            @Override
+            public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
+                super.touchUp(event, x, y, pointer, button);
+                nextLevel = previousGame.getLevelId() < Constants.MAX_LEVEL;
+            }
+
+        });
 
         ImageButton replayLevelButton = GUIBuilder.createButton(Assets.Buttons.REPLAY_LEVEL);
         replayLevelButton.setSize(120, 90);
@@ -85,6 +96,7 @@ public class LevelCompleteScreen extends AbstractOverlay {
         for (ImageButton button: buttons) button.setChecked(button.isOver());
 
         if (replaying) game.setScreen(new GameScreen(game, previousGame.getLevelId()));
+        if (nextLevel) game.setScreen(new GameScreen(game, previousGame.getLevelId() + 1));
     }
 
 

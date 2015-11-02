@@ -22,6 +22,7 @@ public class Constants {
             Assets.LevelMaps.TEST,
             Assets.LevelMaps.TEST2
     };
+    public static final int MAX_LEVEL = LEVELS.length - 1;
 
     // --------------- UI / Window ------------
 
