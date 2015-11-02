@@ -42,7 +42,7 @@ public class GameOverScreen extends AbstractOverlay {
         Label levelIDLabel = GUIBuilder.createLabel((previousGame.getLevelId() + 1) + "", Assets.FontSizes.TWO_HUNDRED, Color.MAROON);
         levelIDLabel.setPosition((800 - levelIDLabel.getWidth()) / 2, 195);
 
-        ImageButton nextLevelButton = GUIBuilder.createButton(Assets.Buttons.NEXT_LEVEL);
+        Image nextLevelButton = new Image(Assets.getAsset(Assets.Images.NEXT_LEVEL_DISABLED, Texture.class));
         nextLevelButton.setSize(120, 90);
         nextLevelButton.setPosition(480, 90);
 
