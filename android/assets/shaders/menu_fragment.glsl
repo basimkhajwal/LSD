@@ -15,10 +15,10 @@ float rand(vec2 co){
 }
 
 //RADIUS of our vignette, where 0.5 results in a circle fitting the screen
-const float RADIUS = 0.75;
+const float RADIUS = 0.85;
 
 //softness of our vignette, between 0.0 and 1.0
-const float SOFTNESS = 0.45;
+const float SOFTNESS = 0.6;
 
 void main() {
     //1. APPLY BLUR

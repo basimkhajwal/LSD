@@ -44,6 +44,7 @@ public class MenuScreen extends AbstractScreen{
     private Texture backgroundTexture;
     private Vector2 backgroundSize = new Vector2();
     private ShaderProgram shaderProgram;
+    private float backgroundX = 0;
     private float time = 0;
 
     private boolean changingScreen;
@@ -114,6 +115,7 @@ public class MenuScreen extends AbstractScreen{
         shaderProgram.setUniformf("screenSize", width, height);
         shaderProgram.end();
 
+        backgroundX = 0;
         backgroundSize.set(width, height);
 	}
 	
@@ -123,12 +125,17 @@ public class MenuScreen extends AbstractScreen{
 
         time += delta;
 
-        batch.setShader(shaderProgram);
+        backgroundX += 25 * delta;
+        if (backgroundX >= backgroundSize.x) {
+            backgroundX = 0;
+        }
 
+        batch.setShader(shaderProgram);
         batch.setProjectionMatrix(camera.combined);
         batch.begin();
         shaderProgram.setUniformf("time", time);
-        batch.draw(backgroundTexture, 0, 0, backgroundSize.x, backgroundSize.y);
+        batch.draw(backgroundTexture, backgroundX, 0, backgroundSize.x, backgroundSize.y);
+        batch.draw(backgroundTexture, backgroundX - backgroundSize.x, 0, backgroundSize.x, backgroundSize.y);
         batch.end();
 
 		stage.act(delta);
