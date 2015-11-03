@@ -38,6 +38,9 @@ public abstract class AbstractOverlay extends AbstractScreen {
 
         this.game = game;
         this.previousGame = previousGame;
+
+        //Setup all the elements
+        setup();
     }
 
     private void setup() {
