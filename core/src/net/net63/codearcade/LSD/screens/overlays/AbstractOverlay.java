@@ -17,13 +17,19 @@ import net.net63.codearcade.LSD.screens.GameScreen;
 import net.net63.codearcade.LSD.utils.Constants;
 
 /**
+ * Abstract overlay screen to handle the most common
+ * methods and variables in the overlay-screens after
+ * the game
+ *
  * Created by Basim on 10/10/15.
  */
 public abstract class AbstractOverlay extends AbstractScreen {
 
+    //Pointers to the game and the last re-run
     protected GameScreen previousGame;
     protected LSD game;
 
+    //GUI elements
     private Stage stage;
     private Image overlay;
 
@@ -35,18 +41,22 @@ public abstract class AbstractOverlay extends AbstractScreen {
     }
 
     private void setup() {
+        //Create the stage and set to input
         stage = new Stage(new ExtendViewport(Constants.DEFAULT_SCREEN_WIDTH, Constants.DEFAULT_SCREEN_HEIGHT));
         Gdx.input.setInputProcessor(stage);
 
+        //Create the translucent gray pixmap
         Pixmap overlayPix = new Pixmap(1, 1, Pixmap.Format.RGBA8888);
         overlayPix.setColor(0, 0, 0, 0.5f);
         overlayPix.fill();
 
+        //Create the texture from the pixmap
         overlay = new Image(new Texture(overlayPix));
         overlay.setScaling(Scaling.stretch);
         stage.addActor(overlay);
-
         overlayPix.dispose();
+
+        //Call the subclass to add all the other GUI elements
         setupUI(stage);
     }
 
@@ -57,34 +67,40 @@ public abstract class AbstractOverlay extends AbstractScreen {
     public void resize(int width, int height) {
         super.resize(width, height);
 
-        if (stage == null) setup();
-
+        //Update the viewport
         Viewport viewport = stage.getViewport();
         viewport.update(width, height);
 
+        //Centre the camera
         Camera stageCam = stage.getViewport().getCamera();
         stageCam.position.x = Constants.DEFAULT_SCREEN_WIDTH / 2;
         stageCam.position.y = Constants.DEFAULT_SCREEN_HEIGHT / 2;
         stageCam.update();
 
+        //Set the overlay to the bottom left
         Vector2 zero = new Vector2(0, height - 1);
         viewport.unproject(zero);
 
         overlay.setPosition(zero.x, zero.y);
         overlay.setSize(viewport.getWorldWidth(), viewport.getWorldHeight());
 
+        //Resize the previous game
         previousGame.resize(width, height);
     }
 
     @Override
     public void render(float deltaTime) {
         super.render(deltaTime);
+
+        //Render the previous game
         previousGame.render(deltaTime);
 
+        //Render the GUI
         stage.getViewport().apply();
         stage.act(deltaTime);
         stage.draw();
 
+        //Call the abstract method for any subclass changes
         checkChange();
     }
 
