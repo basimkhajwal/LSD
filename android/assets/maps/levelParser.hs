@@ -32,6 +32,18 @@ instance Monad Parser where
             Left err        -> Left err
             Right (a, str1) -> runParse (f a) str1
 
+err :: Error -> Either Error a
+err msg = Left ("Error: " ++ msg)
+
+bail :: Error -> Parser a
+bail msg = Parser (\_ -> err msg )
+
+satisfy :: (Char -> Bool) -> Parser Char
+satisfy f = Parser $ \str ->
+    case str of
+        []                  -> err "end of stream"
+        (c:cs) | f c        -> Right (c, cs)
+               | otherwise  -> err "condition not satisfied"
 
 main :: IO ()
 main = putStrLn "In development :P"
