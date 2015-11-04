@@ -45,15 +45,33 @@ satisfy f = Parser $ \str ->
         (c:cs) | f c        -> Right (c, cs)
                | otherwise  -> err "condition not satisfied"
 
-char :: Char -> Parser Char
-char c = satisfy (==c)
+parseChar :: Char -> Parser Char
+parseChar c = satisfy (==c)
 
-string :: String -> Parser String
-string (c:cs) = liftM2 (:) (char c) (string cs)
-string []     = return []
+parseString :: String -> Parser String
+parseString (c:cs) = liftM2 (:) (parseChar c) (parseString cs)
+parseString []     = return []
 
-oneOf :: [Char] -> Parser Char
+oneOf :: String -> Parser Char
 oneOf cs = satisfy (`elem` cs)
+
+peekChar :: Parser (Maybe Char)
+peekChar = Parser $ \str ->
+    case str of
+        (c:_)   -> Right (Just c, str)
+        []      -> Right (Nothing, str)
+
+type Vector2 = (Int, Int)
+
+type Wall = (Vector2, Vector2)
+type Sensor = (Vector2, Vector2)
+
+data Level =
+    Level {
+        getPlayerPosition :: Vector2,
+        getWalls :: [Wall],
+        getSensors :: [Sensor]
+    }
 
 main :: IO ()
 main = putStrLn "In development :P"
