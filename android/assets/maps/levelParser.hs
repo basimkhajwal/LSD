@@ -1,6 +1,5 @@
-import Control.Applicative
+import Control.Applicative (Applicative, (<*>), pure)
 import Control.Monad
-import Data.Functor
 
 type Error = String
 newtype Parser a = Parser { runParse :: String -> Either Error (a, String) }
@@ -32,25 +31,24 @@ instance Monad Parser where
             Left err        -> Left err
             Right (a, str1) -> runParse (f a) str1
 
-err :: Error -> Either Error a
-err msg = Left ("Error: " ++ msg)
+parserError :: Error -> Either Error a
+parserError msg = Left ("Error: " ++ msg)
 
 bail :: Error -> Parser a
-bail msg = Parser (\_ -> err msg )
+bail msg = Parser (\_ -> parserError msg )
 
 satisfy :: (Char -> Bool) -> Parser Char
 satisfy f = Parser $ \str ->
     case str of
-        []                  -> err "end of stream"
+        []                  -> parserError "end of stream"
         (c:cs) | f c        -> Right (c, cs)
-               | otherwise  -> err "condition not satisfied"
+               | otherwise  -> parserError "condition not satisfied"
 
 parseChar :: Char -> Parser Char
 parseChar c = satisfy (==c)
 
 parseString :: String -> Parser String
-parseString (c:cs) = liftM2 (:) (parseChar c) (parseString cs)
-parseString []     = return []
+parseString = foldr (liftM2 (:) . parseChar) (return [])
 
 oneOf :: String -> Parser Char
 oneOf cs = satisfy (`elem` cs)
@@ -72,6 +70,48 @@ data Level =
         getWalls :: [Wall],
         getSensors :: [Sensor]
     }
+
+-- Specifies the xml tag type either with an end and a start or
+-- all in one tag
+data XMLTag =
+    Single {
+        singTagName :: String,
+        singTagAttrs :: [Attr]
+    } |
+    Dual {
+        tagName :: String,
+        tagAttrs :: [Attr],
+
+        tagContent :: String,
+        tagChildren :: [XMLTag]
+    }
+
+-- Specifies an attribute within the tag
+data Attr =
+    Attr {
+        attrName :: String,
+        attrValue :: String
+    }
+
+xmlPrefab :: String
+xmlPrefab = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>"
+
+tagAttrString :: String -> [Attr] -> String
+tagAttrString name attrs = name ++ unwords attrStrings
+    where attrStrings = map attrToString attrs
+          attrToString (Attr key val) = key ++ "=" ++ show val
+
+prettyPrintTag :: XMLTag -> String
+prettyPrintTag (Single name attrs) = "<" ++ (tagAttrString name attrs) ++ "/>\n"
+prettyPrintTag (Dual name attrs content children) =
+    beginning ++ content ++ "\n" ++ insideValues ++ "<" ++ name ++ ">"
+    where beginning = "<" ++ (tagAttrString name attrs) ++ ">\n"
+          
+
+generateTmxMap :: Level -> String
+generateTmxMap level = undefined
+
+
 
 main :: IO ()
 main = putStrLn "In development :P"
