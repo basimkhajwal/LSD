@@ -45,5 +45,8 @@ satisfy f = Parser $ \str ->
         (c:cs) | f c        -> Right (c, cs)
                | otherwise  -> err "condition not satisfied"
 
+parseChar :: Char -> Parser Char
+parseChar c = satisfy (==c)
+
 main :: IO ()
 main = putStrLn "In development :P"
