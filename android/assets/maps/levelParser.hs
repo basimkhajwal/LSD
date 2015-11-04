@@ -45,8 +45,15 @@ satisfy f = Parser $ \str ->
         (c:cs) | f c        -> Right (c, cs)
                | otherwise  -> err "condition not satisfied"
 
-parseChar :: Char -> Parser Char
-parseChar c = satisfy (==c)
+char :: Char -> Parser Char
+char c = satisfy (==c)
+
+string :: String -> Parser String
+string (c:cs) = liftM2 (:) (char c) (string cs)
+string []     = return []
+
+oneOf :: [Char] -> Parser Char
+oneOf cs = satisfy (`elem` cs)
 
 main :: IO ()
 main = putStrLn "In development :P"
