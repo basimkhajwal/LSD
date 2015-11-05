@@ -1,35 +1,29 @@
 import Control.Applicative (Applicative, (<*>), pure)
 import Control.Monad
 
+type Vector2 = (Int, Int)
+
+type Wall = (Vector2, Vector2)
+type Sensor = (Vector2, Vector2)
+
+data Level =
+    Level {
+        getPlayerPosition :: Vector2,
+        getWalls :: [Wall],
+        getSensors :: [Sensor]
+    }
+
+generateTmxMap :: Level -> String
+generateTmxMap level = undefined
+
+
+main :: IO ()
+main = putStrLn "In development :P"
+
+------------------ Parsers & Utility functions ---------------
+
 type Error = String
 newtype Parser a = Parser { runParse :: String -> Either Error (a, String) }
-
-instance Functor Parser where
-
-    fmap f parser = Parser $ \str ->
-        case runParse parser str of
-            Left err        -> Left err
-            Right (a, str2) -> Right (f a, str2)
-
-instance Applicative Parser where
-
-    pure x = Parser (\str -> Right (x, str))
-
-    first <*> second = Parser $ \str0 ->
-        case runParse first str0 of
-            Left err        -> Left err
-            Right (f, str1) ->
-                case runParse second str1 of
-                    Left err        -> Left err
-                    Right (a, str2) -> Right (f a, str2)
-
-instance Monad Parser where
-    return = pure
-
-    parser >>= f = Parser $ \str0 ->
-        case runParse parser str0 of
-            Left err        -> Left err
-            Right (a, str1) -> runParse (f a) str1
 
 parserError :: Error -> Either Error a
 parserError msg = Left ("Error: " ++ msg)
@@ -59,17 +53,36 @@ peekChar = Parser $ \str ->
         (c:_)   -> Right (Just c, str)
         []      -> Right (Nothing, str)
 
-type Vector2 = (Int, Int)
+---------------- Parser Instances ----------------------------
 
-type Wall = (Vector2, Vector2)
-type Sensor = (Vector2, Vector2)
+instance Functor Parser where
 
-data Level =
-    Level {
-        getPlayerPosition :: Vector2,
-        getWalls :: [Wall],
-        getSensors :: [Sensor]
-    }
+    fmap f parser = Parser $ \str ->
+        case runParse parser str of
+            Left err        -> Left err
+            Right (a, str2) -> Right (f a, str2)
+
+instance Applicative Parser where
+
+    pure x = Parser (\str -> Right (x, str))
+
+    first <*> second = Parser $ \str0 ->
+        case runParse first str0 of
+            Left err        -> Left err
+            Right (f, str1) ->
+                case runParse second str1 of
+                    Left err        -> Left err
+                    Right (a, str2) -> Right (f a, str2)
+
+instance Monad Parser where
+    return = pure
+
+    parser >>= f = Parser $ \str0 ->
+        case runParse parser str0 of
+            Left err        -> Left err
+            Right (a, str1) -> runParse (f a) str1
+
+------------------ XML Generators -----------------------------
 
 -- Specifies the xml tag type either with an end and a start or
 -- all in one tag
@@ -93,9 +106,6 @@ data Attr =
         attrValue :: String
     }
 
-xmlPrefab :: String
-xmlPrefab = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>"
-
 tagAttrString :: String -> [Attr] -> String
 tagAttrString name []    = name
 tagAttrString name attrs = name ++ " " ++ unwords attrStrings
@@ -103,10 +113,8 @@ tagAttrString name attrs = name ++ " " ++ unwords attrStrings
           attrToString (Attr key val) = key ++ "=" ++ show val
 
 prettyPrintTag :: Int -> XMLTag -> String
-
-prettyPrintTag indentLevel (Single name attrs) = indent ++ "<" ++ (tagAttrString name attrs) ++ "/>\n"
+prettyPrintTag indentLevel (Single name attrs) = indent ++ "<" ++ tagAttrString name attrs ++ "/>\n"
     where indent = replicate indentLevel '\t'
-
 prettyPrintTag indentLevel (Dual name attrs content children) = beginning ++ middle ++ ending
     where indent = replicate indentLevel '\t'
 
@@ -119,10 +127,6 @@ prettyPrintTag indentLevel (Dual name attrs content children) = beginning ++ mid
 
           ending = indent ++ "<" ++ name ++ "/>\n"
 
-generateTmxMap :: Level -> String
-generateTmxMap level = undefined
-
-
-
-main :: IO ()
-main = putStrLn "In development :P"
+generateXML :: XMLTag -> String
+generateXML = (xmlPrefab++) . prettyPrintTag 0
+    where xmlPrefab = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n"
