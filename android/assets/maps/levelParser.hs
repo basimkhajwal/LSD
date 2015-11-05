@@ -97,16 +97,27 @@ xmlPrefab :: String
 xmlPrefab = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>"
 
 tagAttrString :: String -> [Attr] -> String
-tagAttrString name attrs = name ++ unwords attrStrings
+tagAttrString name []    = name
+tagAttrString name attrs = name ++ " " ++ unwords attrStrings
     where attrStrings = map attrToString attrs
           attrToString (Attr key val) = key ++ "=" ++ show val
 
-prettyPrintTag :: XMLTag -> String
-prettyPrintTag (Single name attrs) = "<" ++ (tagAttrString name attrs) ++ "/>\n"
-prettyPrintTag (Dual name attrs content children) =
-    beginning ++ content ++ "\n" ++ insideValues ++ "<" ++ name ++ ">"
-    where beginning = "<" ++ (tagAttrString name attrs) ++ ">\n"
-          
+prettyPrintTag :: Int -> XMLTag -> String
+
+prettyPrintTag indentLevel (Single name attrs) = indent ++ "<" ++ (tagAttrString name attrs) ++ "/>\n"
+    where indent = replicate indentLevel '\t'
+
+prettyPrintTag indentLevel (Dual name attrs content children) = beginning ++ middle ++ ending
+    where indent = replicate indentLevel '\t'
+
+          tagString = tagAttrString name attrs
+          beginning = indent ++ "<" ++ tagString ++ ">\n"
+
+          contentString = indent ++ "\t" ++ content ++ "\n"
+          childrenString = concatMap (prettyPrintTag (indentLevel + 1)) children
+          middle = contentString ++ childrenString
+
+          ending = indent ++ "<" ++ name ++ "/>\n"
 
 generateTmxMap :: Level -> String
 generateTmxMap level = undefined
