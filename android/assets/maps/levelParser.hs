@@ -50,8 +50,21 @@ oneOf cs = satisfy (`elem` cs)
 peekChar :: Parser (Maybe Char)
 peekChar = Parser $ \str ->
     case str of
-        (c:_)   -> Right (Just c, str)
+        (c:cs)   -> Right (Just c, cs)
         []      -> Right (Nothing, str)
+
+parseWhileWith :: (Char -> a -> a) -> Parser a
+parseWhileWith f = do
+    result <- peekChar
+    case result of
+        Just
+
+parseWhile :: (Char -> Bool) -> Parser String
+parseWhile f = do
+    result <- peekChar
+    case result of
+        Just c | f c    -> liftM (c:) (parseWhile f)
+        _               -> return []
 
 ---------------- Parser Instances ----------------------------
 
@@ -105,6 +118,9 @@ data Attr =
         attrName :: String,
         attrValue :: String
     }
+
+attrFromList :: [(String, String)] -> [Attr]
+attrFromList = map (\(k, v) -> Attr k v)
 
 tagAttrString :: String -> [Attr] -> String
 tagAttrString name []    = name
