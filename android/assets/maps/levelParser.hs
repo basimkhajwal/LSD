@@ -26,7 +26,6 @@ data Level =
 ------------------ Level File Specific Parsers ---------------
 
 
-
 ------------------ Parsers & Utility functions ---------------
 
 type Error = String
@@ -73,6 +72,9 @@ parseWhile f = do
 skipSpaces :: Parser String
 skipSpaces = parseWhile isSpace
 
+parseWord :: Parser String
+parseWord = skipSpaces >> parseWhile (not . isSpace)
+
 ---------------- Parser Instances ----------------------------
 
 instance Functor Parser where
@@ -107,8 +109,55 @@ instance Alternative Parser where
     empty = Parser $ \str -> Left "empty"
     (<|>) (Parser a) (Parser b) = undefined
 
+----------------- Level XML Generators  -----------------------
 
------------------- XML Generators -----------------------------
+defaultMapAttributes :: [Attr]
+defaultMapAttributes = attrFromList
+    [
+        ("version", "1.0"),
+        ("orientation", "orthogonal"),
+        ("renderorder", "right-up"),
+
+        ("width", "80"), ("height", "60"),
+        ("tilewidth", "10"), ("tileheight", "10")
+    ]
+
+createMapTag :: Int -> [XMLTag] -> XMLTag
+createMapTag objectNum = Dual "map" attrs ""
+    where attrs = defaultMapAttributes ++ [Attr "nextobjectid" (show $ objectNum + 1)]
+
+createObjectGroup :: String -> [XMLTag] -> XMLTag
+createObjectGroup name = Dual "objectgroup" attrs ""
+    where attrs = [Attr "name" name]
+
+createObject :: String -> Int -> Vector2 -> Vector2 -> XMLTag
+createObject name objectId (x,y) (width, height) = Single "object" attrs
+    where attrs = attrFromList
+            [
+                ("id", show objectId),
+                ("name", name),
+                ("type", name),
+
+                ("x", show x), ("y", show y),
+                ("width", show width), ("height", show height)
+            ]
+
+createLevelXML :: Level -> XMLTag
+createLevelXML (Level playerPos walls sensors) = createMapTag numObjects groups
+    where numWalls = length walls
+          numSensors = length sensors
+          numObjects = numWalls + numSensors + 1
+
+          wallIds = [1..numWalls]
+          sensorIds = [(numWalls + 1)..(numWalls + numSensors)]
+
+          wallObjects = zipWith (\n (pos, sz) -> createObject "wall" n pos sz) wallIds walls
+          sensorObjects = zipWith (\n (pos, sz) -> createObject "sensor" n pos sz) sensorIds sensors
+          metaObjects = [createObject "player-position" numObjects playerPos (20, 20)]
+
+          groups = zipWith createObjectGroup ["walls", "sensors", "meta"] [wallObjects, sensorObjects, metaObjects]
+
+----------------- Generic XML Generators ----------------------
 
 -- Specifies the xml tag type either with an end and a start or
 -- all in one tag
@@ -150,7 +199,7 @@ prettyPrintTag indentLevel (Dual name attrs content children) = beginning ++ mid
           tagString = tagAttrString name attrs
           beginning = indent ++ "<" ++ tagString ++ ">\n"
 
-          contentString = indent ++ "\t" ++ content ++ "\n"
+          contentString = if null content then "" else indent ++ "\t" ++ content ++ "\n"
           childrenString = concatMap (prettyPrintTag (indentLevel + 1)) children
           middle = contentString ++ childrenString
 
