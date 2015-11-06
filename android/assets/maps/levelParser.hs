@@ -203,7 +203,7 @@ prettyPrintTag indentLevel (Dual name attrs content children) = beginning ++ mid
           childrenString = concatMap (prettyPrintTag (indentLevel + 1)) children
           middle = contentString ++ childrenString
 
-          ending = indent ++ "<" ++ name ++ "/>\n"
+          ending = indent ++ "</" ++ name ++ ">\n"
 
 generateXML :: XMLTag -> String
 generateXML = (xmlPrefab++) . prettyPrintTag 0
