@@ -1,5 +1,15 @@
-import Control.Applicative (Applicative, (<*>), pure)
+import Control.Applicative
 import Control.Monad
+
+import Data.Char (isSpace)
+
+generateTmxMap :: Level -> String
+generateTmxMap level = undefined
+
+main :: IO ()
+main = putStrLn "In development :P"
+
+------------------ Level Type Definitions --------------------
 
 type Vector2 = (Int, Int)
 
@@ -13,12 +23,9 @@ data Level =
         getSensors :: [Sensor]
     }
 
-generateTmxMap :: Level -> String
-generateTmxMap level = undefined
+------------------ Level File Specific Parsers ---------------
 
 
-main :: IO ()
-main = putStrLn "In development :P"
 
 ------------------ Parsers & Utility functions ---------------
 
@@ -38,6 +45,9 @@ satisfy f = Parser $ \str ->
         (c:cs) | f c        -> Right (c, cs)
                | otherwise  -> parserError "condition not satisfied"
 
+parseByte :: Parser Char
+parseByte = satisfy (const True)
+
 parseChar :: Char -> Parser Char
 parseChar c = satisfy (==c)
 
@@ -50,21 +60,18 @@ oneOf cs = satisfy (`elem` cs)
 peekChar :: Parser (Maybe Char)
 peekChar = Parser $ \str ->
     case str of
-        (c:cs)   -> Right (Just c, cs)
+        (c:cs)   -> Right (Just c, str)
         []      -> Right (Nothing, str)
-
-parseWhileWith :: (Char -> a -> a) -> Parser a
-parseWhileWith f = do
-    result <- peekChar
-    case result of
-        Just
 
 parseWhile :: (Char -> Bool) -> Parser String
 parseWhile f = do
     result <- peekChar
     case result of
-        Just c | f c    -> liftM (c:) (parseWhile f)
+        Just c | f c    -> (:) <$> parseByte <*> parseWhile f
         _               -> return []
+
+skipSpaces :: Parser String
+skipSpaces = parseWhile isSpace
 
 ---------------- Parser Instances ----------------------------
 
@@ -95,6 +102,12 @@ instance Monad Parser where
             Left err        -> Left err
             Right (a, str1) -> runParse (f a) str1
 
+instance Alternative Parser where
+
+    empty = Parser $ \str -> Left "empty"
+    (<|>) (Parser a) (Parser b) = undefined
+
+
 ------------------ XML Generators -----------------------------
 
 -- Specifies the xml tag type either with an end and a start or
@@ -120,7 +133,7 @@ data Attr =
     }
 
 attrFromList :: [(String, String)] -> [Attr]
-attrFromList = map (\(k, v) -> Attr k v)
+attrFromList = map (uncurry Attr)
 
 tagAttrString :: String -> [Attr] -> String
 tagAttrString name []    = name
