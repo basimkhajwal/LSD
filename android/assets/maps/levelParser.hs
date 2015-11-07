@@ -26,6 +26,11 @@ data Level =
 ------------------ Level File Specific Parsers ---------------
 
 
+
+parseLevel :: Parser Level
+parseLevel = undefined
+
+
 ------------------ Parsers & Utility functions ---------------
 
 type Error = String
@@ -56,11 +61,14 @@ parseString = foldr (liftM2 (:) . parseChar) (return [])
 oneOf :: String -> Parser Char
 oneOf cs = satisfy (`elem` cs)
 
+try :: Parser a -> Parser (Maybe a)
+try p = Parser $ \str ->
+    case runParse p str of
+        Left err        -> Right (Nothing, str)
+        Right (a, str2) -> Right (Just a, str)
+
 peekChar :: Parser (Maybe Char)
-peekChar = Parser $ \str ->
-    case str of
-        (c:cs)   -> Right (Just c, str)
-        []      -> Right (Nothing, str)
+peekChar = try parseByte
 
 parseWhile :: (Char -> Bool) -> Parser String
 parseWhile f = do
@@ -71,6 +79,10 @@ parseWhile f = do
 
 skipSpaces :: Parser String
 skipSpaces = parseWhile isSpace
+
+assert :: Bool -> String -> Parser ()
+assert True  _   = pure ()
+assert False err = bail err
 
 parseWord :: Parser String
 parseWord = skipSpaces >> parseWhile (not . isSpace)
@@ -107,7 +119,10 @@ instance Monad Parser where
 instance Alternative Parser where
 
     empty = Parser $ \str -> Left "empty"
-    (<|>) (Parser a) (Parser b) = undefined
+    (<|>) (Parser a) (Parser b) = Parser $ \str ->
+        case a str of
+            Left err        -> b str
+            Right (x, str2) -> Right (x, str2)
 
 ----------------- Level XML Generators  -----------------------
 
