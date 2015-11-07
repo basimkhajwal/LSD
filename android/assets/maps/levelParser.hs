@@ -48,7 +48,9 @@ parseVariable name objectParse = do
     objectParse
 
 parseLevel :: Parser Level
-parseLevel = undefined
+parseLevel = do
+    parseString "return {"
+    parseVariable "player" (parseArray parseInt)
 
 
 ------------------ Parsers & Utility functions ---------------
@@ -85,7 +87,7 @@ try :: Parser a -> Parser (Maybe a)
 try p = Parser $ \str ->
     case runParse p str of
         Left err        -> Right (Nothing, str)
-        Right (a, str2) -> Right (Just a, str)
+        Right (a, str2) -> Right (Just a, str2)
 
 peekChar :: Parser (Maybe Char)
 peekChar = try parseByte
@@ -112,9 +114,10 @@ parseDigit = digitToInt <$> satisfy isDigit
 
 parseInt :: Parser Int
 parseInt = do
+    positive <- (== Nothing) <$> try (parseChar '-')
     i <- parseWhile isDigit
     assert (not $ null i) "Integer not found"
-    return $ read i
+    return $ read i * (if positive then 1 else -1)
 ---------------- Parser Instances ----------------------------
 
 instance Functor Parser where
