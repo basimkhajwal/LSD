@@ -1,7 +1,7 @@
 import Control.Applicative
 import Control.Monad
 
-import Data.Char (isSpace)
+import Data.Char (isSpace, isDigit, digitToInt)
 
 generateTmxMap :: Level -> String
 generateTmxMap level = undefined
@@ -25,7 +25,16 @@ data Level =
 
 ------------------ Level File Specific Parsers ---------------
 
+parseArray :: Parser a -> Parser [a]
+parseArray parse = parseChar '{' >> parseConsecutive parse
 
+parseConsecutive :: Parser a -> Parser [a]
+parseConsecutive parse = skipSpaces >> (objectParse <|> commaParse <|> endParse)
+    where objectParse = (:) <$> parse <*> next
+          commaParse = parseChar ',' >> next
+          endParse = parseChar '}' >> return []
+
+          next = parseConsecutive parse
 
 parseLevel :: Parser Level
 parseLevel = undefined
@@ -75,7 +84,7 @@ parseWhile f = do
     result <- peekChar
     case result of
         Just c | f c    -> (:) <$> parseByte <*> parseWhile f
-        _               -> return []
+        _               -> pure []
 
 skipSpaces :: Parser String
 skipSpaces = parseWhile isSpace
@@ -87,6 +96,14 @@ assert False err = bail err
 parseWord :: Parser String
 parseWord = skipSpaces >> parseWhile (not . isSpace)
 
+parseDigit :: Parser Int
+parseDigit = digitToInt <$> satisfy isDigit
+
+parseInt :: Parser Int
+parseInt = do
+    i <- parseWhile isDigit
+    assert (not $ null i) "Integer not found"
+    return $ read i
 ---------------- Parser Instances ----------------------------
 
 instance Functor Parser where
