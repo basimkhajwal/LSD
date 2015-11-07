@@ -1,13 +1,24 @@
 import Control.Applicative
 import Control.Monad
 
-import Data.Char (isSpace, isDigit, digitToInt)
+import Data.Char (isSpace, isDigit)
 
 generateTmxMap :: String -> String
-generateTmxMap = undefined
+generateTmxMap str =
+    case runParse parseLevel str of
+        Left err        -> err
+        Right (l, _)    -> (generateXML . createLevelXML) l
+
+convertLevel :: String -> IO ()
+convertLevel name = do
+    content <- readFile $ "original/" ++ name ++ ".lua"
+    writeFile (name ++ ".tmx") (generateTmxMap content)
 
 main :: IO ()
-main = putStrLn "In development :P"
+main = do
+    putStrLn "Parsing levels...."
+    mapM_ (convertLevel . ("level" ++) . show) ([1..16] :: [Int])
+
 
 ------------------ Level Type Definitions --------------------
 
@@ -16,12 +27,7 @@ type Vector2 = (Int, Int)
 type Wall = (Vector2, Vector2)
 type Sensor = (Vector2, Vector2)
 
-data Level =
-    Level {
-        getPlayerPosition :: Vector2,
-        getWalls :: [Wall],
-        getSensors :: [Sensor]
-    } deriving (Show)
+data Level = Level  Vector2 [Wall] [Sensor] deriving (Show)
 
 ------------------ Level File Specific Parsers ---------------
 
@@ -41,16 +47,12 @@ parseVariable name objectParse = do
     n <- parseWord
     assert (n == name) $ "variable " ++ name ++ " not found -- instead " ++ n
 
-    skipSpaces
-    parseChar '='
-    skipSpaces
-
-    objectParse
+    skipSpaces >> parseChar '=' >> skipSpaces >> objectParse
 
 parseLevel :: Parser Level
 parseLevel = do
     -- Prefab
-    parseString "return {"
+    _ <- parseString "return {"
 
     -- Parse the player coordinates
     ps <- parseVariable "player" (parseArray parseInt)
@@ -59,8 +61,7 @@ parseLevel = do
 
     -- Parse but ignore map bounds (auto-generated in the Java version)
     mapM_ (\n -> parseChar ',' >> parseVariable n parseInt) ["minX", "maxX", "minY", "maxY"]
-    parseChar ','
-    skipSpaces
+    _ <- parseChar ',' >> skipSpaces
 
     -- Check whether walls or sensors come first then parse accordingly
     wallsFirst <- (== Nothing) <$> try (parseChar 's')
@@ -114,14 +115,11 @@ parseChar c = satisfy (==c)
 parseString :: String -> Parser String
 parseString = foldr (liftM2 (:) . parseChar) (return [])
 
-oneOf :: String -> Parser Char
-oneOf cs = satisfy (`elem` cs)
-
 try :: Parser a -> Parser (Maybe a)
 try p = Parser $ \str ->
     case runParse p str of
-        Left err        -> Right (Nothing, str)
-        Right (a, str2) -> Right (Just a, str)
+        Left _       -> Right (Nothing, str)
+        Right (a, _) -> Right (Just a, str)
 
 peekChar :: Parser (Maybe Char)
 peekChar = try parseByte
@@ -142,9 +140,6 @@ assert False err = bail err
 
 parseWord :: Parser String
 parseWord = skipSpaces >> parseWhile (not . isSpace)
-
-parseDigit :: Parser Int
-parseDigit = digitToInt <$> satisfy isDigit
 
 parseInt :: Parser Int
 parseInt = do
@@ -183,10 +178,10 @@ instance Monad Parser where
 
 instance Alternative Parser where
 
-    empty = Parser $ \str -> Left "empty"
+    empty = Parser $ \_ -> Left "empty"
     (<|>) (Parser a) (Parser b) = Parser $ \str ->
         case a str of
-            Left err        -> b str
+            Left _          -> b str
             Right (x, str2) -> Right (x, str2)
 
 ----------------- Level XML Generators  -----------------------
@@ -242,24 +237,14 @@ createLevelXML (Level playerPos walls sensors) = createMapTag numObjects groups
 -- Specifies the xml tag type either with an end and a start or
 -- all in one tag
 data XMLTag =
-    Single {
-        singTagName :: String,
-        singTagAttrs :: [Attr]
-    } |
-    Dual {
-        tagName :: String,
-        tagAttrs :: [Attr],
+    -- Name , Attributes
+    Single  String [Attr] |
 
-        tagContent :: String,
-        tagChildren :: [XMLTag]
-    }
+    -- Name, Attributes, Content, Children
+    Dual String [Attr] String  [XMLTag]
 
--- Specifies an attribute within the tag
-data Attr =
-    Attr {
-        attrName :: String,
-        attrValue :: String
-    }
+-- Specifies an attribute within the tag (name, value)
+data Attr = Attr String String
 
 attrFromList :: [(String, String)] -> [Attr]
 attrFromList = map (uncurry Attr)
