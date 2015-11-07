@@ -29,12 +29,23 @@ parseArray :: Parser a -> Parser [a]
 parseArray parse = parseChar '{' >> parseConsecutive parse
 
 parseConsecutive :: Parser a -> Parser [a]
-parseConsecutive parse = skipSpaces >> (objectParse <|> commaParse <|> endParse)
+parseConsecutive parse = skipSpaces >> (objectParse <|> commaParse <|> endParse <|> bail "array parse failure")
     where objectParse = (:) <$> parse <*> next
           commaParse = parseChar ',' >> next
           endParse = parseChar '}' >> return []
 
           next = parseConsecutive parse
+
+parseVariable :: String -> Parser a -> Parser a
+parseVariable name objectParse = do
+    n <- parseWord
+    assert (n == name) $ "variable " ++ name ++ " not found"
+
+    skipSpaces
+    parseChar '='
+    skipSpaces
+
+    objectParse
 
 parseLevel :: Parser Level
 parseLevel = undefined
