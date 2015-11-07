@@ -3,8 +3,8 @@ import Control.Monad
 
 import Data.Char (isSpace, isDigit, digitToInt)
 
-generateTmxMap :: Level -> String
-generateTmxMap level = undefined
+generateTmxMap :: String -> String
+generateTmxMap = undefined
 
 main :: IO ()
 main = putStrLn "In development :P"
@@ -21,7 +21,7 @@ data Level =
         getPlayerPosition :: Vector2,
         getWalls :: [Wall],
         getSensors :: [Sensor]
-    }
+    } deriving (Show)
 
 ------------------ Level File Specific Parsers ---------------
 
@@ -39,7 +39,7 @@ parseConsecutive parse = skipSpaces >> (objectParse <|> commaParse <|> endParse 
 parseVariable :: String -> Parser a -> Parser a
 parseVariable name objectParse = do
     n <- parseWord
-    assert (n == name) $ "variable " ++ name ++ " not found"
+    assert (n == name) $ "variable " ++ name ++ " not found -- instead " ++ n
 
     skipSpaces
     parseChar '='
@@ -48,7 +48,44 @@ parseVariable name objectParse = do
     objectParse
 
 parseLevel :: Parser Level
-parseLevel = undefined
+parseLevel = do
+    -- Prefab
+    parseString "return {"
+
+    -- Parse the player coordinates
+    ps <- parseVariable "player" (parseArray parseInt)
+    assert (length ps == 2) "player position not valid"
+    let playerPos = (head ps, ps !! 1)
+
+    -- Parse but ignore map bounds (auto-generated in the Java version)
+    mapM_ (\n -> parseChar ',' >> parseVariable n parseInt) ["minX", "maxX", "minY", "maxY"]
+    parseChar ','
+    skipSpaces
+
+    -- Check whether walls or sensors come first then parse accordingly
+    wallsFirst <- (== Nothing) <$> try (parseChar 's')
+
+    let fl a _ b = (a,b)
+
+    parsing <- if wallsFirst then fl <$> parseWalls <*> parseChar ',' <*> parseSensors
+               else fl <$> parseSensors <*> parseChar ',' <*> parseWalls
+
+    let walls = (if wallsFirst then fst else snd) parsing
+        sensors = (if wallsFirst then snd else fst) parsing
+
+    return $ Level playerPos walls sensors
+
+parseWalls :: Parser [Wall]
+parseWalls = do
+    ws <- parseVariable "walls" (parseArray (parseArray parseInt))
+    assert (all ((==4) . length) ws) "wall definitions not valid"
+    return $ map (\[x,y,w,h] -> ((x,y), (w, h))) ws
+
+parseSensors :: Parser [Sensor]
+parseSensors = do
+    ss <- parseVariable "sensors" (parseArray (parseArray parseInt))
+    assert (all ((==4) . length) ss) "sensor definitions not valid"
+    return $ map (\[x,y,w,h]-> ((x,y), (w, h))) ss
 
 ------------------ Parsers & Utility functions ---------------
 
@@ -84,7 +121,7 @@ try :: Parser a -> Parser (Maybe a)
 try p = Parser $ \str ->
     case runParse p str of
         Left err        -> Right (Nothing, str)
-        Right (a, str2) -> Right (Just a, str2)
+        Right (a, str2) -> Right (Just a, str)
 
 peekChar :: Parser (Maybe Char)
 peekChar = try parseByte
@@ -93,7 +130,7 @@ parseWhile :: (Char -> Bool) -> Parser String
 parseWhile f = do
     result <- peekChar
     case result of
-        Just c | f c    -> (c:) <$> parseWhile f
+        Just c | f c    -> (:) <$> parseByte <*> parseWhile f
         _               -> pure []
 
 skipSpaces :: Parser String
