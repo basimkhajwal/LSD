@@ -80,13 +80,13 @@ parseWalls :: Parser [Wall]
 parseWalls = do
     ws <- parseVariable "walls" (parseArray (parseArray parseInt))
     assert (all ((==4) . length) ws) "wall definitions not valid"
-    return $ map (\[x,y,w,h] -> ((x,y), (w, h))) ws
+    return $ map (\[x,y,w,h] -> ((x,y - h), (w, h))) ws
 
 parseSensors :: Parser [Sensor]
 parseSensors = do
     ss <- parseVariable "sensors" (parseArray (parseArray parseInt))
     assert (all ((==4) . length) ss) "sensor definitions not valid"
-    return $ map (\[x,y,w,h]-> ((x,y), (w, h))) ss
+    return $ map (\[x,y,w,h]-> ((x,y - h), (w, h))) ss
 
 ------------------ Parsers & Utility functions ---------------
 
@@ -193,7 +193,7 @@ defaultMapAttributes = attrFromList
         ("orientation", "orthogonal"),
         ("renderorder", "right-up"),
 
-        ("width", "80"), ("height", "60"),
+        ("width", "200"), ("height", "200"),
         ("tilewidth", "10"), ("tileheight", "10")
     ]
 

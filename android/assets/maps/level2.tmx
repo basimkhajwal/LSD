@@ -1,28 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-up" width="80" height="60" tilewidth="10" tileheight="10" nextobjectid="22">
+<map version="1.0" orientation="orthogonal" renderorder="right-up" width="200" height="200" tilewidth="10" tileheight="10" nextobjectid="22">
 	<objectgroup name="walls">
-		<object id="1" name="wall" type="wall" x="620" y="560" width="20" height="390"/>
-		<object id="2" name="wall" type="wall" x="890" y="560" width="20" height="230"/>
-		<object id="3" name="wall" type="wall" x="640" y="560" width="250" height="20"/>
-		<object id="4" name="wall" type="wall" x="910" y="420" width="210" height="20"/>
-		<object id="5" name="wall" type="wall" x="620" y="170" width="20" height="100"/>
-		<object id="6" name="wall" type="wall" x="640" y="90" width="190" height="20"/>
-		<object id="7" name="wall" type="wall" x="1100" y="400" width="20" height="160"/>
-		<object id="8" name="wall" type="wall" x="1320" y="420" width="20" height="180"/>
-		<object id="9" name="wall" type="wall" x="1340" y="420" width="190" height="20"/>
-		<object id="10" name="wall" type="wall" x="1530" y="540" width="20" height="210"/>
-		<object id="11" name="wall" type="wall" x="1530" y="560" width="290" height="20"/>
-		<object id="12" name="wall" type="wall" x="1800" y="540" width="20" height="470"/>
-		<object id="13" name="wall" type="wall" x="1610" y="90" width="190" height="20"/>
+		<object id="1" name="wall" type="wall" x="620" y="170" width="20" height="390"/>
+		<object id="2" name="wall" type="wall" x="890" y="330" width="20" height="230"/>
+		<object id="3" name="wall" type="wall" x="640" y="540" width="250" height="20"/>
+		<object id="4" name="wall" type="wall" x="910" y="400" width="210" height="20"/>
+		<object id="5" name="wall" type="wall" x="620" y="70" width="20" height="100"/>
+		<object id="6" name="wall" type="wall" x="640" y="70" width="190" height="20"/>
+		<object id="7" name="wall" type="wall" x="1100" y="240" width="20" height="160"/>
+		<object id="8" name="wall" type="wall" x="1320" y="240" width="20" height="180"/>
+		<object id="9" name="wall" type="wall" x="1340" y="400" width="190" height="20"/>
+		<object id="10" name="wall" type="wall" x="1530" y="330" width="20" height="210"/>
+		<object id="11" name="wall" type="wall" x="1530" y="540" width="290" height="20"/>
+		<object id="12" name="wall" type="wall" x="1800" y="70" width="20" height="470"/>
+		<object id="13" name="wall" type="wall" x="1610" y="70" width="190" height="20"/>
 	</objectgroup>
 	<objectgroup name="sensors">
-		<object id="14" name="sensor" type="sensor" x="930" y="390" width="150" height="30"/>
-		<object id="15" name="sensor" type="sensor" x="690" y="520" width="150" height="30"/>
-		<object id="16" name="sensor" type="sensor" x="650" y="130" width="150" height="30"/>
-		<object id="17" name="sensor" type="sensor" x="1140" y="350" width="160" height="30"/>
-		<object id="18" name="sensor" type="sensor" x="1360" y="390" width="150" height="30"/>
-		<object id="19" name="sensor" type="sensor" x="1600" y="520" width="150" height="30"/>
-		<object id="20" name="sensor" type="sensor" x="1640" y="130" width="150" height="30"/>
+		<object id="14" name="sensor" type="sensor" x="930" y="360" width="150" height="30"/>
+		<object id="15" name="sensor" type="sensor" x="690" y="490" width="150" height="30"/>
+		<object id="16" name="sensor" type="sensor" x="650" y="100" width="150" height="30"/>
+		<object id="17" name="sensor" type="sensor" x="1140" y="320" width="160" height="30"/>
+		<object id="18" name="sensor" type="sensor" x="1360" y="360" width="150" height="30"/>
+		<object id="19" name="sensor" type="sensor" x="1600" y="490" width="150" height="30"/>
+		<object id="20" name="sensor" type="sensor" x="1640" y="100" width="150" height="30"/>
 	</objectgroup>
 	<objectgroup name="meta">
 		<object id="21" name="player-position" type="player-position" x="769" y="440" width="20" height="20"/>
