@@ -20,7 +20,8 @@ public class Constants {
 
     public static final String[] LEVELS = {
             Assets.LevelMaps.TEST,
-            Assets.LevelMaps.TEST2
+            Assets.LevelMaps.TEST2,
+            Assets.LevelMaps.LEVEL_2
     };
     public static final int MAX_LEVEL = LEVELS.length - 1;
 
