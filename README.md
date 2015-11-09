@@ -12,6 +12,7 @@ It can compile to the following platforms:
 - HTML5 (any modern browser, Internet Explorer requires Google Chrome Frame) *Tested*
 
 A compiled (but not regularly updated) HTML5 version is at: [basimkhajwal.freeoda.com] (http://basimkhajwal.freeoda.com)
+(Note: it is not currently working due)
 
 They should all work but only desktop and HTML5 builds have currently been tested. For the latest version, download this repository and run the gradle-based projects on your computer -- more [here](https://github.com/libgdx/libgdx/wiki/Gradle-on-the-Commandline).
 
