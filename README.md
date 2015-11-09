@@ -22,12 +22,9 @@ They should all work but only desktop and HTML5 builds have currently been teste
 - [ ] Particles for player death
 - [ ] Slow-motion level complete / player death
 - [ ] Add JSON read/write for a persistent Settings value
-- [ ] Add ability to progress from level to level
 - [ ] Create a sub-menu / level selection screen
 - [ ] Create a settings screen
-- [ ] Add custom shaders and tweens for the background
 - [ ] Add parallax effect for the game
-- [ ] Create a loader to load levels from the previous version of LSD
 
 #### Currently Working:
 - [x] Platforms are loaded from a Tiled map (.tmx) format
@@ -50,3 +47,6 @@ They should all work but only desktop and HTML5 builds have currently been teste
 - [x] Add a sound manager
 - [x] Implement background music and sounds for player death, jump etc.
 - [x] Different sized particles
+- [x] Add ability to progress from level to level
+- [x] Create a loader to load levels from the previous version of LSD
+- [x] Add custom shaders and tweens for the background
