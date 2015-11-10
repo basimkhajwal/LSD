@@ -2,12 +2,9 @@ package net.net63.codearcade.LSD;
 
 import com.badlogic.gdx.graphics.FPSLogger;
 import net.net63.codearcade.LSD.screens.MenuScreen;
-import net.net63.codearcade.LSD.utils.Assets;
+import net.net63.codearcade.LSD.utils.*;
 
 import com.badlogic.gdx.Game;
-import net.net63.codearcade.LSD.utils.Constants;
-import net.net63.codearcade.LSD.utils.ShaderManager;
-import net.net63.codearcade.LSD.utils.SoundManager;
 
 /**
  * Top level game class and libGDX entry point for the game
@@ -28,6 +25,7 @@ public class LSD extends Game {
 	@Override
 	public void create() {
 		Assets.loadAll();
+        LevelManager.loadAll();
         SoundManager.loadAll();
         ShaderManager.loadAll();
 
