@@ -45,6 +45,16 @@ public class LevelManager {
     }
 
     /**
+     * Access a level pack
+     *
+     * @param packId The id of the level pack
+     * @return The associated level pack
+     */
+    public static LevelPack getPack(int packId) {
+        return levelPacks[packId];
+    }
+
+    /**
      * Access a level
      *
      * @param packId The id of the level pack (from the LevelPacks class)

@@ -12,9 +12,9 @@ import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import net.net63.codearcade.LSD.LSD;
 import net.net63.codearcade.LSD.screens.overlays.GameOverScreen;
 import net.net63.codearcade.LSD.screens.overlays.LevelCompleteScreen;
-import net.net63.codearcade.LSD.utils.Assets;
 import net.net63.codearcade.LSD.utils.Constants;
 import net.net63.codearcade.LSD.utils.GUIBuilder;
+import net.net63.codearcade.LSD.utils.LevelManager;
 import net.net63.codearcade.LSD.world.GameWorld;
 
 /**
@@ -40,7 +40,7 @@ public class GameScreen extends AbstractScreen implements EventListener {
         this.levelId = levelId;
 
         //Create a new world with the map at the current level
-        gameWorld = new GameWorld(Assets.getTiledMap(Constants.LEVELS[levelId]));
+        gameWorld = new GameWorld(LevelManager.getLevel(Constants.DEFAULT_PACK, levelId));
         setupUI();
 	}
 
