@@ -1,7 +1,9 @@
 package net.net63.codearcade.LSD.systems;
 
-import com.badlogic.ashley.core.*;
-import com.badlogic.ashley.utils.ImmutableArray;
+import com.badlogic.ashley.core.ComponentMapper;
+import com.badlogic.ashley.core.Entity;
+import com.badlogic.ashley.core.Family;
+import com.badlogic.ashley.systems.IteratingSystem;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -13,21 +15,24 @@ import net.net63.codearcade.LSD.utils.Assets;
 import net.net63.codearcade.LSD.utils.Constants;
 
 /**
+ * Render the aim points when the player is being
+ * aimed at a point
+ *
  * Created by Basim on 12/08/15.
  */
-public class EffectRenderSystem extends EntitySystem implements Disposable{
+public class AimRenderSystem extends IteratingSystem implements Disposable{
 
+    //Render variables
     private OrthographicCamera gameCamera;
     private SpriteBatch batch;
     private Texture trajectoryImage;
 
+    //Mappers
     private ComponentMapper<PlayerComponent> playerMapper;
     private ComponentMapper<StateComponent> stateMapper;
 
-    private ImmutableArray<Entity> playerEntities;
-
-    public EffectRenderSystem (OrthographicCamera gameCamera) {
-        super(Constants.SYSTEM_PRIORITIES.EFFECT_RENDER);
+    public AimRenderSystem(OrthographicCamera gameCamera) {
+        super(Family.all(PlayerComponent.class).get(), Constants.SYSTEM_PRIORITIES.EFFECT_RENDER);
 
         this.gameCamera = gameCamera;
         batch = new SpriteBatch();
@@ -39,23 +44,15 @@ public class EffectRenderSystem extends EntitySystem implements Disposable{
     }
 
     @Override
-    public void addedToEngine(Engine engine) {
-        super.addedToEngine(engine);
-
-        playerEntities = engine.getEntitiesFor(Family.all(PlayerComponent.class).get());
-    }
-
-    @Override
-    public void update(float deltaTime) {
-        Entity player = playerEntities.first();
-
+    public void processEntity(Entity player, float deltaTime) {
+        //Draw if the aiming state is set
         if (stateMapper.get(player).get() == PlayerComponent.STATE_AIMING) {
-            Vector2[] trajectories = playerMapper.get(player).trajectoryPoints;
 
             batch.setProjectionMatrix(gameCamera.combined);
             batch.begin();
 
-            for (Vector2 point: trajectories) {
+            //Draw the image at each trajectory point
+            for (Vector2 point:  playerMapper.get(player).trajectoryPoints) {
                 batch.draw(trajectoryImage, point.x, point.y, 0.1f, 0.1f);
             }
 
