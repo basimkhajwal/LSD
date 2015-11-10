@@ -11,10 +11,14 @@ import net.net63.codearcade.LSD.components.StateComponent;
 import net.net63.codearcade.LSD.utils.Constants;
 
 /**
+ * An animation manager that updates each animation
+ * component as to which texture
+ *
  * Created by Basim on 31/08/15.
  */
 public class AnimationSystem extends IteratingSystem {
 
+    //Mappers
     private ComponentMapper<AnimationComponent> animMapper;
     private ComponentMapper<RenderComponent> renderMapper;
     private ComponentMapper<StateComponent> stateMapper;
@@ -32,10 +36,12 @@ public class AnimationSystem extends IteratingSystem {
     public void processEntity(Entity entity, float deltaTime) {
         StateComponent state = stateMapper.get(entity);
 
+        //Update the state time
+        state.time += deltaTime;
+
+        //Set the texture at the current time
         Animation currentAnimation = animMapper.get(entity).animations.get(state.get());
         renderMapper.get(entity).texture = currentAnimation.getKeyFrame(state.time);
-
-        state.time += deltaTime;
     }
 
 }
