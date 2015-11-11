@@ -1,15 +1,59 @@
 package net.net63.codearcade.LSD.systems;
 
 import com.badlogic.ashley.core.EntitySystem;
+import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.utils.Disposable;
+import net.net63.codearcade.LSD.world.LevelDescriptor;
 
 /**
  * Created by Basim on 11/11/15.
  */
-public class ParallaxEffectSystem extends EntitySystem {
+public class ParallaxEffectSystem extends EntitySystem implements Disposable {
 
-    public ParallaxEffectSystem() {
-        
+    private static final int NUM_LAYERS = 3;
+    private static final int BLOCKS_PER_LAYER = 30;
+
+    private static final Vector2 MIN_BLOCK_SIZE = new Vector2();
+    private static final Vector2 MAX_BLOCK_SIZE = new Vector2();
+
+    private ShapeRenderer shapeRenderer;
+    private OrthographicCamera camera;
+
+    private Rectangle[][] layers = new Rectangle[NUM_LAYERS][BLOCKS_PER_LAYER];
+
+    public ParallaxEffectSystem(OrthographicCamera camera, LevelDescriptor levelDescriptor) {
+        super();
+
+        this.camera = camera;
+        shapeRenderer = new ShapeRenderer();
+
+        generateLayers(levelDescriptor.getWorldBounds());
     }
 
+    private void generateLayers(Rectangle bounds) {
 
+        for (int n = 0; n < NUM_LAYERS; n++) {
+
+            for (int i = 0; i  < BLOCKS_PER_LAYER) {
+
+            }
+
+        }
+
+    }
+
+    @Override
+    public void update(float deltaTime) {
+        super.update(deltaTime);
+
+        shapeRenderer.setProjectionMatrix(camera.combined);
+    }
+
+    @Override
+    public void dispose() {
+        shapeRenderer.dispose();
+    }
 }
