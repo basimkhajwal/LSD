@@ -70,13 +70,13 @@ public class GameWorld implements Disposable, EntityListener {
         //Level descriptor handles score, achievements etc.
         levelDescriptor = new LevelDescriptor();
 
-        //Add entity systems for logic/rendering and listeners
-        addSystems();
-        addListeners();
-
         //Add all the elements from the tiled map
         WorldBuilder.setup(engine, world, levelDescriptor);
         WorldBuilder.loadFromMap(gameMap);
+
+        //Add entity systems for logic/rendering and listeners
+        addSystems();
+        addListeners();
 
         //Maintain a pointer to the player entity since it is commonly used
         player = engine.getEntitiesFor(Family.all(PlayerComponent.class).get()).first();
@@ -201,6 +201,7 @@ public class GameWorld implements Disposable, EntityListener {
         engine.addSystem(new ParticleUpdateSystem(world));
 
         engine.addSystem(new BackgroundRenderSystem());
+        engine.addSystem(new ParallaxEffectSystem(gameCamera, levelDescriptor));
         engine.addSystem(new RenderSystem(gameCamera));
         engine.addSystem(new DebugRenderSystem(gameCamera));
         engine.addSystem(new ParticleRenderSystem(gameCamera));
