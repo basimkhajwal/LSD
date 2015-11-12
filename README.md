@@ -25,7 +25,6 @@ They should all work but only desktop and HTML5 builds have currently been teste
 - [ ] Add JSON read/write for a persistent Settings value
 - [ ] Create a sub-menu / level selection screen
 - [ ] Create a settings screen
-- [ ] Add parallax effect for the game
 
 #### Currently Working:
 - [x] Platforms are loaded from a Tiled map (.tmx) format
@@ -50,4 +49,5 @@ They should all work but only desktop and HTML5 builds have currently been teste
 - [x] Different sized particles
 - [x] Add ability to progress from level to level
 - [x] Create a loader to load levels from the previous version of LSD
-- [x] Add custom shaders and tweens for the background
+- [x] Add custom shaders for the background
+- [x] Add parallax effect for the game
