@@ -84,9 +84,10 @@ public class Constants {
         public static final int CAMERA_SHAKE            = 8;
         public static final int ANIMATION               = 9;
         public static final int BACKGROUND_RENDER       = 10;
-        public static final int RENDER                  = 11;
-        public static final int DEBUG_RENDER            = 12;
-        public static final int PARTICLE_RENDER         = 13;
-        public static final int EFFECT_RENDER           = 14;
+        public static final int PARALLAX_EFFECT         = 11;
+        public static final int RENDER                  = 12;
+        public static final int DEBUG_RENDER            = 13;
+        public static final int PARTICLE_RENDER         = 14;
+        public static final int EFFECT_RENDER           = 15;
     }
 }
