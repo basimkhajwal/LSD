@@ -19,13 +19,15 @@ import net.net63.codearcade.LSD.world.LevelDescriptor;
 public class ParallaxEffectSystem extends EntitySystem implements Disposable {
 
     private static final int NUM_LAYERS = 3;
-    private static final int BLOCKS_PER_LAYER = 30;
+    private static final int BLOCKS_PER_LAYER = 10;
 
-    private static final Vector2 MIN_BLOCK_SIZE = new Vector2(0.5f, 0.5f);
-    private static final Vector2 MAX_BLOCK_SIZE = new Vector2(1, 1);
+    private static final float MIN_BLOCK_SIZE = 0.1f;
+    private static final float MAX_BLOCK_SIZE = 0.6f;
 
-    private static final float MIN_GRAY = 150 / 255f;
-    private static final float MAX_GRAY = 170 / 255f;
+    private static final float MIN_GRAY = 245 / 255f;
+    private static final float MAX_GRAY = 250 / 255f;
+
+    private static final float ALPHA = 0.4f;
 
     private static final float MIN_MOVEMENT = 0.25f;
     private static final float MAX_MOVEMENT = 0.75f;
@@ -57,16 +59,16 @@ public class ParallaxEffectSystem extends EntitySystem implements Disposable {
             layers[n] = new Rectangle[BLOCKS_PER_LAYER];
 
             for (int i = 0; i < BLOCKS_PER_LAYER; i++) {
+                float size = MathUtils.random(MIN_BLOCK_SIZE, MAX_BLOCK_SIZE);
                 layers[n][i] = new Rectangle(
                         MathUtils.random(bounds.x, bounds.x + bounds.width),
                         MathUtils.random(bounds.y, bounds.y + bounds.height),
-                        MathUtils.random(MIN_BLOCK_SIZE.x, MAX_BLOCK_SIZE.x),
-                        MathUtils.random(MAX_BLOCK_SIZE.y, MAX_BLOCK_SIZE.y)
+                        size, size
                 );
             }
 
             float gray = MathUtils.random(MIN_GRAY, MAX_GRAY);
-            colors[n] = new Color(gray, gray, gray, 0.5f);
+            colors[n] = new Color(gray, gray, gray, ALPHA);
         }
 
     }
