@@ -1,7 +1,9 @@
 package net.net63.codearcade.LSD.systems;
 
 import com.badlogic.ashley.core.EntitySystem;
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.MathUtils;
@@ -25,11 +27,18 @@ public class ParallaxEffectSystem extends EntitySystem implements Disposable {
     private static final float MIN_GRAY = 150 / 255f;
     private static final float MAX_GRAY = 170 / 255f;
 
+    private static final float MIN_MOVEMENT = 0.25f;
+    private static final float MAX_MOVEMENT = 0.75f;
+    private static final float STEP_MOVEMENT = (MAX_MOVEMENT - MIN_MOVEMENT) / NUM_LAYERS;
+
     private ShapeRenderer shapeRenderer;
     private OrthographicCamera camera;
 
     private Rectangle[][] layers = new Rectangle[NUM_LAYERS][];
     private Color[] colors = new Color[NUM_LAYERS];
+
+    private Vector2 previousPosition = new Vector2();
+    private Vector2 tmp = new Vector2();
 
     public ParallaxEffectSystem(OrthographicCamera camera, LevelDescriptor levelDescriptor) {
         super(Constants.SYSTEM_PRIORITIES.PARALLAX_EFFECT);
@@ -57,7 +66,7 @@ public class ParallaxEffectSystem extends EntitySystem implements Disposable {
             }
 
             float gray = MathUtils.random(MIN_GRAY, MAX_GRAY);
-            colors[n] = new Color(gray, gray, gray, 1);
+            colors[n] = new Color(gray, gray, gray, 0.5f);
         }
 
     }
@@ -66,20 +75,40 @@ public class ParallaxEffectSystem extends EntitySystem implements Disposable {
     public void update(float deltaTime) {
         super.update(deltaTime);
 
+        tmp.set(camera.position.x, camera.position.y);
+        boolean change = false;
+
+        if (!previousPosition.isZero() && !previousPosition.equals(tmp)) {
+            change = true;
+            tmp.sub(previousPosition);
+        }
+
+        previousPosition.set(camera.position.x, camera.position.y);
+
+        Gdx.gl.glEnable(GL20.GL_BLEND);
         shapeRenderer.setProjectionMatrix(camera.combined);
         shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
 
+        float initMovement = MIN_MOVEMENT + STEP_MOVEMENT / 2;
+
         for (int i = 0; i < NUM_LAYERS; i++) {
             shapeRenderer.setColor(colors[i]);
+            float amount = initMovement + STEP_MOVEMENT * i;
 
             for (int j = 0; j < BLOCKS_PER_LAYER; j++) {
                 Rectangle rectangle = layers[i][j];
+
+                if (change) {
+                    rectangle.x += tmp.x * amount;
+                    rectangle.y += tmp.y * amount;
+                }
 
                 shapeRenderer.rect(rectangle.x, rectangle.y, rectangle.width, rectangle.height);
             }
         }
 
         shapeRenderer.end();
+        Gdx.gl.glDisable(GL20.GL_BLEND);
     }
 
     @Override
