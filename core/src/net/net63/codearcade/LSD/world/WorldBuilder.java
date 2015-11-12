@@ -83,8 +83,8 @@ public class WorldBuilder {
     }
 
     private static void addBoundedBody(float x, float y, float width, float height) {
-        bounds.merge(x, y);
-        bounds.merge(x + width, y + height);
+        if (bounds.width == 0) bounds.set(x, y, width, height);
+        else bounds.merge(x, y).merge(x + width, y + height);
     }
 
     private static float[] getDimensions(MapObject mapObject) {
