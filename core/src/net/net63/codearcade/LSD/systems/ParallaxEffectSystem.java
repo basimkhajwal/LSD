@@ -19,18 +19,18 @@ import net.net63.codearcade.LSD.world.LevelDescriptor;
 public class ParallaxEffectSystem extends EntitySystem implements Disposable {
 
     private static final int NUM_LAYERS = 3;
-    private static final int BLOCKS_PER_LAYER = 10;
+    private static final int BLOCKS_PER_LAYER = 15;
 
     private static final float MIN_BLOCK_SIZE = 0.1f;
-    private static final float MAX_BLOCK_SIZE = 0.6f;
+    private static final float MAX_BLOCK_SIZE = 0.5f;
 
     private static final float MIN_GRAY = 245 / 255f;
     private static final float MAX_GRAY = 250 / 255f;
 
     private static final float ALPHA = 0.4f;
 
-    private static final float MIN_MOVEMENT = 0.25f;
-    private static final float MAX_MOVEMENT = 0.75f;
+    private static final float MIN_MOVEMENT = 0.3f;
+    private static final float MAX_MOVEMENT = 0.8f;
     private static final float STEP_MOVEMENT = (MAX_MOVEMENT - MIN_MOVEMENT) / NUM_LAYERS;
 
     private ShapeRenderer shapeRenderer;
