@@ -21,6 +21,8 @@ They should all work but only desktop and HTML5 builds have currently been teste
 #### TODO:
 - [ ] Comment out code
 - [ ] Particles for player death
+- [ ] Add timer for each platform
+- [ ] Customize shader for the game (add a new one)
 - [ ] Slow-motion level complete / player death
 - [ ] Add JSON read/write for a persistent Settings value
 - [ ] Create a sub-menu / level selection screen
