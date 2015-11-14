@@ -64,12 +64,11 @@ public class MenuScreen extends AbstractScreen{
 
         //Load the shader and set pedantic to stop un-used uniform errors
         shaderProgram = ShaderManager.getShader(ShaderManager.Shaders.MENU);
-        shaderProgram.pedantic = false;
+        //shaderProgram.pedantic = false;
 
         //Create the stage for the GUI and the input handler
         stage = new Stage(new ExtendViewport(Constants.DEFAULT_SCREEN_WIDTH, Constants.DEFAULT_SCREEN_HEIGHT));
         Gdx.input.setInputProcessor(stage);
-
 
         setupUI();
     }
@@ -103,7 +102,10 @@ public class MenuScreen extends AbstractScreen{
         //Get the background and set the shader uniform
         backgroundTexture = Assets.getAsset(Assets.Images.BACKGROUND, Texture.class);
         backgroundTexture.setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
+
+        shaderProgram.begin();
         shaderProgram.setUniformf("invScreenSize", 1.0f/backgroundTexture.getWidth(), 1.0f/backgroundTexture.getHeight());
+        shaderProgram.end();
 
         //Add all the GUI elements
         stage.addActor(topTitle);
@@ -153,7 +155,7 @@ public class MenuScreen extends AbstractScreen{
         batch.setShader(shaderProgram);
         batch.setProjectionMatrix(camera.combined);
         batch.begin();
-        shaderProgram.setUniformf("time", time);
+        //shaderProgram.setUniformf("time", time);
 
         //Draw the background twice, side by side
         batch.draw(backgroundTexture, backgroundX, 0, backgroundSize.x, backgroundSize.y);
