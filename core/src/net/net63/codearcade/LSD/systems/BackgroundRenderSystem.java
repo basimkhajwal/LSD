@@ -37,7 +37,6 @@ public class BackgroundRenderSystem extends EntitySystem implements Disposable {
 
         batch = new SpriteBatch();
         shaderProgram = ShaderManager.getShader(ShaderManager.Shaders.MENU);
-        shaderProgram.pedantic = false;
 
         //Send the texture size shader
         shaderProgram.begin();
