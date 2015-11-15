@@ -14,9 +14,14 @@ import net.net63.codearcade.LSD.utils.Constants;
 import net.net63.codearcade.LSD.world.LevelDescriptor;
 
 /**
+ * System to render and update a parallax effect in the
+ * background to make the game more realistic
+ *
  * Created by Basim on 11/11/15.
  */
 public class ParallaxEffectSystem extends EntitySystem implements Disposable {
+
+    // Effect tweaking variables
 
     private static final int NUM_LAYERS = 3;
     private static final int BLOCKS_PER_LAYER = 15;
@@ -32,6 +37,8 @@ public class ParallaxEffectSystem extends EntitySystem implements Disposable {
     private static final float MIN_MOVEMENT = 0.3f;
     private static final float MAX_MOVEMENT = 0.8f;
     private static final float STEP_MOVEMENT = (MAX_MOVEMENT - MIN_MOVEMENT) / NUM_LAYERS;
+
+    // Rendering instances/objects
 
     private ShapeRenderer shapeRenderer;
     private OrthographicCamera camera;
@@ -51,10 +58,10 @@ public class ParallaxEffectSystem extends EntitySystem implements Disposable {
         generateLayers(levelDescriptor.getWorldBounds());
     }
 
+    //Generate all the objects in the all layers
     private void generateLayers(Rectangle bounds) {
 
-        System.out.println(bounds.toString());
-
+        //Iterate over every layer
         for (int n = 0; n < NUM_LAYERS; n++) {
             layers[n] = new Rectangle[BLOCKS_PER_LAYER];
 
@@ -67,6 +74,7 @@ public class ParallaxEffectSystem extends EntitySystem implements Disposable {
                 );
             }
 
+            //Assign a random gray value for this layer
             float gray = MathUtils.random(MIN_GRAY, MAX_GRAY);
             colors[n] = new Color(gray, gray, gray, ALPHA);
         }
