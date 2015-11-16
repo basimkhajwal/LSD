@@ -60,7 +60,7 @@ public class BackgroundRenderer implements Disposable {
 
     public interface BackgroundRenderable {
         void setup(BackgroundRenderer renderer);
-        void renderBackground(SpriteBatch batch, Texture background);
+        void renderBackground(SpriteBatch batch);
     }
 
     public static final BackgroundRenderable DEFAULT = new BackgroundRenderable() {
@@ -73,8 +73,10 @@ public class BackgroundRenderer implements Disposable {
         }
 
         @Override
-        public void renderBackground(SpriteBatch batch, Texture background) {
-            batch.draw
+        public void renderBackground(SpriteBatch batch) {
+            Vector2 size = renderer.getScreenSize();
+
+            batch.draw(renderer.getTexture(), 0, 0, size.x, size.y);
         }
     };
 
@@ -88,6 +90,10 @@ public class BackgroundRenderer implements Disposable {
 
     public Vector2 getScreenSize() {
         return screenSize;
+    }
+
+    public Texture getTexture() {
+        return backgroundTexture;
     }
 
     @Override
