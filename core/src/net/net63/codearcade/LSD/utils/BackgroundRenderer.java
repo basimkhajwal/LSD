@@ -8,6 +8,9 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Disposable;
 
 /**
+ * A utility renderer that renders the background given
+ * certain variables with a shader
+ *
  * Created by Basim on 15/11/15.
  */
 public class BackgroundRenderer implements Disposable {
@@ -23,46 +26,81 @@ public class BackgroundRenderer implements Disposable {
     private Vector2 screenSize = new Vector2();
     private float time;
 
+    /**
+     * Create a new background renderer
+     *
+     * @param shaderProgram The shader by which to render with
+     * @param renderMethod The method to render the texture by
+     */
     public BackgroundRenderer(ShaderProgram shaderProgram, BackgroundRenderable renderMethod) {
         this.shaderProgram = shaderProgram;
         shaderProgram.pedantic = false;
 
         this.renderMethod = renderMethod;
         renderMethod.setup(this);
-        backgroundTexture = Assets.getAsset(Assets.Images.BACKGROUND, Texture.class);
 
         camera = new OrthographicCamera();
         batch = new SpriteBatch();
+
+        //Get the background and set the shader uniform
+        backgroundTexture = Assets.getAsset(Assets.Images.BACKGROUND, Texture.class);
+        backgroundTexture.setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
+
+        shaderProgram.begin();
+        shaderProgram.setUniformf("invScreenSize", 1.0f/backgroundTexture.getWidth(), 1.0f/backgroundTexture.getHeight());
+        shaderProgram.end();
     }
 
+    /**
+     * Render the background
+     *
+     * @param deltaTime The time to update by in seconds
+     */
     public void render(float deltaTime) {
 
+        //Increment time
         time += deltaTime;
 
+        //Set the batch variables
         batch.setShader(shaderProgram);
         batch.setProjectionMatrix(camera.combined);
         batch.begin();
 
+        //Send the time
         shaderProgram.setUniformf("time", time);
-        renderMethod.renderBackground(batch, backgroundTexture);
+
+        //Render according to the method
+        renderMethod.renderBackground(batch);
 
         batch.end();
     }
 
+    /**
+     * Resize the background
+     *
+     * @param width The width of the screen
+     * @param height The height of the screen
+     */
     public void resize(int width, int height) {
+        //Set the sizes
         camera.setToOrtho(false, width, height);
         screenSize.set(width, height);
 
+        //Send the screenSize uniform
         shaderProgram.begin();
         shaderProgram.setUniformf("screenSize", width, height);
         shaderProgram.end();
     }
 
+    /**
+     * Interface for a class that can render a background
+     */
     public interface BackgroundRenderable {
         void setup(BackgroundRenderer renderer);
         void renderBackground(SpriteBatch batch);
     }
 
+    //The default background rendering
     public static final BackgroundRenderable DEFAULT = new BackgroundRenderable() {
 
         private BackgroundRenderer renderer;
@@ -80,26 +118,20 @@ public class BackgroundRenderer implements Disposable {
         }
     };
 
-    public ShaderProgram getShaderProgram() {
-        return shaderProgram;
-    }
-
-    public float getTime() {
-        return time;
-    }
-
-    public Vector2 getScreenSize() {
-        return screenSize;
-    }
-
-    public Texture getTexture() {
-        return backgroundTexture;
-    }
-
     @Override
     public void dispose() {
         batch.dispose();
+        shaderProgram.dispose();
     }
 
+    // ---------------- Getter Methods -----------------------
+
+    public ShaderProgram getShaderProgram() { return shaderProgram; }
+
+    public float getTime() { return time; }
+
+    public Vector2 getScreenSize() { return screenSize; }
+
+    public Texture getTexture() { return backgroundTexture; }
 
 }
