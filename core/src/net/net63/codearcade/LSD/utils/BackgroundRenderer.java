@@ -27,6 +27,16 @@ public class BackgroundRenderer implements Disposable {
     private float time;
 
     /**
+     * Create a new background shader
+     *
+     * @param shaderName The string file stub of the shader
+     * @param renderMethod The method to render the texture by
+     */
+    public BackgroundRenderer(String shaderName, BackgroundRenderable renderMethod) {
+        this(ShaderManager.getShader(shaderName), renderMethod);
+    }
+
+    /**
      * Create a new background renderer
      *
      * @param shaderProgram The shader by which to render with
