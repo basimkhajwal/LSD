@@ -47,7 +47,6 @@ public class BackgroundRenderer implements Disposable {
         shaderProgram.pedantic = false;
 
         this.renderMethod = renderMethod;
-        renderMethod.setup(this);
 
         camera = new OrthographicCamera();
         batch = new SpriteBatch();
@@ -59,6 +58,8 @@ public class BackgroundRenderer implements Disposable {
         shaderProgram.begin();
         shaderProgram.setUniformf("invScreenSize", 1.0f/backgroundTexture.getWidth(), 1.0f/backgroundTexture.getHeight());
         shaderProgram.end();
+
+        renderMethod.setup(this);
     }
 
     /**
@@ -80,7 +81,7 @@ public class BackgroundRenderer implements Disposable {
         shaderProgram.setUniformf("time", time);
 
         //Render according to the method
-        renderMethod.renderBackground(batch);
+        renderMethod.renderBackground(batch, deltaTime);
 
         batch.end();
     }
@@ -107,7 +108,7 @@ public class BackgroundRenderer implements Disposable {
      */
     public interface BackgroundRenderable {
         void setup(BackgroundRenderer renderer);
-        void renderBackground(SpriteBatch batch);
+        void renderBackground(SpriteBatch batch, float deltaTime);
     }
 
     //The default background rendering
@@ -121,7 +122,7 @@ public class BackgroundRenderer implements Disposable {
         }
 
         @Override
-        public void renderBackground(SpriteBatch batch) {
+        public void renderBackground(SpriteBatch batch, float deltaTime) {
             Vector2 size = renderer.getScreenSize();
 
             batch.draw(renderer.getTexture(), 0, 0, size.x, size.y);

@@ -3,10 +3,8 @@ package net.net63.codearcade.LSD.screens;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -17,10 +15,7 @@ import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import net.net63.codearcade.LSD.LSD;
-import net.net63.codearcade.LSD.utils.Assets;
-import net.net63.codearcade.LSD.utils.Constants;
-import net.net63.codearcade.LSD.utils.GUIBuilder;
-import net.net63.codearcade.LSD.utils.ShaderManager;
+import net.net63.codearcade.LSD.utils.*;
 
 
 /**
@@ -40,30 +35,16 @@ public class MenuScreen extends AbstractScreen{
 	private Stage stage;
     private ImageButton playButton;
 
-    //Shader rendering
-    private SpriteBatch batch;
-    private OrthographicCamera camera;
-
-    //Background and shader
-    private Texture backgroundTexture;
-    private Vector2 backgroundSize = new Vector2();
-    private ShaderProgram shaderProgram;
-
-    //Background position
-    private float backgroundX = 0;
-    private float time = 0;
+    //Background rendering
+    private BackgroundRenderer backgroundRenderer;
 
     private boolean changingScreen = false;
 
     public MenuScreen(LSD game) {
         super(game);
 
-        //Instantiate the batch and camera for drawing the background
-        batch = new SpriteBatch();
-        camera = new OrthographicCamera();
-
-        //Load the shader and set pedantic to stop un-used uniform errors
-        shaderProgram = ShaderManager.getShader(ShaderManager.Shaders.MENU);
+        //Create the background renderer
+        backgroundRenderer = new BackgroundRenderer(ShaderManager.Shaders.MENU, BACKGROUND_METHOD);
 
         //Create the stage for the GUI and the input handler
         stage = new Stage(new ExtendViewport(Constants.DEFAULT_SCREEN_WIDTH, Constants.DEFAULT_SCREEN_HEIGHT));
@@ -98,14 +79,6 @@ public class MenuScreen extends AbstractScreen{
             }
         });
 
-        //Get the background and set the shader uniform
-        backgroundTexture = Assets.getAsset(Assets.Images.BACKGROUND, Texture.class);
-        backgroundTexture.setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
-
-        shaderProgram.begin();
-        shaderProgram.setUniformf("invScreenSize", 1.0f/backgroundTexture.getWidth(), 1.0f/backgroundTexture.getHeight());
-        shaderProgram.end();
-
         //Add all the GUI elements
         stage.addActor(topTitle);
         stage.addActor(bottomTitle);
@@ -116,6 +89,9 @@ public class MenuScreen extends AbstractScreen{
 	public void resize(int width, int height) {
 		super.resize(width, height);
 
+        //Resize the background
+        backgroundRenderer.resize(width, height);
+
         //Update the viewport size
         Viewport viewport = stage.getViewport();
 		viewport.update(width, height);
@@ -125,41 +101,14 @@ public class MenuScreen extends AbstractScreen{
         stageCam.position.x = Constants.DEFAULT_SCREEN_WIDTH / 2;
         stageCam.position.y = Constants.DEFAULT_SCREEN_HEIGHT / 2;
         stageCam.update();
-
-        //Update the shader camera and resend the uniform for the screenSize
-        camera.setToOrtho(false, width, height);
-        shaderProgram.begin();
-        shaderProgram.setUniformf("screenSize", width, height);
-        shaderProgram.end();
-
-        //Reset the size and position of the background
-        backgroundX = 0;
-        backgroundSize.set(width, height);
 	}
 	
 	@Override
 	public void render(float delta) {
 		super.render(delta);
 
-        //Update the time
-        time += delta;
-
-        //Move the background, reset if it passes the screen
-        backgroundX += 25 * delta;
-        if (backgroundX >= backgroundSize.x) {
-            backgroundX = 0;
-        }
-
-        //Set the shader and pass the time uniform
-        batch.setShader(shaderProgram);
-        batch.setProjectionMatrix(camera.combined);
-        batch.begin();
-        shaderProgram.setUniformf("time", time);
-
-        //Draw the background twice, side by side
-        batch.draw(backgroundTexture, backgroundX, 0, backgroundSize.x, backgroundSize.y);
-        batch.draw(backgroundTexture, backgroundX - backgroundSize.x, 0, backgroundSize.x, backgroundSize.y);
-        batch.end();
+        //Render the background
+        backgroundRenderer.render(delta);
 
         //Update and render the UI
 		stage.act(delta);
@@ -172,14 +121,39 @@ public class MenuScreen extends AbstractScreen{
             game.setScreen(new GameScreen(game, 0));
         }
 	}
-	
+
+    // Render method to render the background
+    private static final BackgroundRenderer.BackgroundRenderable BACKGROUND_METHOD = new BackgroundRenderer.BackgroundRenderable() {
+
+        private float xPos;
+        private Texture texture;
+        private Vector2 size;
+
+        @Override
+        public void setup(BackgroundRenderer renderer) {
+            texture = renderer.getTexture();
+            size = renderer.getScreenSize();
+            xPos = 0;
+        }
+
+        @Override
+        public void renderBackground(SpriteBatch batch, float delta) {
+            //Move the background, reset if it passes the screen
+            xPos += 25 * delta;
+            if (xPos >= size.x) xPos = 0;
+
+            //Draw the background twice, side by side
+            batch.draw(texture, xPos, 0, size.x, size.y);
+            batch.draw(texture, xPos - size.x, 0, size.x, size.y);
+        }
+    };
+
 	@Override
 	public void dispose() {
 		super.dispose();
 
-        batch.dispose();
+        backgroundRenderer.dispose();
 		stage.dispose();
-        shaderProgram.dispose();
 	}
 	
 }
