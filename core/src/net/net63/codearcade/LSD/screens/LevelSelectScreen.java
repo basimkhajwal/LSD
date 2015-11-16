@@ -1,5 +1,7 @@
 package net.net63.codearcade.LSD.screens;
 
+import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import net.net63.codearcade.LSD.LSD;
 
 /**
@@ -8,6 +10,9 @@ import net.net63.codearcade.LSD.LSD;
 public class LevelSelectScreen extends AbstractScreen {
 
     private LSD game;
+
+    private OrthographicCamera camera;
+    private SpriteBatch batch;
 
     public LevelSelectScreen(LSD game) {
         super(game);
@@ -28,7 +33,7 @@ public class LevelSelectScreen extends AbstractScreen {
     @Override
     public void dispose() {
         super.dispose();
-        
+
     }
 
 
