@@ -38,17 +38,18 @@ public class Assets {
         public static final String NEXT_LEVEL = "buttons/next_level";
         public static final String REPLAY_LEVEL = "buttons/replay_level";
         public static final String BACK_MENU = "buttons/back_menu";
+        public static final String LEVEL_SELECT = "buttons/level_select";
     }
-    private static final String[] _Buttons = { Buttons.MENU_PLAY, Buttons.NEXT_LEVEL, Buttons.REPLAY_LEVEL, Buttons.BACK_MENU };
+    private static final String[] _Buttons = { Buttons.MENU_PLAY, Buttons.NEXT_LEVEL, Buttons.REPLAY_LEVEL, Buttons.BACK_MENU, Buttons.LEVEL_SELECT };
 
     public static class FontSizes {
         public static final int TWENTY = 20;
-        public static final int FOURTY = 40;
+        public static final int FORTY = 40;
         public static final int FIFTY = 50;
         public static final int HUNDRED = 100;
         public static final int TWO_HUNDRED = 200;
     }
-    private static final int[] _FontSizes = { FontSizes.TWENTY, FontSizes.FOURTY, FontSizes.FIFTY, FontSizes.HUNDRED, FontSizes.TWO_HUNDRED };
+    private static final int[] _FontSizes = { FontSizes.TWENTY, FontSizes.FORTY, FontSizes.FIFTY, FontSizes.HUNDRED, FontSizes.TWO_HUNDRED };
 
 	public static class Fonts {
         public static final String DIN_ALT = "fonts/DINAlternate";
