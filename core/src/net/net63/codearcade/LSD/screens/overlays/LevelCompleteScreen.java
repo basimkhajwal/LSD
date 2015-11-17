@@ -41,7 +41,7 @@ public class LevelCompleteScreen extends AbstractOverlay {
         Label gameOverLabel = GUIBuilder.createLabel("Level Complete", 50, TITLE_COLOUR);
         gameOverLabel.setPosition((800 - gameOverLabel.getWidth()) / 2, 440);
 
-        Label levelLabel = GUIBuilder.createLabel("Level", Assets.FontSizes.FOURTY, TEXT_COLOUR);
+        Label levelLabel = GUIBuilder.createLabel("Level", Assets.FontSizes.FORTY, TEXT_COLOUR);
         levelLabel.setPosition((800 - levelLabel.getWidth()) / 2, 390);
 
         Label levelIDLabel = GUIBuilder.createLabel((previousGame.getLevelId() + 1) + "", Assets.FontSizes.TWO_HUNDRED, TEXT_COLOUR);

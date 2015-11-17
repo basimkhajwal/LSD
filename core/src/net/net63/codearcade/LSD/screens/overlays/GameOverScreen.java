@@ -36,7 +36,7 @@ public class GameOverScreen extends AbstractOverlay {
         Label gameOverLabel = GUIBuilder.createLabel("Game Over", Assets.FontSizes.FIFTY, Color.ORANGE);
         gameOverLabel.setPosition((800 - gameOverLabel.getWidth()) / 2, 440);
 
-        Label levelLabel = GUIBuilder.createLabel("Level", Assets.FontSizes.FOURTY, Color.MAROON);
+        Label levelLabel = GUIBuilder.createLabel("Level", Assets.FontSizes.FORTY, Color.MAROON);
         levelLabel.setPosition((800 - levelLabel.getWidth()) / 2, 390);
 
         Label levelIDLabel = GUIBuilder.createLabel((previousGame.getLevelId() + 1) + "", Assets.FontSizes.TWO_HUNDRED, Color.MAROON);
