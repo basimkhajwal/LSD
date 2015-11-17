@@ -13,7 +13,7 @@ import net.net63.codearcade.LSD.utils.ShaderManager;
  * Created by Basim on 03/09/15.
  */
 public class BackgroundRenderSystem extends EntitySystem implements Disposable {
-    
+
     private BackgroundRenderer backgroundRenderer;
 
     public BackgroundRenderSystem() {
