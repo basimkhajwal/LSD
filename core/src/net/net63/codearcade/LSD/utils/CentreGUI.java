@@ -50,6 +50,7 @@ public class CentreGUI implements Disposable{
      * @param deltaTime The amount to update by (seconds)
      */
     public void render(float deltaTime) {
+        stage.getViewport().apply();
         stage.act(deltaTime);
         stage.draw();
     }
