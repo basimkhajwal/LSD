@@ -1,17 +1,15 @@
 package net.net63.codearcade.LSD.screens;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.Event;
 import com.badlogic.gdx.scenes.scene2d.EventListener;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
-import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import net.net63.codearcade.LSD.LSD;
 import net.net63.codearcade.LSD.screens.overlays.GameOverScreen;
 import net.net63.codearcade.LSD.screens.overlays.LevelCompleteScreen;
+import net.net63.codearcade.LSD.utils.CentreGUI;
 import net.net63.codearcade.LSD.utils.Constants;
 import net.net63.codearcade.LSD.utils.GUIBuilder;
 import net.net63.codearcade.LSD.utils.LevelManager;
@@ -26,7 +24,7 @@ import net.net63.codearcade.LSD.world.GameWorld;
  */
 public class GameScreen extends AbstractScreen implements EventListener {
 
-    private Stage stage;
+    private CentreGUI centreGUI;
     private GameWorld gameWorld;
 
     private Label scoreLabel;
@@ -68,13 +66,10 @@ public class GameScreen extends AbstractScreen implements EventListener {
         scoreLabel = GUIBuilder.createLabel("", 50, Color.YELLOW);
         scoreLabel.setPosition((800 - scoreLabel.getWidth()) / 2.0f , 550 - scoreLabel.getHeight());
 
-        //Add it to the global GUI stage
-        stage = new Stage(new ExtendViewport(Constants.DEFAULT_SCREEN_WIDTH, Constants.DEFAULT_SCREEN_HEIGHT));
-        stage.addActor(scoreLabel);
-
-        //Setup event listeners to handle user events
-        stage.addListener(this);
-        Gdx.input.setInputProcessor(stage);
+        //Create the GUI manager and add listeners
+        centreGUI = new CentreGUI();
+        centreGUI.getStage().addActor(scoreLabel);
+        centreGUI.getStage().addListener(this);
     }
 
 	@Override
@@ -83,13 +78,7 @@ public class GameScreen extends AbstractScreen implements EventListener {
 
         //Update the gui viewport and the game world
         gameWorld.resize(width, height);
-		stage.getViewport().update(width, height);
-
-        //Set the position to centralise the GUI
-        Camera stageCam = stage.getViewport().getCamera();
-        stageCam.position.x = Constants.DEFAULT_SCREEN_WIDTH / 2;
-        stageCam.position.y = Constants.DEFAULT_SCREEN_HEIGHT / 2;
-        stageCam.update();
+		centreGUI.resize(width, height);
 	}
 
     @Override
@@ -107,9 +96,7 @@ public class GameScreen extends AbstractScreen implements EventListener {
         updateScore();
 
         //Handle user events and render the GUI
-        stage.getViewport().apply();
-        stage.act(delta);
-        stage.draw();
+        centreGUI.render(delta);
 
         //Check if the game is finished
         if (!logicPaused && gameWorld.isGameOver()) {
@@ -127,7 +114,7 @@ public class GameScreen extends AbstractScreen implements EventListener {
 
         //Dispose assets from members
         gameWorld.dispose();
-        stage.dispose();
+        centreGUI.dispose();
     }
 
     private void updateScore() {

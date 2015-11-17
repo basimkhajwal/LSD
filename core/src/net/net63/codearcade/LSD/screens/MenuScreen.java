@@ -1,7 +1,5 @@
 package net.net63.codearcade.LSD.screens;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -12,8 +10,6 @@ import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
-import com.badlogic.gdx.utils.viewport.ExtendViewport;
-import com.badlogic.gdx.utils.viewport.Viewport;
 import net.net63.codearcade.LSD.LSD;
 import net.net63.codearcade.LSD.utils.*;
 
@@ -32,7 +28,7 @@ public class MenuScreen extends AbstractScreen{
     private static final Color BOTTOM_TITLE = new Color(150 / 255.0f, 30 / 255.0f, 0f, 1f);
 
     //GUI
-	private Stage stage;
+    private CentreGUI centreGUI;
     private ImageButton playButton;
 
     //Background rendering
@@ -45,10 +41,7 @@ public class MenuScreen extends AbstractScreen{
 
         //Create the background renderer
         backgroundRenderer = new BackgroundRenderer(ShaderManager.Shaders.MENU, BACKGROUND_METHOD);
-
-        //Create the stage for the GUI and the input handler
-        stage = new Stage(new ExtendViewport(Constants.DEFAULT_SCREEN_WIDTH, Constants.DEFAULT_SCREEN_HEIGHT));
-        Gdx.input.setInputProcessor(stage);
+        centreGUI = new CentreGUI();
 
         setupUI();
     }
@@ -80,6 +73,7 @@ public class MenuScreen extends AbstractScreen{
         });
 
         //Add all the GUI elements
+        Stage stage = centreGUI.getStage();
         stage.addActor(topTitle);
         stage.addActor(bottomTitle);
         stage.addActor(playButton);
@@ -92,15 +86,8 @@ public class MenuScreen extends AbstractScreen{
         //Resize the background
         backgroundRenderer.resize(width, height);
 
-        //Update the viewport size
-        Viewport viewport = stage.getViewport();
-		viewport.update(width, height);
-
-        //Reposition the viewport to the centre
-        Camera stageCam = stage.getViewport().getCamera();
-        stageCam.position.x = Constants.DEFAULT_SCREEN_WIDTH / 2;
-        stageCam.position.y = Constants.DEFAULT_SCREEN_HEIGHT / 2;
-        stageCam.update();
+        //Update the GUI
+        centreGUI.resize(width, height);
 	}
 	
 	@Override
@@ -111,9 +98,8 @@ public class MenuScreen extends AbstractScreen{
         backgroundRenderer.render(delta);
 
         //Update and render the UI
-		stage.act(delta);
         playButton.setChecked(playButton.isOver());
-		stage.draw();
+        centreGUI.render(delta);
 
         //If the button has been clicked start the game
 		if (changingScreen) {
@@ -153,7 +139,7 @@ public class MenuScreen extends AbstractScreen{
 		super.dispose();
 
         backgroundRenderer.dispose();
-		stage.dispose();
+		centreGUI.dispose();
 	}
 	
 }
