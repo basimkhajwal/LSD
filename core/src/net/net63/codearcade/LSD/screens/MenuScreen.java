@@ -104,7 +104,7 @@ public class MenuScreen extends AbstractScreen{
         //If the button has been clicked start the game
 		if (changingScreen) {
             dispose();
-            game.setScreen(new GameScreen(game, 0));
+            game.setScreen(new LevelSelectScreen(game, LevelManager.LevelPacks.ORIGINAL));
         }
 	}
 
