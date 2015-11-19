@@ -24,7 +24,6 @@ They should all work but only desktop and HTML5 builds have currently been teste
 - [ ] Customize shader for the game (add a new one)
 - [ ] Slow-motion level complete / player death
 - [ ] Add JSON read/write for a persistent Settings value
-- [ ] Create a sub-menu / level selection screen
 - [ ] Create a settings screen
 
 #### Currently Working:
@@ -52,3 +51,4 @@ They should all work but only desktop and HTML5 builds have currently been teste
 - [x] Create a loader to load levels from the previous version of LSD
 - [x] Add custom shaders for the background
 - [x] Add parallax effect for the game
+- [x] Create a sub-menu / level selection screen
