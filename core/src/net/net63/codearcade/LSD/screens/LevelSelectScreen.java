@@ -28,12 +28,15 @@ public class LevelSelectScreen extends AbstractScreen {
     private CentreGUI centreGUI;
     private BackgroundRenderer backgroundRenderer;
 
+    private ImageButton[] buttons;
+
     public LevelSelectScreen(LSD game, int mapPack) {
         super(game);
 
         this.game = game;
 
         levelPack = LevelManager.getPack(mapPack);
+        buttons = new ImageButton[levelPack.numLevels];
 
         centreGUI = new CentreGUI();
         backgroundRenderer = new BackgroundRenderer(ShaderManager.Shaders.MENU, BackgroundRenderer.DEFAULT);
@@ -59,6 +62,8 @@ public class LevelSelectScreen extends AbstractScreen {
         for (int i = 0; i < levelPack.numLevels; i++) {
 
             ImageButton button = createButton(i);
+
+            buttons[i] = button;
 
             buttonTable.add(button)
                     .width(BUTTON_WIDTH)
@@ -99,6 +104,8 @@ public class LevelSelectScreen extends AbstractScreen {
     @Override
     public void render(float deltaTime) {
         super.render(deltaTime);
+
+        for (ImageButton button : buttons) button.setChecked(button.isOver());
 
         backgroundRenderer.render(deltaTime);
         centreGUI.render(deltaTime);
