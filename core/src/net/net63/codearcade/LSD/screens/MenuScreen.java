@@ -64,11 +64,9 @@ public class MenuScreen extends AbstractScreen{
         playButton.addListener(new ClickListener() {
 
             @Override
-            public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
-                super.touchUp(event, x, y, pointer, button);
-
-                //If the mouse is released on the button apply the change
-                if (this.inTapSquare()) changingScreen = true;
+            public void clicked(InputEvent event, float x, float y) {
+                //Apply the change
+                 changingScreen = true;
             }
         });
 

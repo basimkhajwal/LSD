@@ -53,8 +53,7 @@ public class LevelCompleteScreen extends AbstractOverlay {
         nextLevelButton.addListener(new ClickListener() {
 
             @Override
-            public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
-                super.touchUp(event, x, y, pointer, button);
+            public void clicked(InputEvent event, float x, float y) {
                 nextLevel = previousGame.getLevelId() < Constants.MAX_LEVEL;
             }
 
@@ -66,8 +65,7 @@ public class LevelCompleteScreen extends AbstractOverlay {
         replayLevelButton.addListener(new ClickListener() {
 
             @Override
-            public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
-                super.touchUp(event, x, y, pointer, button);
+            public void clicked (InputEvent event, float x, float y) {
                 replaying = true;
             }
 
