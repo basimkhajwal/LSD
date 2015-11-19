@@ -11,8 +11,10 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Array;
 import net.net63.codearcade.LSD.LSD;
 import net.net63.codearcade.LSD.screens.GameScreen;
+import net.net63.codearcade.LSD.screens.LevelSelectScreen;
 import net.net63.codearcade.LSD.utils.Assets;
 import net.net63.codearcade.LSD.utils.GUIBuilder;
+import net.net63.codearcade.LSD.utils.LevelManager;
 
 /**
  * Created by Basim on 30/09/15.
@@ -20,6 +22,7 @@ import net.net63.codearcade.LSD.utils.GUIBuilder;
 public class GameOverScreen extends AbstractOverlay {
 
     private boolean replaying = false;
+    private boolean backToMenu = false;
 
     private Array<ImageButton> buttons;
 
@@ -61,6 +64,14 @@ public class GameOverScreen extends AbstractOverlay {
         ImageButton backMenuButton = GUIBuilder.createButton(Assets.Buttons.BACK_MENU);
         backMenuButton.setSize(120, 90);
         backMenuButton.setPosition(200, 90);
+        backMenuButton.addListener(new ClickListener() {
+
+            @Override
+            public void clicked (InputEvent event, float x, float y) {
+                backToMenu = true;
+            }
+
+        });
 
         buttons = new Array<ImageButton>();
         buttons.add(backMenuButton);
@@ -80,6 +91,7 @@ public class GameOverScreen extends AbstractOverlay {
         for (ImageButton button: buttons) button.setChecked(button.isOver());
 
         if (replaying) game.setScreen(new GameScreen(game, previousGame.getLevelId()));
+        if (backToMenu) game.setScreen(new LevelSelectScreen(game, LevelManager.LevelPacks.ORIGINAL));
     }
 
 }
