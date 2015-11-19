@@ -1,7 +1,11 @@
 package net.net63.codearcade.LSD.screens;
 
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.scenes.scene2d.ui.*;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
 import net.net63.codearcade.LSD.LSD;
 import net.net63.codearcade.LSD.utils.*;
@@ -30,6 +34,9 @@ public class LevelSelectScreen extends AbstractScreen {
 
     private ImageButton[] buttons;
 
+    private boolean changing = false;
+    private int levelTo = 0;
+
     public LevelSelectScreen(LSD game, int mapPack) {
         super(game);
 
@@ -52,7 +59,7 @@ public class LevelSelectScreen extends AbstractScreen {
 
         centreGUI.getStage().addActor(title);
 
-        Table buttonTable = new Table();
+        final Table buttonTable = new Table();
         buttonTable.setPosition(PADDING_SIDE, PADDING_TOP);
         buttonTable.setSize(800 - 2*PADDING_SIDE, title.getY() - 2*PADDING_TOP);
         //buttonTable.setDebug(true);
@@ -64,6 +71,7 @@ public class LevelSelectScreen extends AbstractScreen {
             ImageButton button = createButton(i);
 
             buttons[i] = button;
+            button.addListener(new ButtonClickListener(i));
 
             buttonTable.add(button)
                     .width(BUTTON_WIDTH)
@@ -93,6 +101,21 @@ public class LevelSelectScreen extends AbstractScreen {
         return main;
     }
 
+    private class ButtonClickListener extends ClickListener {
+
+        private int level;
+
+        public ButtonClickListener(int level) {
+            this.level = level;
+        }
+
+        @Override
+        public void clicked (InputEvent event, float x, float y) {
+            changing = true;
+            levelTo = level;
+        }
+    }
+
     @Override
     public void resize(int width, int height) {
         super.resize(width, height);
@@ -109,6 +132,11 @@ public class LevelSelectScreen extends AbstractScreen {
 
         backgroundRenderer.render(deltaTime);
         centreGUI.render(deltaTime);
+        
+        if (changing) {
+            dispose();
+            game.setScreen(new GameScreen(game, levelTo));
+        }
     }
 
     @Override
