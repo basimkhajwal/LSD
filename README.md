@@ -18,7 +18,6 @@ They should all work but only desktop and HTML5 builds have currently been teste
 ### Development:
 
 #### TODO:
-- [ ] Comment out code
 - [ ] Particles for player death
 - [ ] Add timer for each platform
 - [ ] Customize shader for the game (add a new one)
