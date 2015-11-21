@@ -122,7 +122,7 @@ public class PlayerSystem extends IteratingSystem implements ContactListener {
             positions[i] = new Vector2(pos);
             positions[i].add(MathUtils.random(-radius, radius), MathUtils.random(-radius, radius));
 
-            colors[i] = new Color(MathUtils.random(), MathUtils.random(), MathUtils.random(), 1.0f);
+            colors[i] = Color.BROWN;
         }
 
         WorldBuilder.createParticleEffect(positions, colors, 2);
