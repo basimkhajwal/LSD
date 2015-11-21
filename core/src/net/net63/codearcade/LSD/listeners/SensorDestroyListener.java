@@ -65,7 +65,7 @@ public class SensorDestroyListener implements EntityListener {
                 colors[i] = Color.BLACK;
             }
 
-            WorldBuilder.createParticleEffect(positions, colors, 3);
+            WorldBuilder.createParticleEffect(positions, colors, 2);
         }
     }
 }
