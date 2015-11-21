@@ -7,11 +7,12 @@ import com.badlogic.ashley.core.EntityListener;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.*;
+import com.badlogic.gdx.physics.box2d.Body;
+import com.badlogic.gdx.physics.box2d.PolygonShape;
+import com.badlogic.gdx.physics.box2d.World;
 import net.net63.codearcade.LSD.components.BodyComponent;
-import net.net63.codearcade.LSD.components.ParticleComponent;
 import net.net63.codearcade.LSD.components.SensorComponent;
-import net.net63.codearcade.LSD.utils.Constants;
+import net.net63.codearcade.LSD.world.WorldBuilder;
 
 /**
  * Created by Basim on 13/10/15.
@@ -53,52 +54,18 @@ public class SensorDestroyListener implements EntityListener {
             Vector2 bottomLeft = body.getPosition().cpy().sub(dimensions);
             dimensions.scl(2);
 
-            ParticleComponent particleComponent = new ParticleComponent();
-            particleComponent.numParticles = PARTICLE_NUM;
-            particleComponent.particles = new Body[PARTICLE_NUM];
-            particleComponent.colors = new Color[PARTICLE_NUM];
-
-            particleComponent.currentTime = 0;
-            particleComponent.finalTime = 3;
+            Vector2[] positions = new Vector2[PARTICLE_NUM];
+            Color[] colors = new Color[PARTICLE_NUM];
 
             for (int i = 0; i < PARTICLE_NUM; i++) {
-                Body particleBody = createParticle(
+                positions[i] = new Vector2(
                         bottomLeft.x + MathUtils.random(0, dimensions.x),
                         bottomLeft.y + MathUtils.random(0, dimensions.y));
 
-                particleBody.applyLinearImpulse(new Vector2(MathUtils.random(-20, 20), MathUtils.random(-10, 20)), particleBody.getWorldCenter(), true);
-                particleBody.setAngularVelocity(MathUtils.random(-10, 10));
-
-                particleComponent.particles[i] = particleBody;
-                particleComponent.colors[i] = new Color(MathUtils.random(), MathUtils.random(), MathUtils.random(), 1.0f);
+                colors[i] = new Color(MathUtils.random(), MathUtils.random(), MathUtils.random(), 1.0f);
             }
 
-            Entity particleEntity = new Entity();
-            particleEntity.add(particleComponent);
-            engine.addEntity(particleEntity);
+            WorldBuilder.createParticleEffect(positions, colors, 3);
         }
-    }
-
-    private Body createParticle(float x, float y) {
-        BodyDef bodyDef = new BodyDef();
-        FixtureDef fixtureDef = new FixtureDef();
-
-        bodyDef.position.set(x, y);
-        bodyDef.fixedRotation = false;
-        bodyDef.type = BodyDef.BodyType.DynamicBody;
-
-        float size = MathUtils.random(MIN_PARTICLE_SIZE, MAX_PARTICLE_SIZE);
-
-        PolygonShape shape = new PolygonShape();
-        shape.setAsBox(size / 2, size / 2);
-        fixtureDef.restitution = 0.6f;
-        fixtureDef.shape = shape;
-        fixtureDef.filter.categoryBits = Constants.CategoryBits.PARTICLE;
-        fixtureDef.filter.maskBits = Constants.MaskBits.PARTICLE;
-
-        Body body = world.createBody(bodyDef);
-        body.createFixture(fixtureDef);
-
-        return body;
     }
 }
