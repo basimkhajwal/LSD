@@ -106,8 +106,10 @@ public class PlayerSystem extends IteratingSystem implements ContactListener {
 
     private void killPlayer(Entity player) {
         PlayerComponent playerComponent = playerMapper.get(player);
-        renderMapper.get(player).render = false;
         Body body = bodyMapper.get(player).body;
+
+        renderMapper.get(player).render = false;
+        stateMapper.get(player).set(PlayerComponent.STATE_DEAD);
 
         SoundManager.playSound(SoundManager.Sounds.PLAYER_DEATH);
 
