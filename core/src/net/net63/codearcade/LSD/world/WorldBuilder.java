@@ -316,6 +316,10 @@ public class WorldBuilder {
     }
 
     public static Entity createParticleEffect(Vector2[] positions, Color[] colors, float time) {
+        return createParticleEffect(positions, colors, time, 20, 20);
+    }
+
+    public static Entity createParticleEffect(Vector2[] positions, Color[] colors, float time, float vX, float vY) {
 
         int size = Math.min(positions.length, colors.length);
 
@@ -329,7 +333,7 @@ public class WorldBuilder {
         for (int i = 0; i < size; i++) {
             Body particle = createParticle(positions[i].x, positions[i].y);
 
-            particle.applyLinearImpulse(new Vector2(MathUtils.random(-20, 20), MathUtils.random(-10, 20)), particle.getWorldCenter(), true);
+            particle.applyLinearImpulse(new Vector2(MathUtils.random(-vX, vX), MathUtils.random(-vY, vY)), particle.getWorldCenter(), true);
             particle.setAngularVelocity(MathUtils.random(-10, 10));
 
             particleComponent.particles[i] = particle;
@@ -352,6 +356,7 @@ public class WorldBuilder {
 
         bodyDef.position.set(x, y);
         bodyDef.fixedRotation = false;
+        bodyDef.gravityScale = 0.8f;
         bodyDef.type = BodyDef.BodyType.DynamicBody;
 
         float size = MathUtils.random(MIN_PARTICLE_SIZE, MAX_PARTICLE_SIZE);

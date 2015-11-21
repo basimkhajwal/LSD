@@ -21,7 +21,7 @@ public class SensorDestroyListener implements EntityListener {
 
     private static final float MAX_PARTICLE_SIZE = 0.09f;
     private static final float MIN_PARTICLE_SIZE = 0.05f;
-    private static final int PARTICLE_NUM = 80;
+    private static final int PARTICLE_NUM = 50;
 
     private ComponentMapper<SensorComponent> sensorMapper;
     private ComponentMapper<BodyComponent> bodyMapper;

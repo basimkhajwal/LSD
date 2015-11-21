@@ -29,7 +29,7 @@ public class PlayerSystem extends IteratingSystem implements ContactListener {
 
     private LevelDescriptor levelDescriptor;
 
-    private static final int PARTICLE_NUM = 50;
+    private static final int PARTICLE_NUM = 30;
 
     public PlayerSystem (LevelDescriptor levelDescriptor) {
         super(Family.all(PlayerComponent.class).get(), Constants.SYSTEM_PRIORITIES.PLAYER);
@@ -125,7 +125,7 @@ public class PlayerSystem extends IteratingSystem implements ContactListener {
             colors[i] = Color.BROWN;
         }
 
-        WorldBuilder.createParticleEffect(positions, colors, 2);
+        WorldBuilder.createParticleEffect(positions, colors, 2, 5, 5);
     }
 
     /* ---------- BOX 2D Contact Stuff */
