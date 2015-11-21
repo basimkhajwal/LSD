@@ -78,6 +78,10 @@ public class PlayerSystem extends IteratingSystem implements ContactListener {
                 break;
         }
 
+        if (playerComponent.isDead) {
+            playerComponent.deathTime += deltaTime;
+        }
+
         if (playerComponent.isFlying) {
             Rectangle bounds = levelDescriptor.getWorldBounds();
 
