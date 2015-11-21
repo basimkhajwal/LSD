@@ -4,6 +4,8 @@ import com.badlogic.ashley.core.ComponentMapper;
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.Family;
 import com.badlogic.ashley.systems.IteratingSystem;
+import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
@@ -11,6 +13,7 @@ import net.net63.codearcade.LSD.components.*;
 import net.net63.codearcade.LSD.utils.Constants;
 import net.net63.codearcade.LSD.utils.SoundManager;
 import net.net63.codearcade.LSD.world.LevelDescriptor;
+import net.net63.codearcade.LSD.world.WorldBuilder;
 
 /**
  * Created by Basim on 10/08/15.
@@ -24,6 +27,8 @@ public class PlayerSystem extends IteratingSystem implements ContactListener {
     private ComponentMapper<WallComponent> wallMapper;
 
     private LevelDescriptor levelDescriptor;
+
+    private static final int PARTICLE_NUM = 50;
 
     public PlayerSystem (LevelDescriptor levelDescriptor) {
         super(Family.all(PlayerComponent.class).get(), Constants.SYSTEM_PRIORITIES.PLAYER);
@@ -79,6 +84,10 @@ public class PlayerSystem extends IteratingSystem implements ContactListener {
         }
 
         if (playerComponent.isDead) {
+            if (playerComponent.deathTime == 0) {
+                killPlayer(entity);
+            }
+
             playerComponent.deathTime += deltaTime;
         }
 
@@ -90,6 +99,30 @@ public class PlayerSystem extends IteratingSystem implements ContactListener {
                 playerComponent.isDead = true;
             }
         }
+    }
+
+
+    private void killPlayer(Entity player) {
+        PlayerComponent playerComponent = playerMapper.get(player);
+        Body body = bodyMapper.get(player).body;
+
+        SoundManager.playSound(SoundManager.Sounds.PLAYER_DEATH);
+
+        // --- Particle Effect ----
+        Vector2 pos = body.getPosition();
+        float radius = body.getFixtureList().first().getShape().getRadius();
+
+        Vector2[] positions = new Vector2[PARTICLE_NUM];
+        Color[] colors = new Color[PARTICLE_NUM];
+
+        for (int i = 0; i < PARTICLE_NUM; i++) {
+            positions[i] = new Vector2(pos);
+            positions[i].add(MathUtils.random(-radius, radius), MathUtils.random(-radius, radius));
+
+            colors[i] = new Color(MathUtils.random(), MathUtils.random(), MathUtils.random(), 1.0f);
+        }
+
+        WorldBuilder.createParticleEffect(positions, colors, 2);
     }
 
     /* ---------- BOX 2D Contact Stuff */
@@ -126,7 +159,6 @@ public class PlayerSystem extends IteratingSystem implements ContactListener {
 
             if (wallMapper.has(other)) {
                 playerComponent.isDead = true;
-                SoundManager.playSound(SoundManager.Sounds.PLAYER_DEATH);
             }
 
         }
