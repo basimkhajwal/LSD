@@ -25,6 +25,7 @@ public class PlayerSystem extends IteratingSystem implements ContactListener {
     private ComponentMapper<SensorComponent> sensorMapper;
     private ComponentMapper<PlayerComponent> playerMapper;
     private ComponentMapper<WallComponent> wallMapper;
+    private ComponentMapper<RenderComponent> renderMapper;
 
     private LevelDescriptor levelDescriptor;
 
@@ -40,6 +41,7 @@ public class PlayerSystem extends IteratingSystem implements ContactListener {
         playerMapper = ComponentMapper.getFor(PlayerComponent.class);
         sensorMapper = ComponentMapper.getFor(SensorComponent.class);
         wallMapper = ComponentMapper.getFor(WallComponent.class);
+        renderMapper = ComponentMapper.getFor(RenderComponent.class);
     }
 
     @Override
@@ -104,6 +106,7 @@ public class PlayerSystem extends IteratingSystem implements ContactListener {
 
     private void killPlayer(Entity player) {
         PlayerComponent playerComponent = playerMapper.get(player);
+        renderMapper.get(player).render = false;
         Body body = bodyMapper.get(player).body;
 
         SoundManager.playSound(SoundManager.Sounds.PLAYER_DEATH);
