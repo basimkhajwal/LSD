@@ -58,6 +58,8 @@ public class RenderSystem extends IteratingSystem implements Disposable {
         RenderComponent renderComponent = renderMapper.get(entity);
         Fixture fixture = body.getFixtureList().first();
 
+        if (!renderComponent.render) return;
+
         if (fixture != null) {
             boolean rendering  = true;
 
