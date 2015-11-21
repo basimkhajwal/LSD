@@ -20,6 +20,9 @@ import net.net63.codearcade.LSD.utils.Assets;
 import net.net63.codearcade.LSD.utils.Constants;
 
 /**
+ * A utility class that contains code to generate entities
+ * in the world and engine
+ *
  * Created by Basim on 10/07/15.
  */
 public class WorldBuilder {
@@ -36,6 +39,14 @@ public class WorldBuilder {
     private static LevelDescriptor levelDescriptor;
     private static Rectangle bounds;
 
+    /**
+     * Required before using, set all the states
+     * of the World Builder
+     *
+     * @param engine The engine for the entities
+     * @param world The Box2d world
+     * @param levelDescriptor A level descriptor to hold level data
+     */
     public static void setup(Engine engine, World world, LevelDescriptor levelDescriptor) {
         WorldBuilder.engine = engine;
         WorldBuilder.world = world;
@@ -44,6 +55,12 @@ public class WorldBuilder {
         bounds = new Rectangle();
     }
 
+    /**
+     * Create all entities corresponding to the given
+     * TiledMap as walls, sensors and the player position
+     *
+     * @param map The TiledMap to load from
+     */
     public static void loadFromMap(TiledMap map) {
         createWorld();
 
@@ -56,7 +73,14 @@ public class WorldBuilder {
         levelDescriptor.setWorldBounds(bounds);
     }
 
+    /**
+     * Load the meta details from the map
+     *
+     * @param metaLayer The meta map layer
+     */
     private static void loadMeta(MapLayer metaLayer) {
+
+        //Load the player position
         MapObject playerPosition = metaLayer.getObjects().get("player-position");
         float[] dimensions = getDimensions(playerPosition);
         float posX = dimensions[0] + dimensions[2] / 2.0f;
@@ -64,10 +88,16 @@ public class WorldBuilder {
         createPlayer(posX, posY);
     }
 
+    /**
+     * Load all the sensors from the given layer
+     *
+     * @param sensorLayer The MapLayer containing sensors
+     */
     private static void loadSensors(MapLayer sensorLayer) {
 
         int sensorCount = 0;
 
+        //Iterate over each object and create a new sensor
         for (MapObject sensor: sensorLayer.getObjects()) {
             float[] dimensions = getDimensions(sensor);
 
@@ -80,8 +110,14 @@ public class WorldBuilder {
         levelDescriptor.setSensorCount(sensorCount);
     }
 
+    /**
+     * Load all the walls from the given layer
+     *
+     * @param wallLayer The MapLayer containing all the walls
+     */
     private static void loadWalls(MapLayer wallLayer) {
 
+        //Iterate over each object and create a new wall
         for (MapObject wallObject: wallLayer.getObjects()) {
             float[] dimensions = getDimensions(wallObject);
 
@@ -92,17 +128,35 @@ public class WorldBuilder {
 
     }
 
+    /**
+     * Update the level bounds to contain the given position
+     * and dimensions
+     *
+     * @param x The x-position
+     * @param y The y-position
+     * @param width The width
+     * @param height The height
+     */
     private static void addBoundedBody(float x, float y, float width, float height) {
         if (bounds.width == 0) bounds.set(x, y, width, height);
         else bounds.merge(x, y).merge(x + width, y + height);
     }
 
+    /**
+     * Obtain dimensions in world space with a given
+     * object
+     *
+     * @param mapObject The object to get dimensions from
+     * @return A 4-length array as [x, y, width, height]
+     */
     private static float[] getDimensions(MapObject mapObject) {
         MapProperties properties = mapObject.getProperties();
 
+        //The properties to extract
         String[] keys = { "x", "y", "width", "height" };
         float[] values = new float[keys.length];
 
+        //Iterate over each property and convert it to world space
         for (int i = 0; i < keys.length; i++) {
             if (! properties.containsKey(keys[i])) return null;
             values[i] = Constants.PIXEL_TO_METRE * properties.get(keys[i], Float.class).floatValue();
@@ -111,6 +165,11 @@ public class WorldBuilder {
         return values;
     }
 
+    /**
+     * Create the world entity and Box2d world
+     *
+     * @return The world entity
+     */
     public static Entity createWorld() {
         WorldComponent worldComponent = new WorldComponent();
         worldComponent.world = world;
@@ -118,6 +177,16 @@ public class WorldBuilder {
         return createEntityFrom(worldComponent);
     }
 
+    /**
+     * Create a sensor at the specified position
+     * with the given dimensions
+     *
+     * @param x
+     * @param y
+     * @param width
+     * @param height
+     * @return
+     */
     public static Entity createSensor(float x, float y, float width, float height) {
 
         addBoundedBody(x, y, width, height);
@@ -149,6 +218,16 @@ public class WorldBuilder {
         return createEntityFrom(sensorComponent, bodyComponent, renderComponent);
     }
 
+    /**
+     * Create a wall at the specified position with
+     * the given dimensions
+     *
+     * @param x
+     * @param y
+     * @param width
+     * @param height
+     * @return
+     */
     public static Entity createWall(float x, float y, float width, float height) {
 
         addBoundedBody(x, y, width, height);
@@ -181,6 +260,13 @@ public class WorldBuilder {
 
     }
 
+    /**
+     * Create the player component at the given position
+     *
+     * @param x
+     * @param y
+     * @return
+     */
     public static Entity createPlayer(float x, float y) {
 
         PlayerComponent playerComponent = new PlayerComponent();
@@ -253,6 +339,13 @@ public class WorldBuilder {
         return createEntityFrom(particleComponent);
     }
 
+    /**
+     * Create a new particle body at the given position
+     *
+     * @param x
+     * @param y
+     * @return
+     */
     private static Body createParticle(float x, float y) {
         BodyDef bodyDef = new BodyDef();
         FixtureDef fixtureDef = new FixtureDef();
@@ -276,6 +369,13 @@ public class WorldBuilder {
         return body;
     }
 
+    /**
+     * Utility class to create and add an entity given an array of components,
+     * this also adds it to the global entity Engine
+     *
+     * @param components The components to add
+     * @return The entity containing all the components
+     */
     private static Entity createEntityFrom(Component... components) {
         Entity entity = new Entity();
 
