@@ -18,7 +18,6 @@ They should all work but only desktop and HTML5 builds have currently been teste
 ### Development:
 
 #### TODO:
-- [ ] Particles for player death
 - [ ] Add timer for each platform
 - [ ] Customize shader for the game (add a new one)
 - [ ] Slow-motion level complete / player death
@@ -51,3 +50,4 @@ They should all work but only desktop and HTML5 builds have currently been teste
 - [x] Add custom shaders for the background
 - [x] Add parallax effect for the game
 - [x] Create a sub-menu / level selection screen
+- [x] Particles for player death
