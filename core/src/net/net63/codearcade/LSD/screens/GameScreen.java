@@ -24,6 +24,8 @@ import net.net63.codearcade.LSD.world.GameWorld;
  */
 public class GameScreen extends AbstractScreen implements EventListener {
 
+    private static final float DEATH_TIME_GAP = 2f;
+
     private CentreGUI centreGUI;
     private GameWorld gameWorld;
 
@@ -31,6 +33,8 @@ public class GameScreen extends AbstractScreen implements EventListener {
 
     private int levelId;
     private boolean logicPaused = false;
+
+    private float gameOverTime = 0f;
 
 	public GameScreen(LSD game, int levelId) {
 		super(game);
@@ -100,11 +104,17 @@ public class GameScreen extends AbstractScreen implements EventListener {
 
         //Check if the game is finished
         if (!logicPaused && gameWorld.isGameOver()) {
-            pauseLogic();
+            gameOverTime += delta;
 
-            //Either level over or level completed
-            if (gameWorld.isGameWon()) game.setScreen(new LevelCompleteScreen(game, this));
-            else game.setScreen(new GameOverScreen(game, this));
+            if (gameOverTime > DEATH_TIME_GAP) {
+                //Stop game logic
+                pauseLogic();
+
+                //Either level over or level completed
+                if (gameWorld.isGameWon()) game.setScreen(new LevelCompleteScreen(game, this));
+                else game.setScreen(new GameOverScreen(game, this));
+            }
+
         }
 	}
 

@@ -303,6 +303,7 @@ public class WorldBuilder {
         animationComponent.animations.put(PlayerComponent.STATE_AIMING, still);
         animationComponent.animations.put(PlayerComponent.STATE_FIRING, still);
         animationComponent.animations.put(PlayerComponent.STATE_HITTING, still);
+        animationComponent.animations.put(PlayerComponent.STATE_DEAD, still);
         animationComponent.animations.put(PlayerComponent.STATE_JUMPING, jumping);
         animationComponent.animations.put(PlayerComponent.STATE_FALLING, falling);
 
