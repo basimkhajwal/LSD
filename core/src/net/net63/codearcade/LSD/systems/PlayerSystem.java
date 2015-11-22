@@ -87,16 +87,15 @@ public class PlayerSystem extends IteratingSystem implements ContactListener {
                 break;
         }
 
-        if (applyDeath && !playerComponent.isDead) killPlayer(entity);
-
-        if (playerComponent.isFlying) {
+        if (playerComponent.isFlying && !playerComponent.isDead) {
             Rectangle bounds = levelDescriptor.getWorldBounds();
 
             if ((!bounds.contains(position)) &&  (bounds.y + bounds.height) > position.y) {
-                SoundManager.playSound(SoundManager.Sounds.PLAYER_DEATH);
-                playerComponent.isDead = true;
+                applyDeath = true;
             }
         }
+
+        if (applyDeath && !playerComponent.isDead) killPlayer(entity);
     }
 
 
