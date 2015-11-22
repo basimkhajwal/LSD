@@ -25,6 +25,7 @@ import net.net63.codearcade.LSD.world.GameWorld;
 public class GameScreen extends AbstractScreen implements EventListener {
 
     private static final float DEATH_TIME_GAP = 2f;
+    private static final float SLOW_MO = 0.2f;
 
     private CentreGUI centreGUI;
     private GameWorld gameWorld;
@@ -95,8 +96,10 @@ public class GameScreen extends AbstractScreen implements EventListener {
 	public void render(float delta) {
 		super.render(delta);
 
-        //Render/complete the logic and update UI elements to show it
-        gameWorld.update(delta);
+        //Render / complete logic (in slow motion if game is finished)
+        gameWorld.update(gameWorld.isGameOver() ? delta * SLOW_MO : delta);
+
+        //Update UI elements
         updateScore();
 
         //Handle user events and render the GUI
