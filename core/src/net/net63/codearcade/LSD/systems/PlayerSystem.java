@@ -85,14 +85,6 @@ public class PlayerSystem extends IteratingSystem implements ContactListener {
                 break;
         }
 
-        if (playerComponent.isDead) {
-            if (playerComponent.deathTime == 0) {
-                killPlayer(entity);
-            }
-
-            playerComponent.deathTime += deltaTime;
-        }
-
         if (playerComponent.isFlying) {
             Rectangle bounds = levelDescriptor.getWorldBounds();
 
@@ -105,9 +97,9 @@ public class PlayerSystem extends IteratingSystem implements ContactListener {
 
 
     private void killPlayer(Entity player) {
-        PlayerComponent playerComponent = playerMapper.get(player);
         Body body = bodyMapper.get(player).body;
 
+        playerMapper.get(player).isDead = true;
         renderMapper.get(player).render = false;
         stateMapper.get(player).set(PlayerComponent.STATE_DEAD);
 
@@ -163,7 +155,7 @@ public class PlayerSystem extends IteratingSystem implements ContactListener {
             }
 
             if (wallMapper.has(other)) {
-                playerComponent.isDead = true;
+                killPlayer(playerEntity);
             }
 
         }
