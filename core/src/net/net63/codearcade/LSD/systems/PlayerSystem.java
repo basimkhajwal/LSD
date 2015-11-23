@@ -94,6 +94,7 @@ public class PlayerSystem extends IteratingSystem implements ContactListener {
                 applyDeath = true;
             }
         }
+        
 
         if (applyDeath && !playerComponent.isDead) killPlayer(entity);
     }
