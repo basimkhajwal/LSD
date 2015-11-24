@@ -20,7 +20,6 @@ They should all work but only desktop and HTML5 builds have currently been teste
 #### TODO:
 - [ ] Add timer for each platform
 - [ ] Customize shader for the game (add a new one)
-- [ ] Slow-motion level complete / player death
 - [ ] Add JSON read/write for a persistent Settings value
 - [ ] Create a settings screen
 
@@ -51,3 +50,4 @@ They should all work but only desktop and HTML5 builds have currently been teste
 - [x] Add parallax effect for the game
 - [x] Create a sub-menu / level selection screen
 - [x] Particles for player death
+- [x] Slow-motion level complete / player death
