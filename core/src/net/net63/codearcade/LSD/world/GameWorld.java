@@ -158,6 +158,13 @@ public class GameWorld implements Disposable, EntityListener {
     }
 
     /**
+     * Stop the shake effect if it is currently on
+     */
+    public void stopShake() {
+        engine.getSystem(CameraShakeSystem.class).stopShake();
+    }
+
+    /**
      * Pause logic so when update is called
      * the game won't continue but will still
      * be rendered

@@ -113,6 +113,7 @@ public class GameScreen extends AbstractScreen implements EventListener {
 
         //Check if the game is finished
         if (!logicPaused && gameWorld.isGameOver()) {
+            if (gameOverTime == 0) gameWorld.stopShake();
             gameOverTime += delta;
 
             if (gameOverTime > DEATH_TIME_GAP) {
