@@ -21,6 +21,8 @@ They should all work but only desktop and HTML5 builds have currently been teste
 - [ ] Add timer for each platform
 - [ ] Add a pause option/screen
 - [ ] Gesture detection and pinch zoom in/out
+- [ ] Improve menu/title colours
+- [ ] Prevent firing through a block
 - [ ] Customize shader for the game (add a new one)
 - [ ] Add JSON read/write for a persistent Settings value
 - [ ] Create a settings screen
