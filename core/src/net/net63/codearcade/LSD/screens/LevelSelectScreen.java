@@ -23,8 +23,8 @@ public class LevelSelectScreen extends AbstractScreen {
     private static final int NUM_COLS = 4;
     private static final int MAX_ROWS = 4;
 
-    private static final int PADDING_TOP = 20;
-    private static final int PADDING_SIDE = 20;
+    private static final int PADDING_TOP = 40;
+    private static final int PADDING_SIDE = 40;
 
     private static final int BUTTON_WIDTH = 150;
     private static final int BUTTON_HEIGHT = 90;
