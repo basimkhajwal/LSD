@@ -19,6 +19,8 @@ They should all work but only desktop and HTML5 builds have currently been teste
 
 #### TODO:
 - [ ] Add timer for each platform
+- [ ] Add a pause option/screen
+- [ ] Gesture detection and pinch zoom in/out
 - [ ] Customize shader for the game (add a new one)
 - [ ] Add JSON read/write for a persistent Settings value
 - [ ] Create a settings screen
