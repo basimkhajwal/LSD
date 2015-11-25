@@ -16,16 +16,22 @@ import net.net63.codearcade.LSD.components.RenderComponent;
 import net.net63.codearcade.LSD.utils.Constants;
 
 /**
+ * Entity system to render entities with a render
+ * component and a physics body component
+ *
  * Created by Basim on 03/07/15.
  */
 public class RenderSystem extends IteratingSystem implements Disposable {
 
-    private Vector2 tmp;
-    private Vector2 tmp2;
+    //Temporary storage
+    private static final Vector2 tmp = new Vector2();
+    private static final Vector2 tmp2 = new Vector2();
 
+    //Rendering instances
     private OrthographicCamera camera;
     private SpriteBatch batch;
 
+    //Component retrievers
     private ComponentMapper<RenderComponent> renderMapper;
     private ComponentMapper<BodyComponent> bodyMapper;
 
@@ -35,15 +41,13 @@ public class RenderSystem extends IteratingSystem implements Disposable {
         this.camera = camera;
         batch = new SpriteBatch();
 
-        tmp = new Vector2();
-        tmp2 = new Vector2();
-
         renderMapper = ComponentMapper.getFor(RenderComponent.class);
         bodyMapper = ComponentMapper.getFor(BodyComponent.class);
     }
 
     @Override
     public void update(float deltaTime) {
+        //Apply the batch then render each entity
         batch.setProjectionMatrix(camera.combined);
         batch.begin();
 
@@ -54,62 +58,66 @@ public class RenderSystem extends IteratingSystem implements Disposable {
 
     @Override
     public void processEntity(Entity entity, float deltaTime) {
+        //Get all components and details of the entity to render
         Body body = bodyMapper.get(entity).body;
         RenderComponent renderComponent = renderMapper.get(entity);
         Fixture fixture = body.getFixtureList().first();
 
-        if (!renderComponent.render) return;
+        //Short circuit if rendering is set to false or invalid body
+        if (!renderComponent.render || fixture == null) return;
 
-        if (fixture != null) {
-            boolean rendering  = true;
+        //Get dimensions depending on body type (tmp = pos, tmp2 = size)
+        switch (fixture.getType()) {
 
-            switch (fixture.getType()) {
+            //Only handles rectangles
+            case Polygon:
+                PolygonShape polygon = (PolygonShape) fixture.getShape();
 
-                case Polygon:
-                    PolygonShape polygon = (PolygonShape) fixture.getShape();
+                //Get vertices and compute dimensions
+                polygon.getVertex(0, tmp);
+                polygon.getVertex(2, tmp2);
 
-                    polygon.getVertex(0, tmp);
-                    polygon.getVertex(2, tmp2);
+                tmp2.sub(tmp);
+                tmp.add(body.getPosition());
 
-                    tmp2.sub(tmp);
-                    tmp.add(body.getPosition());
+                break;
 
-                    break;
+            //Set sizes for a circle shape
+            case Circle:
+                float radius = fixture.getShape().getRadius();
 
-                case Circle:
-                    float radius = fixture.getShape().getRadius();
+                tmp.set(body.getPosition()).sub(radius, radius);
+                tmp2.set(radius * 2, radius * 2);
 
-                    tmp.set(body.getPosition()).sub(radius, radius);
-                    tmp2.set(radius * 2, radius * 2);
+                break;
 
-                    break;
+            //Other shapes aren't rendered
+            default: return;
+        }
 
-                default:
-                    rendering = false;
-            }
+        //If the texture is being tiled
+        if (renderComponent.tileToSize) {
+            //Calculate tile sizes and amounts
+            float tileWidth = renderComponent.tileWidth * Constants.PIXEL_TO_METRE;
+            float tileHeight = renderComponent.tileHeight * Constants.PIXEL_TO_METRE;
+            int tilesAcross = (int) Math.ceil(tmp2.x / tileWidth);
+            int tilesUp = (int) Math.ceil(tmp2.y / tileHeight);
 
-            if (rendering) {
-                if (renderComponent.tileToSize) {
-                    float tileWidth = renderComponent.tileWidth * Constants.PIXEL_TO_METRE;
-                    float tileHeight = renderComponent.tileHeight * Constants.PIXEL_TO_METRE;
-
-                    int tilesAcross = (int) Math.ceil(tmp2.x / tileWidth);
-                    int tilesUp = (int) Math.ceil(tmp2.y / tileHeight);
-
-                    for (int row = 0; row < tilesUp; row++) {
-                        for (int col = 0; col < tilesAcross; col++) {
-                            batch.draw(renderComponent.texture,
-                                    tmp.x + col * tileWidth,
-                                    tmp.y + row * tileHeight,
-                                    tileWidth, tileHeight);
-                        }
-                    }
-
-                } else {
-                    batch.draw(renderComponent.texture, tmp.x, tmp.y, tmp2.x, tmp2.y);
+            //Render the texture at each required co-ordinate
+            for (int row = 0; row < tilesUp; row++) {
+                for (int col = 0; col < tilesAcross; col++) {
+                    batch.draw(renderComponent.texture,
+                            tmp.x + col * tileWidth,
+                            tmp.y + row * tileHeight,
+                            tileWidth, tileHeight);
                 }
             }
+
+        } else {
+            //Simply draw at the given position and size
+            batch.draw(renderComponent.texture, tmp.x, tmp.y, tmp2.x, tmp2.y);
         }
+
     }
 
     @Override
