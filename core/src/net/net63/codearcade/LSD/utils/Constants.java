@@ -19,7 +19,7 @@ public class Constants {
     // ---------------- Game Content ----------
 
     public static final int DEFAULT_PACK = LevelManager.LevelPacks.ORIGINAL;
-    public static final int MAX_LEVEL = LevelManager.getPack(DEFAULT_PACK).numLevels;
+    public static final int MAX_LEVEL = LevelManager.getPack(DEFAULT_PACK).numLevels - 1;
 
     // --------------- UI / Window ------------
 
