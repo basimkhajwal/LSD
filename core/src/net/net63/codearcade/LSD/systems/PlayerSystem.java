@@ -98,6 +98,12 @@ public class PlayerSystem extends IteratingSystem implements ContactListener {
         if (applyDeath && !playerComponent.isDead) killPlayer(entity);
     }
 
+    /**
+     * Kill the player on the next tick
+     */
+    public void applyPlayerDeath() {
+        applyDeath = true;
+    }
 
     private void killPlayer(Entity player) {
         Body body = bodyMapper.get(player).body;
