@@ -29,8 +29,6 @@ public class PlayerSystem extends IteratingSystem implements ContactListener {
 
     private LevelDescriptor levelDescriptor;
 
-    private boolean applyDeath = false;
-
     private static final int PARTICLE_NUM = 30;
 
     public PlayerSystem (LevelDescriptor levelDescriptor) {
@@ -91,18 +89,11 @@ public class PlayerSystem extends IteratingSystem implements ContactListener {
             Rectangle bounds = levelDescriptor.getWorldBounds();
 
             if ((!bounds.contains(position)) &&  (bounds.y + bounds.height) > position.y) {
-                applyDeath = true;
+                playerComponent.applyDeath = true;
             }
         }
 
-        if (applyDeath && !playerComponent.isDead) killPlayer(entity);
-    }
-
-    /**
-     * Kill the player on the next tick
-     */
-    public void applyPlayerDeath() {
-        applyDeath = true;
+        if (playerComponent.applyDeath && !playerComponent.isDead) killPlayer(entity);
     }
 
     private void killPlayer(Entity player) {
@@ -164,7 +155,7 @@ public class PlayerSystem extends IteratingSystem implements ContactListener {
             }
 
             if (wallMapper.has(other)) {
-                applyDeath = true;
+                playerComponent.applyDeath = true;
             }
 
         }

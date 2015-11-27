@@ -26,4 +26,5 @@ public class PlayerComponent implements Component{
 
     public boolean isFlying = true;
     public boolean isDead = false;
+    public boolean applyDeath = false;
 }
