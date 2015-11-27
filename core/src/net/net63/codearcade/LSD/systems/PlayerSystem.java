@@ -145,6 +145,8 @@ public class PlayerSystem extends IteratingSystem implements ContactListener {
             StateComponent state = stateMapper.get(playerEntity);
             PlayerComponent playerComponent = playerMapper.get(playerEntity);
 
+
+
             if (playerComponent.isFlying) {
                 playerComponent.isFlying = false;
                 state.set(PlayerComponent.STATE_HITTING);
