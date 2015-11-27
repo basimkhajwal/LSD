@@ -19,6 +19,7 @@ They should all work but only desktop and HTML5 builds have currently been teste
 
 #### TODO:
 - [ ] Add timer for each platform
+- [ ] Add a centre event queue / re-organise code
 - [ ] Add a pause option/screen
 - [ ] Gesture detection and pinch zoom in/out
 - [ ] Improve menu/title colours
