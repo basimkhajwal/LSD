@@ -1,10 +1,9 @@
 package net.net63.codearcade.LSD.systems;
 
-import com.badlogic.ashley.core.Engine;
-import com.badlogic.ashley.core.Entity;
-import com.badlogic.ashley.core.EntitySystem;
-import com.badlogic.ashley.core.Family;
+import com.badlogic.ashley.core.*;
 import net.net63.codearcade.LSD.components.PlayerComponent;
+import net.net63.codearcade.LSD.utils.Constants;
+import net.net63.codearcade.LSD.world.LevelDescriptor;
 
 /**
  * Created by Basim on 25/11/15.
@@ -12,10 +11,12 @@ import net.net63.codearcade.LSD.components.PlayerComponent;
 public class TimerSystem extends EntitySystem {
 
     private Entity player;
+    private LevelDescriptor levelDescriptor;
 
     private float currentTime = 0;
 
-    public TimerSystem() {
+    public TimerSystem(LevelDescriptor levelDescriptor) {
+        super(Constants.SYSTEM_PRIORITIES.TIMER);
 
     }
 

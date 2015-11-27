@@ -90,6 +90,7 @@ public class Constants {
         public static final int RENDER                  = 12;
         public static final int DEBUG_RENDER            = 13;
         public static final int PARTICLE_RENDER         = 14;
-        public static final int EFFECT_RENDER           = 15;
+        public static final int TIMER                   = 15;
+        public static final int EFFECT_RENDER           = 16;
     }
 }
