@@ -12,7 +12,7 @@ import net.net63.codearcade.LSD.screens.overlays.LevelCompleteScreen;
 import net.net63.codearcade.LSD.utils.CentreGUI;
 import net.net63.codearcade.LSD.utils.Constants;
 import net.net63.codearcade.LSD.utils.GUIBuilder;
-import net.net63.codearcade.LSD.utils.LevelManager;
+import net.net63.codearcade.LSD.managers.LevelManager;
 import net.net63.codearcade.LSD.world.GameWorld;
 
 /**

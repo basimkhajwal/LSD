@@ -17,7 +17,7 @@ import net.net63.codearcade.LSD.listeners.BodyRemovalListener;
 import net.net63.codearcade.LSD.listeners.SensorDestroyListener;
 import net.net63.codearcade.LSD.systems.*;
 import net.net63.codearcade.LSD.utils.Constants;
-import net.net63.codearcade.LSD.utils.SoundManager;
+import net.net63.codearcade.LSD.managers.SoundManager;
 
 /**
  * The main game world handles and controls the game events

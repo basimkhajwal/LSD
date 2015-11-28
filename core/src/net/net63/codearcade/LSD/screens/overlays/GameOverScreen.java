@@ -12,9 +12,9 @@ import com.badlogic.gdx.utils.Array;
 import net.net63.codearcade.LSD.LSD;
 import net.net63.codearcade.LSD.screens.GameScreen;
 import net.net63.codearcade.LSD.screens.LevelSelectScreen;
-import net.net63.codearcade.LSD.utils.Assets;
+import net.net63.codearcade.LSD.managers.Assets;
 import net.net63.codearcade.LSD.utils.GUIBuilder;
-import net.net63.codearcade.LSD.utils.LevelManager;
+import net.net63.codearcade.LSD.managers.LevelManager;
 
 /**
  * Created by Basim on 30/09/15.

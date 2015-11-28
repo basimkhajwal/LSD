@@ -16,7 +16,7 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import net.net63.codearcade.LSD.components.*;
-import net.net63.codearcade.LSD.utils.Assets;
+import net.net63.codearcade.LSD.managers.Assets;
 import net.net63.codearcade.LSD.utils.Constants;
 
 /**

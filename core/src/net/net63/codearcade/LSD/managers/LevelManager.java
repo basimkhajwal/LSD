@@ -1,4 +1,4 @@
-package net.net63.codearcade.LSD.utils;
+package net.net63.codearcade.LSD.managers;
 
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;

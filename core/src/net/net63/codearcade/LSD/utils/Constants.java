@@ -1,6 +1,7 @@
 package net.net63.codearcade.LSD.utils;
 
 import com.badlogic.gdx.math.Vector2;
+import net.net63.codearcade.LSD.managers.LevelManager;
 
 /**
  * Game class with all the static constant variables to be used in game, 

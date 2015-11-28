@@ -4,7 +4,7 @@ import com.badlogic.ashley.core.EntitySystem;
 import com.badlogic.gdx.utils.Disposable;
 import net.net63.codearcade.LSD.utils.BackgroundRenderer;
 import net.net63.codearcade.LSD.utils.Constants;
-import net.net63.codearcade.LSD.utils.ShaderManager;
+import net.net63.codearcade.LSD.managers.ShaderManager;
 
 /**
  * Render the background for the game, using a separate

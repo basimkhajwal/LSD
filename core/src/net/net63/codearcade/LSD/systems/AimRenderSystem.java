@@ -11,7 +11,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Disposable;
 import net.net63.codearcade.LSD.components.PlayerComponent;
 import net.net63.codearcade.LSD.components.StateComponent;
-import net.net63.codearcade.LSD.utils.Assets;
+import net.net63.codearcade.LSD.managers.Assets;
 import net.net63.codearcade.LSD.utils.Constants;
 
 /**

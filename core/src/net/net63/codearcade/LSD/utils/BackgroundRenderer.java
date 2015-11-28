@@ -6,6 +6,8 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Disposable;
+import net.net63.codearcade.LSD.managers.Assets;
+import net.net63.codearcade.LSD.managers.ShaderManager;
 
 /**
  * A utility renderer that renders the background given

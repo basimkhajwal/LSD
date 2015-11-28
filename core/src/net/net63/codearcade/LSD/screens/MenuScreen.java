@@ -11,6 +11,9 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
 import net.net63.codearcade.LSD.LSD;
+import net.net63.codearcade.LSD.managers.Assets;
+import net.net63.codearcade.LSD.managers.LevelManager;
+import net.net63.codearcade.LSD.managers.ShaderManager;
 import net.net63.codearcade.LSD.utils.*;
 
 

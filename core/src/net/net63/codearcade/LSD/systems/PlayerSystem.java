@@ -11,7 +11,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import net.net63.codearcade.LSD.components.*;
 import net.net63.codearcade.LSD.utils.Constants;
-import net.net63.codearcade.LSD.utils.SoundManager;
+import net.net63.codearcade.LSD.managers.SoundManager;
 import net.net63.codearcade.LSD.world.LevelDescriptor;
 import net.net63.codearcade.LSD.world.WorldBuilder;
 

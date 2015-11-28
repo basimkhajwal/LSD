@@ -1,6 +1,10 @@
 package net.net63.codearcade.LSD;
 
 import com.badlogic.gdx.graphics.FPSLogger;
+import net.net63.codearcade.LSD.managers.Assets;
+import net.net63.codearcade.LSD.managers.LevelManager;
+import net.net63.codearcade.LSD.managers.ShaderManager;
+import net.net63.codearcade.LSD.managers.SoundManager;
 import net.net63.codearcade.LSD.screens.MenuScreen;
 import net.net63.codearcade.LSD.utils.*;
 
