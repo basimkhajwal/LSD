@@ -5,5 +5,10 @@ package net.net63.codearcade.LSD.events;
  */
 public enum GameEvent {
 
+    RESIZE,
+
+    FIRE_PLAYER
+
+
 
 }

@@ -1,6 +1,7 @@
 package net.net63.codearcade.LSD.world;
 
 import com.badlogic.ashley.core.*;
+import com.badlogic.ashley.signals.Signal;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -13,11 +14,12 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import net.net63.codearcade.LSD.components.PlayerComponent;
 import net.net63.codearcade.LSD.components.SensorComponent;
 import net.net63.codearcade.LSD.components.StateComponent;
+import net.net63.codearcade.LSD.events.GameEvent;
 import net.net63.codearcade.LSD.listeners.BodyRemovalListener;
 import net.net63.codearcade.LSD.listeners.SensorDestroyListener;
+import net.net63.codearcade.LSD.managers.SoundManager;
 import net.net63.codearcade.LSD.systems.*;
 import net.net63.codearcade.LSD.utils.Constants;
-import net.net63.codearcade.LSD.managers.SoundManager;
 
 /**
  * The main game world handles and controls the game events
@@ -37,6 +39,8 @@ public class GameWorld implements Disposable, EntityListener {
     private LevelDescriptor levelDescriptor;
     private Entity player;
 
+    private Signal<GameEvent> gameEventSignal;
+
     private ComponentMapper<PlayerComponent> playerMapper;
     private ComponentMapper<StateComponent> stateMapper;
     private ComponentMapper<SensorComponent> sensorMapper;
@@ -49,6 +53,10 @@ public class GameWorld implements Disposable, EntityListener {
      * @param map The level map
      */
     public GameWorld (TiledMap map) {
+
+        //Create the event signal
+        gameEventSignal = new Signal<GameEvent>();
+
         //Setup the camera and viewport
         gameCamera = new OrthographicCamera();
         viewport = new ExtendViewport(Constants.WORLD_WIDTH, Constants.WORLD_HEIGHT, gameCamera);
@@ -92,12 +100,15 @@ public class GameWorld implements Disposable, EntityListener {
         //Update the viewport
         viewport.update(w, h, true);
 
+        gameEventSignal.dispatch(GameEvent.RESIZE);
+
+        /*
         //If systems are loaded then centralise it to the player / update them
         CameraMovementSystem cam = engine.getSystem(CameraMovementSystem.class);
         BackgroundRenderSystem back = engine.getSystem(BackgroundRenderSystem.class);
 
         if (cam != null) cam.forceUpdate();
-        if (back != null) back.resize(w, h);
+        if (back != null) back.resize(w, h); */
     }
 
     //Temporary debug to easily move around the world
