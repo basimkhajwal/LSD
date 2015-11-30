@@ -29,8 +29,6 @@ public class PlayerSystem extends IteratingSystem implements ContactListener {
 
     private LevelDescriptor levelDescriptor;
 
-    private static final int PARTICLE_NUM = 30;
-
     public PlayerSystem (LevelDescriptor levelDescriptor) {
         super(Family.all(PlayerComponent.class).get(), Constants.SYSTEM_PRIORITIES.PLAYER);
 
@@ -106,13 +104,15 @@ public class PlayerSystem extends IteratingSystem implements ContactListener {
         SoundManager.playSound(SoundManager.Sounds.PLAYER_DEATH);
 
         // --- Particle Effect ----
+        int num = Constants.PLAYER_DEATH_PARTICLES;
+
         Vector2 pos = body.getPosition();
         float radius = body.getFixtureList().first().getShape().getRadius();
 
-        Vector2[] positions = new Vector2[PARTICLE_NUM];
-        Color[] colors = new Color[PARTICLE_NUM];
+        Vector2[] positions = new Vector2[num];
+        Color[] colors = new Color[num];
 
-        for (int i = 0; i < PARTICLE_NUM; i++) {
+        for (int i = 0; i < num; i++) {
             positions[i] = new Vector2(pos);
             positions[i].add(MathUtils.random(-radius, radius), MathUtils.random(-radius, radius));
 
@@ -144,8 +144,6 @@ public class PlayerSystem extends IteratingSystem implements ContactListener {
         if (playerEntity != null) {
             StateComponent state = stateMapper.get(playerEntity);
             PlayerComponent playerComponent = playerMapper.get(playerEntity);
-
-
 
             if (playerComponent.isFlying) {
                 playerComponent.isFlying = false;

@@ -12,16 +12,13 @@ import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 import net.net63.codearcade.LSD.components.BodyComponent;
 import net.net63.codearcade.LSD.components.SensorComponent;
+import net.net63.codearcade.LSD.utils.Constants;
 import net.net63.codearcade.LSD.world.WorldBuilder;
 
 /**
  * Created by Basim on 13/10/15.
  */
 public class SensorDestroyListener implements EntityListener {
-
-    private static final float MAX_PARTICLE_SIZE = 0.09f;
-    private static final float MIN_PARTICLE_SIZE = 0.05f;
-    private static final int PARTICLE_NUM = 50;
 
     private ComponentMapper<SensorComponent> sensorMapper;
     private ComponentMapper<BodyComponent> bodyMapper;
@@ -54,10 +51,12 @@ public class SensorDestroyListener implements EntityListener {
             Vector2 bottomLeft = body.getPosition().cpy().sub(dimensions);
             dimensions.scl(2);
 
-            Vector2[] positions = new Vector2[PARTICLE_NUM];
-            Color[] colors = new Color[PARTICLE_NUM];
+            int num = Constants.PLATFORM_PARTICLES;
 
-            for (int i = 0; i < PARTICLE_NUM; i++) {
+            Vector2[] positions = new Vector2[num];
+            Color[] colors = new Color[num];
+
+            for (int i = 0; i < num; i++) {
                 positions[i] = new Vector2(
                         bottomLeft.x + MathUtils.random(0, dimensions.x),
                         bottomLeft.y + MathUtils.random(0, dimensions.y));

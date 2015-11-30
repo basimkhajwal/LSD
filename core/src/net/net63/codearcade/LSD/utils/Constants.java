@@ -42,6 +42,9 @@ public class Constants {
     public static final float PLAYER_WIDTH = 0.45f;
     public static final float PLAYER_HEIGHT = 0.45f;
 
+    public static final int PLAYER_DEATH_PARTICLES = 30;
+    public static final int PLATFORM_PARTICLES     = 50;
+
     public static final int NUM_TRAJECTORY_PROJECTIONS = 25;
     public static final int TRAJECTORY_PROJECTION_STEPS = 7;
 

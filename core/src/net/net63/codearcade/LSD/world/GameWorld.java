@@ -100,15 +100,8 @@ public class GameWorld implements Disposable, EntityListener {
         //Update the viewport
         viewport.update(w, h, true);
 
+        //Dispatch a resize event
         gameEventSignal.dispatch(GameEvent.RESIZE);
-
-        /*
-        //If systems are loaded then centralise it to the player / update them
-        CameraMovementSystem cam = engine.getSystem(CameraMovementSystem.class);
-        BackgroundRenderSystem back = engine.getSystem(BackgroundRenderSystem.class);
-
-        if (cam != null) cam.forceUpdate();
-        if (back != null) back.resize(w, h); */
     }
 
     //Temporary debug to easily move around the world
@@ -148,6 +141,7 @@ public class GameWorld implements Disposable, EntityListener {
 
         //Check if the player is still or already aiming, otherwise don't aim
         if (state.get() == PlayerComponent.STATE_STILL || state.get() == PlayerComponent.STATE_AIMING) {
+
             //Convert to world space
             Vector2 worldPos = new Vector2(x, y);
             viewport.unproject(worldPos);
