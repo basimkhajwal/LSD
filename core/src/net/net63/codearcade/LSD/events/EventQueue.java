@@ -16,6 +16,12 @@ public class EventQueue implements Listener<GameEvent> {
         eventQueue = new PriorityQueue<GameEvent>();
     }
 
+    public GameEvent[] getEvents() {
+        GameEvent[] events = eventQueue.toArray(new GameEvent[0]);
+        eventQueue.clear();
+        return events;
+    }
+
     public GameEvent poll() {
         return eventQueue.poll();
     }

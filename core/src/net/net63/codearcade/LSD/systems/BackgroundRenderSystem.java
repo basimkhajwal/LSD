@@ -1,7 +1,11 @@
 package net.net63.codearcade.LSD.systems;
 
 import com.badlogic.ashley.core.EntitySystem;
+import com.badlogic.ashley.signals.Signal;
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.utils.Disposable;
+import net.net63.codearcade.LSD.events.EventQueue;
+import net.net63.codearcade.LSD.events.GameEvent;
 import net.net63.codearcade.LSD.utils.BackgroundRenderer;
 import net.net63.codearcade.LSD.utils.Constants;
 import net.net63.codearcade.LSD.managers.ShaderManager;
@@ -16,22 +20,26 @@ public class BackgroundRenderSystem extends EntitySystem implements Disposable {
 
     private BackgroundRenderer backgroundRenderer;
 
-    public BackgroundRenderSystem() {
+    private EventQueue eventQueue;
+
+    public BackgroundRenderSystem(Signal<GameEvent> signal) {
         super(Constants.SYSTEM_PRIORITIES.BACKGROUND_RENDER);
+
+        eventQueue = new EventQueue();
+        signal.add(eventQueue);
 
         backgroundRenderer = new BackgroundRenderer(ShaderManager.Shaders.MENU, BackgroundRenderer.DEFAULT);
     }
 
     @Override
     public void update(float deltaTime) {
-        backgroundRenderer.render(deltaTime);
-    }
+        for (GameEvent event : eventQueue.getEvents()) {
+            if (event == GameEvent.RESIZE) {
+                backgroundRenderer.resize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+            }
+        }
 
-    /**
-     * Resize the shader and texture to match the screen size
-     */
-    public void resize(int width, int height) {
-        backgroundRenderer.resize(width, height);
+        backgroundRenderer.render(deltaTime);
     }
 
     @Override
