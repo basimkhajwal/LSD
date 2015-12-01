@@ -67,25 +67,20 @@ public class PlayerSystem extends IteratingSystem implements ContactListener {
                 body.setGravityScale(0f);
                 body.setLinearVelocity(0, 0);
 
+                playerComponent.isFlying = false;
+
                 state.set(PlayerComponent.STATE_STILL);
             }
         }
 
-        switch (state.get()) {
-
-            case PlayerComponent.STATE_JUMPING:
-
-                if (body.getLinearVelocity().y < 0) {
-                    state.set(PlayerComponent.STATE_FALLING);
-                }
-
-                break;
+        if (state.get() == PlayerComponent.STATE_JUMPING && body.getLinearVelocity().y < 0) {
+            state.set(PlayerComponent.STATE_FALLING);
         }
 
         if (playerComponent.isFlying && !playerComponent.isDead) {
             Rectangle bounds = levelDescriptor.getWorldBounds();
 
-            if ((!bounds.contains(position)) &&  (bounds.y + bounds.height) > position.y) {
+            if ((!bounds.contains(position)) && (bounds.y + bounds.height) > position.y) {
                 playerComponent.applyDeath = true;
             }
         }
