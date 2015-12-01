@@ -31,12 +31,14 @@ public class PlayerSystem extends IteratingSystem implements ContactListener {
     private ComponentMapper<RenderComponent> renderMapper;
 
     private LevelDescriptor levelDescriptor;
+    private Signal<GameEvent> gameEventSignal;
     private EventQueue eventQueue;
 
     public PlayerSystem (LevelDescriptor levelDescriptor, Signal<GameEvent> gameEventSignal) {
         super(Family.all(PlayerComponent.class).get(), Constants.SYSTEM_PRIORITIES.PLAYER);
 
         this.levelDescriptor = levelDescriptor;
+        this.gameEventSignal = gameEventSignal;
 
         eventQueue = new EventQueue();
         gameEventSignal.add(eventQueue);
@@ -60,17 +62,16 @@ public class PlayerSystem extends IteratingSystem implements ContactListener {
             if (event == GameEvent.LAUNCH_PLAYER && state.get() == PlayerComponent.STATE_AIMING) {
                 launchPlayer(entity);
             }
-        }
 
-        switch (state.get()) {
-
-            case PlayerComponent.STATE_HITTING:
-
+            else if (event == GameEvent.PLATFORM_COLLISION) {
                 body.setGravityScale(0f);
                 body.setLinearVelocity(0, 0);
 
                 state.set(PlayerComponent.STATE_STILL);
-                break;
+            }
+        }
+
+        switch (state.get()) {
 
             case PlayerComponent.STATE_JUMPING:
 
@@ -159,15 +160,10 @@ public class PlayerSystem extends IteratingSystem implements ContactListener {
         Entity other = (entityA == playerEntity) ? entityB : entityA;
 
         if (playerEntity != null) {
-            StateComponent state = stateMapper.get(playerEntity);
             PlayerComponent playerComponent = playerMapper.get(playerEntity);
 
-            if (playerComponent.isFlying) {
-                playerComponent.isFlying = false;
-                state.set(PlayerComponent.STATE_HITTING);
-            }
-
             if (sensorMapper.has(other)) {
+                gameEventSignal.dispatch(GameEvent.PLATFORM_COLLISION);
                 playerComponent.currentSensor = other;
             }
 
