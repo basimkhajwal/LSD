@@ -7,7 +7,7 @@ public enum GameEvent {
 
     RESIZE,
 
-    FIRE_PLAYER
+    LAUNCH_PLAYER
 
 
 

@@ -57,8 +57,8 @@ public class PlayerSystem extends IteratingSystem implements ContactListener {
         Vector2 position = body.getPosition();
 
         for (GameEvent event : eventQueue.getEvents()) {
-            if (event == GameEvent.FIRE_PLAYER && state.get() == PlayerComponent.STATE_AIMING) {
-                firePlayer(entity);
+            if (event == GameEvent.LAUNCH_PLAYER && state.get() == PlayerComponent.STATE_AIMING) {
+                launchPlayer(entity);
             }
         }
 
@@ -94,7 +94,7 @@ public class PlayerSystem extends IteratingSystem implements ContactListener {
         }
     }
 
-    private void firePlayer(Entity player) {
+    private void launchPlayer(Entity player) {
         PlayerComponent playerComponent = playerMapper.get(player);
         Body body = bodyMapper.get(player).body;
 

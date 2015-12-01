@@ -157,7 +157,7 @@ public class GameWorld implements Disposable, EntityListener {
      */
     public void launchPlayer() {
         //Fire the player-fire event
-        gameEventSignal.dispatch(GameEvent.FIRE_PLAYER);
+        gameEventSignal.dispatch(GameEvent.LAUNCH_PLAYER);
     }
 
     /**
