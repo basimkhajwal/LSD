@@ -3,6 +3,7 @@ package net.net63.codearcade.LSD.systems;
 import com.badlogic.ashley.core.ComponentMapper;
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.Family;
+import com.badlogic.ashley.signals.Signal;
 import com.badlogic.ashley.systems.IteratingSystem;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.MathUtils;
@@ -10,8 +11,10 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import net.net63.codearcade.LSD.components.*;
-import net.net63.codearcade.LSD.utils.Constants;
+import net.net63.codearcade.LSD.events.EventQueue;
+import net.net63.codearcade.LSD.events.GameEvent;
 import net.net63.codearcade.LSD.managers.SoundManager;
+import net.net63.codearcade.LSD.utils.Constants;
 import net.net63.codearcade.LSD.world.LevelDescriptor;
 import net.net63.codearcade.LSD.world.WorldBuilder;
 
@@ -28,11 +31,15 @@ public class PlayerSystem extends IteratingSystem implements ContactListener {
     private ComponentMapper<RenderComponent> renderMapper;
 
     private LevelDescriptor levelDescriptor;
+    private EventQueue eventQueue;
 
-    public PlayerSystem (LevelDescriptor levelDescriptor) {
+    public PlayerSystem (LevelDescriptor levelDescriptor, Signal<GameEvent> gameEventSignal) {
         super(Family.all(PlayerComponent.class).get(), Constants.SYSTEM_PRIORITIES.PLAYER);
 
         this.levelDescriptor = levelDescriptor;
+
+        eventQueue = new EventQueue();
+        gameEventSignal.add(eventQueue);
 
         bodyMapper = ComponentMapper.getFor(BodyComponent.class);
         stateMapper = ComponentMapper.getFor(StateComponent.class);
@@ -49,22 +56,13 @@ public class PlayerSystem extends IteratingSystem implements ContactListener {
         PlayerComponent playerComponent = playerMapper.get(entity);
         Vector2 position = body.getPosition();
 
+        for (GameEvent event : eventQueue.getEvents()) {
+            if (event == GameEvent.FIRE_PLAYER && state.get() == PlayerComponent.STATE_AIMING) {
+                firePlayer(entity);
+            }
+        }
+
         switch (state.get()) {
-
-            case PlayerComponent.STATE_FIRING:
-
-                body.setGravityScale(1.0f);
-                body.applyLinearImpulse(playerComponent.launchImpulse, body.getWorldCenter(), true);
-
-                if (playerComponent.sensorEntity != null) {
-                    getEngine().removeEntity(playerComponent.sensorEntity);
-
-                    playerComponent.isFlying = true;
-                    playerComponent.sensorEntity = null;
-                }
-
-                state.set(PlayerComponent.STATE_JUMPING);
-                break;
 
             case PlayerComponent.STATE_HITTING:
 
@@ -91,7 +89,26 @@ public class PlayerSystem extends IteratingSystem implements ContactListener {
             }
         }
 
-        if (playerComponent.applyDeath && !playerComponent.isDead) killPlayer(entity);
+        if (playerComponent.applyDeath && !playerComponent.isDead) {
+            killPlayer(entity);
+        }
+    }
+
+    private void firePlayer(Entity player) {
+        PlayerComponent playerComponent = playerMapper.get(player);
+        Body body = bodyMapper.get(player).body;
+
+        body.setGravityScale(1.0f);
+        body.applyLinearImpulse(playerComponent.launchImpulse, body.getWorldCenter(), true);
+
+        if (playerComponent.sensorEntity != null) {
+            getEngine().removeEntity(playerComponent.sensorEntity);
+
+            playerComponent.isFlying = true;
+            playerComponent.sensorEntity = null;
+        }
+
+        stateMapper.get(player).set(PlayerComponent.STATE_JUMPING);
     }
 
     private void killPlayer(Entity player) {

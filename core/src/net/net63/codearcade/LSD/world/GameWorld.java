@@ -156,10 +156,8 @@ public class GameWorld implements Disposable, EntityListener {
      *  Fire the player if it is already aiming
      */
     public void launchPlayer() {
-        //Fire the player if the player state is aiming
-        if (stateMapper.get(player).get() == PlayerComponent.STATE_AIMING) {
-            stateMapper.get(player).set(PlayerComponent.STATE_FIRING);
-        }
+        //Fire the player-fire event
+        gameEventSignal.dispatch(GameEvent.FIRE_PLAYER);
     }
 
     /**
@@ -205,7 +203,7 @@ public class GameWorld implements Disposable, EntityListener {
     private void addSystems() {
         engine.addSystem(new WorldSystem());
         engine.addSystem(new PlayerAimSystem());
-        engine.addSystem(new PlayerSystem(levelDescriptor));
+        engine.addSystem(new PlayerSystem(levelDescriptor, gameEventSignal));
 
         engine.addSystem(new AnimationSystem());
         engine.addSystem(new CameraMovementSystem(gameCamera, gameEventSignal));

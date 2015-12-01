@@ -12,11 +12,10 @@ public class PlayerComponent implements Component{
     public static final int STATE_INIT      = 0;
     public static final int STATE_STILL     = 1;
     public static final int STATE_AIMING    = 2;
-    public static final int STATE_FIRING    = 3;
-    public static final int STATE_JUMPING   = 4;
-    public static final int STATE_FALLING   = 5;
-    public static final int STATE_HITTING   = 6;
-    public static final int STATE_DEAD      = 7;
+    public static final int STATE_JUMPING   = 3;
+    public static final int STATE_FALLING   = 4;
+    public static final int STATE_HITTING   = 5;
+    public static final int STATE_DEAD      = 6;
 
     public Vector2 aimPosition;
     public Vector2 launchImpulse;
