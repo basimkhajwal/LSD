@@ -6,9 +6,7 @@ package net.net63.codearcade.LSD.events;
 public enum GameEvent {
 
     RESIZE,
-
-    LAUNCH_PLAYER
-
-
+    LAUNCH_PLAYER,
+    PLATFORM_COLLISION
 
 }

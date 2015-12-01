@@ -21,7 +21,7 @@ public class PlayerComponent implements Component{
     public Vector2 launchImpulse;
     public Vector2[] trajectoryPoints;
 
-    public Entity sensorEntity = null;
+    public Entity currentSensor = null;
 
     public boolean isFlying = true;
     public boolean isDead = false;

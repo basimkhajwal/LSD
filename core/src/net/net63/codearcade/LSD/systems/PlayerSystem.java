@@ -101,11 +101,11 @@ public class PlayerSystem extends IteratingSystem implements ContactListener {
         body.setGravityScale(1.0f);
         body.applyLinearImpulse(playerComponent.launchImpulse, body.getWorldCenter(), true);
 
-        if (playerComponent.sensorEntity != null) {
-            getEngine().removeEntity(playerComponent.sensorEntity);
+        if (playerComponent.currentSensor != null) {
+            getEngine().removeEntity(playerComponent.currentSensor);
 
             playerComponent.isFlying = true;
-            playerComponent.sensorEntity = null;
+            playerComponent.currentSensor = null;
         }
 
         stateMapper.get(player).set(PlayerComponent.STATE_JUMPING);
@@ -168,7 +168,7 @@ public class PlayerSystem extends IteratingSystem implements ContactListener {
             }
 
             if (sensorMapper.has(other)) {
-                playerComponent.sensorEntity = other;
+                playerComponent.currentSensor = other;
             }
 
             if (wallMapper.has(other)) {
