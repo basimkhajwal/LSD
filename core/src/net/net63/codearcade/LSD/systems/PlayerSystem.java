@@ -13,7 +13,6 @@ import com.badlogic.gdx.physics.box2d.*;
 import net.net63.codearcade.LSD.components.*;
 import net.net63.codearcade.LSD.events.EventQueue;
 import net.net63.codearcade.LSD.events.GameEvent;
-import net.net63.codearcade.LSD.managers.SoundManager;
 import net.net63.codearcade.LSD.utils.Constants;
 import net.net63.codearcade.LSD.world.LevelDescriptor;
 import net.net63.codearcade.LSD.world.WorldBuilder;
@@ -129,8 +128,6 @@ public class PlayerSystem extends IteratingSystem implements ContactListener {
         playerMapper.get(player).isDead = true;
         renderMapper.get(player).render = false;
         stateMapper.get(player).set(PlayerComponent.STATE_DEAD);
-
-        SoundManager.playSound(SoundManager.Sounds.PLAYER_DEATH);
 
         // --- Particle Effect ----
         int num = Constants.PLAYER_DEATH_PARTICLES;

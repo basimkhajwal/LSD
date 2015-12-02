@@ -17,7 +17,6 @@ import net.net63.codearcade.LSD.components.StateComponent;
 import net.net63.codearcade.LSD.events.GameEvent;
 import net.net63.codearcade.LSD.listeners.BodyRemovalListener;
 import net.net63.codearcade.LSD.listeners.SensorDestroyListener;
-import net.net63.codearcade.LSD.managers.SoundManager;
 import net.net63.codearcade.LSD.systems.*;
 import net.net63.codearcade.LSD.utils.Constants;
 
@@ -235,8 +234,6 @@ public class GameWorld implements Disposable, EntityListener {
     public void entityRemoved(Entity entity) {
         if (sensorMapper.has(entity)) {
             levelDescriptor.setSensorsDestroyed(levelDescriptor.getSensorsDestroyed() + 1);
-            SoundManager.playSound(SoundManager.Sounds.EXPLOSION);
-
             engine.getSystem(CameraShakeSystem.class).applyShake(0.5f);
         }
     }
