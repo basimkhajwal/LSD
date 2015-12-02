@@ -4,11 +4,14 @@ import com.badlogic.ashley.core.Engine;
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.EntitySystem;
 import com.badlogic.ashley.core.Family;
+import com.badlogic.ashley.signals.Signal;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.utils.Disposable;
 import net.net63.codearcade.LSD.components.PlayerComponent;
+import net.net63.codearcade.LSD.events.EventQueue;
+import net.net63.codearcade.LSD.events.GameEvent;
 import net.net63.codearcade.LSD.utils.Constants;
 import net.net63.codearcade.LSD.world.LevelDescriptor;
 
@@ -16,6 +19,11 @@ import net.net63.codearcade.LSD.world.LevelDescriptor;
  * Created by Basim on 25/11/15.
  */
 public class TimerSystem extends EntitySystem implements Disposable {
+
+    private static final float PADDING_SIDE = 100;
+    private static final float PADDING_BELOW = 30;
+    private static final float HEIGHT = 20;
+    private static final float WIDTH = Constants.DEFAULT_SCREEN_WIDTH - 2 * PADDING_SIDE;
 
     private Entity player;
     private LevelDescriptor levelDescriptor;
@@ -26,12 +34,19 @@ public class TimerSystem extends EntitySystem implements Disposable {
     private float currentTime = 0;
     private float currentMaxTime = Float.POSITIVE_INFINITY;
 
+    private EventQueue eventQueue;
+    private Signal<GameEvent> gameEventSignal;
+
     private boolean timerOn = false;
 
-    public TimerSystem(LevelDescriptor levelDescriptor) {
+    public TimerSystem(LevelDescriptor levelDescriptor, Signal<GameEvent> gameEventSignal) {
         super(Constants.SYSTEM_PRIORITIES.TIMER);
 
         this.levelDescriptor = levelDescriptor;
+        this.gameEventSignal = gameEventSignal;
+
+        eventQueue = new EventQueue();
+        gameEventSignal.add(eventQueue);
 
         camera = new OrthographicCamera();
         camera.setToOrtho(false);
@@ -50,6 +65,18 @@ public class TimerSystem extends EntitySystem implements Disposable {
     public void update(float deltaTime) {
         super.update(deltaTime);
 
+        for (GameEvent event: eventQueue.getEvents()) {
+
+            if (event == GameEvent.LAUNCH_PLAYER) {
+                endTimer();
+            }
+
+            else if (event == GameEvent.PLATFORM_COLLISION) {
+                beginTimer();
+            }
+
+        }
+
         if (timerOn) currentTime += deltaTime;
 
         shapeRenderer.setProjectionMatrix(camera.combined);
@@ -57,20 +84,20 @@ public class TimerSystem extends EntitySystem implements Disposable {
 
         shapeRenderer.setColor(Color.DARK_GRAY);
         if (timerOn) {
-            shapeRenderer.rect(30, 30, 600 * (currentTime / currentMaxTime), 50);
+            shapeRenderer.rect(PADDING_SIDE, PADDING_BELOW, WIDTH * (currentTime / currentMaxTime), HEIGHT);
         } else {
-            shapeRenderer.rect(30, 30, 600, 50);
+            shapeRenderer.rect(PADDING_SIDE, PADDING_BELOW, WIDTH, HEIGHT);
         }
 
         shapeRenderer.end();
     }
 
-    public void beginTimer() {
+    private void beginTimer() {
         timerOn = true;
         currentMaxTime = 5f; //TEMP
     }
 
-    public void endTimer() {
+    private void endTimer() {
         timerOn = false;
     }
 
