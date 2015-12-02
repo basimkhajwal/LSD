@@ -58,18 +58,33 @@ public class PlayerSystem extends IteratingSystem implements ContactListener {
         PlayerComponent playerComponent = playerMapper.get(entity);
         Vector2 position = body.getPosition();
 
+        boolean applyDeath = false;
+
         for (GameEvent event : eventQueue.getEvents()) {
-            if (event == GameEvent.LAUNCH_PLAYER && state.get() == PlayerComponent.STATE_AIMING) {
-                launchPlayer(entity);
-            }
+            switch(event) {
+                case LAUNCH_PLAYER:
+                    if (state.get() == PlayerComponent.STATE_AIMING) {
+                        launchPlayer(entity);
+                    }
+                    break;
 
-            else if (event == GameEvent.PLATFORM_COLLISION) {
-                body.setGravityScale(0f);
-                body.setLinearVelocity(0, 0);
+                case PLATFORM_COLLISION:
+                    body.setGravityScale(0f);
+                    body.setLinearVelocity(0, 0);
 
-                playerComponent.isFlying = false;
+                    playerComponent.isFlying = false;
 
-                state.set(PlayerComponent.STATE_STILL);
+                    state.set(PlayerComponent.STATE_STILL);
+                    break;
+
+                case WALL_COLLISION:
+                case TIMER_OVER:
+                    applyDeath = true;
+                    break;
+
+                case PLAYER_DEATH:
+                    killPlayer(entity);
+                    break;
             }
         }
 
@@ -81,13 +96,11 @@ public class PlayerSystem extends IteratingSystem implements ContactListener {
             Rectangle bounds = levelDescriptor.getWorldBounds();
 
             if ((!bounds.contains(position)) && (bounds.y + bounds.height) > position.y) {
-                playerComponent.applyDeath = true;
+                applyDeath = true;
             }
         }
 
-        if (playerComponent.applyDeath && !playerComponent.isDead) {
-            killPlayer(entity);
-        }
+        if (applyDeath) gameEventSignal.dispatch(GameEvent.PLAYER_DEATH);
     }
 
     private void launchPlayer(Entity player) {
@@ -163,7 +176,7 @@ public class PlayerSystem extends IteratingSystem implements ContactListener {
             }
 
             if (wallMapper.has(other)) {
-                playerComponent.applyDeath = true;
+                gameEventSignal.dispatch(GameEvent.WALL_COLLISION);
             }
 
         }
