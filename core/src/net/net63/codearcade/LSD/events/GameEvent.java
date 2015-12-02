@@ -7,6 +7,11 @@ public enum GameEvent {
 
     RESIZE,
     LAUNCH_PLAYER,
-    PLATFORM_COLLISION
 
+    PLATFORM_COLLISION,
+    WALL_COLLISION,
+
+    TIMER_OVER,
+
+    PLAYER_DEATH
 }
