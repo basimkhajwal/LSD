@@ -85,6 +85,9 @@ public class PlayerSystem extends IteratingSystem implements ContactListener {
                 case PLAYER_DEATH:
                     killPlayer(entity);
                     break;
+
+                default:
+                    break;
             }
         }
 
