@@ -77,14 +77,21 @@ public class TimerSystem extends EntitySystem implements Disposable {
 
         }
 
-        if (timerOn) currentTime += deltaTime;
-        float ratio = timerOn ? (1 - currentTime / currentMaxTime) : 1;
+        if (!timerOn) return;
+
+        currentTime += deltaTime;
+        float ratio = 1 - currentTime / currentMaxTime;
 
         shapeRenderer.setProjectionMatrix(camera.combined);
         shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
         shapeRenderer.setColor(Color.DARK_GRAY);
         shapeRenderer.rect(PADDING_SIDE, PADDING_BELOW, WIDTH * ratio, HEIGHT);
         shapeRenderer.end();
+        
+        if (ratio <= 0) {
+            gameEventSignal.dispatch(GameEvent.TIMER_OVER);
+            endTimer();
+        }
     }
 
     private void beginTimer() {
