@@ -78,7 +78,7 @@ public class TimerSystem extends EntitySystem implements Disposable {
         }
 
         if (timerOn) currentTime += deltaTime;
-        float ratio = timerOn ? (currentTime / currentMaxTime) : 1;
+        float ratio = timerOn ? (1 - currentTime / currentMaxTime) : 1;
 
         shapeRenderer.setProjectionMatrix(camera.combined);
         shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
@@ -89,6 +89,7 @@ public class TimerSystem extends EntitySystem implements Disposable {
 
     private void beginTimer() {
         timerOn = true;
+        currentTime = 0;
         currentMaxTime = 5f; //TEMP
     }
 
