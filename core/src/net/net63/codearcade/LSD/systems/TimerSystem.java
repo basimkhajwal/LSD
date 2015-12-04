@@ -34,7 +34,7 @@ public class TimerSystem extends EntitySystem implements Disposable {
     private EventQueue eventQueue;
     private Signal<GameEvent> gameEventSignal;
 
-    
+    private boolean firstPlatform = true;
     private boolean timerOn = false;
 
     public TimerSystem(LevelDescriptor levelDescriptor, Signal<GameEvent> gameEventSignal) {
@@ -60,12 +60,16 @@ public class TimerSystem extends EntitySystem implements Disposable {
 
         for (GameEvent event: eventQueue.getEvents()) {
 
-            if (event == GameEvent.LAUNCH_PLAYER) {
+            if (event == GameEvent.LAUNCH_PLAYER || event == GameEvent.PLAYER_DEATH) {
                 endTimer();
             }
 
             else if (event == GameEvent.PLATFORM_COLLISION) {
-                beginTimer();
+                if (firstPlatform) {
+                    firstPlatform = false;
+                } else {
+                    beginTimer();
+                }
             }
 
         }
