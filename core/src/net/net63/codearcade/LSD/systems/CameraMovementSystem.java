@@ -30,6 +30,7 @@ public class CameraMovementSystem extends IteratingSystem {
 
     //Mapper(s)
     private ComponentMapper<BodyComponent> bodyMapper;
+    private ComponentMapper<PlayerComponent> playerMapper;
 
     //Whether to reset the camera or not
     private boolean forcedUpdate = true;
@@ -38,6 +39,8 @@ public class CameraMovementSystem extends IteratingSystem {
         super(Family.all(PlayerComponent.class).get(), Constants.SYSTEM_PRIORITIES.CAMERA_MOVEMENT);
 
         this.camera = camera;
+
+        playerMapper = ComponentMapper.getFor(PlayerComponent.class);
         bodyMapper = ComponentMapper.getFor(BodyComponent.class);
 
         eventQueue = new EventQueue();
@@ -51,6 +54,9 @@ public class CameraMovementSystem extends IteratingSystem {
         for (GameEvent event : eventQueue.getEvents()) {
             if (event == GameEvent.RESIZE) forcedUpdate = true;
         }
+
+        //If the player is dead then don't follow it (short-circuit)
+        if (playerMapper.get(player).isDead) return;
 
         //Get the player position
         Vector2 pos = bodyMapper.get(player).body.getPosition();
