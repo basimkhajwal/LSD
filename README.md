@@ -18,8 +18,6 @@ They should all work but only desktop and HTML5 builds have currently been teste
 ### Development:
 
 #### TODO:
-- [ ] Add timer for each platform
-- [ ] Add a centre event queue / re-organise code
 - [ ] Add a pause option/screen
 - [ ] Gesture detection and pinch zoom in/out
 - [ ] Improve menu/title colours
@@ -56,3 +54,5 @@ They should all work but only desktop and HTML5 builds have currently been teste
 - [x] Create a sub-menu / level selection screen
 - [x] Particles for player death
 - [x] Slow-motion level complete / player death
+- [x] Add timer for each platform
+- [x] Add a centre event queue / re-organise code
