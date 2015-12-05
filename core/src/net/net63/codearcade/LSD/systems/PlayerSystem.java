@@ -78,7 +78,7 @@ public class PlayerSystem extends IteratingSystem implements ContactListener {
 
                 case WALL_COLLISION:
                 case TIMER_OVER:
-                    applyDeath = true;
+                    if (!playerComponent.isDead) applyDeath = true;
                     break;
 
                 case PLAYER_DEATH:
