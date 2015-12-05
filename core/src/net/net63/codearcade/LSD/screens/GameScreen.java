@@ -179,7 +179,8 @@ public class GameScreen extends AbstractScreen {
 
         @Override
         public void zoom(InputEvent event, float initialDistance, float distance) {
-
+            float ratio = distance / initialDistance;
+            gameWorld.applyZoom(ratio);
         }
     }
 }

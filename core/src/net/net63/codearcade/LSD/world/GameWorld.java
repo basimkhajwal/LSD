@@ -115,6 +115,16 @@ public class GameWorld implements Disposable, EntityListener {
         if (Gdx.input.isKeyPressed(Input.Keys.W)) gameCamera.zoom -= 0.02f;
     }
 
+    /**
+     * Change the zoom setting of the game camera
+     *
+     * @param amount The zoom to set the camera to
+     */
+    public void applyZoom(float amount) {
+        gameCamera.zoom = amount;
+        gameCamera.update();
+    }
+
     public void update(float delta) {
         if (!logicPaused) debugInput();
 
