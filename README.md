@@ -19,7 +19,6 @@ They should all work but only desktop and HTML5 builds have currently been teste
 
 #### TODO:
 - [ ] Add a pause option/screen
-- [ ] Gesture detection and pinch zoom in/out
 - [ ] Improve menu/title colours
 - [ ] Prevent firing through a block
 - [ ] Customize shader for the game (add a new one)
@@ -55,4 +54,5 @@ They should all work but only desktop and HTML5 builds have currently been teste
 - [x] Particles for player death
 - [x] Slow-motion level complete / player death
 - [x] Add timer for each platform
-- [x] Add a centre event queue / re-organise code
+- [x] Add a central event queue / re-organise code
+- [x] Gesture detection and pinch zoom in/out
