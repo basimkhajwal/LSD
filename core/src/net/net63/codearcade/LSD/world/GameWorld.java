@@ -212,7 +212,7 @@ public class GameWorld implements Disposable, EntityListener {
     //Add the entity systems that contain the bulk of the logic
     private void addSystems() {
         engine.addSystem(new WorldSystem());
-        engine.addSystem(new PlayerAimSystem());
+        engine.addSystem(new PlayerAimSystem(world));
         engine.addSystem(new PlayerSystem(levelDescriptor, gameEventSignal));
 
         engine.addSystem(new AnimationSystem());
