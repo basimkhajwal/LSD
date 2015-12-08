@@ -59,10 +59,12 @@ public class AimRenderSystem extends IteratingSystem implements Disposable{
             batch.begin();
 
             if (!playerComponent.validLaunch) {
-                float x = playerComponent.aimPosition.x; // - Constants.PLAYER_WIDTH / 2;
-                float y = playerComponent.aimPosition.y; // - Constants.PLAYER_HEIGHT / 2;
 
-                batch.draw(blockedImage, x, y, 0.3f, 0.3f);
+                final float size = 0.3f;
+                float x = playerComponent.aimPosition.x - size / 2;
+                float y = playerComponent.aimPosition.y - size / 2;
+
+                batch.draw(blockedImage, x, y, size, size);
             } else {
 
                 //Draw the image at each trajectory point
