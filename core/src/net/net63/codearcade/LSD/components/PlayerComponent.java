@@ -19,6 +19,7 @@ public class PlayerComponent implements Component{
     public Vector2 aimPosition;
     public Vector2 launchImpulse;
     public Vector2[] trajectoryPoints;
+    public boolean validLaunch;
 
     public Entity currentSensor = null;
 

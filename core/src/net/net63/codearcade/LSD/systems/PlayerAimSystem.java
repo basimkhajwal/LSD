@@ -6,8 +6,12 @@ import com.badlogic.ashley.core.Family;
 import com.badlogic.ashley.systems.IteratingSystem;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
+import com.badlogic.gdx.physics.box2d.Fixture;
+import com.badlogic.gdx.physics.box2d.RayCastCallback;
+import com.badlogic.gdx.physics.box2d.World;
 import net.net63.codearcade.LSD.components.BodyComponent;
 import net.net63.codearcade.LSD.components.PlayerComponent;
+import net.net63.codearcade.LSD.components.SensorComponent;
 import net.net63.codearcade.LSD.components.StateComponent;
 import net.net63.codearcade.LSD.utils.Constants;
 
@@ -16,16 +20,22 @@ import net.net63.codearcade.LSD.utils.Constants;
  */
 public class PlayerAimSystem extends IteratingSystem {
 
+    private World world;
+
     private ComponentMapper<StateComponent> stateMapper;
     private ComponentMapper<PlayerComponent> playerMapper;
     private ComponentMapper<BodyComponent> bodyMapper;
+    private ComponentMapper<SensorComponent> sensorMapper;
 
-    public PlayerAimSystem() {
+    public PlayerAimSystem(World world) {
         super(Family.all(PlayerComponent.class).get(), Constants.SYSTEM_PRIORITIES.PLAYER_AIM);
+
+        this.world = world;
 
         stateMapper = ComponentMapper.getFor(StateComponent.class);
         playerMapper = ComponentMapper.getFor(PlayerComponent.class);
         bodyMapper = ComponentMapper.getFor(BodyComponent.class);
+        sensorMapper = ComponentMapper.getFor(SensorComponent.class);
     }
 
     @Override
@@ -37,8 +47,18 @@ public class PlayerAimSystem extends IteratingSystem {
         if (state.get() == PlayerComponent.STATE_AIMING) {
             playerComponent.launchImpulse = calculateLaunchImpulse(body.getPosition(), playerComponent.aimPosition);
             playerComponent.trajectoryPoints = calculateTrajectoryPoints(body.getPosition(), playerComponent.launchImpulse);
+
+
         }
     }
+
+    private RayCastCallback aimValidifier = new RayCastCallback() {
+
+        @Override
+        public float reportRayFixture(Fixture fixture, Vector2 point, Vector2 normal, float fraction) {
+            return 0;
+        }
+    };
 
     private float calculateVerticalVelocity(float desiredHeight) {
         if (desiredHeight <= 0) {
