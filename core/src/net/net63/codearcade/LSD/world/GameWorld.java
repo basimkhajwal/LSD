@@ -148,6 +148,7 @@ public class GameWorld implements Disposable, EntityListener {
      */
     public void aimPlayer(int x, int y) {
         StateComponent state = stateMapper.get(player);
+        PlayerComponent playerComponent = playerMapper.get(player);
 
         //Check if the player is still or already aiming, otherwise don't aim
         if (state.get() == PlayerComponent.STATE_STILL || state.get() == PlayerComponent.STATE_AIMING) {
@@ -156,9 +157,10 @@ public class GameWorld implements Disposable, EntityListener {
             Vector2 worldPos = new Vector2(x, y);
             viewport.unproject(worldPos);
 
-            //Set the aim position
+            //Set the aim position and invalidate (force re-compute)
             state.set(PlayerComponent.STATE_AIMING);
-            playerMapper.get(player).aimPosition = worldPos;
+            playerComponent.aimPosition = worldPos;
+            playerComponent.invalidateAim = true;
         }
     }
 

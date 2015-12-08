@@ -44,7 +44,7 @@ public class PlayerAimSystem extends IteratingSystem {
         PlayerComponent playerComponent = playerMapper.get(entity);
         Body body = bodyMapper.get(entity).body;
 
-        if (state.get() == PlayerComponent.STATE_AIMING) {
+        if (state.get() == PlayerComponent.STATE_AIMING && playerComponent.invalidateAim) {
             playerComponent.launchImpulse = calculateLaunchImpulse(body.getPosition(), playerComponent.aimPosition);
             playerComponent.trajectoryPoints = calculateTrajectoryPoints(body.getPosition(), playerComponent.launchImpulse);
 
@@ -52,6 +52,7 @@ public class PlayerAimSystem extends IteratingSystem {
             world.rayCast(aimValididator, body.getWorldCenter(), playerComponent.aimPosition);
 
             playerComponent.validLaunch = !platformCollision;
+            playerComponent.invalidateAim = false;
         }
     }
 
