@@ -17,7 +17,7 @@ import net.net63.codearcade.LSD.world.LevelDescriptor;
 public class TimerSystem extends EntitySystem implements Disposable {
 
     private static final float LONGEST_TIME = 4f;
-    private static final float SHORTEST_TIME = 1f;
+    private static final float SHORTEST_TIME = 0.5f;
 
     private static final float PADDING_SIDE = 100;
     private static final float PADDING_BELOW = 30;
@@ -35,6 +35,7 @@ public class TimerSystem extends EntitySystem implements Disposable {
     private Signal<GameEvent> gameEventSignal;
 
     private boolean firstPlatform = true;
+    private boolean finished = false;
     private boolean timerOn = false;
 
     public TimerSystem(LevelDescriptor levelDescriptor, Signal<GameEvent> gameEventSignal) {
@@ -60,14 +61,19 @@ public class TimerSystem extends EntitySystem implements Disposable {
 
         for (GameEvent event: eventQueue.getEvents()) {
 
-            if (event == GameEvent.LAUNCH_PLAYER || event == GameEvent.PLAYER_DEATH) {
+            if (event == GameEvent.LAUNCH_PLAYER) {
                 endTimer();
+            }
+
+            else if (event == GameEvent.PLAYER_DEATH) {
+                endTimer();
+                finished = true;
             }
 
             else if (event == GameEvent.PLATFORM_COLLISION) {
                 if (firstPlatform) {
                     firstPlatform = false;
-                } else {
+                } else if (!finished) {
                     beginTimer();
                 }
             }
