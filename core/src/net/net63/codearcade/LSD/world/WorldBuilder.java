@@ -305,7 +305,7 @@ public class WorldBuilder {
         animationComponent.animations.put(PlayerComponent.STATE_JUMPING, jumping);
         animationComponent.animations.put(PlayerComponent.STATE_FALLING, falling);
 
-        stateComponent.set(PlayerComponent.STATE_STILL);
+        stateComponent.set(PlayerComponent.STATE_INIT);
         renderComponent.texture = animationComponent.animations.get(stateComponent.get()).getKeyFrame(0);
 
         bodyComponent.body = world.createBody(bodyDef);
