@@ -299,6 +299,7 @@ public class WorldBuilder {
         jumping.setFrameDuration(0.1f);
         falling.setFrameDuration(0.1f);
 
+        animationComponent.animations.put(PlayerComponent.STATE_INIT, falling);
         animationComponent.animations.put(PlayerComponent.STATE_STILL, still);
         animationComponent.animations.put(PlayerComponent.STATE_AIMING, still);
         animationComponent.animations.put(PlayerComponent.STATE_DEAD, still);
