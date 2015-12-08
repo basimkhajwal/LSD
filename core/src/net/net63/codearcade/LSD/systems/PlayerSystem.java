@@ -174,13 +174,13 @@ public class PlayerSystem extends IteratingSystem implements ContactListener {
         Body a = contact.getFixtureA().getBody();
         Body b = contact.getFixtureB().getBody();
 
+        //End if no entity-entity collision occurred
+        if (! (a.getUserData() instanceof Entity) || ! (b.getUserData() instanceof Entity)) return;
+
         //Check if entities have collided
         Entity entityA = (Entity) a.getUserData();
         Entity entityB = (Entity) b.getUserData();
         Entity playerEntity = null;
-
-        //End if no entity-entity collision occured
-        if (entityA == null || entityB == null) return;
 
         //Find player entity
         if (playerMapper.has(entityA)) playerEntity = entityA;
