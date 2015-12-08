@@ -82,12 +82,12 @@ public class GameWorld implements Disposable, EntityListener {
         WorldBuilder.setup(engine, world, levelDescriptor);
         WorldBuilder.loadFromMap(gameMap);
 
+        //Maintain a pointer to the player entity since it is commonly used
+        player = engine.getEntitiesFor(Family.all(PlayerComponent.class).get()).first();
+
         //Add entity systems for logic/rendering and listeners
         addSystems();
         addListeners();
-
-        //Maintain a pointer to the player entity since it is commonly used
-        player = engine.getEntitiesFor(Family.all(PlayerComponent.class).get()).first();
     }
 
     /**
@@ -231,13 +231,13 @@ public class GameWorld implements Disposable, EntityListener {
 
     //Add listeners for physics and entity events
     private void addListeners() {
-        engine.addEntityListener(0, new ParticleEffectListener(engine, world));
-        engine.addEntityListener(1, this);
-        engine.addEntityListener(2, new BodyRemovalListener(world));
+        engine.addEntityListener(0, this);
+        engine.addEntityListener(1, new BodyRemovalListener(world));
 
         world.setContactListener(engine.getSystem(PlayerSystem.class));
 
         gameEventSignal.add(new SoundEventListener());
+        gameEventSignal.add(new ParticleEffectListener(player));
     }
 
     @Override
