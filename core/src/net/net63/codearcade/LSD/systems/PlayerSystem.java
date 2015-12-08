@@ -159,6 +159,10 @@ public class PlayerSystem extends IteratingSystem implements ContactListener {
         playerMapper.get(player).isDead = true;
         renderMapper.get(player).render = false;
         stateMapper.get(player).set(PlayerComponent.STATE_DEAD);
+
+        //Stop the players motion and gravity
+        bodyMapper.get(player).body.setGravityScale(0);
+        bodyMapper.get(player).body.setLinearVelocity(Vector2.Zero);
     }
 
     /* ---------- BOX 2D Contact Stuff */
