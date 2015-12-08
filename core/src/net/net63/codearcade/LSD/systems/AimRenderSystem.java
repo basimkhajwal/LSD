@@ -25,6 +25,9 @@ public class AimRenderSystem extends IteratingSystem implements Disposable{
     //Render variables
     private OrthographicCamera gameCamera;
     private SpriteBatch batch;
+
+    //Textures
+    private Texture blockedImage;
     private Texture trajectoryImage;
 
     //Mappers
@@ -38,6 +41,7 @@ public class AimRenderSystem extends IteratingSystem implements Disposable{
         batch = new SpriteBatch();
 
         trajectoryImage = Assets.getAsset(Assets.Images.TRAJECTORY, Texture.class);
+        blockedImage = Assets.getAsset(Assets.Images.BLOCKED, Texture.class);
 
         stateMapper = ComponentMapper.getFor(StateComponent.class);
         playerMapper = ComponentMapper.getFor(PlayerComponent.class);
@@ -45,15 +49,26 @@ public class AimRenderSystem extends IteratingSystem implements Disposable{
 
     @Override
     public void processEntity(Entity player, float deltaTime) {
+
+        PlayerComponent playerComponent = playerMapper.get(player);
+
         //Draw if the aiming state is set
         if (stateMapper.get(player).get() == PlayerComponent.STATE_AIMING) {
 
             batch.setProjectionMatrix(gameCamera.combined);
             batch.begin();
 
-            //Draw the image at each trajectory point
-            for (Vector2 point:  playerMapper.get(player).trajectoryPoints) {
-                batch.draw(trajectoryImage, point.x, point.y, 0.1f, 0.1f);
+            if (!playerComponent.validLaunch) {
+                float x = playerComponent.aimPosition.x; // - Constants.PLAYER_WIDTH / 2;
+                float y = playerComponent.aimPosition.y; // - Constants.PLAYER_HEIGHT / 2;
+
+                batch.draw(blockedImage, x, y, 0.3f, 0.3f);
+            } else {
+
+                //Draw the image at each trajectory point
+                for (Vector2 point:  playerComponent.trajectoryPoints) {
+                    batch.draw(trajectoryImage, point.x, point.y, 0.1f, 0.1f);
+                }
             }
 
             batch.end();
