@@ -19,6 +19,7 @@ They should all work but only desktop and HTML5 builds have currently been teste
 
 #### TODO:
 - [ ] Add a pause option/screen
+- [ ] Prevent player movement after death
 - [ ] Improve menu/title colours
 - [ ] Prevent firing through a block
 - [ ] Customize shader for the game (add a new one)
