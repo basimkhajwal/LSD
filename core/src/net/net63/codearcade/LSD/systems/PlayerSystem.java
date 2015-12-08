@@ -5,8 +5,6 @@ import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.Family;
 import com.badlogic.ashley.signals.Signal;
 import com.badlogic.ashley.systems.IteratingSystem;
-import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
@@ -15,7 +13,6 @@ import net.net63.codearcade.LSD.events.EventQueue;
 import net.net63.codearcade.LSD.events.GameEvent;
 import net.net63.codearcade.LSD.utils.Constants;
 import net.net63.codearcade.LSD.world.LevelDescriptor;
-import net.net63.codearcade.LSD.world.WorldBuilder;
 
 /**
  * Player system which handles the abstract and specific
@@ -158,36 +155,10 @@ public class PlayerSystem extends IteratingSystem implements ContactListener {
      * @param player The entity
      */
     private void killPlayer(Entity player) {
-        Body body = bodyMapper.get(player).body;
-
         //Set the state variables
         playerMapper.get(player).isDead = true;
         renderMapper.get(player).render = false;
         stateMapper.get(player).set(PlayerComponent.STATE_DEAD);
-
-        // --- Particle Effect ----
-
-        //How many particles to generate
-        int num = Constants.PLAYER_DEATH_PARTICLES;
-
-        //Position and radius of player
-        Vector2 pos = body.getPosition();
-        float radius = body.getFixtureList().first().getShape().getRadius();
-
-        //Each particle start position and color
-        Vector2[] positions = new Vector2[num];
-        Color[] colors = new Color[num];
-
-        //Randomly position within player radius
-        for (int i = 0; i < num; i++) {
-            positions[i] = new Vector2(pos);
-            positions[i].add(MathUtils.random(-radius, radius), MathUtils.random(-radius, radius));
-
-            colors[i] = Color.BROWN;
-        }
-
-        //Create particle effect from builder
-        WorldBuilder.createParticleEffect(positions, colors, 2, 5, 5);
     }
 
     /* ---------- BOX 2D Contact Stuff */

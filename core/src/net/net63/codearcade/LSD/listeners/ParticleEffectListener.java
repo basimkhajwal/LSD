@@ -42,13 +42,11 @@ public class ParticleEffectListener implements Listener<GameEvent> {
             case LAUNCH_PLAYER:
                 Entity sensor = playerMapper.get(playerEntity).currentSensor;
                 if (sensor != null) createSensorEffect(sensor);
-
                 break;
 
             case PLAYER_DEATH:
-
+                createPlayerEffect();
                 break;
-
 
             default:
                 break;
@@ -58,9 +56,31 @@ public class ParticleEffectListener implements Listener<GameEvent> {
     }
 
     private void createPlayerEffect() {
+        Body body = bodyMapper.get(playerEntity).body;
 
+        //How many particles to generate
+        int num = Constants.PLAYER_DEATH_PARTICLES;
+
+        //Position and radius of player
+        Vector2 pos = body.getPosition();
+        float radius = body.getFixtureList().first().getShape().getRadius();
+
+        //Each particle start position and color
+        Vector2[] positions = new Vector2[num];
+        Color[] colors = new Color[num];
+
+        //Randomly position within player radius
+        for (int i = 0; i < num; i++) {
+            positions[i] = new Vector2(pos);
+            positions[i].add(MathUtils.random(-radius, radius), MathUtils.random(-radius, radius));
+
+            colors[i] = Color.BROWN;
+        }
+
+        //Create particle effect from builder
+        WorldBuilder.createParticleEffect(positions, colors, 2, 5, 5);
     }
-    
+
     private void createSensorEffect(Entity entity) {
         Body body = bodyMapper.get(entity).body;
         PolygonShape shape = (PolygonShape) body.getFixtureList().first().getShape();
