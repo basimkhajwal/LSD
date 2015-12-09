@@ -144,6 +144,8 @@ public class GameScreen extends AbstractScreen {
 
     private class GameEventListener extends ActorGestureListener {
 
+        private boolean zooming = false;
+
         @Override
         public boolean handle(Event event) {
             if (logicPaused) return false;
@@ -152,22 +154,28 @@ public class GameScreen extends AbstractScreen {
 
         @Override
         public void touchDown(InputEvent event, float x, float y, int pointer, int button) {
-            gameWorld.aimPlayer(Gdx.input.getX(), Gdx.input.getY());
+            if (!zooming) {
+                gameWorld.aimPlayer(Gdx.input.getX(), Gdx.input.getY());
+            }
         }
 
         @Override
         public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
             gameWorld.launchPlayer();
+            zooming = false;
         }
 
         @Override
         public void pan (InputEvent event, float x, float y, float deltaX, float deltaY) {
-            gameWorld.aimPlayer(Gdx.input.getX(), Gdx.input.getY());
+            if (!zooming) {
+                gameWorld.aimPlayer(Gdx.input.getX(), Gdx.input.getY());
+            }
         }
 
         @Override
         public void zoom(InputEvent event, float initialDistance, float distance) {
             gameWorld.applyZoom(initialDistance / distance);
+            zooming = true;
         }
     }
 }

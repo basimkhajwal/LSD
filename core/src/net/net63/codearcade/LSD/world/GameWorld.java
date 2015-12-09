@@ -116,13 +116,20 @@ public class GameWorld implements Disposable, EntityListener {
     }
 
     /**
-     * Change the zoom setting of the game camera
+     * Change the zoom setting of the game camera by the ratio given
      *
-     * @param amount The zoom to set the camera to
+     * @param amount The zoom to apply the camera to
      */
     public void applyZoom(float amount) {
-        gameCamera.zoom = amount;
+        //Update the camera
+        gameCamera.zoom *= amount;
         gameCamera.update();
+
+        //Stop aiming if the player is
+        StateComponent state = stateMapper.get(player);
+        if (state.get() == PlayerComponent.STATE_AIMING) {
+            state.set(PlayerComponent.STATE_STILL);
+        }
     }
 
     public void update(float delta) {
