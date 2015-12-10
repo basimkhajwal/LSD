@@ -19,9 +19,7 @@ They should all work but only desktop and HTML5 builds have currently been teste
 
 #### TODO:
 - [ ] Add a pause option/screen
-- [ ] Prevent player movement after death
 - [ ] Improve menu/title colours
-- [ ] Prevent firing through a block
 - [ ] Customize shader for the game (add a new one)
 - [ ] Add JSON read/write for a persistent Settings value
 - [ ] Create a settings screen
@@ -57,3 +55,5 @@ They should all work but only desktop and HTML5 builds have currently been teste
 - [x] Add timer for each platform
 - [x] Add a central event queue / re-organise code
 - [x] Gesture detection and pinch zoom in/out
+- [x] Prevent player movement after death
+- [x] Prevent firing through a block
