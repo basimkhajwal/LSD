@@ -2,6 +2,7 @@ package net.net63.codearcade.LSD.systems;
 
 import com.badlogic.ashley.core.EntitySystem;
 import com.badlogic.ashley.signals.Signal;
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
@@ -16,7 +17,7 @@ import net.net63.codearcade.LSD.world.LevelDescriptor;
  */
 public class TimerSystem extends EntitySystem implements Disposable {
 
-    private static final float LONGEST_TIME = 4f;
+    private static final float LONGEST_TIME = 10f;
     private static final float SHORTEST_TIME = 0.5f;
 
     private static final float PADDING_SIDE = 100;
@@ -78,6 +79,9 @@ public class TimerSystem extends EntitySystem implements Disposable {
                 }
             }
 
+            else if (event == GameEvent.RESIZE) {
+                camera.setToOrtho(false);
+            }
         }
 
         if (!timerOn) return;
@@ -85,10 +89,13 @@ public class TimerSystem extends EntitySystem implements Disposable {
         currentTime += deltaTime;
         float ratio = 1 - currentTime / currentMaxTime;
 
+        float scaleX = ((float) Gdx.graphics.getWidth()) / Constants.DEFAULT_SCREEN_WIDTH;
+        float scaleY = ((float) Gdx.graphics.getHeight()) / Constants.DEFAULT_SCREEN_HEIGHT;
+
         shapeRenderer.setProjectionMatrix(camera.combined);
         shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
         shapeRenderer.setColor(Color.DARK_GRAY);
-        shapeRenderer.rect(PADDING_SIDE, PADDING_BELOW, WIDTH * ratio, HEIGHT);
+        shapeRenderer.rect(PADDING_SIDE * scaleX, PADDING_BELOW * scaleY, WIDTH * ratio * scaleX, HEIGHT * scaleY);
         shapeRenderer.end();
 
         if (ratio <= 0) {
