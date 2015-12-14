@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.Event;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.utils.ActorGestureListener;
@@ -81,6 +82,7 @@ public class GameScreen extends AbstractScreen {
         pauseButton = GUIBuilder.createButton(Assets.Buttons.PAUSE);
         pauseButton.setSize(50, 50);
         pauseButton.setPosition(800 - pauseButton.getWidth() - 20, 600 - pauseButton.getHeight() - 20);
+        pauseButton.setTouchable(Touchable.enabled);
 
         //Create the GUI manager and add listeners
         centreGUI = new CentreGUI();
@@ -156,7 +158,7 @@ public class GameScreen extends AbstractScreen {
 
         @Override
         public boolean handle(Event event) {
-            if (logicPaused) return false;
+            if (logicPaused || centreGUI.getStage().hit(Gdx.input.getX(), 600 - Gdx.input.getY(), true) != null ) return false;
             return super.handle(event);
         }
 
