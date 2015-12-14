@@ -4,9 +4,12 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.Event;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.utils.ActorGestureListener;
 import net.net63.codearcade.LSD.LSD;
+import net.net63.codearcade.LSD.managers.Assets;
 import net.net63.codearcade.LSD.managers.LevelManager;
 import net.net63.codearcade.LSD.screens.overlays.GameOverScreen;
 import net.net63.codearcade.LSD.screens.overlays.LevelCompleteScreen;
@@ -29,10 +32,11 @@ public class GameScreen extends AbstractScreen {
 
     private static final float SLOW_MO = 0.35f;
 
-    private CentreGUI centreGUI;
     private GameWorld gameWorld;
-    private Label scoreLabel;
 
+    private CentreGUI centreGUI;
+    private Label scoreLabel;
+    private ImageButton pauseButton;
 
     private int levelId;
     private boolean logicPaused = false;
@@ -73,10 +77,16 @@ public class GameScreen extends AbstractScreen {
         scoreLabel = GUIBuilder.createLabel("", 50, Color.YELLOW);
         scoreLabel.setPosition((800 - scoreLabel.getWidth()) / 2.0f , 550 - scoreLabel.getHeight());
 
+        //Create the pause button in the top right corner
+        pauseButton = GUIBuilder.createButton(Assets.Buttons.PAUSE);
+        pauseButton.setSize(50, 50);
+        pauseButton.setPosition(800 - pauseButton.getWidth() - 20, 600 - pauseButton.getHeight() - 20);
+
         //Create the GUI manager and add listeners
         centreGUI = new CentreGUI();
-        centreGUI.getStage().addActor(scoreLabel);
-        centreGUI.getStage().addListener(new GameEventListener());
+        Stage stage = centreGUI.getStage();
+        stage.addActor(scoreLabel);
+        stage.addListener(new GameEventListener());
     }
 
 	@Override
