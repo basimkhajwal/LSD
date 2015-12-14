@@ -86,6 +86,7 @@ public class GameScreen extends AbstractScreen {
         centreGUI = new CentreGUI();
         Stage stage = centreGUI.getStage();
         stage.addActor(scoreLabel);
+        stage.addActor(pauseButton);
         stage.addListener(new GameEventListener());
     }
 
@@ -116,7 +117,8 @@ public class GameScreen extends AbstractScreen {
         }
 
         //Update UI elements
-        updateScore();
+        scoreLabel.setText(gameWorld.getScore());
+        pauseButton.setChecked(pauseButton.isOver());
 
         //Handle user events and render the GUI
         centreGUI.render(delta);
@@ -145,10 +147,6 @@ public class GameScreen extends AbstractScreen {
         //Dispose assets from members
         gameWorld.dispose();
         centreGUI.dispose();
-    }
-
-    private void updateScore() {
-        scoreLabel.setText(gameWorld.getScore());
     }
 
 
