@@ -1,5 +1,6 @@
 package net.net63.codearcade.LSD.screens.overlays;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
@@ -29,6 +30,9 @@ public class PauseScreen extends AbstractOverlay {
 
     @Override
     public void checkChange() {
-        
+        if (Gdx.input.justTouched()) {
+            previousGame.resumeLogic();
+            game.setScreen(previousGame);
+        }
     }
 }

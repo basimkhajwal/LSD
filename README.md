@@ -19,6 +19,8 @@ They should all work but only desktop and HTML5 builds have currently been teste
 
 #### TODO:
 - [ ] Add a pause option/screen
+- [ ] Add moving platforms
+- [ ] Add option of having multiple map packs (with a scroll screen in between)
 - [ ] Improve menu/title colours
 - [ ] Customize shader for the game (add a new one)
 - [ ] Add JSON read/write for a persistent Settings value
