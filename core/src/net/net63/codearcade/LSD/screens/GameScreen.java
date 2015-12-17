@@ -2,6 +2,7 @@ package net.net63.codearcade.LSD.screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.Event;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -10,6 +11,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.utils.ActorGestureListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.utils.viewport.Viewport;
 import net.net63.codearcade.LSD.LSD;
 import net.net63.codearcade.LSD.managers.Assets;
 import net.net63.codearcade.LSD.managers.LevelManager;
@@ -29,6 +31,8 @@ import net.net63.codearcade.LSD.world.GameWorld;
  *
  */
 public class GameScreen extends AbstractScreen {
+
+    private static final Vector3 tmp = new Vector3();
 
     private static final float SLOW_MO_TIME_GAP = 1.5f;
     private static final float DEATH_TIME_GAP = 3f;
@@ -86,7 +90,6 @@ public class GameScreen extends AbstractScreen {
         //Create the pause button in the top right corner
         pauseButton = GUIBuilder.createButton(Assets.Buttons.PAUSE);
         pauseButton.setSize(50, 50);
-        pauseButton.setPosition(800 - pauseButton.getWidth() - 20, 600 - pauseButton.getHeight() - 20);
         pauseButton.setTouchable(Touchable.enabled);
         pauseButton.addListener(new ClickListener() {
 
@@ -112,6 +115,12 @@ public class GameScreen extends AbstractScreen {
         //Update the gui viewport and the game world
         gameWorld.resize(width, height);
 		centreGUI.resize(width, height);
+
+        //Set the pause button to be in the right corner
+        Viewport viewport = centreGUI.getStage().getViewport();
+        tmp.set(width, 0, 0);
+        viewport.getCamera().unproject(tmp);
+        pauseButton.setPosition(tmp.x - 20 - pauseButton.getWidth(), tmp.y - 20 - pauseButton.getHeight());
 	}
 
     @Override
@@ -157,7 +166,6 @@ public class GameScreen extends AbstractScreen {
         //Check if pausing is needed
         if (pauseClicked) {
             pauseLogic();
-            System.out.println("CALLED");
             pauseClicked = false;
             game.setScreen(new PauseScreen(game, this));
         }
@@ -179,7 +187,10 @@ public class GameScreen extends AbstractScreen {
 
         @Override
         public boolean handle(Event event) {
-            if (logicPaused || centreGUI.getStage().hit(Gdx.input.getX(), 600 - Gdx.input.getY(), true) != null ) return false;
+            tmp.set(Gdx.input.getX(), Gdx.input.getY(), 0);
+            centreGUI.getStage().getViewport().getCamera().unproject(tmp);
+
+            if (logicPaused || centreGUI.getStage().hit(tmp.x, tmp.y, true) != null ) return false;
             return super.handle(event);
         }
 
