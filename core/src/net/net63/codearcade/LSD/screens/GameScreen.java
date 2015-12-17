@@ -9,11 +9,13 @@ import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.utils.ActorGestureListener;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import net.net63.codearcade.LSD.LSD;
 import net.net63.codearcade.LSD.managers.Assets;
 import net.net63.codearcade.LSD.managers.LevelManager;
 import net.net63.codearcade.LSD.screens.overlays.GameOverScreen;
 import net.net63.codearcade.LSD.screens.overlays.LevelCompleteScreen;
+import net.net63.codearcade.LSD.screens.overlays.PauseScreen;
 import net.net63.codearcade.LSD.utils.CentreGUI;
 import net.net63.codearcade.LSD.utils.Constants;
 import net.net63.codearcade.LSD.utils.GUIBuilder;
@@ -41,6 +43,7 @@ public class GameScreen extends AbstractScreen {
 
     private int levelId;
     private boolean logicPaused = false;
+    private boolean pauseClicked = false;
 
     private float gameOverTime = 0f;
 
@@ -63,6 +66,8 @@ public class GameScreen extends AbstractScreen {
     @Override
     public void resumeLogic() {
         if (logicPaused) gameWorld.resumeLogic();
+
+        Gdx.input.setInputProcessor(centreGUI.getStage());
         logicPaused = false;
     }
 
@@ -83,6 +88,14 @@ public class GameScreen extends AbstractScreen {
         pauseButton.setSize(50, 50);
         pauseButton.setPosition(800 - pauseButton.getWidth() - 20, 600 - pauseButton.getHeight() - 20);
         pauseButton.setTouchable(Touchable.enabled);
+        pauseButton.addListener(new ClickListener() {
+
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                pauseClicked = true;
+            }
+
+        });
 
         //Create the GUI manager and add listeners
         centreGUI = new CentreGUI();
@@ -139,6 +152,14 @@ public class GameScreen extends AbstractScreen {
                 else game.setScreen(new GameOverScreen(game, this));
             }
 
+        }
+
+        //Check if pausing is needed
+        if (pauseClicked) {
+            pauseLogic();
+            System.out.println("CALLED");
+            pauseClicked = false;
+            game.setScreen(new PauseScreen(game, this));
         }
 	}
 
