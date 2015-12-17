@@ -14,16 +14,17 @@ import net.net63.codearcade.LSD.utils.GUIBuilder;
  */
 public class PauseScreen extends AbstractOverlay {
 
-
     public PauseScreen(LSD game, GameScreen previousGame) {
         super(game, previousGame);
+
+        disposeGame = false;
     }
 
     @Override
     public void setupUI(Stage stage) {
 
-        Label pauseLabel = GUIBuilder.createLabel("Game Paused", Assets.FontSizes.FIFTY, Color.FIREBRICK);
-        pauseLabel.setPosition((800 - pauseLabel.getWidth()) / 2, 500);
+        Label pauseLabel = GUIBuilder.createLabel("Game Paused", Assets.FontSizes.FIFTY, Color.ORANGE);
+        pauseLabel.setPosition((800 - pauseLabel.getWidth()) / 2, 300);
 
         stage.addActor(pauseLabel);
     }
