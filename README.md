@@ -18,7 +18,6 @@ They should all work but only desktop and HTML5 builds have currently been teste
 ### Development:
 
 #### TODO:
-- [ ] Add a pause option/screen
 - [ ] Add moving platforms
 - [ ] Add option of having multiple map packs (with a scroll screen in between)
 - [ ] Improve menu/title colours
@@ -59,3 +58,4 @@ They should all work but only desktop and HTML5 builds have currently been teste
 - [x] Gesture detection and pinch zoom in/out
 - [x] Prevent player movement after death
 - [x] Prevent firing through a block
+- [x] Add a pause option/screen
