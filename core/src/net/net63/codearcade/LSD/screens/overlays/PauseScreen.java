@@ -26,7 +26,11 @@ public class PauseScreen extends AbstractOverlay {
         Label pauseLabel = GUIBuilder.createLabel("Game Paused", Assets.FontSizes.FIFTY, Color.ORANGE);
         pauseLabel.setPosition((800 - pauseLabel.getWidth()) / 2, 300);
 
+        Label continueLabel = GUIBuilder.createLabel("Press anywhere to continue", Assets.FontSizes.TWENTY, Color.YELLOW);
+        continueLabel.setPosition((800 - continueLabel.getWidth()) / 2, pauseLabel.getY() - 10 - continueLabel.getHeight());
+
         stage.addActor(pauseLabel);
+        stage.addActor(continueLabel);
     }
 
     @Override
