@@ -37,7 +37,9 @@ public class TimerSystem extends EntitySystem implements Disposable {
 
     private boolean firstPlatform = true;
     private boolean finished = false;
-    private boolean timerOn = false;
+
+    private boolean updateTimer = false;
+    private boolean drawTimer = false;
 
     public TimerSystem(LevelDescriptor levelDescriptor, Signal<GameEvent> gameEventSignal) {
         super(Constants.SYSTEM_PRIORITIES.TIMER);
@@ -62,33 +64,52 @@ public class TimerSystem extends EntitySystem implements Disposable {
 
         for (GameEvent event: eventQueue.getEvents()) {
 
-            if (event == GameEvent.LAUNCH_PLAYER) {
-                endTimer();
-            }
+            switch (event) {
 
-            else if (event == GameEvent.PLAYER_DEATH) {
-                endTimer();
-                finished = true;
-            }
+                case LAUNCH_PLAYER:
+                    endTimer();
+                    break;
 
-            else if (event == GameEvent.PLATFORM_COLLISION) {
-                if (firstPlatform) {
-                    firstPlatform = false;
-                } else if (!finished) {
-                    beginTimer();
-                }
-            }
+                case RESIZE:
+                    camera.setToOrtho(false);
+                    break;
 
-            else if (event == GameEvent.RESIZE) {
-                camera.setToOrtho(false);
+                case PLAYER_DEATH:
+                    finished = true;
+                    endTimer();
+                    break;
+
+                case PAUSE_GAME:
+                    updateTimer = false;
+                    break;
+
+                case RESUME_GAME:
+                    if (drawTimer) updateTimer = true;
+                    break;
+
+                case PLATFORM_COLLISION:
+                    if (firstPlatform) {
+                        firstPlatform = false;
+                    } else if (!finished) {
+                        beginTimer();
+                    }
+                    break;
+
             }
         }
 
-        if (!timerOn) return;
+        if (updateTimer) {
+            currentTime += deltaTime;
 
-        currentTime += deltaTime;
+            if (currentTime >= currentMaxTime) {
+                gameEventSignal.dispatch(GameEvent.TIMER_OVER);
+                endTimer();
+            }
+        }
+
+        if (!drawTimer) return;
+
         float ratio = 1 - currentTime / currentMaxTime;
-
         float scaleX = ((float) Gdx.graphics.getWidth()) / Constants.DEFAULT_SCREEN_WIDTH;
         float scaleY = ((float) Gdx.graphics.getHeight()) / Constants.DEFAULT_SCREEN_HEIGHT;
 
@@ -97,21 +118,18 @@ public class TimerSystem extends EntitySystem implements Disposable {
         shapeRenderer.setColor(Color.DARK_GRAY);
         shapeRenderer.rect(PADDING_SIDE * scaleX, PADDING_BELOW * scaleY, WIDTH * ratio * scaleX, HEIGHT * scaleY);
         shapeRenderer.end();
-
-        if (ratio <= 0) {
-            gameEventSignal.dispatch(GameEvent.TIMER_OVER);
-            endTimer();
-        }
     }
 
     private void beginTimer() {
-        timerOn = true;
+        drawTimer = true;
+        updateTimer = true;
         currentTime = 0;
         currentMaxTime -= platformTimeStep;
     }
 
     private void endTimer() {
-        timerOn = false;
+        drawTimer = false;
+        updateTimer = false;
     }
 
     @Override
