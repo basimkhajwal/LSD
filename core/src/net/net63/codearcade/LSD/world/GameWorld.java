@@ -200,6 +200,8 @@ public class GameWorld implements Disposable, EntityListener {
     public void pauseLogic() {
         if (logicPaused) return;
 
+        gameEventSignal.dispatch(GameEvent.PAUSE_GAME);
+
         engine.getSystem(CameraShakeSystem.class).stopShake();
 
         engine.getSystem(WorldSystem.class).setProcessing(false);
@@ -215,6 +217,8 @@ public class GameWorld implements Disposable, EntityListener {
      */
     public void resumeLogic() {
         if (!logicPaused) return;
+
+        gameEventSignal.dispatch(GameEvent.RESUME_GAME);
 
         engine.getSystem(WorldSystem.class).setProcessing(true);
         engine.getSystem(PlayerAimSystem.class).setProcessing(true);
