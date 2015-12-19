@@ -18,9 +18,11 @@ They should all work but only desktop and HTML5 builds have currently been teste
 ### Development:
 
 #### TODO:
+- [ ] Create an extensible map formate that will allow various objects
 - [ ] Add moving platforms
 - [ ] Add option of having multiple map packs (with a scroll screen in between)
 - [ ] Improve menu/title colours
+- [ ] Create more levels 
 - [ ] Customize shader for the game (add a new one)
 - [ ] Add JSON read/write for a persistent Settings value
 - [ ] Create a settings screen
