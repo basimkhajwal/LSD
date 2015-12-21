@@ -4,12 +4,14 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
+import com.badlogic.gdx.utils.viewport.Viewport;
 import net.net63.codearcade.LSD.LSD;
 import net.net63.codearcade.LSD.managers.Assets;
 import net.net63.codearcade.LSD.managers.LevelManager;
@@ -26,12 +28,16 @@ import net.net63.codearcade.LSD.utils.*;
  */
 public class MenuScreen extends AbstractScreen{
 
+    //Temporary vectors
+    private static final Vector3 tmp = new Vector3();
+
     // Constants
     private static final Color TOP_TITLE = new Color(220 / 255.0f, 80 / 255.0f, 0f, 1f);
     private static final Color BOTTOM_TITLE = new Color(150 / 255.0f, 30 / 255.0f, 0f, 1f);
 
     //GUI
     private CentreGUI centreGUI;
+    private ImageButton settingsButton;
     private ImageButton playButton;
 
     //Background rendering
@@ -73,11 +79,17 @@ public class MenuScreen extends AbstractScreen{
             }
         });
 
+        //The settings button to view the settings (positioned in the top right corner)
+        settingsButton = GUIBuilder.createButton(Assets.Buttons.SETTINGS);
+        settingsButton.setSize(50, 50);
+
+
         //Add all the GUI elements
         Stage stage = centreGUI.getStage();
         stage.addActor(topTitle);
         stage.addActor(bottomTitle);
         stage.addActor(playButton);
+        stage.addActor(settingsButton);
     }
 	
 	@Override
@@ -89,6 +101,12 @@ public class MenuScreen extends AbstractScreen{
 
         //Update the GUI
         centreGUI.resize(width, height);
+
+        //Set the position of the settings button to the top-right corner
+        Viewport viewport = centreGUI.getStage().getViewport();
+        tmp.set(width, 0, 0);
+        viewport.getCamera().unproject(tmp);
+        settingsButton.setPosition(tmp.x - 20 - settingsButton.getWidth(), tmp.y - 20 - settingsButton.getHeight());
 	}
 	
 	@Override
@@ -100,6 +118,7 @@ public class MenuScreen extends AbstractScreen{
 
         //Update and render the UI
         playButton.setChecked(playButton.isOver());
+        settingsButton.setChecked(settingsButton.isOver());
         centreGUI.render(delta);
 
         //If the button has been clicked start the game
