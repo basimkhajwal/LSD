@@ -89,7 +89,7 @@ public class GameScreen extends AbstractScreen {
 
         //Create the pause button in the top right corner
         pauseButton = GUIBuilder.createButton(Assets.Buttons.PAUSE);
-        pauseButton.setSize(50, 50);
+        pauseButton.setSize(30, 45);
         pauseButton.setTouchable(Touchable.enabled);
         pauseButton.addListener(new ClickListener() {
 
@@ -120,7 +120,7 @@ public class GameScreen extends AbstractScreen {
         Viewport viewport = centreGUI.getStage().getViewport();
         tmp.set(width, 0, 0);
         viewport.getCamera().unproject(tmp);
-        pauseButton.setPosition(tmp.x - 20 - pauseButton.getWidth(), tmp.y - 20 - pauseButton.getHeight());
+        pauseButton.setPosition(tmp.x - 20 - pauseButton.getWidth(), tmp.y - 15 - pauseButton.getHeight());
 	}
 
     @Override
