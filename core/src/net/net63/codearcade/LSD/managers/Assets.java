@@ -45,11 +45,14 @@ public class Assets {
         public static final String BACK_MENU = "buttons/back_menu";
         public static final String LEVEL_SELECT = "buttons/level_select";
         public static final String PAUSE = "buttons/pause";
+        public static final String SETTINGS = "buttons/settings";
     }
     private static final String[] _Buttons = {
             Buttons.MENU_PLAY, Buttons.NEXT_LEVEL,
             Buttons.REPLAY_LEVEL, Buttons.BACK_MENU,
-            Buttons.LEVEL_SELECT, Buttons.PAUSE };
+            Buttons.LEVEL_SELECT, Buttons.PAUSE,
+            Buttons.SETTINGS
+    };
 
     public static class FontSizes {
         public static final int TWENTY = 20;
