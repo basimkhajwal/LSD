@@ -1,5 +1,6 @@
 package net.net63.codearcade.LSD.screens;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -55,6 +56,11 @@ public class MenuScreen extends AbstractScreen{
         centreGUI = new CentreGUI();
 
         setupUI();
+    }
+
+    @Override
+    public void resumeLogic() {
+        Gdx.input.setInputProcessor(centreGUI.getStage());
     }
 
     private void setupUI() {
