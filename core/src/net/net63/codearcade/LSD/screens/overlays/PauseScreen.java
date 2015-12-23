@@ -17,7 +17,7 @@ public class PauseScreen extends AbstractOverlay {
     public PauseScreen(LSD game, GameScreen previousGame) {
         super(game, previousGame);
 
-        disposeGame = false;
+        disposeScreen = false;
     }
 
     @Override
@@ -36,8 +36,8 @@ public class PauseScreen extends AbstractOverlay {
     @Override
     public void checkChange() {
         if (Gdx.input.justTouched()) {
-            previousGame.resumeLogic();
-            game.setScreen(previousGame);
+            previousScreen.resumeLogic();
+            game.setScreen(previousScreen);
         }
     }
 }

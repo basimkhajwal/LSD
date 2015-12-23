@@ -10,11 +10,11 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Array;
 import net.net63.codearcade.LSD.LSD;
+import net.net63.codearcade.LSD.managers.Assets;
+import net.net63.codearcade.LSD.managers.LevelManager;
 import net.net63.codearcade.LSD.screens.GameScreen;
 import net.net63.codearcade.LSD.screens.LevelSelectScreen;
-import net.net63.codearcade.LSD.managers.Assets;
 import net.net63.codearcade.LSD.utils.GUIBuilder;
-import net.net63.codearcade.LSD.managers.LevelManager;
 
 /**
  * Created by Basim on 30/09/15.
@@ -25,13 +25,18 @@ public class GameOverScreen extends AbstractOverlay {
     private boolean backToMenu = false;
 
     private Array<ImageButton> buttons;
+    private GameScreen previousGame;
 
     public GameOverScreen(LSD game, GameScreen previousGame) {
         super(game, previousGame);
+
+        //Cast to game since it is always over a GameScreen
+        this.previousGame = (GameScreen) previousScreen;
     }
 
     @Override
     public void setupUI(Stage stage) {
+
         Image backingImage = new Image(Assets.getAsset(Assets.Images.TRANSITION_BACKGROUND, Texture.class));
         backingImage.setSize(400, 320);
         backingImage.setPosition(200, 200);
