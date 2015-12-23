@@ -153,9 +153,6 @@ public class GameScreen extends AbstractScreen {
             gameOverTime += delta;
 
             if (gameOverTime > DEATH_TIME_GAP) {
-                //Stop game logic
-                pauseLogic();
-
                 //Either level over or level completed
                 if (gameWorld.isGameWon()) game.setScreen(new LevelCompleteScreen(game, this));
                 else game.setScreen(new GameOverScreen(game, this));
@@ -165,7 +162,6 @@ public class GameScreen extends AbstractScreen {
 
         //Check if pausing is needed
         if (pauseClicked) {
-            pauseLogic();
             pauseClicked = false;
             game.setScreen(new PauseScreen(game, this));
         }

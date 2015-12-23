@@ -24,8 +24,8 @@ import net.net63.codearcade.LSD.utils.Constants;
  */
 public abstract class AbstractOverlay extends AbstractScreen {
 
-    //Whether to dispose the game on hide
-    protected boolean disposeGame = true;
+    //Whether to dispose the previous screen on hide
+    protected boolean disposeScreen = true;
 
     //Pointers to the game and the last re-run
     protected AbstractScreen previousScreen;
@@ -40,6 +40,7 @@ public abstract class AbstractOverlay extends AbstractScreen {
 
         this.game = game;
         this.previousScreen = previousScreen;
+        previousScreen.pauseLogic();
 
         //Setup all the elements
         setup();
@@ -119,7 +120,7 @@ public abstract class AbstractOverlay extends AbstractScreen {
     public void dispose() {
         super.dispose();
 
-        if (disposeGame) previousScreen.dispose();
+        if (disposeScreen) previousScreen.dispose();
         ((TextureRegionDrawable) overlay.getDrawable()).getRegion().getTexture().dispose();
         stage.dispose();
     }
