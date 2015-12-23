@@ -40,9 +40,9 @@ public class SettingsScreen extends AbstractOverlay {
         title.setPosition((800 - title.getWidth()) / 2, 550 - title.getHeight() - 20);
 
         crossButton = GUIBuilder.createButton(Assets.Buttons.CROSS);
-        crossButton.setSize(20, 20);
-        crossButton.setPosition(background.getX() + background.getWidth() - 15,
-                background.getY() + background.getHeight() - 15);
+        crossButton.setSize(25, 25);
+        crossButton.setPosition(background.getX() + background.getWidth() - 20,
+                background.getY() + background.getHeight() - 20);
         crossButton.addListener(new ClickListener() {
 
             @Override
