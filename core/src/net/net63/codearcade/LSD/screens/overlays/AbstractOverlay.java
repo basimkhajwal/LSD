@@ -13,13 +13,12 @@ import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import net.net63.codearcade.LSD.LSD;
 import net.net63.codearcade.LSD.screens.AbstractScreen;
-import net.net63.codearcade.LSD.screens.GameScreen;
 import net.net63.codearcade.LSD.utils.Constants;
 
 /**
  * Abstract overlay screen to handle the most common
- * methods and variables in the overlay-screens after
- * the game
+ * methods and variables in the overlay-screens to be
+ * displayed on top of another screen
  *
  * Created by Basim on 10/10/15.
  */
@@ -29,18 +28,18 @@ public abstract class AbstractOverlay extends AbstractScreen {
     protected boolean disposeGame = true;
 
     //Pointers to the game and the last re-run
-    protected GameScreen previousGame;
+    protected AbstractScreen previousScreen;
     protected LSD game;
 
     //GUI elements
     private Stage stage;
     private Image overlay;
 
-    public AbstractOverlay(LSD game, GameScreen previousGame) {
+    public AbstractOverlay(LSD game, AbstractScreen previousScreen) {
         super(game);
 
         this.game = game;
-        this.previousGame = previousGame;
+        this.previousScreen = previousScreen;
 
         //Setup all the elements
         setup();
@@ -91,7 +90,7 @@ public abstract class AbstractOverlay extends AbstractScreen {
         overlay.setSize(viewport.getWorldWidth(), viewport.getWorldHeight());
 
         //Resize the previous game
-        previousGame.resize(width, height);
+        previousScreen.resize(width, height);
     }
 
     @Override
@@ -99,7 +98,7 @@ public abstract class AbstractOverlay extends AbstractScreen {
         super.render(deltaTime);
 
         //Render the previous game
-        previousGame.render(deltaTime);
+        previousScreen.render(deltaTime);
 
         //Render the GUI
         stage.getViewport().apply();
@@ -120,7 +119,7 @@ public abstract class AbstractOverlay extends AbstractScreen {
     public void dispose() {
         super.dispose();
 
-        if (disposeGame) previousGame.dispose();
+        if (disposeGame) previousScreen.dispose();
         ((TextureRegionDrawable) overlay.getDrawable()).getRegion().getTexture().dispose();
         stage.dispose();
     }
