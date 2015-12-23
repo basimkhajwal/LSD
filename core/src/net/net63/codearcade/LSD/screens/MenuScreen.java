@@ -16,6 +16,7 @@ import net.net63.codearcade.LSD.LSD;
 import net.net63.codearcade.LSD.managers.Assets;
 import net.net63.codearcade.LSD.managers.LevelManager;
 import net.net63.codearcade.LSD.managers.ShaderManager;
+import net.net63.codearcade.LSD.screens.overlays.SettingsScreen;
 import net.net63.codearcade.LSD.utils.*;
 
 
@@ -43,7 +44,8 @@ public class MenuScreen extends AbstractScreen{
     //Background rendering
     private BackgroundRenderer backgroundRenderer;
 
-    private boolean changingScreen = false;
+    private boolean settingsClicked = false;
+    private boolean playClicked = false;
 
     public MenuScreen(LSD game) {
         super(game);
@@ -75,13 +77,21 @@ public class MenuScreen extends AbstractScreen{
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 //Apply the change
-                 changingScreen = true;
+                 playClicked = true;
             }
         });
 
         //The settings button to view the settings (positioned in the top right corner)
         settingsButton = GUIBuilder.createButton(Assets.Buttons.SETTINGS);
         settingsButton.setSize(50, 50);
+        settingsButton.addListener(new ClickListener() {
+
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                settingsClicked = true;
+            }
+
+        });
 
 
         //Add all the GUI elements
@@ -122,9 +132,15 @@ public class MenuScreen extends AbstractScreen{
         centreGUI.render(delta);
 
         //If the button has been clicked start the game
-		if (changingScreen) {
+		if (playClicked) {
             dispose();
             game.setScreen(new LevelSelectScreen(game, LevelManager.LevelPacks.ORIGINAL));
+        }
+
+        //If the settings button was clicked go to the settings screen
+        if (settingsClicked) {
+            settingsClicked = false;
+            game.setScreen(new SettingsScreen(game, this));
         }
 	}
 
