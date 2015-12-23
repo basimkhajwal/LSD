@@ -1,34 +1,28 @@
 package net.net63.codearcade.LSD.screens.overlays;
 
+import com.badlogic.gdx.scenes.scene2d.Stage;
 import net.net63.codearcade.LSD.LSD;
 import net.net63.codearcade.LSD.screens.AbstractScreen;
 
 /**
  * Created by Basim on 21/12/15.
  */
-public class SettingsScreen extends AbstractScreen {
-
-    private AbstractScreen previousScreen;
+public class SettingsScreen extends AbstractOverlay {
 
     public SettingsScreen(LSD game, AbstractScreen previousScreen) {
-        super(game);
+        super(game, previousScreen);
 
-        this.previousScreen = previousScreen;
-        previousScreen.pauseLogic();
+        disposeScreen = false;
     }
 
     @Override
-    public void resize(int width, int height) {
-        super.resize(width, height);
+    public void setupUI(Stage stage) {
 
-        previousScreen.resize(width, height);
     }
 
     @Override
-    public void render(float deltaTime) {
-        super.render(deltaTime);
+    public void checkChange() {
 
-        previousScreen.render(deltaTime);
     }
 
 }
