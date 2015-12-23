@@ -37,9 +37,9 @@ public class SettingsScreen extends AbstractOverlay {
         title.setPosition((800 - title.getWidth()) / 2, 550 - title.getHeight() - 20);
 
         crossButton = GUIBuilder.createButton(Assets.Buttons.CROSS);
-        crossButton.setSize(30, 30);
-        crossButton.setPosition(background.getX() + background.getWidth() - crossButton.getWidth() / 2,
-                background.getY() + background.getHeight() - crossButton.getHeight() / 2);
+        crossButton.setSize(20, 20);
+        crossButton.setPosition(background.getX() + background.getWidth() - 15,
+                background.getY() + background.getHeight() - 15);
 
         stage.addActor(background);
         stage.addActor(title);
