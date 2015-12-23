@@ -31,7 +31,7 @@ public class GameOverScreen extends AbstractOverlay {
         super(game, previousGame);
 
         //Cast to game since it is always over a GameScreen
-        this.previousGame = (GameScreen) previousScreen;
+
     }
 
     @Override

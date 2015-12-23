@@ -32,11 +32,11 @@ public class LevelCompleteScreen extends AbstractOverlay {
     private Array<ImageButton> buttons;
     private GameScreen previousGame;
 
-    public LevelCompleteScreen(LSD game, GameScreen previousGame) {
-        super(game, previousGame);
+    public LevelCompleteScreen(LSD game, GameScreen previousScreen) {
+        super(game, previousScreen);
 
         //Cast to GameScreen since LevelComplete is only called after a GameScreen
-        this.previousGame = (GameScreen) previousScreen;
+        this.previousGame = previousScreen;
     }
 
     @Override
