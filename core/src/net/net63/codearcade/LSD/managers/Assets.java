@@ -46,12 +46,13 @@ public class Assets {
         public static final String LEVEL_SELECT = "buttons/level_select";
         public static final String PAUSE = "buttons/pause";
         public static final String SETTINGS = "buttons/settings";
+        public static final String CROSS = "buttons/cross";
     }
     private static final String[] _Buttons = {
             Buttons.MENU_PLAY, Buttons.NEXT_LEVEL,
             Buttons.REPLAY_LEVEL, Buttons.BACK_MENU,
             Buttons.LEVEL_SELECT, Buttons.PAUSE,
-            Buttons.SETTINGS
+            Buttons.SETTINGS, Buttons.CROSS
     };
 
     public static class FontSizes {
