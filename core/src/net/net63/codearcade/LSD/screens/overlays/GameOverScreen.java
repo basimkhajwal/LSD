@@ -29,13 +29,13 @@ public class GameOverScreen extends AbstractOverlay {
 
     public GameOverScreen(LSD game, GameScreen previousGame) {
         super(game, previousGame);
-
-        //Cast to game since it is always over a GameScreen
-
     }
 
     @Override
     public void setupUI(Stage stage) {
+
+        //Cast to game since it is always over a GameScreen
+        previousGame = (GameScreen) previousScreen;
 
         Image backingImage = new Image(Assets.getAsset(Assets.Images.TRANSITION_BACKGROUND, Texture.class));
         backingImage.setSize(400, 320);

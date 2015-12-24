@@ -34,13 +34,14 @@ public class LevelCompleteScreen extends AbstractOverlay {
 
     public LevelCompleteScreen(LSD game, GameScreen previousScreen) {
         super(game, previousScreen);
-
-        //Cast to GameScreen since LevelComplete is only called after a GameScreen
-        this.previousGame = previousScreen;
     }
 
     @Override
     public void setupUI(Stage stage) {
+
+        //Cast to GameScreen since LevelComplete is only called after a GameScreen
+        this.previousGame = (GameScreen) previousScreen;
+
         Image backingImage = new Image(Assets.getAsset(Assets.Images.TRANSITION_BACKGROUND, Texture.class));
         backingImage.setSize(400, 320);
         backingImage.setPosition(200, 200);
