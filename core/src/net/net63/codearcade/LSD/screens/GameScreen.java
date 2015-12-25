@@ -5,7 +5,9 @@ import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.input.GestureDetector;
 import com.badlogic.gdx.math.Vector3;
-import com.badlogic.gdx.scenes.scene2d.*;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
@@ -67,6 +69,10 @@ public class GameScreen extends AbstractScreen {
     @Override
     public void pauseLogic() {
         if (!logicPaused) gameWorld.pauseLogic();
+
+        //Prevent input events
+         if (Gdx.input.getInputProcessor() == inputMultiplexer) Gdx.input.setInputProcessor(null);
+
         logicPaused = true;
     }
 
@@ -152,10 +158,14 @@ public class GameScreen extends AbstractScreen {
 
         //Check if the game is finished
         if (!logicPaused && gameWorld.isGameOver()) {
-            if (gameOverTime == 0) gameWorld.stopShake();
+            if (gameOverTime == 0) {
+                Gdx.input.setInputProcessor(null);
+                gameWorld.stopShake();
+            }
             gameOverTime += delta;
 
             if (gameOverTime > DEATH_TIME_GAP) {
+
                 //Either level over or level completed
                 if (gameWorld.isGameWon()) game.setScreen(new LevelCompleteScreen(game, this));
                 else game.setScreen(new GameOverScreen(game, this));

@@ -177,7 +177,7 @@ public class GameWorld implements Disposable, EntityListener {
     public void launchPlayer() {
         //Fire the player-fire event if a valid aim was done
         PlayerComponent playerComponent = playerMapper.get(player);
-        if (!playerComponent.isDead && playerComponent.validLaunch) {
+        if (!playerComponent.isDead && playerComponent.validLaunch && stateMapper.get(player).get() == PlayerComponent.STATE_AIMING) {
             gameEventSignal.dispatch(GameEvent.LAUNCH_PLAYER);
         } else {
             //Otherwise set to rest state once more
