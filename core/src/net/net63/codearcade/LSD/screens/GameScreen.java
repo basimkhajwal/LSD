@@ -208,12 +208,14 @@ public class GameScreen extends AbstractScreen {
         @Override
         public boolean panStop(float x, float y, int pointer, int button) {
             gameWorld.launchPlayer();
+            return true;
         }
 
         @Override
         public boolean zoom(float initialDistance, float distance) {
             zoomRatio = initialDistance / distance;
             gameWorld.applyZoom(zoomRatio * currentZoom);
+            return true;
         }
     }
 }
