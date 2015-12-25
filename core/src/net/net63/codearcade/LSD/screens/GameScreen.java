@@ -1,15 +1,13 @@
 package net.net63.codearcade.LSD.screens;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.input.GestureDetector;
 import com.badlogic.gdx.math.Vector3;
-import com.badlogic.gdx.scenes.scene2d.Event;
-import com.badlogic.gdx.scenes.scene2d.InputEvent;
-import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.Touchable;
+import com.badlogic.gdx.scenes.scene2d.*;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.scenes.scene2d.utils.ActorGestureListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import net.net63.codearcade.LSD.LSD;
@@ -41,6 +39,7 @@ public class GameScreen extends AbstractScreen {
 
     private GameWorld gameWorld;
 
+    private InputMultiplexer inputMultiplexer;
     private CentreGUI centreGUI;
     private Label scoreLabel;
     private ImageButton pauseButton;
@@ -59,6 +58,10 @@ public class GameScreen extends AbstractScreen {
         //Create a new world with the map at the current level
         gameWorld = new GameWorld(LevelManager.getLevel(Constants.DEFAULT_PACK, levelId));
         setupUI();
+
+        //Set the input multiplexer so the GUI and the game controls function
+        inputMultiplexer = new InputMultiplexer(centreGUI.getStage(), new GestureDetector(new GameEventListener()));
+        Gdx.input.setInputProcessor(inputMultiplexer);
 	}
 
     @Override
@@ -71,7 +74,7 @@ public class GameScreen extends AbstractScreen {
     public void resumeLogic() {
         if (logicPaused) gameWorld.resumeLogic();
 
-        Gdx.input.setInputProcessor(centreGUI.getStage());
+        Gdx.input.setInputProcessor(inputMultiplexer);
         logicPaused = false;
     }
 
@@ -96,6 +99,7 @@ public class GameScreen extends AbstractScreen {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 pauseClicked = true;
+                event.handle();
             }
 
         });
@@ -105,7 +109,6 @@ public class GameScreen extends AbstractScreen {
         Stage stage = centreGUI.getStage();
         stage.addActor(scoreLabel);
         stage.addActor(pauseButton);
-        stage.addListener(new GameEventListener());
     }
 
 	@Override
@@ -176,44 +179,41 @@ public class GameScreen extends AbstractScreen {
         centreGUI.dispose();
     }
 
+    private class GameEventListener extends GestureDetector.GestureAdapter {
 
-    private class GameEventListener extends ActorGestureListener {
-
-        private boolean zooming = false;
+        private float zoomRatio = 1f;
+        private float currentZoom = 1f;
 
         @Override
-        public boolean handle(Event event) {
-            tmp.set(Gdx.input.getX(), Gdx.input.getY(), 0);
-            centreGUI.getStage().getViewport().getCamera().unproject(tmp);
+        public boolean touchDown(float x, float y, int pointer, int button) {
+            currentZoom *= zoomRatio;
+            zoomRatio = 1f;
 
-            if (logicPaused || centreGUI.getStage().hit(tmp.x, tmp.y, true) != null ) return false;
-            return super.handle(event);
+            gameWorld.aimPlayer(Gdx.input.getX(), Gdx.input.getY());
+            return true;
         }
 
         @Override
-        public void touchDown(InputEvent event, float x, float y, int pointer, int button) {
-            if (!zooming) {
-                gameWorld.aimPlayer(Gdx.input.getX(), Gdx.input.getY());
-            }
+        public boolean pan (float x, float y, float deltaX, float deltaY) {
+            gameWorld.aimPlayer(Gdx.input.getX(), Gdx.input.getY());
+            return true;
         }
 
         @Override
-        public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+        public boolean tap(float x, float y, int count, int button) {
             gameWorld.launchPlayer();
-            zooming = false;
+            return true;
         }
 
         @Override
-        public void pan (InputEvent event, float x, float y, float deltaX, float deltaY) {
-            if (!zooming) {
-                gameWorld.aimPlayer(Gdx.input.getX(), Gdx.input.getY());
-            }
+        public boolean panStop(float x, float y, int pointer, int button) {
+            gameWorld.launchPlayer();
         }
 
         @Override
-        public void zoom(InputEvent event, float initialDistance, float distance) {
-            gameWorld.applyZoom(initialDistance / distance);
-            zooming = true;
+        public boolean zoom(float initialDistance, float distance) {
+            zoomRatio = initialDistance / distance;
+            gameWorld.applyZoom(zoomRatio * currentZoom);
         }
     }
 }

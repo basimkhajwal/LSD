@@ -122,7 +122,7 @@ public class GameWorld implements Disposable, EntityListener {
      */
     public void applyZoom(float amount) {
         //Update the camera
-        gameCamera.zoom *= amount;
+        gameCamera.zoom = amount;
         gameCamera.update();
 
         //Stop aiming if the player is
@@ -181,8 +181,15 @@ public class GameWorld implements Disposable, EntityListener {
             gameEventSignal.dispatch(GameEvent.LAUNCH_PLAYER);
         } else {
             //Otherwise set to rest state once more
-            stateMapper.get(player).set(PlayerComponent.STATE_STILL);
+            restPlayer();
         }
+    }
+
+    /**
+     * Set the player to the rest state
+     */
+    public void restPlayer() {
+        stateMapper.get(player).set(PlayerComponent.STATE_STILL);
     }
 
     /**
