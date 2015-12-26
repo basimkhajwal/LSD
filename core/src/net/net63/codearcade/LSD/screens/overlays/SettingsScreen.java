@@ -3,14 +3,17 @@ package net.net63.codearcade.LSD.screens.overlays;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.NinePatch;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
+import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import net.net63.codearcade.LSD.LSD;
 import net.net63.codearcade.LSD.managers.Assets;
 import net.net63.codearcade.LSD.screens.AbstractScreen;
 import net.net63.codearcade.LSD.utils.GUIBuilder;
+import net.net63.codearcade.LSD.utils.Settings;
 
 /**
  * Created by Basim on 21/12/15.
@@ -56,13 +59,29 @@ public class SettingsScreen extends AbstractOverlay {
         Slider soundSlider = createVolumeSlider();
         soundSlider.setPosition(background.getX() + 50, soundTitle.getY() - soundSlider.getHeight() - 20);
         soundSlider.setWidth(background.getWidth() - 100);
+        soundSlider.setValue(Settings.getSoundVolume());
+        soundSlider.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                float value = ((Slider) actor).getValue();
+                Settings.setSoundVolume(value);
+            }
+        });
 
         Label musicTitle = GUIBuilder.createLabel("Music", Assets.FontSizes.TWENTY, Color.BLUE);
         musicTitle.setPosition(background.getX() + 50, soundTitle.getY() - musicTitle.getHeight() - 100);
 
         Slider musicSlider = createVolumeSlider();
-        musicSlider.setPosition(background.getX() + 50, musicSlider.getY() - musicSlider.getHeight() - 20);
+        musicSlider.setPosition(background.getX() + 50, musicTitle.getY() - musicSlider.getHeight() - 20);
         musicSlider.setWidth(background.getWidth() - 100);
+        musicSlider.setValue(Settings.getMusicVolume());
+        musicSlider.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                float value = ((Slider) actor).getValue();
+                Settings.setMusicVolume(value);
+            }
+        });
 
         stage.addActor(background);
         stage.addActor(title);
