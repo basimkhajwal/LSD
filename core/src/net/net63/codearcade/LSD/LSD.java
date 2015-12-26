@@ -42,7 +42,7 @@ public class LSD extends Game {
     @Override
     public void dispose() {
         super.dispose();
-        
+
         Settings.saveSettings();
     }
 

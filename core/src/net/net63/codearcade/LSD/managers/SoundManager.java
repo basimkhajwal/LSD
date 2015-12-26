@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.utils.ArrayMap;
+import net.net63.codearcade.LSD.utils.Settings;
 
 /**
  * SoundManager class to handle the loading,
@@ -61,7 +62,16 @@ public class SoundManager {
      * @param sound The path of the sound to play
      */
     public static void playSound(String sound) {
-        sounds.get(sound).play(1.0f);
+        sounds.get(sound).play(Settings.getSoundVolume());
+    }
+
+    /**
+     * Sets the volume to play the background music
+     *
+     * @param volume The volume between 0 and 1
+     */
+    public static void setMusicVolume(float volume) {
+        backgroundMusic.setVolume(volume);
     }
 
     /**
