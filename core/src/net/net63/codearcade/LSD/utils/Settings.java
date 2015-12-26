@@ -9,7 +9,10 @@ package net.net63.codearcade.LSD.utils;
  */
 public class Settings {
 
-    public static int currentLevel = 0;
+    private static int currentLevel = 0;
+    private static float musicVolume = 1f;
+    private static float soundVolume = 1f;
+
 
     /**
     * Load all the default values for the settings, this is automatically
@@ -17,6 +20,8 @@ public class Settings {
     */
     public static void loadDefaults() {
         currentLevel = 0;
+        musicVolume = 1f;
+        soundVolume = 1f;
     }
 
 	/**
@@ -37,4 +42,32 @@ public class Settings {
 
         return "";
 	}
+
+    /* ---------------------- Getters & Setters -----------------------------*/
+
+    public static int getCurrentLevel() {
+        return currentLevel;
+    }
+
+    public static void setCurrentLevel(int newLevel) {
+        currentLevel = newLevel;
+    }
+
+    public static float getMusicVolume() {
+        return musicVolume;
+    }
+
+    public static void setMusicVolume(float musicVolume) {
+        Settings.musicVolume = musicVolume;
+    }
+
+    public static float getSoundVolume() {
+        return soundVolume;
+    }
+
+    public static void setSoundVolume(float soundVolume) {
+        Settings.soundVolume = soundVolume;
+    }
+
+
 }
