@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.utils.ArrayMap;
 
 /**
@@ -80,6 +81,8 @@ public class Assets {
     public static final ArrayMap<String, Animation> animationList = new ArrayMap<String, Animation>();
     private static final String[] _Animations = { Animations.PLAYER_STILL, Animations.PLAYER_JUMPING, Animations.PLAYER_FALLING };
 
+    public static final String UI_SKIN = "skin/uiskin.json";
+
 	private static AssetManager assetManager = new AssetManager();
 	
 	//Private constructor to prevent instantiation
@@ -98,6 +101,8 @@ public class Assets {
             assetManager.load(button + "_hover.png", Texture.class);
             assetManager.load(button + "_down.png", Texture.class);
         }
+
+        assetManager.load(UI_SKIN, Skin.class);
 
 		assetManager.finishLoading();
 
