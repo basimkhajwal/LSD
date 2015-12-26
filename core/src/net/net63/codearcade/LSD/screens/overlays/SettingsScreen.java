@@ -52,8 +52,16 @@ public class SettingsScreen extends AbstractOverlay {
 
         });
 
+        Label soundTitle = GUIBuilder.createLabel("Sound Effects", Assets.FontSizes.TWENTY, Color.BLUE);
+        soundTitle.setPosition(background.getX() + 50, title.getY() - soundTitle.getHeight() - 30);
+
+        Label musicTitle = GUIBuilder.createLabel("Music", Assets.FontSizes.TWENTY, Color.BLUE);
+        musicTitle.setPosition(background.getX() + 50, soundTitle.getY() - musicTitle.getHeight() - 100);
+
         stage.addActor(background);
         stage.addActor(title);
+        stage.addActor(soundTitle);
+        stage.addActor(musicTitle);
         stage.addActor(crossButton);
 
     }
