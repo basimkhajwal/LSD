@@ -32,11 +32,19 @@ public class LSD extends Game {
         LevelManager.loadAll();
         SoundManager.loadAll();
         ShaderManager.loadAll();
+        Settings.loadSettings();
 
         SoundManager.playMusic();
 
 		this.setScreen(new MenuScreen(this));
 	}
+
+    @Override
+    public void dispose() {
+        super.dispose();
+        
+        Settings.saveSettings();
+    }
 
     @Override
     public void render() {
