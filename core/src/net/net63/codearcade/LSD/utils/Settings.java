@@ -2,6 +2,7 @@ package net.net63.codearcade.LSD.utils;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Preferences;
+import net.net63.codearcade.LSD.managers.SoundManager;
 
 /**
  * Class to hold the settings (mutable) for the game for
@@ -69,8 +70,8 @@ public class Settings {
         return currentLevel;
     }
 
-    public static void setCurrentLevel(int newLevel) {
-        currentLevel = newLevel;
+    public static void setCurrentLevel(int currentLevel) {
+        Settings.currentLevel = currentLevel;
     }
 
     public static float getMusicVolume() {
@@ -79,6 +80,7 @@ public class Settings {
 
     public static void setMusicVolume(float musicVolume) {
         Settings.musicVolume = musicVolume;
+        SoundManager.setMusicVolume(musicVolume);
     }
 
     public static float getSoundVolume() {
