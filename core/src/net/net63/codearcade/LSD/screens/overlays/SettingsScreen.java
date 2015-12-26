@@ -5,9 +5,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.NinePatch;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Image;
-import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import net.net63.codearcade.LSD.LSD;
 import net.net63.codearcade.LSD.managers.Assets;
@@ -55,15 +53,29 @@ public class SettingsScreen extends AbstractOverlay {
         Label soundTitle = GUIBuilder.createLabel("Sound Effects", Assets.FontSizes.TWENTY, Color.BLUE);
         soundTitle.setPosition(background.getX() + 50, title.getY() - soundTitle.getHeight() - 30);
 
+        Slider soundSlider = createVolumeSlider();
+        soundSlider.setPosition(background.getX() + 50, soundTitle.getY() - soundSlider.getHeight() - 20);
+        soundSlider.setWidth(background.getWidth() - 100);
+
         Label musicTitle = GUIBuilder.createLabel("Music", Assets.FontSizes.TWENTY, Color.BLUE);
         musicTitle.setPosition(background.getX() + 50, soundTitle.getY() - musicTitle.getHeight() - 100);
+
+        Slider musicSlider = createVolumeSlider();
+        musicSlider.setPosition(background.getX() + 50, musicSlider.getY() - musicSlider.getHeight() - 20);
+        musicSlider.setWidth(background.getWidth() - 100);
 
         stage.addActor(background);
         stage.addActor(title);
         stage.addActor(soundTitle);
         stage.addActor(musicTitle);
+        stage.addActor(soundSlider);
+        stage.addActor(musicSlider);
         stage.addActor(crossButton);
 
+    }
+
+    private Slider createVolumeSlider() {
+        return new Slider(0, 1, 0.05f, false, Assets.getAsset(Assets.UI_SKIN, Skin.class));
     }
 
     @Override
