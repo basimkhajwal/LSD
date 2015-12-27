@@ -40,9 +40,9 @@ public class Settings {
 
         //Iterate over each value in the key set and set the corresponding value
         for (String name: preferences.get().keySet()) {
-            if (name == "currentLevel") setCurrentLevel(preferences.getInteger(name));
-            if (name == "musicVolume")  setMusicVolume(preferences.getFloat(name));
-            if (name == "soundVolume")  setSoundVolume(preferences.getFloat(name));
+            if (name.equals("currentLevel")) setCurrentLevel(preferences.getInteger(name));
+            if (name.equals("musicVolume")) setMusicVolume(preferences.getFloat(name));
+            if (name.equals("soundVolume"))  setSoundVolume(preferences.getFloat(name));
         }
 
 	}
