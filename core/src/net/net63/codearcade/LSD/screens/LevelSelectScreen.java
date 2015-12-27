@@ -54,6 +54,7 @@ public class LevelSelectScreen extends AbstractScreen {
     private ImageButton[] buttons;
 
     private boolean changing = false;
+    private boolean backClicked = false;
     private int levelTo = 0;
 
     public LevelSelectScreen(LSD game, int mapPack) {
@@ -89,6 +90,16 @@ public class LevelSelectScreen extends AbstractScreen {
         backButton = GUIBuilder.createButton(Assets.Buttons.BACK);
         float ratio = 2f/3;
         backButton.setSize(BUTTON_WIDTH * ratio, BUTTON_HEIGHT * ratio);
+        backButton.addListener(new ClickListener() {
+
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                backClicked = true;
+                event.handle();
+            }
+
+
+        });
 
         //Add to the stage
         stage.addActor(title);
@@ -201,6 +212,12 @@ public class LevelSelectScreen extends AbstractScreen {
         if (changing) {
             dispose();
             game.setScreen(new GameScreen(game, levelTo));
+        }
+
+        //If the back button was clicked go back to the menu
+        if (backClicked) {
+            dispose();
+            game.setScreen(new MenuScreen(game));
         }
     }
 
