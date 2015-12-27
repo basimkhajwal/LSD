@@ -24,8 +24,6 @@ They should all work but only desktop and HTML5 builds have currently been teste
 - [ ] Improve menu/title colours
 - [ ] Create more levels
 - [ ] Customize shader for the game (add a new one)
-- [ ] Add JSON read/write for a persistent Settings value
-- [ ] Create a settings screen
 
 #### Currently Working:
 - [x] Platforms are loaded from a Tiled map (.tmx) format
@@ -61,3 +59,5 @@ They should all work but only desktop and HTML5 builds have currently been teste
 - [x] Prevent player movement after death
 - [x] Prevent firing through a block
 - [x] Add a pause option/screen
+- [x] Add JSON read/write for a persistent Settings value
+- [x] Create a settings screen
