@@ -1,17 +1,22 @@
 package net.net63.codearcade.LSD.screens;
 
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
+import com.badlogic.gdx.utils.viewport.Viewport;
 import net.net63.codearcade.LSD.LSD;
 import net.net63.codearcade.LSD.managers.Assets;
 import net.net63.codearcade.LSD.managers.LevelManager;
 import net.net63.codearcade.LSD.managers.ShaderManager;
-import net.net63.codearcade.LSD.utils.*;
+import net.net63.codearcade.LSD.utils.BackgroundRenderer;
+import net.net63.codearcade.LSD.utils.CentreGUI;
+import net.net63.codearcade.LSD.utils.GUIBuilder;
 
 /**
  * A screen allowing the player to select which
@@ -29,12 +34,15 @@ public class LevelSelectScreen extends AbstractScreen {
     private static final int PADDING_TOP = 40;
     private static final int PADDING_SIDE = 40;
 
-    private static final int BUTTON_WIDTH = 150;
-    private static final int BUTTON_HEIGHT = 90;
+    private static final float BUTTON_WIDTH = 150;
+    private static final float BUTTON_HEIGHT = 90;
 
     private static final Color TEXT_COLOR = new Color(100/255f, 100/255f, 100/255f, 1f);
 
     // ----------------- Instance Variables ---------------------
+
+    //Temporary vector for storage
+    private static final Vector3 tmp = new Vector3();
 
     private LSD game;
     private LevelManager.LevelPack levelPack;
@@ -42,6 +50,7 @@ public class LevelSelectScreen extends AbstractScreen {
     private CentreGUI centreGUI;
     private BackgroundRenderer backgroundRenderer;
 
+    private ImageButton backButton;
     private ImageButton[] buttons;
 
     private boolean changing = false;
@@ -68,13 +77,22 @@ public class LevelSelectScreen extends AbstractScreen {
      */
     private void setupUI() {
 
+        //Keep a pointer to the stage
+        Stage stage = centreGUI.getStage();
+
         //Create and position the title at the top centre
         Label title = GUIBuilder.createLabel("Level Select", Assets.FontSizes.FIFTY, Color.YELLOW);
         title.setX((800 -  title.getWidth()) / 2);
         title.setY(580 - title.getHeight());
 
+        //Back button (positioned in the top left corner)
+        backButton = GUIBuilder.createButton(Assets.Buttons.BACK);
+        float ratio = 2f/3;
+        backButton.setSize(BUTTON_WIDTH * ratio, BUTTON_HEIGHT * ratio);
+
         //Add to the stage
-        centreGUI.getStage().addActor(title);
+        stage.addActor(title);
+        stage.addActor(backButton);
 
         //The main table for storing the buttons
         Table buttonTable = new Table();
@@ -110,7 +128,7 @@ public class LevelSelectScreen extends AbstractScreen {
         }
 
         //Add the table to the GUI stage
-        centreGUI.getStage().addActor(buttonTable);
+        stage.addActor(buttonTable);
     }
 
     /**
@@ -159,6 +177,12 @@ public class LevelSelectScreen extends AbstractScreen {
         //Resize the background and the GUI
         backgroundRenderer.resize(width, height);
         centreGUI.resize(width, height);
+
+        //Position the back button in the top left corner
+        Viewport viewport = centreGUI.getStage().getViewport();
+        tmp.set(0, 0, 0);
+        viewport.getCamera().unproject(tmp);
+        backButton.setPosition(tmp.x + 10, tmp.y - 10 - backButton.getHeight());
     }
 
     @Override
@@ -167,6 +191,7 @@ public class LevelSelectScreen extends AbstractScreen {
 
         //Set the correct hover of each button
         for (ImageButton button : buttons) button.setChecked(button.isOver());
+        backButton.setChecked(backButton.isOver());
 
         //Render the background and the GUI
         backgroundRenderer.render(deltaTime);
