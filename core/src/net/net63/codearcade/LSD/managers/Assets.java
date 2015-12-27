@@ -48,12 +48,14 @@ public class Assets {
         public static final String PAUSE = "buttons/pause";
         public static final String SETTINGS = "buttons/settings";
         public static final String CROSS = "buttons/cross";
+        public static final String BACK = "buttons/back";
     }
     private static final String[] _Buttons = {
             Buttons.MENU_PLAY, Buttons.NEXT_LEVEL,
             Buttons.REPLAY_LEVEL, Buttons.BACK_MENU,
             Buttons.LEVEL_SELECT, Buttons.PAUSE,
-            Buttons.SETTINGS, Buttons.CROSS
+            Buttons.SETTINGS, Buttons.CROSS,
+            Buttons.BACK
     };
 
     public static class FontSizes {
