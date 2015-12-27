@@ -18,7 +18,7 @@ public class LevelManager {
     }
 
     private static final LevelPack[] levelPacks = new LevelPack[]{
-        new LevelPack("original", "maps/level", 16)
+        new LevelPack("original", "maps/original/level", 16)
     };
 
     //Level data caches
