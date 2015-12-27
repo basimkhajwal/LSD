@@ -19,6 +19,7 @@ public class Settings {
     private static int currentLevel;
     private static float musicVolume;
     private static float soundVolume;
+    private static boolean debugEnabled;
 
     /**
     * Load all the default values for the settings, this is automatically
@@ -28,6 +29,7 @@ public class Settings {
         setCurrentLevel(0);
         setMusicVolume(1);
         setSoundVolume(1);
+        setDebugEnabled(true);
     }
 
 	/**
@@ -41,8 +43,9 @@ public class Settings {
         //Iterate over each value in the key set and set the corresponding value
         for (String name: preferences.get().keySet()) {
             if (name.equals("currentLevel")) setCurrentLevel(preferences.getInteger(name));
-            if (name.equals("musicVolume")) setMusicVolume(preferences.getFloat(name));
+            if (name.equals("musicVolume"))  setMusicVolume(preferences.getFloat(name));
             if (name.equals("soundVolume"))  setSoundVolume(preferences.getFloat(name));
+            if (name.equals("debugEnabled")) setDebugEnabled(preferences.getBoolean(name));
         }
 
 	}
@@ -59,6 +62,7 @@ public class Settings {
         preferences.putInteger("currentLevel", currentLevel);
         preferences.putFloat("musicVolume", musicVolume);
         preferences.putFloat("soundVolume", soundVolume);
+        preferences.putBoolean("debugEnabled", debugEnabled);
 
         //Save the preferences
         preferences.flush();
@@ -91,5 +95,12 @@ public class Settings {
         Settings.soundVolume = soundVolume;
     }
 
+    public static boolean isDebugEnabled() {
+        return debugEnabled;
+    }
+
+    public static void setDebugEnabled(boolean debugEnabled) {
+        Settings.debugEnabled = debugEnabled;
+    }
 
 }
