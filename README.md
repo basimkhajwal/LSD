@@ -8,7 +8,7 @@ A casual physics based arcade game where you fire the character around, avoiding
 ### Running the current game:
 It can compile to the following platforms:
 - Desktop (requires Java 1.6+ and OpenGL 3+) *Tested current version*
-- Mobile (iOS / Android) *Not tested*
+- Mobile (iOS / Android) *Tested (only android)*
 - HTML5 (any modern browser, Internet Explorer requires Google Chrome Frame) *Tested*
 
 A compiled (but not regularly updated) HTML5 version is at: [basimkhajwal.freeoda.com] (http://basimkhajwal.freeoda.com)
