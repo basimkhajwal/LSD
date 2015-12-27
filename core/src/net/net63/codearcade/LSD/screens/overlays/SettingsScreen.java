@@ -74,7 +74,7 @@ public class SettingsScreen extends AbstractOverlay {
         Slider musicSlider = createVolumeSlider();
         musicSlider.setPosition(background.getX() + 50, musicTitle.getY() - musicSlider.getHeight() - 20);
         musicSlider.setWidth(background.getWidth() - 100);
-        musicSlider.setValue(Settings.getMusicVolume());
+        musicSlider.setHeight(musicSlider.getHeight() * 2);
         musicSlider.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
@@ -82,6 +82,11 @@ public class SettingsScreen extends AbstractOverlay {
                 Settings.setMusicVolume(value);
             }
         });
+
+        Slider.SliderStyle style = soundSlider.getStyle();
+        style.knob.setMinHeight(30);
+        style.knob.setMinWidth(15);
+        style.background.setMinHeight(10);
 
         stage.addActor(background);
         stage.addActor(title);
