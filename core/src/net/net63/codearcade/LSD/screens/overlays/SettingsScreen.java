@@ -56,30 +56,29 @@ public class SettingsScreen extends AbstractOverlay {
         Label soundTitle = GUIBuilder.createLabel("Sound Effects", Assets.FontSizes.TWENTY, Color.BLUE);
         soundTitle.setPosition(background.getX() + 50, title.getY() - soundTitle.getHeight() - 30);
 
-        Slider soundSlider = createVolumeSlider();
+        final Slider soundSlider = createVolumeSlider();
         soundSlider.setPosition(background.getX() + 50, soundTitle.getY() - soundSlider.getHeight() - 20);
         soundSlider.setWidth(background.getWidth() - 100);
         soundSlider.setValue(Settings.getSoundVolume());
         soundSlider.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                float value = ((Slider) actor).getValue();
-                Settings.setSoundVolume(value);
+                Settings.setSoundVolume(soundSlider.getValue());
             }
         });
 
         Label musicTitle = GUIBuilder.createLabel("Music", Assets.FontSizes.TWENTY, Color.BLUE);
         musicTitle.setPosition(background.getX() + 50, soundTitle.getY() - musicTitle.getHeight() - 100);
 
-        Slider musicSlider = createVolumeSlider();
+        final Slider musicSlider = createVolumeSlider();
         musicSlider.setPosition(background.getX() + 50, musicTitle.getY() - musicSlider.getHeight() - 20);
         musicSlider.setWidth(background.getWidth() - 100);
         musicSlider.setHeight(musicSlider.getHeight() * 2);
+        musicSlider.setValue(Settings.getMusicVolume());
         musicSlider.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                float value = ((Slider) actor).getValue();
-                Settings.setMusicVolume(value);
+                Settings.setMusicVolume(musicSlider.getValue());
             }
         });
 
@@ -88,14 +87,28 @@ public class SettingsScreen extends AbstractOverlay {
         style.knob.setMinWidth(15);
         style.background.setMinHeight(10);
 
+        Label debugLabel = GUIBuilder.createLabel("Enable Debug? ", Assets.FontSizes.TWENTY, Color.BLUE);
+        debugLabel.setPosition(background.getX() + 50, musicSlider.getY() - debugLabel.getHeight() - 30);
+
+        final CheckBox debugCheckBox = new CheckBox("", Assets.getAsset(Assets.UI_SKIN, Skin.class));
+        debugCheckBox.setPosition(debugLabel.getX() + debugLabel.getWidth(), debugLabel.getY());
+        debugCheckBox.setChecked(Settings.isDebugEnabled());
+        debugCheckBox.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                Settings.setDebugEnabled(debugCheckBox.isChecked());
+            }
+        });
+
         stage.addActor(background);
         stage.addActor(title);
         stage.addActor(soundTitle);
         stage.addActor(musicTitle);
         stage.addActor(soundSlider);
         stage.addActor(musicSlider);
+        stage.addActor(debugCheckBox);
+        stage.addActor(debugLabel);
         stage.addActor(crossButton);
-
     }
 
     private Slider createVolumeSlider() {
