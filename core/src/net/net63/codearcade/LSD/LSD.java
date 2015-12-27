@@ -50,9 +50,7 @@ public class LSD extends Game {
     public void render() {
         super.render();
 
-        if (Constants.DEBUG) {
-            fpsLogger.log();
-        }
+        if (Settings.isDebugEnabled()) fpsLogger.log();
     }
 	
 	

@@ -15,7 +15,6 @@ public class Constants {
     // --------------- Meta -------------------
 	public static final String LOG = "LSD";
 	public static final String TITLE = "Little Sticky Destroyer";
-    public static final boolean DEBUG = true;
 
     // ---------------- Game Content ----------
 
