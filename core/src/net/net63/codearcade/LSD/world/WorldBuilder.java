@@ -37,6 +37,7 @@ public class WorldBuilder {
     private static Engine engine;
     private static World world;
     private static LevelDescriptor levelDescriptor;
+    private static TiledMap currentMap;
     private static Rectangle bounds;
 
     /**
@@ -63,6 +64,8 @@ public class WorldBuilder {
      */
     public static void loadFromMap(TiledMap map) {
         createWorld();
+
+        WorldBuilder.currentMap = map;
 
         loadMeta(map.getLayers().get("meta"));
         loadSensors(map.getLayers().get("sensors"));
@@ -148,13 +151,23 @@ public class WorldBuilder {
             //Set the initial node to the position
             nodes[0] = new Vector2(dimensions[0], dimensions[1]);
 
+            //Store the map height for use with each node
+            float mapHeight = currentMap.getProperties().get("height", Integer.class);
+            mapHeight *= currentMap.getProperties().get("tileheight", Integer.class);
+
             //Set each successive node as specified in nodeX and nodeY
             for (int i = 1; i < nodes.length; i++) {
                 nodes[i] = new Vector2(Float.parseFloat(nodeX[i - 1]), Float.parseFloat(nodeY[i - 1]));
 
+                //Transform the y-coordinate from right-down to right-up which is normally done by the loader
+                nodes[i].y = mapHeight - nodes[i].y - dimensions[3];
+
                 //Convert to world space
                 nodes[i].scl(Constants.PIXEL_TO_METRE);
             }
+
+            for (int i = 0; i < dimensions.length; i++) System.out.println((i + 1) + ": " + dimensions[i]);
+            for (int i = 0; i < nodes.length; i++) System.out.println((i + 1) + ") " + nodes[i].toString());
 
             //Create a new entity with all the extracted values
             sensorCount++;
@@ -289,7 +302,10 @@ public class WorldBuilder {
         movementComponent.nodes = nodes;
 
         movementComponent.distanceToNext = nodes[0].dst(nodes[1]);
-        sensor.getComponent(BodyComponent.class).body.setLinearVelocity(nodes[1].cpy().sub(nodes[0]).nor().scl(speed));
+
+        Body body = sensor.getComponent(BodyComponent.class).body;
+        body.setType(BodyDef.BodyType.KinematicBody);
+        body.setLinearVelocity(nodes[1].cpy().sub(nodes[0]).nor().scl(speed));
 
         sensor.add(movementComponent);
 
