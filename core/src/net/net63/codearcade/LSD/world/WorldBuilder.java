@@ -95,7 +95,7 @@ public class WorldBuilder {
      */
     private static void loadSensors(MapLayer sensorLayer) {
 
-        int sensorCount = 0;
+        int sensorCount = levelDescriptor.getSensorCount();
 
         //Iterate over each object and create a new sensor
         for (MapObject sensor: sensorLayer.getObjects()) {
@@ -117,7 +117,36 @@ public class WorldBuilder {
      */
     private static void loadMovingSensors(MapLayer movingSensorLayer) {
 
+        int sensorCount = levelDescriptor.getSensorCount();
 
+        for (MapObject movingSensor: movingSensorLayer.getObjects()) {
+            float[] dimensions = getDimensions(movingSensor);
+            if (dimensions == null) continue;
+
+            MapProperties properties = movingSensor.getProperties();
+            String[] neededKeys = {"delay", "speed", "nodeX", "nodeY"};
+
+            boolean valid = true;
+            for (String key: neededKeys) if (!properties.containsKey(key)) valid = false;
+            if (!valid) continue;
+
+            float delay = properties.get("delay", Float.class).floatValue();
+            float speed = properties.get("speed", Float.class).floatValue();
+            String[] nodeX = properties.get("nodeX", String.class).split(",");
+            String[] nodeY = properties.get("nodeY", String.class).split(",");
+
+            if (nodeX.length != nodeY.length) continue;
+            Vector2[] nodes = new Vector2[nodeX.length];
+            for (int i = 0; i < nodes.length; i++) {
+                nodes[i] = new Vector2(Float.parseFloat(nodeX[i]), Float.parseFloat(nodeY[i]));
+            }
+
+            sensorCount++;
+            createMovingSensor(dimensions[0], dimensions[1], dimensions[2], dimensions[3],
+                                nodes, delay, speed);
+        }
+
+        levelDescriptor.setSensorCount(sensorCount);
     }
 
     /**
