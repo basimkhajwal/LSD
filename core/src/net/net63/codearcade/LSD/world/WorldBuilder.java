@@ -228,6 +228,26 @@ public class WorldBuilder {
         return createEntityFrom(sensorComponent, bodyComponent, renderComponent);
     }
 
+    public static Entity createMovingSensor(float x, float y, float width, float height, Vector2[] nodes, float delay, float speed) {
+
+        Entity sensor = createSensor(x, y, width, height);
+
+        NodeMovementComponent movementComponent = new NodeMovementComponent();
+
+        movementComponent.hasStarted = false;
+        movementComponent.delay = delay;
+        movementComponent.timeRemaining = delay;
+
+        movementComponent.speed = speed;
+        movementComponent.movingForward = true;
+        movementComponent.currentNode = 0;
+        movementComponent.nodes = nodes;
+
+        sensor.add(movementComponent);
+
+        return sensor;
+    }
+
     /**
      * Create a wall at the specified position with
      * the given dimensions
@@ -385,7 +405,7 @@ public class WorldBuilder {
     }
 
     /**
-     * Utility class to create and add an entity given an array of components,
+     * Utility method to create and add an entity given an array of components,
      * this also adds it to the global entity Engine
      *
      * @param components The components to add
