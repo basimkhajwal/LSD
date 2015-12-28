@@ -16,5 +16,6 @@ public class NodeMovementComponent implements Component {
     public float speed;
 
     public Vector2[] nodes;
-    public int currentNode;
+    public int nextNode;
+    public float distanceToNext;
 }
