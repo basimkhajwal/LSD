@@ -212,6 +212,7 @@ public class GameWorld implements Disposable, EntityListener {
         engine.getSystem(CameraShakeSystem.class).stopShake();
 
         engine.getSystem(WorldSystem.class).setProcessing(false);
+        engine.getSystem(NodeMovementSystem.class).setProcessing(false);
         engine.getSystem(PlayerAimSystem.class).setProcessing(false);
         engine.getSystem(PlayerSystem.class).setProcessing(false);
         engine.getSystem(AnimationSystem.class).setProcessing(false);
@@ -228,6 +229,7 @@ public class GameWorld implements Disposable, EntityListener {
         gameEventSignal.dispatch(GameEvent.RESUME_GAME);
 
         engine.getSystem(WorldSystem.class).setProcessing(true);
+        engine.getSystem(NodeMovementSystem.class).setProcessing(true);
         engine.getSystem(PlayerAimSystem.class).setProcessing(true);
         engine.getSystem(PlayerSystem.class).setProcessing(true);
         engine.getSystem(AnimationSystem.class).setProcessing(true);
@@ -238,6 +240,7 @@ public class GameWorld implements Disposable, EntityListener {
     //Add the entity systems that contain the bulk of the logic
     private void addSystems() {
         engine.addSystem(new WorldSystem());
+        engine.addSystem(new NodeMovementSystem());
         engine.addSystem(new PlayerAimSystem(world));
         engine.addSystem(new PlayerSystem(levelDescriptor, gameEventSignal));
 
