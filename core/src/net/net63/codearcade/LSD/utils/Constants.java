@@ -80,7 +80,7 @@ public class Constants {
     public static final class SYSTEM_PRIORITIES {
 
         public static final int WORLD                   = 1;
-
+        public static final int NODE_MOVEMENT           = 2;
 
         public static final int PLAYER_AIM              = 4;
         public static final int PLAYER                  = 5;
