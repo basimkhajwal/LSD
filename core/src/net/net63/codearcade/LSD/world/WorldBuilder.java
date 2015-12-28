@@ -67,6 +67,7 @@ public class WorldBuilder {
         loadMeta(map.getLayers().get("meta"));
         loadSensors(map.getLayers().get("sensors"));
         loadWalls(map.getLayers().get("walls"));
+        loadMovingSensors(map.getLayers().get("moving-sensors"));
 
         bounds.setPosition(bounds.x - Constants.BOUNDS_BUFFER_X, bounds.y - Constants.BOUNDS_BUFFER_Y);
         bounds.setSize(bounds.width + Constants.BOUNDS_BUFFER_X, bounds.height + Constants.BOUNDS_BUFFER_Y);
@@ -135,8 +136,8 @@ public class WorldBuilder {
             if (!valid) continue;
 
             //Retrieve the properties
-            float delay = properties.get("delay", Float.class).floatValue();
-            float speed = properties.get("speed", Float.class).floatValue();
+            float delay = Float.parseFloat(properties.get("delay", String.class));
+            float speed = Float.parseFloat(properties.get("speed", String.class));
             String[] nodeX = properties.get("nodeX", String.class).split(",");
             String[] nodeY = properties.get("nodeY", String.class).split(",");
 
@@ -148,8 +149,8 @@ public class WorldBuilder {
             nodes[0] = new Vector2(dimensions[0], dimensions[1]);
 
             //Set each successive node as specified in nodeX and nodeY
-            for (int i = 1; i <= nodes.length; i++) {
-                nodes[i] = new Vector2(Float.parseFloat(nodeX[i]), Float.parseFloat(nodeY[i]));
+            for (int i = 1; i < nodes.length; i++) {
+                nodes[i] = new Vector2(Float.parseFloat(nodeX[i - 1]), Float.parseFloat(nodeY[i - 1]));
 
                 //Convert to world space
                 nodes[i].scl(Constants.PIXEL_TO_METRE);
