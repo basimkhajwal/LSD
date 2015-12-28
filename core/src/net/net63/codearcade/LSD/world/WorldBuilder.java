@@ -289,6 +289,7 @@ public class WorldBuilder {
         movementComponent.nodes = nodes;
 
         movementComponent.distanceToNext = nodes[0].dst(nodes[1]);
+        sensor.getComponent(BodyComponent.class).body.setLinearVelocity(nodes[1].cpy().sub(nodes[0]).nor().scl(speed));
 
         sensor.add(movementComponent);
 
