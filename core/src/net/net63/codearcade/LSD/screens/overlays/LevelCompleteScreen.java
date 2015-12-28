@@ -10,12 +10,11 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Array;
 import net.net63.codearcade.LSD.LSD;
+import net.net63.codearcade.LSD.managers.Assets;
 import net.net63.codearcade.LSD.screens.GameScreen;
 import net.net63.codearcade.LSD.screens.LevelSelectScreen;
-import net.net63.codearcade.LSD.managers.Assets;
 import net.net63.codearcade.LSD.utils.Constants;
 import net.net63.codearcade.LSD.utils.GUIBuilder;
-import net.net63.codearcade.LSD.managers.LevelManager;
 
 /**
  * Created by Basim on 30/09/15.
@@ -111,7 +110,7 @@ public class LevelCompleteScreen extends AbstractOverlay {
 
         if (replaying) game.setScreen(new GameScreen(game, previousGame.getLevelId()));
         if (nextLevel) game.setScreen(new GameScreen(game, previousGame.getLevelId() + 1));
-        if (backToMenu) game.setScreen(new LevelSelectScreen(game, LevelManager.LevelPacks.ORIGINAL));
+        if (backToMenu) game.setScreen(new LevelSelectScreen(game, Constants.DEFAULT_PACK));
     }
 
 

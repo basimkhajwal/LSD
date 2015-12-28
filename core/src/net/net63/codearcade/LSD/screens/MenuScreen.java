@@ -15,10 +15,12 @@ import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import net.net63.codearcade.LSD.LSD;
 import net.net63.codearcade.LSD.managers.Assets;
-import net.net63.codearcade.LSD.managers.LevelManager;
 import net.net63.codearcade.LSD.managers.ShaderManager;
 import net.net63.codearcade.LSD.screens.overlays.SettingsScreen;
-import net.net63.codearcade.LSD.utils.*;
+import net.net63.codearcade.LSD.utils.BackgroundRenderer;
+import net.net63.codearcade.LSD.utils.CentreGUI;
+import net.net63.codearcade.LSD.utils.Constants;
+import net.net63.codearcade.LSD.utils.GUIBuilder;
 
 
 /**
@@ -140,7 +142,7 @@ public class MenuScreen extends AbstractScreen{
         //If the button has been clicked start the game
 		if (playClicked) {
             dispose();
-            game.setScreen(new LevelSelectScreen(game, LevelManager.LevelPacks.ORIGINAL));
+            game.setScreen(new LevelSelectScreen(game, Constants.DEFAULT_PACK));
         }
 
         //If the settings button was clicked go to the settings screen
