@@ -119,28 +119,43 @@ public class WorldBuilder {
 
         int sensorCount = levelDescriptor.getSensorCount();
 
+        //Iterate over each map object in this layer
         for (MapObject movingSensor: movingSensorLayer.getObjects()) {
+
+            //Retrieve dimensions
             float[] dimensions = getDimensions(movingSensor);
             if (dimensions == null) continue;
 
             MapProperties properties = movingSensor.getProperties();
             String[] neededKeys = {"delay", "speed", "nodeX", "nodeY"};
 
+            //Check if all the needed values are present, otherwise skip this object
             boolean valid = true;
             for (String key: neededKeys) if (!properties.containsKey(key)) valid = false;
             if (!valid) continue;
 
+            //Retrieve the properties
             float delay = properties.get("delay", Float.class).floatValue();
             float speed = properties.get("speed", Float.class).floatValue();
             String[] nodeX = properties.get("nodeX", String.class).split(",");
             String[] nodeY = properties.get("nodeY", String.class).split(",");
 
+            //Create the node array
             if (nodeX.length != nodeY.length) continue;
-            Vector2[] nodes = new Vector2[nodeX.length];
-            for (int i = 0; i < nodes.length; i++) {
+            Vector2[] nodes = new Vector2[nodeX.length + 1];
+
+            //Set the initial node to the position
+            nodes[0] = new Vector2(dimensions[0], dimensions[1]);
+
+            //Set each successive node as specified in nodeX and nodeY
+            for (int i = 1; i <= nodes.length; i++) {
                 nodes[i] = new Vector2(Float.parseFloat(nodeX[i]), Float.parseFloat(nodeY[i]));
+
+                //Convert to world space
+                nodes[i].scl(Constants.PIXEL_TO_METRE);
             }
 
+            //Create a new entity with all the extracted values
             sensorCount++;
             createMovingSensor(dimensions[0], dimensions[1], dimensions[2], dimensions[3],
                                 nodes, delay, speed);
@@ -269,8 +284,10 @@ public class WorldBuilder {
 
         movementComponent.speed = speed;
         movementComponent.movingForward = true;
-        movementComponent.currentNode = 0;
+        movementComponent.nextNode = 1;
         movementComponent.nodes = nodes;
+
+        movementComponent.distanceToNext = nodes[0].dst(nodes[1]);
 
         sensor.add(movementComponent);
 
