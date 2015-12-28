@@ -111,6 +111,16 @@ public class WorldBuilder {
     }
 
     /**
+     * Load all the moving sensors in the given layer
+     *
+     * @param movingSensorLayer The MapLayer containing the moving sensors
+     */
+    private static void loadMovingSensors(MapLayer movingSensorLayer) {
+
+
+    }
+
+    /**
      * Load all the walls from the given layer
      *
      * @param wallLayer The MapLayer containing all the walls

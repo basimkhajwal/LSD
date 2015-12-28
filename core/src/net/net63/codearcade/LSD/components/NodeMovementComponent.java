@@ -1,0 +1,12 @@
+package net.net63.codearcade.LSD.components;
+
+import com.badlogic.ashley.core.Component;
+
+/**
+ * Created by Basim on 28/12/15.
+ */
+public class NodeMovementComponent implements Component {
+
+
+
+}
