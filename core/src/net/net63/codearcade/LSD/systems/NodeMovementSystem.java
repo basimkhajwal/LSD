@@ -50,6 +50,12 @@ public class NodeMovementSystem extends IteratingSystem {
 
             //Update the distance needed to get to the next node
             node.distanceToNext = node.nodes[node.nextNode].dst(body.getPosition());
+
+            //Set the velocity of the object to go to the next node
+            body.getLinearVelocity().set(node.nodes[node.nextNode]).sub(body.getPosition());
+
+            //Normalize and scale and the velocity depending on the speed set
+            body.getLinearVelocity().nor().scl(node.speed);
         }
     }
 
