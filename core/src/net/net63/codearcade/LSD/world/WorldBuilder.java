@@ -149,25 +149,26 @@ public class WorldBuilder {
             Vector2[] nodes = new Vector2[nodeX.length + 1];
 
             //Set the initial node to the position
-            nodes[0] = new Vector2(dimensions[0], dimensions[1]);
+            nodes[0] = new Vector2(dimensions[0] + dimensions[2] / 2, dimensions[1] + dimensions[3] / 2);
 
             //Store the map height for use with each node
             float mapHeight = currentMap.getProperties().get("height", Integer.class);
             mapHeight *= currentMap.getProperties().get("tileheight", Integer.class);
+            mapHeight *= Constants.PIXEL_TO_METRE;
 
             //Set each successive node as specified in nodeX and nodeY
             for (int i = 1; i < nodes.length; i++) {
                 nodes[i] = new Vector2(Float.parseFloat(nodeX[i - 1]), Float.parseFloat(nodeY[i - 1]));
 
+                //Convert to world space
+                nodes[i].scl(Constants.PIXEL_TO_METRE);
+
                 //Transform the y-coordinate from right-down to right-up which is normally done by the loader
                 nodes[i].y = mapHeight - nodes[i].y - dimensions[3];
 
-                //Convert to world space
-                nodes[i].scl(Constants.PIXEL_TO_METRE);
+                //Make sure object is centralized at each node
+                nodes[i].add(dimensions[2] / 2, dimensions[3] / 2);
             }
-
-            for (int i = 0; i < dimensions.length; i++) System.out.println((i + 1) + ": " + dimensions[i]);
-            for (int i = 0; i < nodes.length; i++) System.out.println((i + 1) + ") " + nodes[i].toString());
 
             //Create a new entity with all the extracted values
             sensorCount++;
