@@ -8,6 +8,7 @@ import com.badlogic.ashley.systems.IteratingSystem;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
+import com.badlogic.gdx.physics.box2d.joints.WeldJointDef;
 import net.net63.codearcade.LSD.components.*;
 import net.net63.codearcade.LSD.events.EventQueue;
 import net.net63.codearcade.LSD.events.GameEvent;
@@ -34,6 +35,7 @@ public class PlayerSystem extends IteratingSystem implements ContactListener {
     private LevelDescriptor levelDescriptor;
     private Signal<GameEvent> gameEventSignal;
     private EventQueue eventQueue;
+    private World world;
 
     /**
      * Create a new player system
@@ -41,12 +43,13 @@ public class PlayerSystem extends IteratingSystem implements ContactListener {
      * @param levelDescriptor The level descriptor of the world
      * @param gameEventSignal The event generator of the world
      */
-    public PlayerSystem (LevelDescriptor levelDescriptor, Signal<GameEvent> gameEventSignal) {
+    public PlayerSystem (LevelDescriptor levelDescriptor, World world, Signal<GameEvent> gameEventSignal) {
         super(Family.all(PlayerComponent.class).get(), Constants.SYSTEM_PRIORITIES.PLAYER);
 
         //Save instances
         this.levelDescriptor = levelDescriptor;
         this.gameEventSignal = gameEventSignal;
+        this.world = world;
 
         //Register a new event queue
         eventQueue = new EventQueue();
@@ -83,12 +86,7 @@ public class PlayerSystem extends IteratingSystem implements ContactListener {
 
                 //Colliding with the next platform
                 case PLATFORM_COLLISION:
-                    body.setGravityScale(0f);
-                    body.setLinearVelocity(0, 0);
-
-                    playerComponent.isFlying = false;
-
-                    state.set(PlayerComponent.STATE_STILL);
+                    platformCollision(entity);
                     break;
 
                 //Various events that signal player death
@@ -134,8 +132,10 @@ public class PlayerSystem extends IteratingSystem implements ContactListener {
         PlayerComponent playerComponent = playerMapper.get(player);
         Body body = bodyMapper.get(player).body;
 
-        //Re-apply gravity apply appropriate launch impulse
-        body.setGravityScale(1.0f);
+        //Destroy the weld attached between player and sensor
+        if (playerComponent.sensorJoint != null) world.destroyJoint(playerComponent.sensorJoint);
+
+        //Apply appropriate launch impulse
         body.applyLinearImpulse(playerComponent.launchImpulse, body.getWorldCenter(), true);
 
         //Destroy the sensor on which the player is on
@@ -147,6 +147,34 @@ public class PlayerSystem extends IteratingSystem implements ContactListener {
         playerComponent.isFlying = true;
         playerComponent.currentSensor = null;
         stateMapper.get(player).set(PlayerComponent.STATE_JUMPING);
+    }
+
+
+    /**
+     * Apply a platform collision
+     *
+     * @param player The entity
+     */
+    private void platformCollision(Entity player) {
+        Body body = bodyMapper.get(player).body;
+        PlayerComponent playerComponent = playerMapper.get(player);
+        StateComponent state = stateMapper.get(player);
+
+        //Set the player state and set the velocity to 0
+        body.setLinearVelocity(0, 0);
+        playerComponent.isFlying = false;
+        state.set(PlayerComponent.STATE_STILL);
+
+        //Create a weld to join the player to the platform
+        WeldJointDef jointDef = new WeldJointDef();
+        Body sensorBody = bodyMapper.get(playerComponent.currentSensor).body;
+
+        jointDef.bodyA = body;
+        jointDef.bodyB = sensorBody;
+        jointDef.localAnchorA.set(body.getLocalPoint(playerComponent.colllisionPoint));
+        jointDef.localAnchorB.set(sensorBody.getLocalPoint(playerComponent.colllisionPoint));
+        jointDef.referenceAngle = sensorBody.getAngle() - body.getAngle();
+        playerComponent.sensorJoint = world.createJoint(jointDef);
     }
 
     /**
@@ -197,6 +225,8 @@ public class PlayerSystem extends IteratingSystem implements ContactListener {
             //Fire event that sensor was collided with and save the sensor
             if (sensorMapper.has(other)) {
                 gameEventSignal.dispatch(GameEvent.PLATFORM_COLLISION);
+
+                playerComponent.colllisionPoint = contact.getWorldManifold().getPoints()[0];
                 playerComponent.currentSensor = other;
             }
 
