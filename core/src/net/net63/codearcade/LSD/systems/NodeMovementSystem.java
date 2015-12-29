@@ -23,7 +23,7 @@ public class NodeMovementSystem extends IteratingSystem {
         bodyMapper = ComponentMapper.getFor(BodyComponent.class);
         nodeMapper = ComponentMapper.getFor(NodeMovementComponent.class);
     }
-
+    
     @Override
     public void processEntity(Entity entity, float deltaTime) {
         NodeMovementComponent node = nodeMapper.get(entity);
@@ -34,10 +34,11 @@ public class NodeMovementSystem extends IteratingSystem {
         float distanceTravelled = body.getPosition().dst(node.nodes[previousNode]);
 
         //Check if it has gone further than was needed to get to the next node
-        if (distanceTravelled >= node.distanceToNext) {
+        if (distanceTravelled > node.distanceToNext) {
 
             //Check if the node has reached the end of it's movement line
             if (node.nextNode == (node.movingForward ? node.nodes.length - 1 : 0)) {
+
                 //Reverse the direction
                 node.movingForward = !node.movingForward;
             }
@@ -52,10 +53,7 @@ public class NodeMovementSystem extends IteratingSystem {
             node.distanceToNext = node.nodes[node.nextNode].dst(body.getPosition());
 
             //Set the velocity of the object to go to the next node
-            body.getLinearVelocity().set(node.nodes[node.nextNode]).sub(body.getPosition());
-
-            //Normalize and scale and the velocity depending on the speed set
-            body.getLinearVelocity().nor().scl(node.speed);
+            body.setLinearVelocity(node.nodes[node.nextNode].cpy().sub(body.getPosition()).nor().scl(node.speed));
         }
     }
 
