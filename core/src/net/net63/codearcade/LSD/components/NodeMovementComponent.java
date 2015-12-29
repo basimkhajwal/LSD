@@ -7,8 +7,7 @@ import com.badlogic.gdx.math.Vector2;
  * Created by Basim on 28/12/15.
  */
 public class NodeMovementComponent implements Component {
-
-    public float delay;
+    
     public float timeRemaining;
     public boolean hasStarted = false;
 
