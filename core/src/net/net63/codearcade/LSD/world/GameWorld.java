@@ -242,7 +242,7 @@ public class GameWorld implements Disposable, EntityListener {
         engine.addSystem(new WorldSystem());
         engine.addSystem(new NodeMovementSystem());
         engine.addSystem(new PlayerAimSystem(world));
-        engine.addSystem(new PlayerSystem(levelDescriptor, gameEventSignal));
+        engine.addSystem(new PlayerSystem(levelDescriptor, world, gameEventSignal));
 
         engine.addSystem(new AnimationSystem());
         engine.addSystem(new CameraMovementSystem(gameCamera, gameEventSignal));
