@@ -3,6 +3,7 @@ package net.net63.codearcade.LSD.components;
 import com.badlogic.ashley.core.Component;
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.Joint;
 
 /**
  * Created by Basim on 23/06/15.
@@ -23,6 +24,8 @@ public class PlayerComponent implements Component{
     public boolean validLaunch;
 
     public Entity currentSensor = null;
+    public Joint sensorJoint = null;
+    public Vector2 colllisionPoint;
 
     public boolean isFlying = true;
     public boolean isDead = false;
