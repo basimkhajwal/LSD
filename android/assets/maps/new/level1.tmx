@@ -55,7 +55,7 @@
  <objectgroup name="moving-sensors">
   <object id="48" name="moving-sensor" type="moving-sensor" x="1070" y="300" width="120" height="30">
    <properties>
-    <property name="delay" value="500"/>
+    <property name="delay" value="100"/>
     <property name="nodeX" value="1350"/>
     <property name="nodeY" value="160"/>
     <property name="speed" value="50"/>
