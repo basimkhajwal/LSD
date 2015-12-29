@@ -294,8 +294,7 @@ public class WorldBuilder {
         NodeMovementComponent movementComponent = new NodeMovementComponent();
 
         movementComponent.hasStarted = false;
-        movementComponent.delay = delay;
-        movementComponent.timeRemaining = delay;
+        movementComponent.timeRemaining = delay / 1000f;
 
         movementComponent.speed = speed;
         movementComponent.movingForward = true;
