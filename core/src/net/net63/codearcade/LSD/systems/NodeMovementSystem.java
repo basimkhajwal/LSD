@@ -23,18 +23,24 @@ public class NodeMovementSystem extends IteratingSystem {
         bodyMapper = ComponentMapper.getFor(BodyComponent.class);
         nodeMapper = ComponentMapper.getFor(NodeMovementComponent.class);
     }
-    
+
     @Override
     public void processEntity(Entity entity, float deltaTime) {
         NodeMovementComponent node = nodeMapper.get(entity);
         Body body = bodyMapper.get(entity).body;
+
+        //Check if the node is moving yet
+        if (!node.hasStarted) {
+            node.timeRemaining -= deltaTime;
+            node.hasStarted = node.timeRemaining <= 0;
+        }
 
         //Check how far the object has come from the previous node
         int previousNode = node.nextNode + (node.movingForward ? -1: 1);
         float distanceTravelled = body.getPosition().dst(node.nodes[previousNode]);
 
         //Check if it has gone further than was needed to get to the next node
-        if (distanceTravelled > node.distanceToNext) {
+        if (distanceTravelled >= node.distanceToNext) {
 
             //Check if the node has reached the end of it's movement line
             if (node.nextNode == (node.movingForward ? node.nodes.length - 1 : 0)) {
