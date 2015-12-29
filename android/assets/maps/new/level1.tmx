@@ -58,7 +58,7 @@
     <property name="delay" value="500"/>
     <property name="nodeX" value="1350"/>
     <property name="nodeY" value="160"/>
-    <property name="speed" value="0.5"/>
+    <property name="speed" value="50"/>
    </properties>
   </object>
  </objectgroup>
