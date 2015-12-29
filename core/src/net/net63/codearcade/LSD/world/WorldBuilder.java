@@ -296,7 +296,7 @@ public class WorldBuilder {
         movementComponent.hasStarted = false;
         movementComponent.timeRemaining = delay / 1000f;
 
-        movementComponent.speed = speed;
+        movementComponent.speed = speed * Constants.PIXEL_TO_METRE;
         movementComponent.movingForward = true;
         movementComponent.nextNode = 1;
         movementComponent.nodes = nodes;
