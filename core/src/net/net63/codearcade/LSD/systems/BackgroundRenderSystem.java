@@ -28,7 +28,7 @@ public class BackgroundRenderSystem extends EntitySystem implements Disposable {
         eventQueue = new EventQueue();
         signal.add(eventQueue);
 
-        backgroundRenderer = new BackgroundRenderer(ShaderManager.Shaders.MENU, BackgroundRenderer.DEFAULT);
+        backgroundRenderer = new BackgroundRenderer(ShaderManager.Shaders.GAME, BackgroundRenderer.DEFAULT);
     }
 
     @Override
