@@ -19,6 +19,9 @@ import net.net63.codearcade.LSD.utils.Constants;
  */
 public class PlayerAimSystem extends IteratingSystem {
 
+    //How much the player moves before the aim is re-calculated
+    private static final float INVALIDATE_DISTANCE = 0.1f;
+
     private ComponentMapper<StateComponent> stateMapper;
     private ComponentMapper<PlayerComponent> playerMapper;
     private ComponentMapper<BodyComponent> bodyMapper;
@@ -26,6 +29,7 @@ public class PlayerAimSystem extends IteratingSystem {
     private World world;
 
     private Entity currentPlatform;
+    private Vector2 previousPosition = new Vector2();
     public boolean platformCollision;
 
     public PlayerAimSystem(World world) {
@@ -43,16 +47,21 @@ public class PlayerAimSystem extends IteratingSystem {
         StateComponent state = stateMapper.get(entity);
         PlayerComponent playerComponent = playerMapper.get(entity);
         Body body = bodyMapper.get(entity).body;
+        Vector2 pos = body.getPosition();
 
-        if (state.get() == PlayerComponent.STATE_AIMING && playerComponent.invalidateAim) {
-            playerComponent.launchImpulse = calculateLaunchImpulse(body.getPosition(), playerComponent.aimPosition);
-            playerComponent.trajectoryPoints = calculateTrajectoryPoints(body.getPosition(), playerComponent.launchImpulse);
+        boolean distanceReached = !previousPosition.isZero() && previousPosition.dst(pos) >= INVALIDATE_DISTANCE;
+
+        if (state.get() == PlayerComponent.STATE_AIMING && (playerComponent.invalidateAim || distanceReached)) {
+            playerComponent.launchImpulse = calculateLaunchImpulse(pos, playerComponent.aimPosition);
+            playerComponent.trajectoryPoints = calculateTrajectoryPoints(pos, playerComponent.launchImpulse);
 
             resetCallback(playerComponent.currentSensor);
             world.rayCast(aimValididator, body.getWorldCenter(), playerComponent.aimPosition);
 
             playerComponent.validLaunch = !platformCollision;
             playerComponent.invalidateAim = false;
+
+            previousPosition.set(pos);
         }
     }
 
