@@ -53,7 +53,7 @@ public class SettingsScreen extends AbstractOverlay {
 
         });
 
-        Label soundTitle = GUIBuilder.createLabel("Sound Effects", Assets.FontSizes.TWENTY, Color.BLUE);
+        Label soundTitle = GUIBuilder.createLabel("Sound Effects", Assets.FontSizes.TWENTY, Color.DARK_GRAY);
         soundTitle.setPosition(background.getX() + 50, title.getY() - soundTitle.getHeight() - 30);
 
         final Slider soundSlider = createVolumeSlider();
@@ -67,7 +67,7 @@ public class SettingsScreen extends AbstractOverlay {
             }
         });
 
-        Label musicTitle = GUIBuilder.createLabel("Music", Assets.FontSizes.TWENTY, Color.BLUE);
+        Label musicTitle = GUIBuilder.createLabel("Music", Assets.FontSizes.TWENTY, Color.DARK_GRAY);
         musicTitle.setPosition(background.getX() + 50, soundTitle.getY() - musicTitle.getHeight() - 100);
 
         final Slider musicSlider = createVolumeSlider();
@@ -87,7 +87,7 @@ public class SettingsScreen extends AbstractOverlay {
         style.knob.setMinWidth(15);
         style.background.setMinHeight(10);
 
-        Label debugLabel = GUIBuilder.createLabel("Enable Debug? ", Assets.FontSizes.TWENTY, Color.BLUE);
+        Label debugLabel = GUIBuilder.createLabel("Enable Debug? ", Assets.FontSizes.TWENTY, Color.DARK_GRAY);
         debugLabel.setPosition(background.getX() + 50, musicSlider.getY() - debugLabel.getHeight() - 30);
 
         final CheckBox debugCheckBox = new CheckBox("", Assets.getAsset(Assets.UI_SKIN, Skin.class));
