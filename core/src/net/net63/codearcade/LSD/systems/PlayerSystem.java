@@ -135,7 +135,8 @@ public class PlayerSystem extends IteratingSystem implements ContactListener {
         //Destroy the weld attached between player and sensor
         if (playerComponent.sensorJoint != null) world.destroyJoint(playerComponent.sensorJoint);
 
-        //Apply appropriate launch impulse
+        //Apply appropriate launch impulse, set the velocity to zero
+        body.setLinearVelocity(0, 0);
         body.applyLinearImpulse(playerComponent.launchImpulse, body.getWorldCenter(), true);
 
         //Destroy the sensor on which the player is on
