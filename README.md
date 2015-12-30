@@ -19,6 +19,11 @@ They should all work but only desktop and HTML5 builds have currently been teste
 
 #### TODO:
 - [ ] Add option of having multiple map packs (with a scroll screen in between)
+- [ ] Add lasers that automatically toggle on intervals
+- [ ] Add lasers that are toggled by destroying coloured sensors
+- [ ] Add a 3-star collection per level and a total star count
+- [ ] Keep track of player progress / prevent accessing end levels until unlocked
+- [ ] Add a currency system with stars in order to unlock new levels
 - [ ] Improve menu/title colours
 - [ ] Create more levels
 - [ ] Customize shader for the game (add a new one)
