@@ -20,7 +20,7 @@ import net.net63.codearcade.LSD.utils.Constants;
 public class PlayerAimSystem extends IteratingSystem {
 
     //How much the player moves before the aim is re-calculated
-    private static final float INVALIDATE_DISTANCE = 0.1f;
+    private static final float INVALIDATE_DISTANCE = 0.02f;
 
     private ComponentMapper<StateComponent> stateMapper;
     private ComponentMapper<PlayerComponent> playerMapper;
