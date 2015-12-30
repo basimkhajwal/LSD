@@ -16,9 +16,10 @@ public class ShaderManager {
     public static class Shaders {
 
         public static final String MENU = "shaders/menu";
+        public static final String GAME = "shaders/game";
 
     }
-    private static final String[] _Shaders = { Shaders.MENU };
+    private static final String[] _Shaders = { Shaders.MENU, Shaders.GAME };
     private static final ArrayMap<String, String> shaderCache = new ArrayMap<String, String>();
 
     /**
