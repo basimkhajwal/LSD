@@ -33,7 +33,7 @@ public class SettingsScreen extends AbstractOverlay {
     public void setupUI(Stage stage) {
 
         NinePatch bg = new NinePatch(Assets.getAsset(Assets.Images.SETTINGS_BACKGROUND, Texture.class), 9, 9, 9, 9);
-        Image background = new Image(bg);
+        final Image background = new Image(bg);
         background.setSize(400, 500);
         background.setPosition(200, 50);
 
@@ -60,10 +60,17 @@ public class SettingsScreen extends AbstractOverlay {
         soundSlider.setPosition(background.getX() + 50, soundTitle.getY() - soundSlider.getHeight() - 20);
         soundSlider.setWidth(background.getWidth() - 100);
         soundSlider.setValue(Settings.getSoundVolume());
+
+        final Label soundValue = GUIBuilder.createLabel(String.format("%.0f", soundSlider.getValue() * 100) + " %", Assets.FontSizes.TWENTY, Color.DARK_GRAY);
+        soundValue.setPosition(soundSlider.getX() + soundSlider.getWidth() - soundValue.getWidth(), soundTitle.getY());
+
         soundSlider.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                Settings.setSoundVolume(soundSlider.getValue());
+                float value = soundSlider.getValue();
+                Settings.setSoundVolume(value);
+                soundValue.setText(String.format("%.0f", value * 100) + " %");
+                soundValue.setX(soundSlider.getX() + soundSlider.getWidth() - soundValue.getWidth());
             }
         });
 
@@ -75,10 +82,17 @@ public class SettingsScreen extends AbstractOverlay {
         musicSlider.setWidth(background.getWidth() - 100);
         musicSlider.setHeight(musicSlider.getHeight() * 2);
         musicSlider.setValue(Settings.getMusicVolume());
+
+        final Label musicValue = GUIBuilder.createLabel(String.format("%.0f", musicSlider.getValue() * 100) + " %", Assets.FontSizes.TWENTY, Color.DARK_GRAY);
+        musicValue.setPosition(musicSlider.getX() + musicSlider.getWidth() - musicValue.getWidth(), musicTitle.getY());
+
         musicSlider.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                Settings.setMusicVolume(musicSlider.getValue());
+                float value = musicSlider.getValue();
+                Settings.setMusicVolume(value);
+                musicValue.setText(String.format("%.0f", value * 100) + " %");
+                musicValue.setX(musicSlider.getX() + musicSlider.getWidth() - musicValue.getWidth());
             }
         });
 
@@ -106,6 +120,8 @@ public class SettingsScreen extends AbstractOverlay {
         stage.addActor(musicTitle);
         stage.addActor(soundSlider);
         stage.addActor(musicSlider);
+        stage.addActor(soundValue);
+        stage.addActor(musicValue);
         stage.addActor(debugCheckBox);
         stage.addActor(debugLabel);
         stage.addActor(crossButton);
