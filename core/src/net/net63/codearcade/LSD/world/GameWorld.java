@@ -46,6 +46,7 @@ public class GameWorld implements Disposable, EntityListener {
     private ComponentMapper<SensorComponent> sensorMapper;
 
     private boolean logicPaused = false;
+    private boolean gameFinished = false;w
 
     /**
      * Create a new game with the given map
@@ -144,6 +145,12 @@ public class GameWorld implements Disposable, EntityListener {
 
         //Reset the camera if it was moved when shaking
         engine.getSystem(CameraShakeSystem.class).restoreCamera();
+
+        //If the game is over in this tick then launch the event
+        if (!gameFinished && isGameOver()) {
+            gameFinished = true;
+            gameEventSignal.dispatch(GameEvent.GAME_FINISHED);
+        }
     }
 
     /**

@@ -9,6 +9,7 @@ public enum GameEvent {
     PAUSE_GAME,
     RESUME_GAME,
     LAUNCH_PLAYER,
+    GAME_FINISHED,
 
     PLATFORM_COLLISION,
     WALL_COLLISION,
