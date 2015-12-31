@@ -14,6 +14,8 @@ public enum GameEvent {
     PLATFORM_COLLISION,
     WALL_COLLISION,
 
+    TIMER_STARTED,
+    TIMER_STOPPED,
     TIMER_OVER,
 
     PLAYER_DEATH
