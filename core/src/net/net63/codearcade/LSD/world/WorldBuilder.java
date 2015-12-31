@@ -71,6 +71,7 @@ public class WorldBuilder {
         loadSensors(map.getLayers().get("sensors"));
         loadWalls(map.getLayers().get("walls"));
         loadMovingSensors(map.getLayers().get("moving-sensors"));
+        loadLasers(map.getLayers().get("lasers"));
 
         bounds.setPosition(bounds.x - Constants.BOUNDS_BUFFER_X, bounds.y - Constants.BOUNDS_BUFFER_Y);
         bounds.setSize(bounds.width + Constants.BOUNDS_BUFFER_X, bounds.height + Constants.BOUNDS_BUFFER_Y);
@@ -177,6 +178,16 @@ public class WorldBuilder {
         }
 
         levelDescriptor.setSensorCount(sensorCount);
+    }
+
+    private static void loadLasers(MapLayer laserLayer) {
+
+        for (MapObject laserObject: laserLayer.getObjects()) {
+
+
+
+        }
+
     }
 
     /**
