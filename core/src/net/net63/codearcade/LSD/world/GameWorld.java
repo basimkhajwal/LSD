@@ -46,7 +46,7 @@ public class GameWorld implements Disposable, EntityListener {
     private ComponentMapper<SensorComponent> sensorMapper;
 
     private boolean logicPaused = false;
-    private boolean gameFinished = false;w
+    private boolean gameFinished = false;
 
     /**
      * Create a new game with the given map
