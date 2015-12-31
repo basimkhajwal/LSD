@@ -125,12 +125,19 @@ public class TimerSystem extends EntitySystem implements Disposable {
         updateTimer = true;
         currentTime = 0;
         currentMaxTime -= platformTimeStep;
+
+        gameEventSignal.dispatch(GameEvent.TIMER_STARTED);
     }
 
     private void endTimer() {
         drawTimer = false;
         updateTimer = false;
+
+        gameEventSignal.dispatch(GameEvent.TIMER_STOPPED);
     }
+
+    public float getCurrentTime() { return currentTime; }
+    public float getCurrentMaxTime() { return currentMaxTime; }
 
     @Override
     public void dispose() {
