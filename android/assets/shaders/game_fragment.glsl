@@ -6,6 +6,7 @@ varying vec2 v_texCoords;
 
 uniform vec2 screenSize;
 uniform vec2 invScreenSize;
+uniform float saturation;
 uniform float time;
 uniform sampler2D u_texture;
 
@@ -36,7 +37,7 @@ void main() {
 
     //2. APPLY NOISE
     vec4 noise = vec4(rand(v_texCoords * time), rand(v_texCoords * (time + 1.0) ), rand(v_texCoords * (time - 1.0) ), 1);
-    gl_FragColor += noise * vec4(0.2, 0.2, 0.2, 0.1);
+    gl_FragColor += noise * vec4(0.2, 0.2, 0.2, saturation);
 
     //3. VIGNETTE
     gl_FragColor.a *= 0.8;
