@@ -183,9 +183,19 @@ public class WorldBuilder {
     private static void loadLasers(MapLayer laserLayer) {
 
         for (MapObject laserObject: laserLayer.getObjects()) {
+            float[] dimensions = getDimensions(laserObject);
+            if (dimensions == null) continue;
 
+            MapProperties properties = laserObject.getProperties();
+            if (!properties.containsKey("interval") || !properties.containsKey("angle") || !properties.containsKey("direction")) continue;
 
+            //Retrieve the properties
+            boolean defaultValue = "on" == properties.get("default", String.class);
+            String direction = properties.get("direction", String.class).toLowerCase();
+            float interval = Float.parseFloat(properties.get("interval", String.class));
+            float angle = Float.parseFloat(properties.get("angle", String.class));
 
+            createLaser(dimensions[0], dimensions[1], dimensions[2], dimensions[3], interval, direction, angle, defaultValue);
         }
 
     }
@@ -321,6 +331,56 @@ public class WorldBuilder {
         sensor.add(movementComponent);
 
         return sensor;
+    }
+
+    private static Entity createLaser(float x, float y, float width, float height, float interval, String direction, float angle, boolean isOn) {
+
+        float laserWidth = 0.2f;
+        float laserHeight = 0.2f;
+
+        addBoundedBody(x, y, laserWidth, laserHeight);
+
+        LaserComponent laserComponent = new LaserComponent();
+        BodyComponent bodyComponent = new BodyComponent();
+
+        laserComponent.angle = angle;
+        laserComponent.interval = interval;
+        laserComponent.laserEnabled = isOn;
+
+        BodyDef bodyDef = new BodyDef();
+        bodyDef.type = BodyDef.BodyType.StaticBody;
+        bodyDef.angle = MathUtils.degreesToRadians * angle;
+
+        if (direction == "up") {
+            laserComponent.direction = 0;
+            bodyDef.position.set(x + width / 2, y + laserHeight / 2);
+        }
+
+        else if (direction == "down") {
+            laserComponent.direction = 1;
+            bodyDef.position.set(x + width / 2, y + height - laserHeight / 2);
+        }
+
+        else if (direction == "right") {
+            laserComponent.direction = 2;
+            bodyDef.position.set(x + laserWidth / 2, y + height / 2);
+        }
+
+        else {
+            laserComponent.direction = 3;
+            bodyDef.position.set(x + width - laserWidth / 2, y + height / 2);
+        }
+
+        FixtureDef fixtureDef = new FixtureDef();
+        fixtureDef.restitution = 0.0f;
+        fixtureDef.shape = new PolygonShape();
+
+        ((PolygonShape) fixtureDef.shape).setAsBox(laserWidth / 2, laserHeight / 2);
+
+        bodyComponent.body = world.createBody(bodyDef);
+        bodyComponent.body.createFixture(fixtureDef);
+
+        return createEntityFrom(laserComponent, bodyComponent);
     }
 
     /**

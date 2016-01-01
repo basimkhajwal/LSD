@@ -32,12 +32,16 @@ public class Assets {
         public static final String BLOCKED = "images/blocked.png";
         public static final String SETTINGS_BACKGROUND = "images/settings_bg.png";
         public static final String NEXT_LEVEL_DISABLED = "buttons/next_level_disabled.png";
+        public static final String LASER_BASE = "images/laser-base.png";
+        public static final String LASER_HEAD = "images/laser-head.png";
 	}
     private static final String[] _Images = {
             Images.BACKGROUND, Images.SENSOR_TILE,
             Images.WALL_TILE, Images.TRANSITION_BACKGROUND,
             Images.TRAJECTORY, Images.NEXT_LEVEL_DISABLED,
-            Images.BLOCKED, Images.SETTINGS_BACKGROUND };
+            Images.BLOCKED, Images.SETTINGS_BACKGROUND,
+            Images.LASER_BASE, Images.LASER_HEAD
+        };
 
     public static class Buttons {
         public static final String MENU_PLAY = "buttons/menu_play";
