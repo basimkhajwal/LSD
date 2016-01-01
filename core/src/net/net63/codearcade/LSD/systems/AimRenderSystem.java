@@ -35,7 +35,7 @@ public class AimRenderSystem extends IteratingSystem implements Disposable{
     private ComponentMapper<StateComponent> stateMapper;
 
     public AimRenderSystem(OrthographicCamera gameCamera) {
-        super(Family.all(PlayerComponent.class).get(), Constants.SYSTEM_PRIORITIES.EFFECT_RENDER);
+        super(Family.all(PlayerComponent.class).get(), Constants.SYSTEM_PRIORITIES.AIM_RENDER);
 
         this.gameCamera = gameCamera;
         batch = new SpriteBatch();
