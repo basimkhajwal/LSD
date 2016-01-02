@@ -41,13 +41,21 @@ public class Constants {
     public static final float PLAYER_WIDTH = 0.45f;
     public static final float PLAYER_HEIGHT = 0.45f;
 
+    public static final float LASER_BODY_WIDTH = 0.5f;
+    public static final float LASER_BODY_HEIGHT = 0.5f;
+    public static final float LASER_BODY_ORIGIN_X = LASER_BODY_WIDTH / 2;
+    public static final float LASER_BODY_ORIGIN_Y = LASER_BODY_HEIGHT * 0.2f;
+
+    public static final float LASER_HEAD_WIDTH = LASER_BODY_WIDTH * 0.6f;
+    public static final float LASER_HEAD_HEIGHT = LASER_BODY_HEIGHT * 0.75f;
+    public static final float LASER_HEAD_ORIGIN_X = LASER_HEAD_WIDTH / 2;
+    public static final float LASER_HEAD_ORIGIN_Y = LASER_HEAD_HEIGHT * (13 / 15f);
+
     public static final int PLAYER_DEATH_PARTICLES = 30;
     public static final int PLATFORM_PARTICLES     = 50;
 
     public static final int NUM_TRAJECTORY_PROJECTIONS = 25;
     public static final int TRAJECTORY_PROJECTION_STEPS = 7;
-
-    public static final float DEATH_TIME = 2f;
 
     public static final Vector2 WORLD_GRAVITY = new Vector2(0, -10);
 
