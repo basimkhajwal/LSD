@@ -339,15 +339,12 @@ public class WorldBuilder {
 
     private static Entity createLaser(float x, float y, float width, float height, float interval, String direction, float angle, boolean isOn) {
 
-        float bodyWidth = 1f;
-        float bodyHeight = 1f;
-        float bodyOriginX = bodyWidth / 2; //In the middle
-        float bodyOriginY = bodyHeight * 0.2f; //4 pixels up from the bottom
+        float bodyHeight = Constants.LASER_BODY_HEIGHT;
 
-        float laserWidth = bodyWidth * 0.6f;
-        float laserHeight = bodyHeight * 0.75f;
-        float laserOriginX = laserWidth / 2;
-        float laserOriginY = laserHeight * (13 / 15f);
+        float laserWidth = Constants.LASER_HEAD_WIDTH;
+        float laserHeight = Constants.LASER_HEAD_HEIGHT;
+        float laserOriginX = Constants.LASER_HEAD_ORIGIN_X;
+        float laserOriginY = Constants.LASER_HEAD_ORIGIN_Y;
 
         addBoundedBody(x, y, width, height);
 
@@ -363,24 +360,24 @@ public class WorldBuilder {
         bodyDef.type = BodyDef.BodyType.StaticBody;
         bodyDef.angle = angle * MathUtils.degreesToRadians;
 
-        if (direction == "up") {
+        if (direction.equals("up")) {
             laserComponent.direction = 0;
             bodyDef.position.set(x + width / 2, y + bodyHeight / 2);
         }
 
-        else if (direction == "down") {
+        else if (direction.equals("right")) {
             laserComponent.direction = 1;
-            bodyDef.position.set(x + width / 2, y + height - bodyHeight / 2);
+            bodyDef.position.set(x + bodyHeight / 2, y + height / 2);
         }
 
-        else if (direction == "right") {
+        else if (direction.equals("down")) {
             laserComponent.direction = 2;
-            bodyDef.position.set(x + bodyWidth / 2, y + height / 2);
+            bodyDef.position.set(x + width / 2, y + height - bodyHeight / 2);
         }
 
         else {
             laserComponent.direction = 3;
-            bodyDef.position.set(x + width - bodyWidth / 2, y + height / 2);
+            bodyDef.position.set(x + width - bodyHeight / 2, y + height / 2);
         }
 
         FixtureDef fixtureDef = new FixtureDef();
