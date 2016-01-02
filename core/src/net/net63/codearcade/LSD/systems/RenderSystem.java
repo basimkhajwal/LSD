@@ -6,6 +6,7 @@ import com.badlogic.ashley.core.Family;
 import com.badlogic.ashley.systems.IteratingSystem;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.Fixture;
@@ -62,6 +63,7 @@ public class RenderSystem extends IteratingSystem implements Disposable {
         Body body = bodyMapper.get(entity).body;
         RenderComponent renderComponent = renderMapper.get(entity);
         Fixture fixture = body.getFixtureList().first();
+        Vector2 position = body.getPosition();
 
         //Short circuit if rendering is set to false or invalid body
         if (!renderComponent.render || fixture == null) return;
@@ -78,7 +80,7 @@ public class RenderSystem extends IteratingSystem implements Disposable {
                 polygon.getVertex(2, tmp2);
 
                 tmp2.sub(tmp);
-                tmp.add(body.getPosition());
+                tmp.add(position);
 
                 break;
 
@@ -86,7 +88,7 @@ public class RenderSystem extends IteratingSystem implements Disposable {
             case Circle:
                 float radius = fixture.getShape().getRadius();
 
-                tmp.set(body.getPosition()).sub(radius, radius);
+                tmp.set(position).sub(radius, radius);
                 tmp2.set(radius * 2, radius * 2);
 
                 break;
@@ -115,7 +117,7 @@ public class RenderSystem extends IteratingSystem implements Disposable {
 
         } else {
             //Simply draw at the given position and size
-            batch.draw(renderComponent.texture, tmp.x, tmp.y, tmp2.x, tmp2.y);
+            batch.draw(renderComponent.texture, tmp.x, tmp.y, tmp2.x / 2, tmp2.y / 2, tmp2.x, tmp2.y, 1, 1, body.getAngle() * MathUtils.radiansToDegrees);
         }
 
     }
