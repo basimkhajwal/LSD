@@ -7,6 +7,8 @@ import com.badlogic.ashley.systems.IteratingSystem;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.utils.Disposable;
 import net.net63.codearcade.LSD.components.BodyComponent;
@@ -19,7 +21,7 @@ import net.net63.codearcade.LSD.utils.Constants;
  */
 public class LaserSystem extends IteratingSystem implements Disposable {
 
-    private Texture base;
+    private TextureRegion baseTexture;
 
     private SpriteBatch batch;
     private OrthographicCamera gameCamera;
@@ -33,7 +35,7 @@ public class LaserSystem extends IteratingSystem implements Disposable {
         this.gameCamera = gameCamera;
         batch = new SpriteBatch();
 
-        base = Assets.getAsset(Assets.Images.LASER_BASE, Texture.class);
+        baseTexture = new TextureRegion(Assets.getAsset(Assets.Images.LASER_BASE, Texture.class));
 
         laserMapper = ComponentMapper.getFor(LaserComponent.class);
         bodyMapper = ComponentMapper.getFor(BodyComponent.class);
@@ -54,8 +56,16 @@ public class LaserSystem extends IteratingSystem implements Disposable {
         LaserComponent laser = laserMapper.get(entity);
         Body body = bodyMapper.get(entity).body;
 
-    
+        float width = Constants.LASER_BODY_WIDTH;
+        float height = Constants.LASER_BODY_HEIGHT;
+        float angle = 180 - (laser.direction * 90);
 
+        float offsetX = (laser.direction % 2 == 1) ? width / 2 : height / 2;
+        float offsetY = (laser.direction % 2 == 1) ? height / 2: width / 2;
+
+        Vector2 pos = body.getPosition().sub(offsetX, offsetY);
+
+        batch.draw(baseTexture, pos.x, pos.y, width / 2, height / 2, width, height, 1, 1, angle);
     }
 
     @Override
