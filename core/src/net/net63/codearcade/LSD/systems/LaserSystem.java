@@ -19,7 +19,6 @@ import net.net63.codearcade.LSD.utils.Constants;
  */
 public class LaserSystem extends IteratingSystem implements Disposable {
 
-    private Texture head;
     private Texture base;
 
     private SpriteBatch batch;
@@ -34,7 +33,6 @@ public class LaserSystem extends IteratingSystem implements Disposable {
         this.gameCamera = gameCamera;
         batch = new SpriteBatch();
 
-        head = Assets.getAsset(Assets.Images.LASER_HEAD, Texture.class);
         base = Assets.getAsset(Assets.Images.LASER_BASE, Texture.class);
 
         laserMapper = ComponentMapper.getFor(LaserComponent.class);
@@ -56,6 +54,7 @@ public class LaserSystem extends IteratingSystem implements Disposable {
         LaserComponent laser = laserMapper.get(entity);
         Body body = bodyMapper.get(entity).body;
 
+    
 
     }
 
