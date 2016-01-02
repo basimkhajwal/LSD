@@ -47,6 +47,7 @@ public class Constants {
     public static final float LASER_BODY_ORIGIN_Y = LASER_BODY_HEIGHT * 0.2f;
 
     public static final float MAX_LASER_DISTANCE = 20f;
+    public static final float LASER_UPDATE_TIME = 0.1f;
 
     public static final float LASER_HEAD_WIDTH = LASER_BODY_WIDTH * 0.6f;
     public static final float LASER_HEAD_HEIGHT = LASER_BODY_WIDTH * 0.75f;
