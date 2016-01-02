@@ -32,6 +32,10 @@ public class WorldBuilder {
     private static final float MAX_PARTICLE_SIZE = 0.09f;
     private static final float MIN_PARTICLE_SIZE = 0.05f;
 
+    // --------------- Useful Variables --------------
+
+    private static final Vector2 tmp = new Vector2();
+
     // --------------- State Vars --------------------
 
     private static Engine engine;
@@ -335,13 +339,21 @@ public class WorldBuilder {
 
     private static Entity createLaser(float x, float y, float width, float height, float interval, String direction, float angle, boolean isOn) {
 
-        float laserWidth = 0.2f;
-        float laserHeight = 0.2f;
+        float bodyWidth = 1f;
+        float bodyHeight = 1f;
+        float bodyOriginX = bodyWidth / 2; //In the middle
+        float bodyOriginY = bodyHeight * 0.2f; //4 pixels up from the bottom
 
-        addBoundedBody(x, y, laserWidth, laserHeight);
+        float laserWidth = bodyWidth * 0.6f;
+        float laserHeight = bodyHeight * 0.75f;
+        float laserOriginX = laserWidth / 2;
+        float laserOriginY = laserHeight * (13 / 15f);
+
+        addBoundedBody(x, y, width, height);
 
         LaserComponent laserComponent = new LaserComponent();
         BodyComponent bodyComponent = new BodyComponent();
+        RenderComponent renderComponent = new RenderComponent();
 
         laserComponent.angle = angle;
         laserComponent.interval = interval;
@@ -349,38 +361,46 @@ public class WorldBuilder {
 
         BodyDef bodyDef = new BodyDef();
         bodyDef.type = BodyDef.BodyType.StaticBody;
-        bodyDef.angle = MathUtils.degreesToRadians * angle;
+        bodyDef.angle = angle * MathUtils.degreesToRadians;
 
         if (direction == "up") {
             laserComponent.direction = 0;
-            bodyDef.position.set(x + width / 2, y + laserHeight / 2);
+            bodyDef.position.set(x + width / 2, y + bodyHeight / 2);
         }
 
         else if (direction == "down") {
             laserComponent.direction = 1;
-            bodyDef.position.set(x + width / 2, y + height - laserHeight / 2);
+            bodyDef.position.set(x + width / 2, y + height - bodyHeight / 2);
         }
 
         else if (direction == "right") {
             laserComponent.direction = 2;
-            bodyDef.position.set(x + laserWidth / 2, y + height / 2);
+            bodyDef.position.set(x + bodyWidth / 2, y + height / 2);
         }
 
         else {
             laserComponent.direction = 3;
-            bodyDef.position.set(x + width - laserWidth / 2, y + height / 2);
+            bodyDef.position.set(x + width - bodyWidth / 2, y + height / 2);
         }
 
         FixtureDef fixtureDef = new FixtureDef();
-        fixtureDef.restitution = 0.0f;
         fixtureDef.shape = new PolygonShape();
-
         ((PolygonShape) fixtureDef.shape).setAsBox(laserWidth / 2, laserHeight / 2);
 
         bodyComponent.body = world.createBody(bodyDef);
         bodyComponent.body.createFixture(fixtureDef);
 
-        return createEntityFrom(laserComponent, bodyComponent);
+        Vector2 pos = bodyComponent.body.getPosition();
+        tmp.set(laserOriginX - laserWidth / 2, laserOriginY - laserHeight / 2);
+
+        Vector2 actualPos = bodyComponent.body.getWorldPoint(tmp).sub(pos);
+        bodyComponent.body.setTransform(pos.sub(actualPos), bodyComponent.body.getAngle());
+
+        renderComponent.tileToSize = false;
+        renderComponent.render = true;
+        renderComponent.texture = new TextureRegion(Assets.getAsset(Assets.Images.LASER_HEAD, Texture.class));
+
+        return createEntityFrom(laserComponent, bodyComponent, renderComponent);
     }
 
     /**
