@@ -98,10 +98,10 @@ public class Constants {
         public static final int ANIMATION               = 9;
         public static final int BACKGROUND_RENDER       = 10;
         public static final int PARALLAX_EFFECT         = 11;
-        public static final int RENDER                  = 12;
-        public static final int DEBUG_RENDER            = 13;
-        public static final int PARTICLE_RENDER         = 14;
-        public static final int LASER                   = 15;
+        public static final int LASER                   = 12;
+        public static final int RENDER                  = 13;
+        public static final int DEBUG_RENDER            = 14;
+        public static final int PARTICLE_RENDER         = 15;
         public static final int TIMER                   = 16;
         public static final int AIM_RENDER              = 17;
     }
