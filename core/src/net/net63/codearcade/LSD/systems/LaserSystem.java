@@ -60,10 +60,9 @@ public class LaserSystem extends IteratingSystem implements Disposable {
         float height = Constants.LASER_BODY_HEIGHT;
         float angle = 180 - (laser.direction * 90);
 
-        float offsetX = (laser.direction % 2 == 1) ? width / 2 : height / 2;
-        float offsetY = (laser.direction % 2 == 1) ? height / 2: width / 2;
-
-        Vector2 pos = body.getPosition().sub(offsetX, offsetY);
+        Vector2 pos = new Vector2(Constants.LASER_HEAD_ORIGIN_X, Constants.LASER_HEAD_ORIGIN_Y);
+        pos.sub(body.getLocalCenter());
+        pos.set(body.getWorldPoint(pos)).sub(Constants.LASER_BODY_ORIGIN_X, Constants.LASER_BODY_ORIGIN_Y);
 
         batch.draw(baseTexture, pos.x, pos.y, width / 2, height / 2, width, height, 1, 1, angle);
     }
