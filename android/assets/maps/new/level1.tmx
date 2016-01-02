@@ -63,10 +63,11 @@
   </object>
  </objectgroup>
  <objectgroup name="lasers">
-  <object id="49" name="laser" type="laser" x="880" y="350" width="10" height="10">
+  <object id="49" name="laser" type="laser" x="840" y="350" width="50" height="30">
    <properties>
-    <property name="angle" value="270"/>
+    <property name="angle" value="45"/>
     <property name="default" value="on"/>
+    <property name="direction" value="down"/>
     <property name="interval" value="2000"/>
    </properties>
   </object>
