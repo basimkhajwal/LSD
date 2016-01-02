@@ -78,6 +78,23 @@ public class LaserSystem extends IteratingSystem implements Disposable {
         pos.set(body.getWorldPoint(pos)).sub(Constants.LASER_BODY_ORIGIN_X, Constants.LASER_BODY_ORIGIN_Y);
 
         batch.draw(baseTexture, pos.x, pos.y, width / 2, height / 2, width, height, 1, 1, angle);
+
+        laser.laserUpdateTime += deltaTime;
+        laser.laserTime += deltaTime;
+
+        if (laser.laserTime >= laser.interval) {
+            laser.laserTime = 0;
+            laser.laserEnabled = !laser.laserEnabled;
+        }
+
+        if (laser.laserUpdateTime >= Constants.LASER_UPDATE_TIME) {
+
+            //TODO Calculate call back here
+
+        }
+
+        //TODO Draw the laser
+
     }
 
     @Override
