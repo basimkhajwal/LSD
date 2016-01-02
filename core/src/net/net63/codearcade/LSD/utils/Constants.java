@@ -42,12 +42,14 @@ public class Constants {
     public static final float PLAYER_HEIGHT = 0.45f;
 
     public static final float LASER_BODY_WIDTH = 0.5f;
-    public static final float LASER_BODY_HEIGHT = 0.5f;
+    public static final float LASER_BODY_HEIGHT = 0.3f;
     public static final float LASER_BODY_ORIGIN_X = LASER_BODY_WIDTH / 2;
     public static final float LASER_BODY_ORIGIN_Y = LASER_BODY_HEIGHT * 0.2f;
 
+    public static final float MAX_LASER_DISTANCE = 20f;
+
     public static final float LASER_HEAD_WIDTH = LASER_BODY_WIDTH * 0.6f;
-    public static final float LASER_HEAD_HEIGHT = LASER_BODY_HEIGHT * 0.75f;
+    public static final float LASER_HEAD_HEIGHT = LASER_BODY_WIDTH * 0.75f;
     public static final float LASER_HEAD_ORIGIN_X = LASER_HEAD_WIDTH / 2;
     public static final float LASER_HEAD_ORIGIN_Y = LASER_HEAD_HEIGHT * (13 / 15f);
 
@@ -63,10 +65,11 @@ public class Constants {
 
     public static class CategoryBits {
 
-        public static final short PLAYER      = 0x0001;
-        public static final short PARTICLE    = 0x0002;
-        public static final short WALL        = 0x0004;
-        public static final short SENSOR      = 0x0008;
+        public static final short PLAYER      = 0x001;
+        public static final short PARTICLE    = 0x002;
+        public static final short WALL        = 0x004;
+        public static final short SENSOR      = 0x008;
+        public static final short LASER       = 0x010;
 
     }
 
@@ -74,6 +77,7 @@ public class Constants {
 
         public static final short PLAYER      = 0xFFF;
         public static final short PARTICLE    = CategoryBits.PARTICLE | CategoryBits.WALL | CategoryBits.SENSOR;
+        public static final short LASER       = CategoryBits.WALL | CategoryBits.SENSOR;
 
     }
 
