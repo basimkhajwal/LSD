@@ -382,6 +382,9 @@ public class WorldBuilder {
 
         FixtureDef fixtureDef = new FixtureDef();
         fixtureDef.shape = new PolygonShape();
+        fixtureDef.filter.categoryBits = Constants.CategoryBits.LASER;
+        fixtureDef.filter.maskBits = Constants.MaskBits.LASER;
+
         ((PolygonShape) fixtureDef.shape).setAsBox(laserWidth / 2, laserHeight / 2);
 
         bodyComponent.body = world.createBody(bodyDef);
