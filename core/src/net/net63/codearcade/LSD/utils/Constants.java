@@ -53,6 +53,8 @@ public class Constants {
     public static final float LASER_HEAD_HEIGHT = LASER_BODY_WIDTH * 0.75f;
     public static final float LASER_HEAD_ORIGIN_X = LASER_HEAD_WIDTH / 2;
     public static final float LASER_HEAD_ORIGIN_Y = LASER_HEAD_HEIGHT * (13 / 15f);
+    public static final float LASER_HEAD_LASER_X = LASER_HEAD_WIDTH / 2;
+    public static final float LASER_HEAD_LASER_Y = 0;
 
     public static final int PLAYER_DEATH_PARTICLES = 30;
     public static final int PLATFORM_PARTICLES     = 50;
