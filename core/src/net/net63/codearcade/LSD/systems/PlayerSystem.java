@@ -91,6 +91,7 @@ public class PlayerSystem extends IteratingSystem implements ContactListener {
 
                 //Various events that signal player death
                 case WALL_COLLISION:
+                case LASER_COLLISION:
                 case TIMER_OVER:
                     applyDeath = true;
                     break;
