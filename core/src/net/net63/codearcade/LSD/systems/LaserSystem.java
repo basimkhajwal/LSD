@@ -4,6 +4,7 @@ import com.badlogic.ashley.core.ComponentMapper;
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.Family;
 import com.badlogic.ashley.systems.IteratingSystem;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -124,8 +125,9 @@ public class LaserSystem extends IteratingSystem implements Disposable {
             batch.end();
 
             shapeRenderer.setProjectionMatrix(gameCamera.combined);
-            shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
-            shapeRenderer.line(laserPos.x, laserPos.y, laser.laserEndPos.x, laser.laserEndPos.y);
+            shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
+            shapeRenderer.setColor(Color.RED);
+            shapeRenderer.rectLine(laserPos.x, laserPos.y, laser.laserEndPos.x, laser.laserEndPos.y, Constants.LASER_BEAM_WIDTH);
             shapeRenderer.end();
 
             batch.begin();

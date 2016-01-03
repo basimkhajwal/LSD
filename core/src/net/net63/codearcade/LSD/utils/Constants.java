@@ -46,15 +46,16 @@ public class Constants {
     public static final float LASER_BODY_ORIGIN_X = LASER_BODY_WIDTH / 2;
     public static final float LASER_BODY_ORIGIN_Y = LASER_BODY_HEIGHT * 0.2f;
 
-    public static final float MAX_LASER_DISTANCE = 20f;
-    public static final float LASER_UPDATE_TIME = 0.1f;
-
     public static final float LASER_HEAD_WIDTH = LASER_BODY_WIDTH * 0.6f;
     public static final float LASER_HEAD_HEIGHT = LASER_BODY_WIDTH * 0.75f;
     public static final float LASER_HEAD_ORIGIN_X = LASER_HEAD_WIDTH / 2;
     public static final float LASER_HEAD_ORIGIN_Y = LASER_HEAD_HEIGHT * (13 / 15f);
     public static final float LASER_HEAD_LASER_X = LASER_HEAD_WIDTH / 2;
     public static final float LASER_HEAD_LASER_Y = 0;
+
+    public static final float MAX_LASER_DISTANCE = 20f;
+    public static final float LASER_UPDATE_TIME = 0.1f;
+    public static final float LASER_BEAM_WIDTH = LASER_HEAD_WIDTH / 6;
 
     public static final int PLAYER_DEATH_PARTICLES = 30;
     public static final int PLATFORM_PARTICLES     = 50;
