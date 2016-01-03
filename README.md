@@ -26,7 +26,6 @@ They should all work but only desktop and HTML5 builds have currently been teste
 - [ ] Add a currency system with stars in order to unlock new levels
 - [ ] Improve menu/title colours
 - [ ] Create more levels
-- [ ] Customize shader for the game (add a new one)
 
 #### Currently Working:
 - [x] Platforms are loaded from a Tiled map (.tmx) format
@@ -66,3 +65,4 @@ They should all work but only desktop and HTML5 builds have currently been teste
 - [x] Create a settings screen
 - [x] Create an extensible map format that will allow various objects
 - [x] Add moving platforms
+- [x] Customize shader for the game (add a new one)
