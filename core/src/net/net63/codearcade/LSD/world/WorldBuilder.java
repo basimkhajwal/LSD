@@ -353,7 +353,7 @@ public class WorldBuilder {
         RenderComponent renderComponent = new RenderComponent();
 
         laserComponent.angle = angle;
-        laserComponent.interval = interval;
+        laserComponent.interval = interval / 1000; //Convert interval from milliseconds to seconds
         laserComponent.laserEnabled = isOn;
 
         BodyDef bodyDef = new BodyDef();
