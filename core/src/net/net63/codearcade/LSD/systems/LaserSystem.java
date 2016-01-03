@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.Fixture;
@@ -27,8 +28,12 @@ public class LaserSystem extends IteratingSystem implements Disposable {
     private TextureRegion baseTexture;
 
     private SpriteBatch batch;
+    private ShapeRenderer shapeRenderer;
     private OrthographicCamera gameCamera;
     private World world;
+
+    private static final Vector2 laserPos = new Vector2();
+    private static final Vector2 endPosition = new Vector2();
 
     private ComponentMapper<LaserComponent> laserMapper;
     private ComponentMapper<BodyComponent> bodyMapper;
@@ -40,6 +45,7 @@ public class LaserSystem extends IteratingSystem implements Disposable {
         this.world = world;
 
         batch = new SpriteBatch();
+        shapeRenderer = new ShapeRenderer();
         baseTexture = new TextureRegion(Assets.getAsset(Assets.Images.LASER_BASE, Texture.class));
 
         laserMapper = ComponentMapper.getFor(LaserComponent.class);
@@ -59,6 +65,9 @@ public class LaserSystem extends IteratingSystem implements Disposable {
     private final RayCastCallback laserCallBack = new RayCastCallback() {
         @Override
         public float reportRayFixture(Fixture fixture, Vector2 point, Vector2 normal, float fraction) {
+
+            
+
             return 0;
         }
     };
@@ -87,10 +96,24 @@ public class LaserSystem extends IteratingSystem implements Disposable {
             laser.laserEnabled = !laser.laserEnabled;
         }
 
-        if (laser.laserUpdateTime >= Constants.LASER_UPDATE_TIME) {
+        if (laser.laserEnabled && laser.laserUpdateTime >= Constants.LASER_UPDATE_TIME) {
+            laser.laserUpdateTime = 0;
 
-            //TODO Calculate call back here
+            System.out.println("GOT");
 
+            laserPos.set(Constants.LASER_HEAD_LASER_X - laserWidth / 2, Constants.LASER_HEAD_LASER_Y - laserHeight / 2);
+            laserPos.set(body.getWorldPoint(laserPos));
+
+            endPosition.set(Constants.MAX_LASER_DISTANCE, 0);
+            endPosition.setAngleRad(body.getAngle());
+            endPosition.add(laserPos);
+
+            world.rayCast(laserCallBack, laserPos, endPosition);
+
+            shapeRenderer.setProjectionMatrix(gameCamera.combined);
+            shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
+            shapeRenderer.line(laserPos.x, laserPos.y, endPosition.x, endPosition.y);
+            shapeRenderer.end();
         }
 
         //TODO Draw the laser
@@ -100,5 +123,6 @@ public class LaserSystem extends IteratingSystem implements Disposable {
     @Override
     public void dispose() {
         batch.dispose();
+        shapeRenderer.dispose();
     }
 }
