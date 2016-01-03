@@ -13,6 +13,7 @@ public enum GameEvent {
 
     PLATFORM_COLLISION,
     WALL_COLLISION,
+    LASER_COLLISION,
 
     TIMER_STARTED,
     TIMER_STOPPED,
