@@ -32,8 +32,11 @@ public class LaserSystem extends IteratingSystem implements Disposable {
     private OrthographicCamera gameCamera;
     private World world;
 
-    private static final Vector2 laserPos = new Vector2();
-    private static final Vector2 endPosition = new Vector2();
+    private final Vector2 laserPos = new Vector2();
+    private final Vector2 endPosition = new Vector2();
+
+    private boolean laserHit = false;
+    private final Vector2 laserHitPos = new Vector2();
 
     private ComponentMapper<LaserComponent> laserMapper;
     private ComponentMapper<BodyComponent> bodyMapper;
@@ -66,7 +69,12 @@ public class LaserSystem extends IteratingSystem implements Disposable {
         @Override
         public float reportRayFixture(Fixture fixture, Vector2 point, Vector2 normal, float fraction) {
 
-            
+            if ((fixture.getFilterData().categoryBits & Constants.MaskBits.LASER) == 0) {
+                return -1;
+            }
+
+            laserHit = true;
+            laserHitPos.set(point);
 
             return 0;
         }
@@ -91,6 +99,9 @@ public class LaserSystem extends IteratingSystem implements Disposable {
         laser.laserUpdateTime += deltaTime;
         laser.laserTime += deltaTime;
 
+        laserPos.set(Constants.LASER_HEAD_LASER_X - laserWidth / 2, Constants.LASER_HEAD_LASER_Y - laserHeight / 2);
+        laserPos.set(body.getWorldPoint(laserPos));
+
         if (laser.laserTime >= laser.interval) {
             laser.laserTime = 0;
             laser.laserEnabled = !laser.laserEnabled;
@@ -99,24 +110,26 @@ public class LaserSystem extends IteratingSystem implements Disposable {
         if (laser.laserEnabled && laser.laserUpdateTime >= Constants.LASER_UPDATE_TIME) {
             laser.laserUpdateTime = 0;
 
-            System.out.println("GOT");
-
-            laserPos.set(Constants.LASER_HEAD_LASER_X - laserWidth / 2, Constants.LASER_HEAD_LASER_Y - laserHeight / 2);
-            laserPos.set(body.getWorldPoint(laserPos));
-
             endPosition.set(Constants.MAX_LASER_DISTANCE, 0);
-            endPosition.setAngleRad(body.getAngle());
+            endPosition.setAngleRad(body.getAngle() - (float)(Math.PI / 2.0));
             endPosition.add(laserPos);
 
+            laserHit = false;
             world.rayCast(laserCallBack, laserPos, endPosition);
+
+            laser.laserEndPos.set(laserHit ? laserHitPos : endPosition);
+        }
+
+        if (laser.laserEnabled) {
+            batch.end();
 
             shapeRenderer.setProjectionMatrix(gameCamera.combined);
             shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
-            shapeRenderer.line(laserPos.x, laserPos.y, endPosition.x, endPosition.y);
+            shapeRenderer.line(laserPos.x, laserPos.y, laser.laserEndPos.x, laser.laserEndPos.y);
             shapeRenderer.end();
-        }
 
-        //TODO Draw the laser
+            batch.begin();
+        }
 
     }
 
