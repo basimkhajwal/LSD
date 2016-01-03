@@ -3,6 +3,7 @@ package net.net63.codearcade.LSD.systems;
 import com.badlogic.ashley.core.ComponentMapper;
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.Family;
+import com.badlogic.ashley.signals.Signal;
 import com.badlogic.ashley.systems.IteratingSystem;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -18,6 +19,7 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Disposable;
 import net.net63.codearcade.LSD.components.BodyComponent;
 import net.net63.codearcade.LSD.components.LaserComponent;
+import net.net63.codearcade.LSD.events.GameEvent;
 import net.net63.codearcade.LSD.managers.Assets;
 import net.net63.codearcade.LSD.utils.Constants;
 
@@ -42,11 +44,14 @@ public class LaserSystem extends IteratingSystem implements Disposable {
     private ComponentMapper<LaserComponent> laserMapper;
     private ComponentMapper<BodyComponent> bodyMapper;
 
-    public LaserSystem(OrthographicCamera gameCamera, World world) {
+    private Signal<GameEvent> gameEventSignal;
+
+    public LaserSystem(OrthographicCamera gameCamera, World world, Signal<GameEvent> gameEventSignal) {
         super(Family.all(LaserComponent.class).get(), Constants.SYSTEM_PRIORITIES.LASER);
 
         this.gameCamera = gameCamera;
         this.world = world;
+        this.gameEventSignal = gameEventSignal;
 
         batch = new SpriteBatch();
         shapeRenderer = new ShapeRenderer();
@@ -71,6 +76,10 @@ public class LaserSystem extends IteratingSystem implements Disposable {
         public float reportRayFixture(Fixture fixture, Vector2 point, Vector2 normal, float fraction) {
 
             if ((fixture.getFilterData().categoryBits & Constants.MaskBits.LASER) == 0) {
+                if (fixture.getFilterData().categoryBits == Constants.CategoryBits.PLAYER) {
+                    gameEventSignal.dispatch(GameEvent.LASER_COLLISION);
+                }
+
                 return -1;
             }
 
