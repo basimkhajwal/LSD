@@ -21,7 +21,7 @@ import net.net63.codearcade.LSD.world.LevelDescriptor;
  *
  * Created by Basim on 10/08/15.
  */
-public class PlayerSystem extends IteratingSystem implements ContactListener {
+public class PlayerSystem extends IteratingSystem {
 
     //Various component mappers
     private ComponentMapper<BodyComponent> bodyMapper;
@@ -194,58 +194,5 @@ public class PlayerSystem extends IteratingSystem implements ContactListener {
         bodyMapper.get(player).body.setGravityScale(0);
         bodyMapper.get(player).body.setLinearVelocity(Vector2.Zero);
     }
-
-    /* ---------- BOX 2D Contact Stuff */
-
-    @Override
-    public void beginContact(Contact contact) {
-
-        //Get bodies
-        Body a = contact.getFixtureA().getBody();
-        Body b = contact.getFixtureB().getBody();
-
-        //End if no entity-entity collision occurred
-        if (! (a.getUserData() instanceof Entity) || ! (b.getUserData() instanceof Entity)) return;
-
-        //Check if entities have collided
-        Entity entityA = (Entity) a.getUserData();
-        Entity entityB = (Entity) b.getUserData();
-        Entity playerEntity = null;
-
-        //Find player entity
-        if (playerMapper.has(entityA)) playerEntity = entityA;
-        if (playerMapper.has(entityB)) playerEntity = entityB;
-
-        //If a player collision occurred
-        if (playerEntity != null) {
-            //Get the player component
-            PlayerComponent playerComponent = playerMapper.get(playerEntity);
-
-            //Other entity (if player found)
-            Entity other = (entityA == playerEntity) ? entityB : entityA;
-
-            //Fire event that sensor was collided with and save the sensor
-            if (sensorMapper.has(other)) {
-                gameEventSignal.dispatch(GameEvent.PLATFORM_COLLISION);
-
-                playerComponent.colllisionPoint = contact.getWorldManifold().getPoints()[0];
-                playerComponent.currentSensor = other;
-            }
-
-            //Fire event that a wall was collided with
-            if (wallMapper.has(other)) {
-                gameEventSignal.dispatch(GameEvent.WALL_COLLISION);
-            }
-
-        }
-    }
-
-    // ------------------ Un-used contact functions ------------------
-    @Override
-    public void endContact(Contact contact) { }
-    @Override
-    public void preSolve(Contact contact, Manifold oldManifold) { }
-    @Override
-    public void postSolve(Contact contact, ContactImpulse impulse) { }
 
 }
