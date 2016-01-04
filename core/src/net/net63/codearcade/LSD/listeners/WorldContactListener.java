@@ -1,5 +1,6 @@
 package net.net63.codearcade.LSD.listeners;
 
+import com.badlogic.ashley.core.Component;
 import com.badlogic.ashley.core.ComponentMapper;
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.signals.Signal;
@@ -33,7 +34,7 @@ public class WorldContactListener implements ContactListener {
         laserMapper = ComponentMapper.getFor(LaserComponent.class);
     }
 
-    private <T> Entity findEntity(ComponentMapper<T> componentMapper, Entity a, Entity b) {
+    private <T extends Component> Entity findEntity(ComponentMapper<T> componentMapper, Entity a, Entity b) {
         if (componentMapper.has(a)) return a;
         if (componentMapper.has(b)) return b;
 
