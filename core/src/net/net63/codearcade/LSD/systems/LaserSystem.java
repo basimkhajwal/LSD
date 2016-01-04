@@ -12,13 +12,11 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.Body;
-import com.badlogic.gdx.physics.box2d.Fixture;
-import com.badlogic.gdx.physics.box2d.RayCastCallback;
-import com.badlogic.gdx.physics.box2d.World;
+import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.utils.Disposable;
 import net.net63.codearcade.LSD.components.BodyComponent;
 import net.net63.codearcade.LSD.components.LaserComponent;
+import net.net63.codearcade.LSD.components.PlayerComponent;
 import net.net63.codearcade.LSD.events.GameEvent;
 import net.net63.codearcade.LSD.managers.Assets;
 import net.net63.codearcade.LSD.utils.Constants;
@@ -26,7 +24,7 @@ import net.net63.codearcade.LSD.utils.Constants;
 /**
  * Created by Basim on 01/01/16.
  */
-public class LaserSystem extends IteratingSystem implements Disposable {
+public class LaserSystem extends IteratingSystem implements Disposable, ContactListener {
 
     private TextureRegion baseTexture;
 
@@ -76,15 +74,11 @@ public class LaserSystem extends IteratingSystem implements Disposable {
         public float reportRayFixture(Fixture fixture, Vector2 point, Vector2 normal, float fraction) {
 
             if ((fixture.getFilterData().categoryBits & Constants.MaskBits.LASER) == 0) {
-                if (fixture.getFilterData().categoryBits == Constants.CategoryBits.PLAYER) {
-                    gameEventSignal.dispatch(GameEvent.LASER_COLLISION);
-                }
-
                 return -1;
             }
 
-            laserHit = true;
             laserHitPos.set(point);
+            laserHit = true;
 
             return 0;
         }
@@ -106,7 +100,6 @@ public class LaserSystem extends IteratingSystem implements Disposable {
 
         batch.draw(baseTexture, pos.x, pos.y, width / 2, height / 2, width, height, 1, 1, angle);
 
-        laser.laserUpdateTime += deltaTime;
         laser.laserTime += deltaTime;
 
         laserPos.set(Constants.LASER_HEAD_LASER_X - laserWidth / 2, Constants.LASER_HEAD_LASER_Y - laserHeight / 2);
@@ -117,8 +110,7 @@ public class LaserSystem extends IteratingSystem implements Disposable {
             laser.laserEnabled = !laser.laserEnabled;
         }
 
-        if (laser.laserEnabled && laser.laserUpdateTime >= Constants.LASER_UPDATE_TIME) {
-            laser.laserUpdateTime = 0;
+        if (laser.laserEnabled && laser.updateLaser) {
 
             endPosition.set(Constants.MAX_LASER_DISTANCE, 0);
             endPosition.setAngleRad(body.getAngle() - (float)(Math.PI / 2.0));
@@ -126,8 +118,12 @@ public class LaserSystem extends IteratingSystem implements Disposable {
 
             laserHit = false;
             world.rayCast(laserCallBack, laserPos, endPosition);
+            laserHitPos.set(laserHit ? laserHitPos : endPosition);
 
-            laser.laserEndPos.set(laserHit ? laserHitPos : endPosition);
+            laser.laserEndPos.set(laserHitPos);
+
+            if (laser.laserSensorBody != null) world.destroyBody(laser.laserSensorBody);
+            laser.laserSensorBody = createNewSensor(entity, body.getAngle());
         }
 
         if (laser.laserEnabled) {
@@ -144,9 +140,64 @@ public class LaserSystem extends IteratingSystem implements Disposable {
 
     }
 
+    private Body createNewSensor(Entity laser, float angle) {
+        BodyDef bodyDef = new BodyDef();
+        bodyDef.angle = angle;
+        bodyDef.position.set(laserPos).lerp(laserHitPos, 0.5f);
+
+        FixtureDef fixtureDef = new FixtureDef();
+        fixtureDef.shape = new PolygonShape();
+        ((PolygonShape) fixtureDef.shape).setAsBox(Constants.LASER_BEAM_WIDTH / 2, bodyDef.position.dst(laserHitPos));
+        fixtureDef.isSensor = true;
+
+        Body body = world.createBody(bodyDef);
+        body.setUserData(laser);
+        body.createFixture(fixtureDef);
+
+        return body;
+    }
+
     @Override
     public void dispose() {
         batch.dispose();
         shapeRenderer.dispose();
     }
+
+    @Override
+    public void beginContact(Contact contact) {
+        Body bodyA = contact.getFixtureA().getBody();
+        Body bodyB = contact.getFixtureB().getBody();
+
+        if (!(bodyA.getUserData() instanceof Entity) || !(bodyB.getUserData() instanceof Entity)) return;
+
+        Entity entityA = (Entity) bodyA.getUserData();
+        Entity entityB = (Entity) bodyB.getUserData();
+        Entity laser, other;
+
+        if (laserMapper.has(entityA)) {
+            laser = entityA;
+            other = entityB;
+        } else if (laserMapper.has(entityB)) {
+            laser = entityB;
+            other = entityA;
+        } else {
+            return;
+        }
+
+        LaserComponent laserComponent = laserMapper.get(laser);
+        laserComponent.updateLaser = true;
+
+        if (other.getComponent(PlayerComponent.class) != null) {
+            gameEventSignal.dispatch(GameEvent.LASER_COLLISION);
+        }
+    }
+
+    @Override
+    public void endContact(Contact contact) { }
+
+    @Override
+    public void preSolve(Contact contact, Manifold oldManifold) { }
+
+    @Override
+    public void postSolve(Contact contact, ContactImpulse impulse) { }
 }
