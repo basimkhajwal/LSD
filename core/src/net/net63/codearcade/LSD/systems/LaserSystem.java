@@ -147,6 +147,8 @@ public class LaserSystem extends IteratingSystem implements Disposable, ContactL
 
         FixtureDef fixtureDef = new FixtureDef();
         fixtureDef.shape = new PolygonShape();
+        fixtureDef.filter.categoryBits = Constants.CategoryBits.LASER;
+        fixtureDef.filter.maskBits = Constants.MaskBits.LASER;
         ((PolygonShape) fixtureDef.shape).setAsBox(Constants.LASER_BEAM_WIDTH / 2, bodyDef.position.dst(laserHitPos));
         fixtureDef.isSensor = true;
 
