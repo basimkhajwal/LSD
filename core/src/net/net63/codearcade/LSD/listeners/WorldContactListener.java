@@ -80,6 +80,15 @@ public class WorldContactListener implements ContactListener {
                 gameEventSignal.dispatch(GameEvent.WALL_COLLISION);
             }
 
+            //Check if it collided with the laser
+            if (laserMapper.has(other)) {
+                gameEventSignal.dispatch(GameEvent.LASER_COLLISION);
+            }
+        }
+
+        //Check if the laser collided with an object other than the player
+        if (laserEntity != null && playerEntity == null) {
+            gameEventSignal.dispatch(GameEvent.LASER_OBJECT_COLLISION);
         }
     }
 
