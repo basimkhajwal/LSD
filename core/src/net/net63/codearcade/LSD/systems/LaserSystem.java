@@ -107,10 +107,19 @@ public class LaserSystem extends IteratingSystem implements Disposable, ContactL
 
         if (laser.laserTime >= laser.interval) {
             laser.laserTime = 0;
+
+            if (laser.laserEnabled && laser.laserSensorBody != null) {
+                world.destroyBody(laser.laserSensorBody);
+                laser.laserSensorBody = null;
+            }
+
             laser.laserEnabled = !laser.laserEnabled;
+
+            if (laser.laserEnabled) laser.updateLaser = true;
         }
 
         if (laser.laserEnabled && laser.updateLaser) {
+            laser.updateLaser = false;
 
             endPosition.set(Constants.MAX_LASER_DISTANCE, 0);
             endPosition.setAngleRad(body.getAngle() - (float)(Math.PI / 2.0));
@@ -144,6 +153,8 @@ public class LaserSystem extends IteratingSystem implements Disposable, ContactL
         BodyDef bodyDef = new BodyDef();
         bodyDef.angle = angle;
         bodyDef.position.set(laserPos).lerp(laserHitPos, 0.5f);
+
+        System.out.println("created sensor");
 
         FixtureDef fixtureDef = new FixtureDef();
         fixtureDef.shape = new PolygonShape();
