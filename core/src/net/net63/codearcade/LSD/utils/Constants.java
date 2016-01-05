@@ -81,7 +81,7 @@ public class Constants {
 
         public static final short PLAYER      = 0xFFF;
         public static final short PARTICLE    = CategoryBits.PARTICLE | CategoryBits.WALL | CategoryBits.SENSOR;
-        public static final short LASER       = CategoryBits.WALL | CategoryBits.SENSOR;
+        public static final short LASER       = CategoryBits.WALL | CategoryBits.SENSOR | CategoryBits.PLAYER;
 
     }
 
