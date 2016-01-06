@@ -109,7 +109,7 @@ public class LaserSystem extends IteratingSystem implements Disposable, ContactL
                 break;
 
             case 1:
-                pos.sub(originY, width - originX);
+                pos.sub(-originY, originX);
                 break;
 
             case 2:
@@ -117,12 +117,15 @@ public class LaserSystem extends IteratingSystem implements Disposable, ContactL
                 break;
 
             case 3:
-                pos.sub(height-originY, originX);
+                pos.sub(originY, originX - width);
                 break;
 
         }
 
-        batch.draw(baseTexture, pos.x, pos.y, width / 2, height / 2, width, height, 1, 1, angle);
+        float rotX = (laser.direction % 2 == 0) ? width / 2 : 0;
+        float rotY = (laser.direction % 2 == 0) ? height /2 : 0;
+
+        batch.draw(baseTexture, pos.x, pos.y, rotX, rotY, width, height, 1, 1, angle);
 
         laser.laserTime += deltaTime;
 
