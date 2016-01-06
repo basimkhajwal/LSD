@@ -44,6 +44,7 @@ public class LaserSystem extends IteratingSystem implements Disposable, ContactL
 
     private Signal<GameEvent> gameEventSignal;
 
+
     public LaserSystem(OrthographicCamera gameCamera, World world, Signal<GameEvent> gameEventSignal) {
         super(Family.all(LaserComponent.class).get(), Constants.SYSTEM_PRIORITIES.LASER);
 
@@ -93,10 +94,33 @@ public class LaserSystem extends IteratingSystem implements Disposable, ContactL
         float height = Constants.LASER_BODY_HEIGHT;
         float laserWidth = Constants.LASER_HEAD_WIDTH;
         float laserHeight = Constants.LASER_HEAD_HEIGHT;
-        float angle = 180 - (laser.direction * 90);
+        float originX = Constants.LASER_BODY_ORIGIN_X;
+        float originY = Constants.LASER_BODY_ORIGIN_Y;
+        float angle = (360 + (2 - laser.direction) * 90) % 360;
 
         Vector2 pos = new Vector2(Constants.LASER_HEAD_ORIGIN_X - laserWidth / 2, Constants.LASER_HEAD_ORIGIN_Y - laserHeight / 2);
-        pos.set(body.getWorldPoint(pos)).sub(Constants.LASER_BODY_ORIGIN_X, Constants.LASER_BODY_ORIGIN_Y);
+        pos.set(body.getWorldPoint(pos));
+
+        //If it is up or down minus x-accordingly
+        switch (laser.direction) {
+
+            case 0:
+                pos.sub(originX, height-originY);
+                break;
+
+            case 1:
+                pos.sub(originY, width - originX);
+                break;
+
+            case 2:
+                pos.sub(originX, originY);
+                break;
+
+            case 3:
+                pos.sub(height-originY, originX);
+                break;
+
+        }
 
         batch.draw(baseTexture, pos.x, pos.y, width / 2, height / 2, width, height, 1, 1, angle);
 
@@ -118,6 +142,15 @@ public class LaserSystem extends IteratingSystem implements Disposable, ContactL
             if (laser.laserEnabled) laser.updateLaser = true;
         }
 
+        if (laser.laserEnabled) {
+            laser.laserUpdateTime += deltaTime;
+
+            if (laser.laserUpdateTime >= Constants.LASER_UPDATE_TIME) {
+                laser.laserUpdateTime = 0;
+                laser.updateLaser = true;
+            }
+        }
+
         if (laser.laserEnabled && laser.updateLaser) {
             laser.updateLaser = false;
 
@@ -129,10 +162,13 @@ public class LaserSystem extends IteratingSystem implements Disposable, ContactL
             world.rayCast(laserCallBack, laserPos, endPosition);
             laserHitPos.set(laserHit ? laserHitPos : endPosition);
 
-            laser.laserEndPos.set(laserHitPos);
+            if (laser.laserEndPos.dst(laserHitPos) > 0.01f) {
+                laser.laserEndPos.set(laserHitPos);
 
-            if (laser.laserSensorBody != null) world.destroyBody(laser.laserSensorBody);
-            laser.laserSensorBody = createNewSensor(entity, body.getAngle());
+                if (laser.laserSensorBody != null) world.destroyBody(laser.laserSensorBody);
+                laser.laserSensorBody = createNewSensor(entity, body.getAngle());
+            }
+
         }
 
         if (laser.laserEnabled) {
