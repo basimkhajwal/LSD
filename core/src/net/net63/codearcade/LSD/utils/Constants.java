@@ -54,7 +54,7 @@ public class Constants {
     public static final float LASER_HEAD_LASER_Y = 0;
 
     public static final float MAX_LASER_DISTANCE = 20f;
-    public static final float LASER_UPDATE_TIME = 0.1f;
+    public static final float LASER_UPDATE_TIME = 0.05f;
     public static final float LASER_BEAM_WIDTH = LASER_HEAD_WIDTH / 6;
 
     public static final int PLAYER_DEATH_PARTICLES = 30;
