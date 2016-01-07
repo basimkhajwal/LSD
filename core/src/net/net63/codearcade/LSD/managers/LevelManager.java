@@ -18,7 +18,7 @@ public class LevelManager {
         public static final int DEBUG    = 1;
     }
 
-    private static final LevelPack[] levelPacks = new LevelPack[]{
+    public static final LevelPack[] levelPacks = new LevelPack[]{
         new LevelPack("original", "maps/original/level", 16),
         new LevelPack("debug", "maps/new/level", 1)
     };
