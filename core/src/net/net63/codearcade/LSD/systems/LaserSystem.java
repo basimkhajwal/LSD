@@ -81,7 +81,7 @@ public class LaserSystem extends IteratingSystem implements Disposable, ContactL
             laserHitPos.set(point);
             laserHit = true;
 
-            return 0;
+            return fraction;
         }
     };
 
