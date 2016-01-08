@@ -19,7 +19,6 @@ import net.net63.codearcade.LSD.managers.ShaderManager;
 import net.net63.codearcade.LSD.screens.overlays.SettingsScreen;
 import net.net63.codearcade.LSD.utils.BackgroundRenderer;
 import net.net63.codearcade.LSD.utils.CentreGUI;
-import net.net63.codearcade.LSD.utils.Constants;
 import net.net63.codearcade.LSD.utils.GUIBuilder;
 
 
@@ -142,7 +141,7 @@ public class MenuScreen extends AbstractScreen{
         //If the button has been clicked start the game
 		if (playClicked) {
             dispose();
-            game.setScreen(new LevelSelectScreen(game, Constants.DEFAULT_PACK));
+            game.setScreen(new PackSelectScreen(game));
         }
 
         //If the settings button was clicked go to the settings screen
