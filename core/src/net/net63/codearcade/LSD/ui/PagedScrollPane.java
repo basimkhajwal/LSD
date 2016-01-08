@@ -66,7 +66,7 @@ public class PagedScrollPane extends ScrollPane {
 
 	@Override
 	public void setWidget (Actor widget) {
-		throw new UnsupportedOperationException("Use PagedScrollPane#addPage.");
+		//throw new UnsupportedOperationException("Use PagedScrollPane#addPage.");
 	}
 	
 	@Override
