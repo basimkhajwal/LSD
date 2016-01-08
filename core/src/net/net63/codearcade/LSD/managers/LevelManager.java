@@ -20,6 +20,8 @@ public class LevelManager {
 
     public static final LevelPack[] levelPacks = new LevelPack[]{
         new LevelPack("original", "maps/original/level", 16),
+            new LevelPack("test", "maps/new/level", 1),
+            new LevelPack("NOT WORKING", "maps/new/level", 1),
         new LevelPack("debug", "maps/new/level", 1)
     };
 
