@@ -36,10 +36,8 @@ public class PackSelectScreen extends AbstractScreen {
         pagedScrollPane = new PagedScrollPane();
 
         for (LevelManager.LevelPack levelPack: LevelManager.levelPacks) {
-
             Table page = createPage(levelPack);
-
-
+            pagedScrollPane.addPage(page);
         }
 
         centreGUI.getStage().addActor(pagedScrollPane);
