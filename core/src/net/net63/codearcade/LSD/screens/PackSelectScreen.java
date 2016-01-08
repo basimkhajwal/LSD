@@ -1,7 +1,9 @@
 package net.net63.codearcade.LSD.screens;
 
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import net.net63.codearcade.LSD.LSD;
+import net.net63.codearcade.LSD.managers.LevelManager;
 import net.net63.codearcade.LSD.managers.ShaderManager;
 import net.net63.codearcade.LSD.utils.BackgroundRenderer;
 import net.net63.codearcade.LSD.utils.CentreGUI;
@@ -25,8 +27,18 @@ public class PackSelectScreen extends AbstractScreen {
 
     private void setupUI(Stage stage) {
 
+        for (LevelManager.LevelPack levelPack: LevelManager.levelPacks) {
+
+            Table page = createPage(levelPack);
 
 
+        }
+
+
+    }
+
+    private Table createPage(LevelManager.LevelPack levelPack) {
+        return null;
     }
 
     @Override
