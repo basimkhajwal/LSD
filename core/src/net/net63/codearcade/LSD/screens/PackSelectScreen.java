@@ -1,12 +1,17 @@
 package net.net63.codearcade.LSD.screens;
 
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import net.net63.codearcade.LSD.LSD;
+import net.net63.codearcade.LSD.managers.Assets;
 import net.net63.codearcade.LSD.managers.LevelManager;
 import net.net63.codearcade.LSD.managers.ShaderManager;
+import net.net63.codearcade.LSD.ui.PagedScrollPane;
 import net.net63.codearcade.LSD.utils.BackgroundRenderer;
 import net.net63.codearcade.LSD.utils.CentreGUI;
+import net.net63.codearcade.LSD.utils.GUIBuilder;
 
 /**
  * Created by Basim on 31/12/15.
@@ -15,6 +20,7 @@ public class PackSelectScreen extends AbstractScreen {
 
     private BackgroundRenderer backgroundRenderer;
     private CentreGUI centreGUI;
+    private PagedScrollPane pagedScrollPane;
 
     public PackSelectScreen(LSD game) {
         super(game);
@@ -27,6 +33,8 @@ public class PackSelectScreen extends AbstractScreen {
 
     private void setupUI(Stage stage) {
 
+        pagedScrollPane = new PagedScrollPane();
+
         for (LevelManager.LevelPack levelPack: LevelManager.levelPacks) {
 
             Table page = createPage(levelPack);
@@ -34,11 +42,17 @@ public class PackSelectScreen extends AbstractScreen {
 
         }
 
-
+        centreGUI.getStage().addActor(pagedScrollPane);
     }
 
     private Table createPage(LevelManager.LevelPack levelPack) {
-        return null;
+        Table table = new Table();
+
+        Label title = GUIBuilder.createLabel(levelPack.name, Assets.FontSizes.FIFTY, Color.WHITE);
+
+        table.add(title).center();
+
+        return table;
     }
 
     @Override
