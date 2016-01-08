@@ -11,6 +11,7 @@ import net.net63.codearcade.LSD.managers.ShaderManager;
 import net.net63.codearcade.LSD.ui.PagedScrollPane;
 import net.net63.codearcade.LSD.utils.BackgroundRenderer;
 import net.net63.codearcade.LSD.utils.CentreGUI;
+import net.net63.codearcade.LSD.utils.Constants;
 import net.net63.codearcade.LSD.utils.GUIBuilder;
 
 /**
@@ -34,6 +35,7 @@ public class PackSelectScreen extends AbstractScreen {
     private void setupUI(Stage stage) {
 
         pagedScrollPane = new PagedScrollPane();
+        pagedScrollPane.setSize(Constants.DEFAULT_SCREEN_WIDTH, Constants.DEFAULT_SCREEN_HEIGHT);
 
         for (LevelManager.LevelPack levelPack: LevelManager.levelPacks) {
             Table page = createPage(levelPack);
@@ -48,7 +50,8 @@ public class PackSelectScreen extends AbstractScreen {
 
         Label title = GUIBuilder.createLabel(levelPack.name, Assets.FontSizes.FIFTY, Color.WHITE);
 
-        table.add(title).center();
+        table.setSize(Constants.DEFAULT_SCREEN_WIDTH, Constants.DEFAULT_SCREEN_HEIGHT);
+        table.add(title).padLeft(400).padRight(400).center();
 
         return table;
     }
