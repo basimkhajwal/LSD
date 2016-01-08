@@ -1,9 +1,11 @@
 package net.net63.codearcade.LSD.screens;
 
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.utils.viewport.Viewport;
 import net.net63.codearcade.LSD.LSD;
 import net.net63.codearcade.LSD.managers.Assets;
 import net.net63.codearcade.LSD.managers.LevelManager;
@@ -21,7 +23,11 @@ public class PackSelectScreen extends AbstractScreen {
 
     private BackgroundRenderer backgroundRenderer;
     private CentreGUI centreGUI;
+
+    private Table container;
     private PagedScrollPane pagedScrollPane;
+
+    private static final Vector3 tmp = new Vector3();
 
     public PackSelectScreen(LSD game) {
         super(game);
@@ -34,15 +40,18 @@ public class PackSelectScreen extends AbstractScreen {
 
     private void setupUI(Stage stage) {
 
+        container = new Table();
+        container.setFillParent(true);
+
         pagedScrollPane = new PagedScrollPane();
-        pagedScrollPane.setSize(Constants.DEFAULT_SCREEN_WIDTH, Constants.DEFAULT_SCREEN_HEIGHT);
 
         for (LevelManager.LevelPack levelPack: LevelManager.levelPacks) {
             Table page = createPage(levelPack);
             pagedScrollPane.addPage(page);
         }
 
-        centreGUI.getStage().addActor(pagedScrollPane);
+        container.add(pagedScrollPane).expand().fill();
+        stage.addActor(container);
     }
 
     private Table createPage(LevelManager.LevelPack levelPack) {
@@ -62,6 +71,13 @@ public class PackSelectScreen extends AbstractScreen {
 
         backgroundRenderer.resize(width, height);
         centreGUI.resize(width, height);
+
+        //Set the container at the bottom left corner
+        Viewport viewport = centreGUI.getStage().getViewport();
+        tmp.set(0, height, 0);
+        viewport.getCamera().unproject(tmp);
+        System.out.println(tmp.x + ", " + tmp.y);
+        container.setPosition(tmp.x, tmp.y);
     }
 
     @Override
