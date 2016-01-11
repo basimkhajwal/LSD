@@ -14,7 +14,6 @@ import net.net63.codearcade.LSD.managers.ShaderManager;
 import net.net63.codearcade.LSD.ui.PagedScrollPane;
 import net.net63.codearcade.LSD.utils.BackgroundRenderer;
 import net.net63.codearcade.LSD.utils.CentreGUI;
-import net.net63.codearcade.LSD.utils.Constants;
 import net.net63.codearcade.LSD.utils.GUIBuilder;
 
 /**
@@ -27,6 +26,7 @@ public class PackSelectScreen extends AbstractScreen {
 
     private Table container;
     private PagedScrollPane pagedScrollPane;
+    private Table first, last;
 
     private static final Vector3 tmp = new Vector3();
 
@@ -45,15 +45,22 @@ public class PackSelectScreen extends AbstractScreen {
         container.setFillParent(true);
 
         pagedScrollPane = new PagedScrollPane();
-
-        
+        boolean isFirst = true;
 
         for (LevelManager.LevelPack levelPack: LevelManager.levelPacks) {
             Table page = createPage(levelPack);
             pagedScrollPane.addPage(page);
+
+            if (isFirst) {
+                first = page;
+                isFirst = false;
+            }
+
+            last = page;
         }
 
         container.add(pagedScrollPane).expand().fill();
+
         stage.addActor(container);
     }
 
@@ -62,8 +69,7 @@ public class PackSelectScreen extends AbstractScreen {
 
         Label title = GUIBuilder.createLabel(levelPack.name, Assets.FontSizes.FIFTY, Color.WHITE);
 
-        table.setSize(Constants.DEFAULT_SCREEN_WIDTH, Constants.DEFAULT_SCREEN_HEIGHT);
-        table.add(title).padLeft(400).padRight(400).center();
+        table.add(title).center();
         table.row();
 
         ImageButton test = GUIBuilder.createButton(Assets.Buttons.MENU_PLAY);
@@ -79,11 +85,15 @@ public class PackSelectScreen extends AbstractScreen {
         backgroundRenderer.resize(width, height);
         centreGUI.resize(width, height);
 
+        //Space pages so only one can be seen at a time
+        first.padLeft((width - first.getMinWidth()) / 2);
+        last.padRight((width - last.getMinWidth()) / 2);
+        pagedScrollPane.setPageSpacing(width / 2);
+
         //Set the container at the bottom left corner
         Viewport viewport = centreGUI.getStage().getViewport();
-        tmp.set(0, height, 0);
+        tmp.set(0, height - 1, 0);
         viewport.getCamera().unproject(tmp);
-        System.out.println(tmp.x + ", " + tmp.y);
         container.setPosition(tmp.x, tmp.y);
     }
 
