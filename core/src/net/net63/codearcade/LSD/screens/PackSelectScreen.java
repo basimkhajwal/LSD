@@ -3,7 +3,6 @@ package net.net63.codearcade.LSD.screens;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.viewport.Viewport;
@@ -41,24 +40,19 @@ public class PackSelectScreen extends AbstractScreen {
 
     private void setupUI(Stage stage) {
 
-        container = new Table();
-        container.setFillParent(true);
-
         pagedScrollPane = new PagedScrollPane();
-        boolean isFirst = true;
+        first = null;
 
         for (LevelManager.LevelPack levelPack: LevelManager.levelPacks) {
             Table page = createPage(levelPack);
             pagedScrollPane.addPage(page);
 
-            if (isFirst) {
-                first = page;
-                isFirst = false;
-            }
-
+            if (first == null) first = page;
             last = page;
         }
 
+        container = new Table();
+        container.setFillParent(true);
         container.add(pagedScrollPane).expand().fill();
 
         stage.addActor(container);
@@ -70,10 +64,6 @@ public class PackSelectScreen extends AbstractScreen {
         Label title = GUIBuilder.createLabel(levelPack.name, Assets.FontSizes.FIFTY, Color.WHITE);
 
         table.add(title).center();
-        table.row();
-
-        ImageButton test = GUIBuilder.createButton(Assets.Buttons.MENU_PLAY);
-        table.add(test).size(80, 80).center();
 
         return table;
     }
