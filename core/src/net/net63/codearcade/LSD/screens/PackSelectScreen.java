@@ -2,10 +2,12 @@ package net.net63.codearcade.LSD.screens;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import net.net63.codearcade.LSD.LSD;
 import net.net63.codearcade.LSD.managers.Assets;
@@ -63,12 +65,32 @@ public class PackSelectScreen extends AbstractScreen {
 
         ImageButton prevButton = GUIBuilder.createButton(Assets.Buttons.PREVIOUS_LEVEL);
         buttons.add(prevButton).size(size, size).spaceRight(space);
+        prevButton.addListener(new ClickListener() {
+
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                int page = pagedScrollPane.getCurrentPage() - 1;
+                
+                if (page >= 0) pagedScrollPane.scrollToPage(page);
+            }
+
+        });
 
         ImageButton startButton = GUIBuilder.createButton(Assets.Buttons.MENU_PLAY);
         buttons.add(startButton).size(size, size).spaceRight(space);
 
         ImageButton nextButton = GUIBuilder.createButton(Assets.Buttons.NEXT_LEVEL);
         buttons.add(nextButton).size(size, size);
+        nextButton.addListener(new ClickListener() {
+
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                int page = pagedScrollPane.getCurrentPage() + 1;
+
+                if (page < LevelManager.levelPacks.length) pagedScrollPane.scrollToPage(page);
+            }
+
+        });
 
         buttons.setPosition((800 - buttons.getWidth()) / 2, 150);
 
