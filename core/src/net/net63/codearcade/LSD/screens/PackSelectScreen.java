@@ -32,8 +32,10 @@ public class PackSelectScreen extends AbstractScreen {
     private PagedScrollPane pagedScrollPane;
     private Table first, last;
     private ArrayList<ImageButton> buttons = new ArrayList<ImageButton>();
+    private ImageButton backButton;
 
     private int levelPackNum = -1;
+    private boolean backClicked = false;
 
     private static final Vector3 tmp = new Vector3();
 
@@ -105,8 +107,27 @@ public class PackSelectScreen extends AbstractScreen {
         buttonTable.setPosition((800 - buttonTable.getWidth()) / 2, 150);
         for (ImageButton button: buttons) buttonTable.add(button).size(100, 100).spaceRight(30);
 
+        //Back button (positioned in the top left corner)
+        backButton = GUIBuilder.createButton(Assets.Buttons.BACK);
+        backButton.setSize(100, 60);
+        backButton.addListener(new ClickListener() {
+
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                backClicked = true;
+                event.handle();
+            }
+
+
+        });
+
+        Label titleLabel = GUIBuilder.createLabel("Pack Select", Assets.FontSizes.FIFTY, Color.YELLOW);
+        titleLabel.setPosition((800 - titleLabel.getWidth()) / 2, 600 - titleLabel.getHeight() - 10);
+
         stage.addActor(container);
         stage.addActor(buttonTable);
+        stage.addActor(titleLabel);
+        stage.addActor(backButton);
     }
 
     private Table createPage(LevelManager.LevelPack levelPack) {
@@ -136,6 +157,11 @@ public class PackSelectScreen extends AbstractScreen {
         tmp.set(0, height - 1, 0);
         viewport.getCamera().unproject(tmp);
         container.setPosition(tmp.x, tmp.y);
+
+        //Set the back button to the top right
+        tmp.set(0, 0, 0);
+        viewport.getCamera().unproject(tmp);
+        backButton.setPosition(tmp.x + 10, tmp.y - 10 - backButton.getHeight());
     }
 
     @Override
@@ -143,11 +169,13 @@ public class PackSelectScreen extends AbstractScreen {
         super.render(deltaTime);
 
         for (ImageButton button: buttons) button.setChecked(button.isOver());
+        backButton.setChecked(backButton.isOver());
 
         backgroundRenderer.render(deltaTime);
         centreGUI.render(deltaTime);
 
         if (levelPackNum != -1) game.setScreen(new LevelSelectScreen(game, levelPackNum));
+        if (backClicked) game.setScreen(new MenuScreen(game));
     }
 
 }
