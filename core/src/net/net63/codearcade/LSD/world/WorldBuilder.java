@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.maps.MapLayer;
+import com.badlogic.gdx.maps.MapLayers;
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.MapProperties;
 import com.badlogic.gdx.maps.tiled.TiledMap;
@@ -71,11 +72,13 @@ public class WorldBuilder {
 
         WorldBuilder.currentMap = map;
 
-        loadMeta(map.getLayers().get("meta"));
-        loadSensors(map.getLayers().get("sensors"));
-        loadWalls(map.getLayers().get("walls"));
-        loadMovingSensors(map.getLayers().get("moving-sensors"));
-        loadLasers(map.getLayers().get("lasers"));
+        MapLayers layers = map.getLayers();
+
+        loadMeta(layers.get("meta"));
+        loadSensors(layers.get("sensors"));
+        if (layers.getIndex("walls") != -1) loadWalls(layers.get("walls"));
+        if (layers.getIndex("moving-sensors") != -1) loadMovingSensors(layers.get("moving-sensors"));
+        if (layers.getIndex("lasers") != -1) loadLasers(layers.get("lasers"));
 
         bounds.setPosition(bounds.x - Constants.BOUNDS_BUFFER_X, bounds.y - Constants.BOUNDS_BUFFER_Y);
         bounds.setSize(bounds.width + Constants.BOUNDS_BUFFER_X, bounds.height + Constants.BOUNDS_BUFFER_Y);
