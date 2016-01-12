@@ -468,7 +468,7 @@ public class WorldBuilder {
         FixtureDef fixtureDef = new FixtureDef();
         fixtureDef.restitution = 0.0f;
         fixtureDef.shape = new CircleShape();
-        fixtureDef.shape.setRadius(Constants.PLAYER_WIDTH / 2.0f);
+        fixtureDef.shape.setRadius(Constants.PLAYER_SIZE / 2.0f);
         fixtureDef.filter.maskBits = Constants.MaskBits.PLAYER;
         fixtureDef.filter.categoryBits = Constants.CategoryBits.PLAYER;
 
