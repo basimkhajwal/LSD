@@ -3,6 +3,7 @@ package net.net63.codearcade.LSD.screens;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.viewport.Viewport;
@@ -55,7 +56,24 @@ public class PackSelectScreen extends AbstractScreen {
         container.setFillParent(true);
         container.add(pagedScrollPane).expand().fill();
 
+        Table buttons = new Table();
+
+        float size = 100f;
+        float space = 30f;
+
+        ImageButton prevButton = GUIBuilder.createButton(Assets.Buttons.PREVIOUS_LEVEL);
+        buttons.add(prevButton).size(size, size).spaceRight(space);
+
+        ImageButton startButton = GUIBuilder.createButton(Assets.Buttons.MENU_PLAY);
+        buttons.add(startButton).size(size, size).spaceRight(space);
+
+        ImageButton nextButton = GUIBuilder.createButton(Assets.Buttons.NEXT_LEVEL);
+        buttons.add(nextButton).size(size, size);
+
+        buttons.setPosition((800 - buttons.getWidth()) / 2, 150);
+
         stage.addActor(container);
+        stage.addActor(buttons);
     }
 
     private Table createPage(LevelManager.LevelPack levelPack) {
