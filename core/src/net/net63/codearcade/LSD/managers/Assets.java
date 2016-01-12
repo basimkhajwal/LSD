@@ -46,6 +46,7 @@ public class Assets {
     public static class Buttons {
         public static final String MENU_PLAY = "buttons/menu_play";
         public static final String NEXT_LEVEL = "buttons/next_level";
+        public static final String PREVIOUS_LEVEL = "buttons/previous_level";
         public static final String REPLAY_LEVEL = "buttons/replay_level";
         public static final String BACK_MENU = "buttons/back_menu";
         public static final String LEVEL_SELECT = "buttons/level_select";
@@ -59,7 +60,7 @@ public class Assets {
             Buttons.REPLAY_LEVEL, Buttons.BACK_MENU,
             Buttons.LEVEL_SELECT, Buttons.PAUSE,
             Buttons.SETTINGS, Buttons.CROSS,
-            Buttons.BACK
+            Buttons.BACK, Buttons.PREVIOUS_LEVEL
     };
 
     public static class FontSizes {
