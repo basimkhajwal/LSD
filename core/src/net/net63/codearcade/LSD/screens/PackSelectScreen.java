@@ -33,6 +33,8 @@ public class PackSelectScreen extends AbstractScreen {
     private Table first, last;
     private ArrayList<ImageButton> buttons = new ArrayList<ImageButton>();
 
+    private int levelPackNum = -1;
+
     private static final Vector3 tmp = new Vector3();
 
     public PackSelectScreen(LSD game) {
@@ -78,9 +80,7 @@ public class PackSelectScreen extends AbstractScreen {
 
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                int pack = pagedScrollPane.getCurrentPage();
-
-
+                levelPackNum = pagedScrollPane.getCurrentPage();
             }
 
         });
@@ -146,6 +146,8 @@ public class PackSelectScreen extends AbstractScreen {
 
         backgroundRenderer.render(deltaTime);
         centreGUI.render(deltaTime);
+
+        if (levelPackNum != -1) game.setScreen(new LevelSelectScreen(game, levelPackNum));
     }
 
 }
