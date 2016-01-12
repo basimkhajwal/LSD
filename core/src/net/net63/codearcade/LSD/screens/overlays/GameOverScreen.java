@@ -11,7 +11,6 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Array;
 import net.net63.codearcade.LSD.LSD;
 import net.net63.codearcade.LSD.managers.Assets;
-import net.net63.codearcade.LSD.managers.LevelManager;
 import net.net63.codearcade.LSD.screens.GameScreen;
 import net.net63.codearcade.LSD.screens.LevelSelectScreen;
 import net.net63.codearcade.LSD.utils.GUIBuilder;
@@ -95,8 +94,8 @@ public class GameOverScreen extends AbstractOverlay {
     public void checkChange() {
         for (ImageButton button: buttons) button.setChecked(button.isOver());
 
-        if (replaying) game.setScreen(new GameScreen(game, previousGame.getLevelId()));
-        if (backToMenu) game.setScreen(new LevelSelectScreen(game, LevelManager.LevelPacks.ORIGINAL));
+        if (replaying) game.setScreen(new GameScreen(game, previousGame.getPackId(), previousGame.getLevelId()));
+        if (backToMenu) game.setScreen(new LevelSelectScreen(game, previousGame.getPackId()));
     }
 
 }

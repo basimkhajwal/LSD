@@ -11,9 +11,9 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Array;
 import net.net63.codearcade.LSD.LSD;
 import net.net63.codearcade.LSD.managers.Assets;
+import net.net63.codearcade.LSD.managers.LevelManager;
 import net.net63.codearcade.LSD.screens.GameScreen;
 import net.net63.codearcade.LSD.screens.LevelSelectScreen;
-import net.net63.codearcade.LSD.utils.Constants;
 import net.net63.codearcade.LSD.utils.GUIBuilder;
 
 /**
@@ -61,7 +61,7 @@ public class LevelCompleteScreen extends AbstractOverlay {
 
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                nextLevel = previousGame.getLevelId() < Constants.MAX_LEVEL;
+                nextLevel = previousGame.getLevelId() < LevelManager.getPack(previousGame.getPackId()).numLevels - 1;
             }
 
         });
@@ -108,9 +108,9 @@ public class LevelCompleteScreen extends AbstractOverlay {
     public void checkChange() {
         for (ImageButton button: buttons) button.setChecked(button.isOver());
 
-        if (replaying) game.setScreen(new GameScreen(game, previousGame.getLevelId()));
-        if (nextLevel) game.setScreen(new GameScreen(game, previousGame.getLevelId() + 1));
-        if (backToMenu) game.setScreen(new LevelSelectScreen(game, Constants.DEFAULT_PACK));
+        if (replaying) game.setScreen(new GameScreen(game, previousGame.getPackId(), previousGame.getLevelId()));
+        if (nextLevel) game.setScreen(new GameScreen(game, previousGame.getPackId(), previousGame.getLevelId() + 1));
+        if (backToMenu) game.setScreen(new LevelSelectScreen(game, previousGame.getPackId()));
     }
 
 
