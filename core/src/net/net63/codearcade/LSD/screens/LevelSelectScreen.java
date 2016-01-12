@@ -45,7 +45,7 @@ public class LevelSelectScreen extends AbstractScreen {
     private static final Vector3 tmp = new Vector3();
 
     private LSD game;
-    private LevelManager.LevelPack levelPack;
+    private int levelPack;
 
     private CentreGUI centreGUI;
     private BackgroundRenderer backgroundRenderer;
@@ -63,8 +63,8 @@ public class LevelSelectScreen extends AbstractScreen {
         this.game = game;
 
         //Get the level pack
-        levelPack = LevelManager.getPack(mapPack);
-        buttons = new ImageButton[levelPack.numLevels];
+        this.levelPack = mapPack;
+        buttons = new ImageButton[LevelManager.getPack(mapPack).numLevels];
 
         //Create renderers
         centreGUI = new CentreGUI();
@@ -109,12 +109,11 @@ public class LevelSelectScreen extends AbstractScreen {
         Table buttonTable = new Table();
         buttonTable.setPosition(PADDING_SIDE, PADDING_TOP);
         buttonTable.setSize(800 - 2*PADDING_SIDE, title.getY() - 2*PADDING_TOP);
-        //buttonTable.setDebug(true);
 
         int cols = 0;
 
         //Loop over every level and add a button for it to the table
-        for (int i = 0; i < levelPack.numLevels; i++) {
+        for (int i = 0; i < buttons.length; i++) {
 
             //Create the button
             ImageButton button = createButton(i);
@@ -211,7 +210,7 @@ public class LevelSelectScreen extends AbstractScreen {
         //Check if changing screen and change to the appropriate one
         if (changing) {
             dispose();
-            game.setScreen(new GameScreen(game, levelTo));
+            game.setScreen(new GameScreen(game, levelPack, levelTo));
         }
 
         //If the back button was clicked go back to the menu
