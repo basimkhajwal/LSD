@@ -1,7 +1,6 @@
 package net.net63.codearcade.LSD.utils;
 
 import com.badlogic.gdx.math.Vector2;
-import net.net63.codearcade.LSD.managers.LevelManager;
 
 /**
  * Game class with all the static constant variables to be used in game, 
@@ -15,11 +14,6 @@ public class Constants {
     // --------------- Meta -------------------
 	public static final String LOG = "LSD";
 	public static final String TITLE = "Little Sticky Destroyer";
-
-    // ---------------- Game Content ----------
-
-    public static final int DEFAULT_PACK = LevelManager.LevelPacks.DEBUG;
-    public static final int MAX_LEVEL = LevelManager.getPack(DEFAULT_PACK).numLevels - 1;
 
     // --------------- UI / Window ------------
 
