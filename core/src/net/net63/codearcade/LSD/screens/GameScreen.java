@@ -19,7 +19,6 @@ import net.net63.codearcade.LSD.screens.overlays.GameOverScreen;
 import net.net63.codearcade.LSD.screens.overlays.LevelCompleteScreen;
 import net.net63.codearcade.LSD.screens.overlays.PauseScreen;
 import net.net63.codearcade.LSD.utils.CentreGUI;
-import net.net63.codearcade.LSD.utils.Constants;
 import net.net63.codearcade.LSD.utils.GUIBuilder;
 import net.net63.codearcade.LSD.world.GameWorld;
 
@@ -47,18 +46,20 @@ public class GameScreen extends AbstractScreen {
     private ImageButton pauseButton;
 
     private int levelId;
+    private int packId;
     private boolean logicPaused = false;
     private boolean pauseClicked = false;
 
     private float gameOverTime = 0f;
 
-	public GameScreen(LSD game, int levelId) {
+	public GameScreen(LSD game, int packId, int levelId) {
 		super(game);
 
         this.levelId = levelId;
+        this.packId = packId;
 
         //Create a new world with the map at the current level
-        gameWorld = new GameWorld(LevelManager.getLevel(Constants.DEFAULT_PACK, levelId));
+        gameWorld = new GameWorld(LevelManager.getLevel(packId, levelId));
         setupUI();
 
         //Set the input multiplexer so the GUI and the game controls function
@@ -90,6 +91,13 @@ public class GameScreen extends AbstractScreen {
       * @return The current level
      */
     public int getLevelId() { return levelId; }
+
+    /**
+     * The pack that holds the current level
+     *
+     * @return The id of the pack
+     */
+    public int getPackId() { return packId; }
 
     private void setupUI() {
         //Create and position the score the label at the top centre
