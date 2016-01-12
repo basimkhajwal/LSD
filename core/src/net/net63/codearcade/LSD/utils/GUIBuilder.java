@@ -20,6 +20,10 @@ public class GUIBuilder {
         Texture txtDwn = Assets.getAsset(button + "_down.png", Texture.class);
         Texture txtHover = Assets.getAsset(button + "_hover.png", Texture.class);
 
+        txt.setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
+        txtDwn.setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
+        txtHover.setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
+
         TextureRegionDrawable btn = new TextureRegionDrawable(new TextureRegion(txt));
         TextureRegionDrawable btnDown = new TextureRegionDrawable(new TextureRegion(txtDwn));
         TextureRegionDrawable btnChecked = new TextureRegionDrawable(new TextureRegion(txtHover));
