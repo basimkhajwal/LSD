@@ -90,6 +90,24 @@ public class PagedScrollPane extends ScrollPane {
 		}
 	}
 
+    public int getCurrentPage() {
+        float scrollX = getScrollX();
+
+        int i = 0;
+        for (Actor a : content.getChildren()) {
+            if (scrollX < (a.getX() + a.getWidth() * 0.5)) break;
+            i++;
+        }
+
+        return  i;
+    }
+
+    public void scrollToPage (int n) {
+        Actor page = content.getChildren().get(n);
+
+        setScrollX(MathUtils.clamp(page.getX() - (getWidth() - page.getWidth()) / 2, 0, getMaxX()));
+    }
+
 	private void scrollToPage () {
 		final float width = getWidth();
 		final float scrollX = getScrollX();
