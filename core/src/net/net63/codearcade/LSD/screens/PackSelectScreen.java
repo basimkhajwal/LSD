@@ -18,6 +18,8 @@ import net.net63.codearcade.LSD.utils.BackgroundRenderer;
 import net.net63.codearcade.LSD.utils.CentreGUI;
 import net.net63.codearcade.LSD.utils.GUIBuilder;
 
+import java.util.ArrayList;
+
 /**
  * Created by Basim on 31/12/15.
  */
@@ -29,6 +31,7 @@ public class PackSelectScreen extends AbstractScreen {
     private Table container;
     private PagedScrollPane pagedScrollPane;
     private Table first, last;
+    private ArrayList<ImageButton> buttons = new ArrayList<ImageButton>();
 
     private static final Vector3 tmp = new Vector3();
 
@@ -58,29 +61,31 @@ public class PackSelectScreen extends AbstractScreen {
         container.setFillParent(true);
         container.add(pagedScrollPane).expand().fill();
 
-        Table buttons = new Table();
-
-        float size = 100f;
-        float space = 30f;
-
         ImageButton prevButton = GUIBuilder.createButton(Assets.Buttons.PREVIOUS_LEVEL);
-        buttons.add(prevButton).size(size, size).spaceRight(space);
         prevButton.addListener(new ClickListener() {
 
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 int page = pagedScrollPane.getCurrentPage() - 1;
-                
+
                 if (page >= 0) pagedScrollPane.scrollToPage(page);
             }
 
         });
 
         ImageButton startButton = GUIBuilder.createButton(Assets.Buttons.MENU_PLAY);
-        buttons.add(startButton).size(size, size).spaceRight(space);
+        startButton.addListener(new ClickListener() {
+
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                int pack = pagedScrollPane.getCurrentPage();
+
+
+            }
+
+        });
 
         ImageButton nextButton = GUIBuilder.createButton(Assets.Buttons.NEXT_LEVEL);
-        buttons.add(nextButton).size(size, size);
         nextButton.addListener(new ClickListener() {
 
             @Override
@@ -92,10 +97,16 @@ public class PackSelectScreen extends AbstractScreen {
 
         });
 
-        buttons.setPosition((800 - buttons.getWidth()) / 2, 150);
+        buttons.add(prevButton);
+        buttons.add(startButton);
+        buttons.add(nextButton);
+
+        Table buttonTable = new Table();
+        buttonTable.setPosition((800 - buttonTable.getWidth()) / 2, 150);
+        for (ImageButton button: buttons) buttonTable.add(button).size(100, 100).spaceRight(30);
 
         stage.addActor(container);
-        stage.addActor(buttons);
+        stage.addActor(buttonTable);
     }
 
     private Table createPage(LevelManager.LevelPack levelPack) {
@@ -130,6 +141,8 @@ public class PackSelectScreen extends AbstractScreen {
     @Override
     public void render(float deltaTime) {
         super.render(deltaTime);
+
+        for (ImageButton button: buttons) button.setChecked(button.isOver());
 
         backgroundRenderer.render(deltaTime);
         centreGUI.render(deltaTime);
