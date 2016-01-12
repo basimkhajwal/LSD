@@ -217,7 +217,7 @@ public class LevelSelectScreen extends AbstractScreen {
         //If the back button was clicked go back to the menu
         if (backClicked) {
             dispose();
-            game.setScreen(new MenuScreen(game));
+            game.setScreen(new PackSelectScreen(game));
         }
     }
 
