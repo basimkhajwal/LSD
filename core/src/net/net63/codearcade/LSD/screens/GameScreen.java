@@ -207,7 +207,7 @@ public class GameScreen extends AbstractScreen {
             currentZoom *= zoomRatio;
             zoomRatio = 1f;
 
-            gameWorld.aimPlayer(Gdx.input.getX(), Gdx.input.getY());
+            gameWorld.aimPlayer((int) x, (int) y);
             return true;
         }
 

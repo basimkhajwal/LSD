@@ -52,7 +52,7 @@ public class PlayerAimSystem extends IteratingSystem {
         boolean distanceReached = !previousPosition.isZero() && previousPosition.dst(pos) >= INVALIDATE_DISTANCE;
 
         if (state.get() == PlayerComponent.STATE_AIMING && (playerComponent.invalidateAim || distanceReached)) {
-            if (distanceReached) playerComponent.aimPosition.add(pos).sub(previousPosition);
+            if (distanceReached && !playerComponent.invalidateAim) playerComponent.aimPosition.add(pos).sub(previousPosition);
 
             playerComponent.launchImpulse = calculateLaunchImpulse(pos, playerComponent.aimPosition);
             playerComponent.trajectoryPoints = calculateTrajectoryPoints(pos, playerComponent.launchImpulse);
