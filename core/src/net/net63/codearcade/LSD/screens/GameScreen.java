@@ -63,7 +63,7 @@ public class GameScreen extends AbstractScreen {
         setupUI();
 
         //Set the input multiplexer so the GUI and the game controls function
-        inputMultiplexer = new InputMultiplexer(centreGUI.getStage(), new GestureDetector(new GameEventListener()));
+        inputMultiplexer = new InputMultiplexer(centreGUI.getStage(), new GestureDetector(5, 0.4f, 1.1f, 0.15f, new GameEventListener()));
         Gdx.input.setInputProcessor(inputMultiplexer);
 	}
 
