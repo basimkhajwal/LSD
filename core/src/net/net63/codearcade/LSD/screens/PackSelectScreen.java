@@ -147,11 +147,6 @@ public class PackSelectScreen extends AbstractScreen {
         backgroundRenderer.resize(width, height);
         centreGUI.resize(width, height);
 
-        //Space pages so only one can be seen at a time
-        first.padLeft((width - first.getMinWidth()) / 2);
-        last.padRight((width - last.getMinWidth()) / 2);
-        pagedScrollPane.setPageSpacing(width / 2);
-
         //Set the container at the bottom left corner
         Viewport viewport = centreGUI.getStage().getViewport();
         tmp.set(0, height - 1, 0);
@@ -162,6 +157,11 @@ public class PackSelectScreen extends AbstractScreen {
         tmp.set(0, 0, 0);
         viewport.getCamera().unproject(tmp);
         backButton.setPosition(tmp.x + 10, tmp.y - 10 - backButton.getHeight());
+
+        //Space pages so only one can be seen at a time
+        first.padLeft(viewport.getLeftGutterWidth() + (800 - first.getMinWidth()) / 2);
+        last.padRight(viewport.getRightGutterWidth() + (800 - last.getMinWidth()) / 2);
+        pagedScrollPane.setPageSpacing(width / 2);
     }
 
     @Override
