@@ -17,6 +17,7 @@ import com.badlogic.gdx.utils.Disposable;
 import net.net63.codearcade.LSD.components.BodyComponent;
 import net.net63.codearcade.LSD.components.LaserComponent;
 import net.net63.codearcade.LSD.components.PlayerComponent;
+import net.net63.codearcade.LSD.events.EventQueue;
 import net.net63.codearcade.LSD.events.GameEvent;
 import net.net63.codearcade.LSD.managers.Assets;
 import net.net63.codearcade.LSD.utils.Constants;
@@ -43,7 +44,9 @@ public class LaserSystem extends IteratingSystem implements Disposable, ContactL
     private ComponentMapper<BodyComponent> bodyMapper;
 
     private Signal<GameEvent> gameEventSignal;
+    private EventQueue eventQueue;
 
+    private boolean paused = false;
 
     public LaserSystem(OrthographicCamera gameCamera, World world, Signal<GameEvent> gameEventSignal) {
         super(Family.all(LaserComponent.class).get(), Constants.SYSTEM_PRIORITIES.LASER);
@@ -58,15 +61,31 @@ public class LaserSystem extends IteratingSystem implements Disposable, ContactL
 
         laserMapper = ComponentMapper.getFor(LaserComponent.class);
         bodyMapper = ComponentMapper.getFor(BodyComponent.class);
+
+        eventQueue = new EventQueue();
+        gameEventSignal.add(eventQueue);
     }
 
     @Override
     public void update(float deltaTime) {
+
+        for (GameEvent event: eventQueue.getEvents()) {
+            switch (event) {
+
+                case PAUSE_GAME:
+                    paused = true;
+                    break;
+
+                case RESUME_GAME:
+                    paused = false;
+                    break;
+
+            }
+        }
+
         batch.setProjectionMatrix(gameCamera.combined);
         batch.begin();
-
         super.update(deltaTime);
-
         batch.end();
     }
 
@@ -127,7 +146,7 @@ public class LaserSystem extends IteratingSystem implements Disposable, ContactL
 
         batch.draw(baseTexture, pos.x, pos.y, rotX, rotY, width, height, 1, 1, angle);
 
-        laser.laserTime += deltaTime;
+        if (!paused) laser.laserTime += deltaTime;
 
         laserPos.set(Constants.LASER_HEAD_LASER_X - laserWidth / 2, Constants.LASER_HEAD_LASER_Y - laserHeight / 2);
         laserPos.set(body.getWorldPoint(laserPos));
@@ -146,7 +165,7 @@ public class LaserSystem extends IteratingSystem implements Disposable, ContactL
         }
 
         if (laser.laserEnabled) {
-            laser.laserUpdateTime += deltaTime;
+            if (!paused) laser.laserUpdateTime += deltaTime;
 
             if (laser.laserUpdateTime >= Constants.LASER_UPDATE_TIME) {
                 laser.laserUpdateTime = 0;
@@ -192,8 +211,6 @@ public class LaserSystem extends IteratingSystem implements Disposable, ContactL
         BodyDef bodyDef = new BodyDef();
         bodyDef.angle = angle;
         bodyDef.position.set(laserPos).lerp(laserHitPos, 0.5f);
-
-        System.out.println("created sensor");
 
         FixtureDef fixtureDef = new FixtureDef();
         fixtureDef.shape = new PolygonShape();
