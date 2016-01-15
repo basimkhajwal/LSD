@@ -61,7 +61,7 @@ public class SettingsScreen extends AbstractOverlay {
         soundSlider.setWidth(background.getWidth() - 100);
         soundSlider.setValue(Settings.getSoundVolume());
 
-        final Label soundValue = GUIBuilder.createLabel(String.format("%.0f", soundSlider.getValue() * 100) + " %", Assets.FontSizes.TWENTY, Color.DARK_GRAY);
+        final Label soundValue = GUIBuilder.createLabel(formatPercent(soundSlider.getValue()), Assets.FontSizes.TWENTY, Color.DARK_GRAY);
         soundValue.setPosition(soundSlider.getX() + soundSlider.getWidth() - soundValue.getWidth(), soundTitle.getY());
 
         soundSlider.addListener(new ChangeListener() {
@@ -69,7 +69,7 @@ public class SettingsScreen extends AbstractOverlay {
             public void changed(ChangeEvent event, Actor actor) {
                 float value = soundSlider.getValue();
                 Settings.setSoundVolume(value);
-                soundValue.setText(String.format("%.0f", value * 100) + " %");
+                soundValue.setText(formatPercent(value));
                 soundValue.setX(soundSlider.getX() + soundSlider.getWidth() - soundValue.getWidth());
             }
         });
@@ -83,7 +83,7 @@ public class SettingsScreen extends AbstractOverlay {
         musicSlider.setHeight(musicSlider.getHeight() * 2);
         musicSlider.setValue(Settings.getMusicVolume());
 
-        final Label musicValue = GUIBuilder.createLabel(String.format("%.0f", musicSlider.getValue() * 100) + " %", Assets.FontSizes.TWENTY, Color.DARK_GRAY);
+        final Label musicValue = GUIBuilder.createLabel(formatPercent(musicSlider.getValue()), Assets.FontSizes.TWENTY, Color.DARK_GRAY);
         musicValue.setPosition(musicSlider.getX() + musicSlider.getWidth() - musicValue.getWidth(), musicTitle.getY());
 
         musicSlider.addListener(new ChangeListener() {
@@ -91,7 +91,7 @@ public class SettingsScreen extends AbstractOverlay {
             public void changed(ChangeEvent event, Actor actor) {
                 float value = musicSlider.getValue();
                 Settings.setMusicVolume(value);
-                musicValue.setText(String.format("%.0f", value * 100) + " %");
+                musicValue.setText(formatPercent(value));
                 musicValue.setX(musicSlider.getX() + musicSlider.getWidth() - musicValue.getWidth());
             }
         });
@@ -125,6 +125,10 @@ public class SettingsScreen extends AbstractOverlay {
         stage.addActor(debugCheckBox);
         stage.addActor(debugLabel);
         stage.addActor(crossButton);
+    }
+
+    private String formatPercent(float percent) {
+        return ((int) (percent * 100)) + " %";
     }
 
     private Slider createVolumeSlider() {
