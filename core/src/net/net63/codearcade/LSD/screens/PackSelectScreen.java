@@ -2,6 +2,7 @@ package net.net63.codearcade.LSD.screens;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
@@ -30,10 +31,10 @@ public class PackSelectScreen extends AbstractScreen {
 
     private Table container;
     private PagedScrollPane pagedScrollPane;
-    private Table first, last;
     private ArrayList<ImageButton> buttons = new ArrayList<ImageButton>();
     private ImageButton backButton;
 
+    private int numLevels;
     private int levelPackNum = -1;
     private boolean backClicked = false;
 
@@ -51,15 +52,14 @@ public class PackSelectScreen extends AbstractScreen {
     private void setupUI(Stage stage) {
 
         pagedScrollPane = new PagedScrollPane();
-        first = null;
+        numLevels = 0;
 
+        pagedScrollPane.addPage(new Actor());
         for (LevelManager.LevelPack levelPack: LevelManager.levelPacks) {
-            Table page = createPage(levelPack);
-            pagedScrollPane.addPage(page);
-
-            if (first == null) first = page;
-            last = page;
+            pagedScrollPane.addPage(createPage(levelPack));
+            numLevels++;
         }
+        pagedScrollPane.addPage(new Actor());
 
         container = new Table();
         container.setFillParent(true);
@@ -72,7 +72,7 @@ public class PackSelectScreen extends AbstractScreen {
             public void clicked(InputEvent event, float x, float y) {
                 int page = pagedScrollPane.getCurrentPage() - 1;
 
-                if (page >= 0) pagedScrollPane.scrollToPage(page);
+                if (page >= 1) pagedScrollPane.scrollToPage(page);
             }
 
         });
@@ -94,7 +94,7 @@ public class PackSelectScreen extends AbstractScreen {
             public void clicked(InputEvent event, float x, float y) {
                 int page = pagedScrollPane.getCurrentPage() + 1;
 
-                if (page < LevelManager.levelPacks.length) pagedScrollPane.scrollToPage(page);
+                if (page <= numLevels) pagedScrollPane.scrollToPage(page);
             }
 
         });
@@ -159,8 +159,6 @@ public class PackSelectScreen extends AbstractScreen {
         backButton.setPosition(tmp.x + 10, tmp.y - 10 - backButton.getHeight());
 
         //Space pages so only one can be seen at a time
-        first.padLeft(viewport.getLeftGutterWidth() + (800 - first.getMinWidth()) / 2);
-        last.padRight(viewport.getRightGutterWidth() + (800 - last.getMinWidth()) / 2);
         pagedScrollPane.setPageSpacing(width / 2);
     }
 
@@ -170,6 +168,10 @@ public class PackSelectScreen extends AbstractScreen {
 
         for (ImageButton button: buttons) button.setChecked(button.isOver());
         backButton.setChecked(backButton.isOver());
+
+        int page = pagedScrollPane.getCurrentPage();
+        if (page == 0) pagedScrollPane.scrollToPage(1);
+        if (page > numLevels) pagedScrollPane.scrollToPage(numLevels);
 
         backgroundRenderer.render(deltaTime);
         centreGUI.render(deltaTime);
