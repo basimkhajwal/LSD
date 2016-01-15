@@ -11,7 +11,7 @@ import com.badlogic.gdx.utils.Array;
 public class PagedScrollPane extends ScrollPane {
 
 	private boolean wasPanDragFling = false;
-	private float pageSpacing;
+    public boolean preventFirstAndLast = false;
 
 	private Table content;
 
@@ -41,12 +41,6 @@ public class PagedScrollPane extends ScrollPane {
 		super.setWidget(content);		
 	}
 
-	public void addPages (Actor... pages) {
-		for (Actor page : pages) {
-			content.add(page).expandY().fillY();
-		}
-	}
-
 	public void addPage (Actor page) {
 		content.add(page).expandY().fillY();
 	}
@@ -57,6 +51,13 @@ public class PagedScrollPane extends ScrollPane {
 		if (wasPanDragFling && !isPanning() && !isDragging() && !isFlinging()) {
 			wasPanDragFling = false;
 			scrollToPage();
+
+            Array<Actor> pages = content.getChildren();
+            int maxPage = pages.size - 2;
+            if (preventFirstAndLast) {
+                if (getScrollX() < pages.get(1).getX()) scrollToPage(1);
+                if (getScrollX() > pages.get(maxPage).getX() + pages.get(maxPage).getWidth() * 0.5) scrollToPage(maxPage);
+            }
 		} else {
 			if (isPanning() || isDragging() || isFlinging()) {
 				wasPanDragFling = true;
@@ -99,7 +100,7 @@ public class PagedScrollPane extends ScrollPane {
             i++;
         }
 
-        return  i;
+        return i;
     }
 
     public void scrollToPage (int n) {
@@ -119,7 +120,14 @@ public class PagedScrollPane extends ScrollPane {
 		float pageX = 0;
 		float pageWidth = 0;
 		if (pages.size > 0) {
+            boolean first = true;
 			for (Actor a : pages) {
+                if (first && preventFirstAndLast) {
+                    first = false;
+                    continue;
+                }
+                if (pages.get(pages.size - 1) == a && preventFirstAndLast) break;
+
 				pageX = a.getX();
 				pageWidth = a.getWidth();
 				if (scrollX < (pageX + pageWidth * 0.5)) {

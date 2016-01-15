@@ -37,6 +37,7 @@ public class PackSelectScreen extends AbstractScreen {
     private int numLevels;
     private int levelPackNum = -1;
     private boolean backClicked = false;
+    private boolean firstTime = true;
 
     private static final Vector3 tmp = new Vector3();
 
@@ -52,6 +53,7 @@ public class PackSelectScreen extends AbstractScreen {
     private void setupUI(Stage stage) {
 
         pagedScrollPane = new PagedScrollPane();
+        pagedScrollPane.preventFirstAndLast = true;
         numLevels = 0;
 
         pagedScrollPane.addPage(new Actor());
@@ -82,7 +84,7 @@ public class PackSelectScreen extends AbstractScreen {
 
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                levelPackNum = pagedScrollPane.getCurrentPage();
+                levelPackNum = pagedScrollPane.getCurrentPage() - 1;
             }
 
         });
@@ -168,10 +170,6 @@ public class PackSelectScreen extends AbstractScreen {
 
         for (ImageButton button: buttons) button.setChecked(button.isOver());
         backButton.setChecked(backButton.isOver());
-
-        int page = pagedScrollPane.getCurrentPage();
-        if (page == 0) pagedScrollPane.scrollToPage(1);
-        if (page > numLevels) pagedScrollPane.scrollToPage(numLevels);
 
         backgroundRenderer.render(deltaTime);
         centreGUI.render(deltaTime);
