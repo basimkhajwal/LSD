@@ -24,6 +24,7 @@ They should all work but only desktop and HTML5 builds have currently been teste
 - [ ] Add a currency system with stars in order to unlock new levels
 - [ ] Improve menu/title colours
 - [ ] Improve level select and pack select (make them look nicer)
+- [ ] Add smooth transitions between screens
 - [ ] Create more levels
 
 #### Currently Working:
