@@ -20,7 +20,7 @@ public class Settings {
     //Array of integers which specify how many levels are unlocked in each pack
     // - A value of -1 means that this particular pack is locked
     // - Otherwise it specifies the maximum index level that is unlocked (levels are unlocked in order)
-    private static final int[] levelsUnlocked = new int[LevelManager.levelPacks.length];
+    private static final int[] levelsUnlocked = new int[LevelManager.LevelPacks.length];
 
     private static float musicVolume;
     private static float soundVolume;
@@ -49,6 +49,7 @@ public class Settings {
             if (name.equals("musicVolume"))  setMusicVolume(preferences.getFloat(name));
             if (name.equals("soundVolume"))  setSoundVolume(preferences.getFloat(name));
             if (name.equals("debugEnabled")) setDebugEnabled(preferences.getBoolean(name));
+            if (name.equals("levelsUnlocked")) loadLevelsUnlocked(preferences.getString(name));
         }
 
 	}
@@ -66,13 +67,46 @@ public class Settings {
         preferences.putFloat("soundVolume", soundVolume);
         preferences.putBoolean("debugEnabled", debugEnabled);
 
+        //Set all the serialized values
+        preferences.putString("levelsUnlocked", levelsUnlockedToString());
+
         //Save the preferences
         preferences.flush();
 	}
 
+    /* ------------------------ Serialization -------------------------------*/
+
+    private static String levelsUnlockedToString() {
+
+        //Create a string of all the numbers separated by spaces
+        String stringVal = "" + levelsUnlocked[0];
+        for (int i = 1; i < levelsUnlocked.length; i++) {
+            stringVal += " " + levelsUnlocked[i];
+        }
+
+        //Return this string
+        return stringVal;
+    }
+
+    private static void loadLevelsUnlocked(String data) {
+
+        //Split the string into all the values
+        String[] split = data.split(" ");
+
+        //Load all the separate integers into the position on the map
+        for (int i = 0; i < Math.min(split.length, levelsUnlocked.length); i++) {
+            levelsUnlocked[i] = Integer.parseInt(split[i]);
+        }
+
+    }
+
     /* ---------------------- Getters & Setters -----------------------------*/
 
     public static int[] getLevelsUnlocked() { return levelsUnlocked; }
+
+    public static void setLevelsUnlocked(int[] levelsUnlocked) {
+        for (int i = 0; i < Settings.levelsUnlocked.length; i++) Settings.levelsUnlocked[i] = levelsUnlocked[i];
+    }
 
     public static float getMusicVolume() {
         return musicVolume;
