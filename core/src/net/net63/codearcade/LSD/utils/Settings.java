@@ -20,7 +20,7 @@ public class Settings {
     //Array of integers which specify how many levels are unlocked in each pack
     // - A value of -1 means that this particular pack is locked
     // - Otherwise it specifies the maximum index level that is unlocked (levels are unlocked in order)
-    private static int[] levelsUnlocked = new int[LevelManager.levelPacks.length];
+    private static final int[] levelsUnlocked = new int[LevelManager.levelPacks.length];
 
     private static float musicVolume;
     private static float soundVolume;
@@ -73,8 +73,6 @@ public class Settings {
     /* ---------------------- Getters & Setters -----------------------------*/
 
     public static int[] getLevelsUnlocked() { return levelsUnlocked; }
-
-    public static void setLevelsUnlocked(int[] levelsUnlocked) { Settings.levelsUnlocked = levelsUnlocked; }
 
     public static float getMusicVolume() {
         return musicVolume;
