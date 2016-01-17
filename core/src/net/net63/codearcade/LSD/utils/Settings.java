@@ -2,6 +2,7 @@ package net.net63.codearcade.LSD.utils;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Preferences;
+import com.badlogic.gdx.utils.ArrayMap;
 import net.net63.codearcade.LSD.managers.LevelManager;
 import net.net63.codearcade.LSD.managers.SoundManager;
 
@@ -20,7 +21,7 @@ public class Settings {
     //Array of integers which specify how many levels are unlocked in each pack
     // - A value of -1 means that this particular pack is locked
     // - Otherwise it specifies the maximum index level that is unlocked (levels are unlocked in order)
-    private static final int[] levelsUnlocked = new int[LevelManager.LevelPacks.length];
+    private static final ArrayMap<String, Integer> levelsUnlocked = new ArrayMap<String, Integer>();
 
     private static float musicVolume;
     private static float soundVolume;
@@ -78,11 +79,7 @@ public class Settings {
 
     private static String levelsUnlockedToString() {
 
-        //Create a string of all the numbers separated by spaces
-        String stringVal = "" + levelsUnlocked[0];
-        for (int i = 1; i < levelsUnlocked.length; i++) {
-            stringVal += " " + levelsUnlocked[i];
-        }
+        
 
         //Return this string
         return stringVal;
@@ -93,20 +90,15 @@ public class Settings {
         //Split the string into all the values
         String[] split = data.split(" ");
 
-        //Load all the separate integers into the position on the map
-        for (int i = 0; i < Math.min(split.length, levelsUnlocked.length); i++) {
-            levelsUnlocked[i] = Integer.parseInt(split[i]);
-        }
+
 
     }
 
     /* ---------------------- Getters & Setters -----------------------------*/
 
-    public static int[] getLevelsUnlocked() { return levelsUnlocked; }
+    public static int getLevelsUnlocked(String packName) { return levelsUnlocked.get(packName); }
 
-    public static void setLevelsUnlocked(int[] levelsUnlocked) {
-        for (int i = 0; i < Settings.levelsUnlocked.length; i++) Settings.levelsUnlocked[i] = levelsUnlocked[i];
-    }
+    public static void setLevelsUnlocked(String packName, int numLevels) { levelsUnlocked.put(packName, numLevels); }
 
     public static float getMusicVolume() {
         return musicVolume;
