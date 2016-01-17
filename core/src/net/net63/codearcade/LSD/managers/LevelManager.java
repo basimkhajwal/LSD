@@ -12,21 +12,13 @@ import com.badlogic.gdx.maps.tiled.TmxMapLoader;
  */
 public class LevelManager {
 
-    //The level packs available
-    public static class LevelPacks {
-        public static final int ORIGINAL = 0;
-        public static final int DEBUG    = 1;
-    }
-
-    public static final LevelPack[] levelPacks = new LevelPack[]{
-        new LevelPack("original", "maps/original/level", 16),
-            new LevelPack("test", "maps/new/level", 1),
-            new LevelPack("NOT WORKING", "maps/new/level", 1),
-        new LevelPack("debug", "maps/new/level", 1)
+    public static final LevelPack[] LevelPacks = new LevelPack[]{
+            new LevelPack("original", "maps/original/level", 16),
+            new LevelPack("debug", "maps/new/level", 1)
     };
 
     //Level data caches
-    private static final TiledMap[][] levelPackCache = new TiledMap[levelPacks.length][];
+    private static final TiledMap[][] levelPackCache = new TiledMap[LevelPacks.length][];
 
     /**
      * Load all the maps into a cache
@@ -36,8 +28,8 @@ public class LevelManager {
         TmxMapLoader mapLoader = new TmxMapLoader();
 
         //Iterate over each level pack
-        for (int i = 0; i < levelPacks.length; i++) {
-            LevelPack pack = levelPacks[i];
+        for (int i = 0; i < LevelPacks.length; i++) {
+            LevelPack pack = LevelPacks[i];
 
             //Load each level into the cache
             levelPackCache[i] = new TiledMap[pack.numLevels];
@@ -55,7 +47,7 @@ public class LevelManager {
      * @return The associated level pack
      */
     public static LevelPack getPack(int packId) {
-        return levelPacks[packId];
+        return LevelPacks[packId];
     }
 
     /**

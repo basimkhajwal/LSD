@@ -57,7 +57,7 @@ public class PackSelectScreen extends AbstractScreen {
         numLevels = 0;
 
         pagedScrollPane.addPage(new Actor());
-        for (LevelManager.LevelPack levelPack: LevelManager.levelPacks) {
+        for (LevelManager.LevelPack levelPack: LevelManager.LevelPacks) {
             pagedScrollPane.addPage(createPage(levelPack));
             numLevels++;
         }
