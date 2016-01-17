@@ -86,8 +86,8 @@ public class Settings {
 
     /* ------------------------ Serialization -------------------------------*/
 
-    private static final String ARRAY_DELIMITER = " _-_ ";
-    private static final String OBJECT_DELIMITER = "_+_";
+    private static final String ARRAY_DELIMITER = " xxx ";
+    private static final String OBJECT_DELIMITER = "___";
 
     private static String levelsUnlockedToString() {
 
