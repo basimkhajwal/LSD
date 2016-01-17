@@ -32,9 +32,18 @@ public class Settings {
     * called if there is an error reading the file
     */
     public static void loadDefaults() {
+
+        //Set default single-valued variables
         setMusicVolume(1);
         setSoundVolume(1);
         setDebugEnabled(true);
+
+        //Set default levels unlocked (all -1 but the first)
+        levelsUnlocked.clear();
+        setLevelsUnlocked(LevelManager.LevelPacks[0].name, 0);
+        for (int i = 1; i < LevelManager.LevelPacks.length; i++) {
+            setLevelsUnlocked(LevelManager.LevelPacks[i].name, -1);
+        }
     }
 
 	/**
@@ -77,9 +86,19 @@ public class Settings {
 
     /* ------------------------ Serialization -------------------------------*/
 
+    private static final String ARRAY_DELIMITER = " _-_ ";
+    private static final String OBJECT_DELIMITER = "_+_";
+
     private static String levelsUnlockedToString() {
 
-        
+        String stringVal;
+        String[] names = levelsUnlocked.keys;
+
+        //Iterate over each pair and add it to the string
+        stringVal = names[0] + OBJECT_DELIMITER + levelsUnlocked.get(names[0]);
+        for (int i = 1; i < names.length; i++) {
+            stringVal += ARRAY_DELIMITER + names[i] + OBJECT_DELIMITER + levelsUnlocked.get(names[i]);
+        }
 
         //Return this string
         return stringVal;
@@ -87,11 +106,15 @@ public class Settings {
 
     private static void loadLevelsUnlocked(String data) {
 
-        //Split the string into all the values
-        String[] split = data.split(" ");
+        //Split the string into all the pack-name to level count pairs
+        for (String arrayVal: data.split(ARRAY_DELIMITER)) {
 
+            //Split each pairing
+            String[] split = arrayVal.split(OBJECT_DELIMITER);
 
-
+            //Set the correct pair value
+            setLevelsUnlocked(split[0], Integer.parseInt(split[1]));
+        }
     }
 
     /* ---------------------- Getters & Setters -----------------------------*/
