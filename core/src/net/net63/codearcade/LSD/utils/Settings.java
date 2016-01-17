@@ -2,6 +2,7 @@ package net.net63.codearcade.LSD.utils;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Preferences;
+import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ArrayMap;
 import net.net63.codearcade.LSD.managers.LevelManager;
 import net.net63.codearcade.LSD.managers.SoundManager;
@@ -92,12 +93,12 @@ public class Settings {
     private static String levelsUnlockedToString() {
 
         String stringVal;
-        String[] names = levelsUnlocked.keys;
+        Array<String> names = levelsUnlocked.keys().toArray(new Array<String>());
 
         //Iterate over each pair and add it to the string
-        stringVal = names[0] + OBJECT_DELIMITER + levelsUnlocked.get(names[0]);
-        for (int i = 1; i < names.length; i++) {
-            stringVal += ARRAY_DELIMITER + names[i] + OBJECT_DELIMITER + levelsUnlocked.get(names[i]);
+        stringVal = names.first() + OBJECT_DELIMITER + levelsUnlocked.get(names.first());
+        for (int i = 1; i < names.size; i++) {
+            stringVal += ARRAY_DELIMITER + names.get(i) + OBJECT_DELIMITER + levelsUnlocked.get(names.get(i));
         }
 
         //Return this string
