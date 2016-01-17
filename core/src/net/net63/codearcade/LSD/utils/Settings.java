@@ -2,6 +2,7 @@ package net.net63.codearcade.LSD.utils;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Preferences;
+import net.net63.codearcade.LSD.managers.LevelManager;
 import net.net63.codearcade.LSD.managers.SoundManager;
 
 /**
@@ -16,8 +17,10 @@ public class Settings {
     //Constant not to be changed preferences handle, the name must never change
     private static final Preferences preferences = Gdx.app.getPreferences("lsd-settings");
 
-
-
+    //Array of integers which specify how many levels are unlocked in each pack
+    // - A value of -1 means that this particular pack is locked
+    // - Otherwise it specifies the maximum index level that is unlocked (levels are unlocked in order)
+    private static int[] levelsUnlocked = new int[LevelManager.levelPacks.length];
 
     private static float musicVolume;
     private static float soundVolume;
@@ -68,6 +71,10 @@ public class Settings {
 	}
 
     /* ---------------------- Getters & Setters -----------------------------*/
+
+    public static int[] getLevelsUnlocked() { return levelsUnlocked; }
+
+    public static void setLevelsUnlocked(int[] levelsUnlocked) { Settings.levelsUnlocked = levelsUnlocked; }
 
     public static float getMusicVolume() {
         return musicVolume;
