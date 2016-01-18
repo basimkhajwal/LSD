@@ -32,6 +32,7 @@ public class Assets {
         public static final String BLOCKED = "images/blocked.png";
         public static final String SETTINGS_BACKGROUND = "images/settings_bg.png";
         public static final String NEXT_LEVEL_DISABLED = "buttons/next_level_disabled.png";
+        public static final String LEVEL_SELECT_DISABLED = "buttons/level_select_disabled.png";
         public static final String LASER_BASE = "images/laser-base.png";
         public static final String LASER_HEAD = "images/laser-head.png";
 	}
@@ -40,7 +41,8 @@ public class Assets {
             Images.WALL_TILE, Images.TRANSITION_BACKGROUND,
             Images.TRAJECTORY, Images.NEXT_LEVEL_DISABLED,
             Images.BLOCKED, Images.SETTINGS_BACKGROUND,
-            Images.LASER_BASE, Images.LASER_HEAD
+            Images.LASER_BASE, Images.LASER_HEAD,
+            Images.LEVEL_SELECT_DISABLED
         };
 
     public static class Buttons {
