@@ -44,6 +44,7 @@ public class LevelSelectScreen extends AbstractScreen {
     private static final float BUTTON_HEIGHT = 690 * 0.13f;
 
     private static final Color TEXT_COLOR = new Color(100/255f, 100/255f, 100/255f, 1f);
+    private static final Color DISABLED_TEXT_COLOR = new Color(100/255f, 100/255f, 100/255f, 0.3f);
 
     // ----------------- Instance Variables ---------------------
 
@@ -157,6 +158,9 @@ public class LevelSelectScreen extends AbstractScreen {
 
             //Get the image for this disabled button
             Image disabled = new Image(Assets.getAsset(Assets.Images.LEVEL_SELECT_DISABLED, Texture.class));
+
+            //Set the correct text colour
+            text.setColor(DISABLED_TEXT_COLOR);
 
             //Create a new table and stack the button with the text
             Table container = new Table();
