@@ -1,9 +1,12 @@
 package net.net63.codearcade.LSD.screens;
 
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
@@ -17,6 +20,9 @@ import net.net63.codearcade.LSD.managers.ShaderManager;
 import net.net63.codearcade.LSD.utils.BackgroundRenderer;
 import net.net63.codearcade.LSD.utils.CentreGUI;
 import net.net63.codearcade.LSD.utils.GUIBuilder;
+import net.net63.codearcade.LSD.utils.Settings;
+
+import java.util.ArrayList;
 
 /**
  * A screen allowing the player to select which
@@ -34,8 +40,8 @@ public class LevelSelectScreen extends AbstractScreen {
     private static final int PADDING_TOP = 40;
     private static final int PADDING_SIDE = 40;
 
-    private static final float BUTTON_WIDTH = 150;
-    private static final float BUTTON_HEIGHT = 90;
+    private static final float BUTTON_WIDTH = 1000 * 0.13f;
+    private static final float BUTTON_HEIGHT = 690 * 0.13f;
 
     private static final Color TEXT_COLOR = new Color(100/255f, 100/255f, 100/255f, 1f);
 
@@ -51,7 +57,7 @@ public class LevelSelectScreen extends AbstractScreen {
     private BackgroundRenderer backgroundRenderer;
 
     private ImageButton backButton;
-    private ImageButton[] buttons;
+    private ArrayList<ImageButton> buttons;
 
     private boolean changing = false;
     private boolean backClicked = false;
@@ -64,7 +70,7 @@ public class LevelSelectScreen extends AbstractScreen {
 
         //Get the level pack
         this.levelPack = mapPack;
-        buttons = new ImageButton[LevelManager.getPack(mapPack).numLevels];
+        buttons = new ArrayList<ImageButton>();
 
         //Create renderers
         centreGUI = new CentreGUI();
@@ -113,17 +119,10 @@ public class LevelSelectScreen extends AbstractScreen {
         int cols = 0;
 
         //Loop over every level and add a button for it to the table
-        for (int i = 0; i < buttons.length; i++) {
+        for (int i = 0; i < LevelManager.getPack(levelPack).numLevels; i++) {
 
-            //Create the button
-            ImageButton button = createButton(i);
-
-            //Add it to the list and add a listener
-            buttons[i] = button;
-            button.addListener(new ButtonClickListener(i));
-
-            //Add it to the table
-            buttonTable.add(button)
+            //Create and add the button to the table
+            buttonTable.add(createButton(i))
                     .width(BUTTON_WIDTH)
                     .height(BUTTON_HEIGHT)
                     .uniform()
@@ -147,19 +146,38 @@ public class LevelSelectScreen extends AbstractScreen {
      * @param num The number to show (zero based but the text will be 1 based)
      * @return The image button with the image and text
      */
-    private ImageButton createButton(int num) {
-        //Create the button
-        ImageButton main = GUIBuilder.createButton(Assets.Buttons.LEVEL_SELECT);
+    private Actor createButton(int num) {
 
         //Create the label
         Label text = GUIBuilder.createLabel(Integer.toString(num + 1), Assets.FontSizes.FORTY, TEXT_COLOR);
         text.setAlignment(Align.center);
 
-        //Align the label on top on the centre
-        main.clearChildren();
-        main.stack(main.getImage(), text).expand().fill();
+        //Check whether or not the current level is enabled or not
+        if (Settings.getLevelsUnlocked(LevelManager.getPack(levelPack).name) < num) {
 
-        return main;
+            //Get the image for this disabled button
+            Image disabled = new Image(Assets.getAsset(Assets.Images.LEVEL_SELECT_DISABLED, Texture.class));
+
+            //Create a new table and stack the button with the text
+            Table container = new Table();
+            container.stack(disabled, text).expand().fill();
+
+            //Return this table
+            return container;
+        }
+
+        //Create the button
+        ImageButton button = GUIBuilder.createButton(Assets.Buttons.LEVEL_SELECT);
+
+        //Align the label on top on the centre
+        button.clearChildren();
+        button.stack(button.getImage(), text).expand().fill();
+
+        //Add a click listener
+        button.addListener(new ButtonClickListener(num));
+        buttons.add(button);
+
+        return button;
     }
 
     /**
