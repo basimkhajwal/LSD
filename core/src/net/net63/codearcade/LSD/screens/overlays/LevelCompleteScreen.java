@@ -15,6 +15,7 @@ import net.net63.codearcade.LSD.managers.LevelManager;
 import net.net63.codearcade.LSD.screens.GameScreen;
 import net.net63.codearcade.LSD.screens.LevelSelectScreen;
 import net.net63.codearcade.LSD.utils.GUIBuilder;
+import net.net63.codearcade.LSD.utils.Settings;
 
 /**
  * Created by Basim on 30/09/15.
@@ -33,6 +34,14 @@ public class LevelCompleteScreen extends AbstractOverlay {
 
     public LevelCompleteScreen(LSD game, GameScreen previousScreen) {
         super(game, previousScreen);
+
+        //Unlock the new level (increment the settings value)
+        LevelManager.LevelPack pack = LevelManager.getPack(previousScreen.getPackId());
+        int nextLevel = previousScreen.getLevelId() + 1;
+        int currentUnlock = Settings.getLevelsUnlocked(pack.name);
+
+        //Check if the next level is further than previously achieved or if all levels have been achieved
+        if (nextLevel > currentUnlock && nextLevel < pack.numLevels) Settings.setLevelsUnlocked(pack.name, nextLevel);
     }
 
     @Override
