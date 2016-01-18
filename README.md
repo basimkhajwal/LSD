@@ -20,8 +20,8 @@ They should all work but only desktop and HTML5 builds have currently been teste
 #### TODO:
 - [ ] Add zoom option for levels so that the correct amount is visible
 - [ ] Add a 3-star collection per level and a total star count
-- [ ] Keep track of player progress / prevent accessing end levels until unlocked
-- [ ] Add a currency system with stars in order to unlock new levels
+- [ ] Keep track of player progress
+- [ ] Add a currency system with stars in order to unlock new packs
 - [ ] Improve menu/title colours
 - [ ] Improve level select and pack select (make them look nicer)
 - [ ] Add smooth transitions between screens
@@ -68,3 +68,4 @@ They should all work but only desktop and HTML5 builds have currently been teste
 - [x] Customize shader for the game (add a new one)
 - [x] Add lasers that automatically toggle on intervals
 - [x] Add option of having multiple map packs (with a scroll screen in between)
+- [x] Prevent accessing end levels until unlocked
