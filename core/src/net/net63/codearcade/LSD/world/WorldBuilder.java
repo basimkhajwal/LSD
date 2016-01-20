@@ -76,6 +76,7 @@ public class WorldBuilder {
 
         loadMeta(layers.get("meta"));
         loadSensors(layers.get("sensors"));
+        loadStars(layers.get("stars"));
         if (layers.getIndex("walls") != -1) loadWalls(layers.get("walls"));
         if (layers.getIndex("moving-sensors") != -1) loadMovingSensors(layers.get("moving-sensors"));
         if (layers.getIndex("lasers") != -1) loadLasers(layers.get("lasers"));
@@ -106,13 +107,12 @@ public class WorldBuilder {
 
         for (MapObject starObject: starLayer.getObjects()) {
 
-
+            float[] dimensions = getDimensions(starObject);
+            createStar(dimensions[0] + dimensions[2] / 2, dimensions[1] + dimensions[3] / 2, count);
 
             count++;
             if (count >= 3) break;
         }
-
-
 
     }
 
@@ -378,7 +378,9 @@ public class WorldBuilder {
         bodyComponent.body = world.createBody(bodyDef);
         bodyComponent.body.createFixture(fixtureDef);
 
-        
+        renderComponent.render = true;
+        renderComponent.tileToSize = false;
+        renderComponent.texture = new TextureRegion(Assets.getAsset(Assets.Images.STAR, Texture.class));
 
         return createEntityFrom(starComponent, bodyComponent, renderComponent);
     }
