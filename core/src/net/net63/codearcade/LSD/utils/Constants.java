@@ -69,6 +69,7 @@ public class Constants {
         public static final short WALL        = 0x004;
         public static final short SENSOR      = 0x008;
         public static final short LASER       = 0x010;
+        public static final short STAR        = 0x020;
 
     }
 
@@ -77,6 +78,7 @@ public class Constants {
         public static final short PLAYER      = 0xFFF;
         public static final short PARTICLE    = CategoryBits.PARTICLE | CategoryBits.WALL | CategoryBits.SENSOR;
         public static final short LASER       = CategoryBits.WALL | CategoryBits.SENSOR | CategoryBits.PLAYER;
+        public static final short STAR        = CategoryBits.PLAYER;
 
     }
 
