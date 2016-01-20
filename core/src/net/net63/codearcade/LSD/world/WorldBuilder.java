@@ -372,9 +372,13 @@ public class WorldBuilder {
         fixtureDef.shape = new PolygonShape();
         ((PolygonShape) fixtureDef.shape).setAsBox(Constants.STAR_SIZE / 2, Constants.STAR_SIZE / 2);
         fixtureDef.isSensor = true;
+        fixtureDef.filter.categoryBits = Constants.CategoryBits.STAR;
+        fixtureDef.filter.maskBits = Constants.MaskBits.STAR;
 
+        bodyComponent.body = world.createBody(bodyDef);
+        bodyComponent.body.createFixture(fixtureDef);
 
-
+        
 
         return createEntityFrom(starComponent, bodyComponent, renderComponent);
     }
