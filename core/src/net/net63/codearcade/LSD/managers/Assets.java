@@ -35,6 +35,7 @@ public class Assets {
         public static final String LEVEL_SELECT_DISABLED = "buttons/level_select_disabled.png";
         public static final String LASER_BASE = "images/laser-base.png";
         public static final String LASER_HEAD = "images/laser-head.png";
+        public static final String STAR = "images/star.png";
 	}
     private static final String[] _Images = {
             Images.BACKGROUND, Images.SENSOR_TILE,
@@ -42,7 +43,7 @@ public class Assets {
             Images.TRAJECTORY, Images.NEXT_LEVEL_DISABLED,
             Images.BLOCKED, Images.SETTINGS_BACKGROUND,
             Images.LASER_BASE, Images.LASER_HEAD,
-            Images.LEVEL_SELECT_DISABLED
+            Images.LEVEL_SELECT_DISABLED, Images.STAR
         };
 
     public static class Buttons {
