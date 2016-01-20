@@ -100,6 +100,22 @@ public class WorldBuilder {
         createPlayer(posX, posY);
     }
 
+    private static void loadStars(MapLayer starLayer) {
+
+        int count = 0;
+
+        for (MapObject starObject: starLayer.getObjects()) {
+
+
+
+            count++;
+            if (count >= 3) break;
+        }
+
+
+
+    }
+
     /**
      * Load all the sensors from the given layer
      *
@@ -338,6 +354,29 @@ public class WorldBuilder {
         sensor.add(movementComponent);
 
         return sensor;
+    }
+
+    private static Entity createStar(float x, float y, int index) {
+
+        StarComponent starComponent = new StarComponent();
+        BodyComponent bodyComponent = new BodyComponent();
+        RenderComponent renderComponent = new RenderComponent();
+
+        starComponent.index = index;
+
+        BodyDef bodyDef = new BodyDef();
+        bodyDef.position.set(x, y);
+        bodyDef.type = BodyDef.BodyType.StaticBody;
+
+        FixtureDef fixtureDef = new FixtureDef();
+        fixtureDef.shape = new PolygonShape();
+        ((PolygonShape) fixtureDef.shape).setAsBox(Constants.STAR_SIZE / 2, Constants.STAR_SIZE / 2);
+        fixtureDef.isSensor = true;
+
+
+
+
+        return createEntityFrom(starComponent, bodyComponent, renderComponent);
     }
 
     private static Entity createLaser(float x, float y, float width, float height, float interval, String direction, float angle, boolean isOn) {
