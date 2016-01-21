@@ -21,9 +21,16 @@ public class SoundManager {
     //Sound effects
     public static class Sounds {
         public static final String PLAYER_DEATH = "sounds/death.wav";
-        public static final String EXPLOSION = "sounds/explosion.wav";
+        public static final String EXPLOSION_1 = "sounds/explosion.wav";
+        public static final String EXPLOSION_2 = "sounds/explosion_2.wav";
+        public static final String EXPLOSION_3 = "sounds/explosion_3.wav";
+        public static final String EXPLOSION_4 = "sounds/explosion_4.wav";
     }
-    private static final String[] _Sounds = {Sounds.PLAYER_DEATH, Sounds.EXPLOSION };
+    private static final String[] _Sounds = {
+            Sounds.PLAYER_DEATH, Sounds.EXPLOSION_1,
+            Sounds.EXPLOSION_2, Sounds.EXPLOSION_3,
+            Sounds.EXPLOSION_4
+        };
 
     //Cache for sound effects
     private static final ArrayMap<String, Sound> sounds = new ArrayMap<String, Sound>();
