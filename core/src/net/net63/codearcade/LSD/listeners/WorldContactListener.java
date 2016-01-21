@@ -5,10 +5,7 @@ import com.badlogic.ashley.core.ComponentMapper;
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.signals.Signal;
 import com.badlogic.gdx.physics.box2d.*;
-import net.net63.codearcade.LSD.components.LaserComponent;
-import net.net63.codearcade.LSD.components.PlayerComponent;
-import net.net63.codearcade.LSD.components.SensorComponent;
-import net.net63.codearcade.LSD.components.WallComponent;
+import net.net63.codearcade.LSD.components.*;
 import net.net63.codearcade.LSD.events.GameEvent;
 
 /**
@@ -23,6 +20,7 @@ public class WorldContactListener implements ContactListener {
     private ComponentMapper<WallComponent> wallMapper;
     private ComponentMapper<SensorComponent> sensorMapper;
     private ComponentMapper<LaserComponent> laserMapper;
+    private ComponentMapper<StarComponent> starMapper;
 
     public WorldContactListener(World world, Signal<GameEvent> gameEventSignal) {
         this.world = world;
@@ -32,6 +30,7 @@ public class WorldContactListener implements ContactListener {
         wallMapper = ComponentMapper.getFor(WallComponent.class);
         sensorMapper = ComponentMapper.getFor(SensorComponent.class);
         laserMapper = ComponentMapper.getFor(LaserComponent.class);
+        starMapper = ComponentMapper.getFor(StarComponent.class);
     }
 
     private <T extends Component> Entity findEntity(ComponentMapper<T> componentMapper, Entity a, Entity b) {
@@ -71,7 +70,7 @@ public class WorldContactListener implements ContactListener {
             if (sensorMapper.has(other)) {
                 gameEventSignal.dispatch(GameEvent.PLATFORM_COLLISION);
 
-                playerComponent.colllisionPoint = contact.getWorldManifold().getPoints()[0];
+                playerComponent.collisionPoint = contact.getWorldManifold().getPoints()[0];
                 playerComponent.currentSensor = other;
             }
 
@@ -84,12 +83,21 @@ public class WorldContactListener implements ContactListener {
             if (laserMapper.has(other)) {
                 gameEventSignal.dispatch(GameEvent.LASER_COLLISION);
             }
+
+            //Check if the player collided with a star
+            if (starMapper.has(other)) {
+                gameEventSignal.dispatch(GameEvent.STAR_COLLISION);
+                playerComponent.starCollected = other;
+            }
+
         }
 
         //Check if the laser collided with an object other than the player
         if (laserEntity != null && playerEntity == null) {
             gameEventSignal.dispatch(GameEvent.LASER_OBJECT_COLLISION);
         }
+
+
     }
 
     // ------------------ Un-used contact functions ------------------
