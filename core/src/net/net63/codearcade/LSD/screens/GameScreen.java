@@ -3,14 +3,19 @@ package net.net63.codearcade.LSD.screens;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.input.GestureDetector;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import net.net63.codearcade.LSD.LSD;
 import net.net63.codearcade.LSD.managers.Assets;
@@ -44,6 +49,10 @@ public class GameScreen extends AbstractScreen {
     private CentreGUI centreGUI;
     private Label scoreLabel;
     private ImageButton pauseButton;
+
+    private TextureRegionDrawable starCollected, starEmpty;
+    private Image[] starImages = new Image[3];
+    private Table starTable;
 
     private int levelId;
     private int packId;
@@ -118,11 +127,21 @@ public class GameScreen extends AbstractScreen {
 
         });
 
+        starCollected = new TextureRegionDrawable(new TextureRegion(Assets.getAsset(Assets.Images.STAR, Texture.class)));
+        starEmpty = new TextureRegionDrawable(new TextureRegion(Assets.getAsset(Assets.Images.EMPTY_STAR, Texture.class)));
+
+        starTable = new Table();
+        for (int i = 0; i < 3; i++) {
+            starImages[i] = new Image(starEmpty);
+            starTable.add(starImages[i]).size(25).space(10);
+        }
+
         //Create the GUI manager and add listeners
         centreGUI = new CentreGUI();
         Stage stage = centreGUI.getStage();
         stage.addActor(scoreLabel);
         stage.addActor(pauseButton);
+        stage.addActor(starTable);
     }
 
 	@Override
@@ -138,6 +157,11 @@ public class GameScreen extends AbstractScreen {
         tmp.set(width, 0, 0);
         viewport.getCamera().unproject(tmp);
         pauseButton.setPosition(tmp.x - 20 - pauseButton.getWidth(), tmp.y - 15 - pauseButton.getHeight());
+
+        //Set the star group to be in the top left corner
+        tmp.set(0, 0, 0);
+        viewport.getCamera().unproject(tmp);
+        starTable.setPosition(tmp.x + 65, tmp.y - 7 - starTable.getMinHeight());
 	}
 
     @Override
