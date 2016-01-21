@@ -289,6 +289,10 @@ public class GameWorld implements Disposable, EntityListener {
         }
     }
 
+    public LevelDescriptor getLevelDescriptor() {
+        return levelDescriptor;
+    }
+
     public String getScore() {
         return levelDescriptor.getSensorsDestroyed() + "/" + levelDescriptor.getSensorCount();
     }
