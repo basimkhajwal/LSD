@@ -23,9 +23,9 @@ public class SoundManager {
     public static class Sounds {
         public static final String PLAYER_DEATH = "sounds/death.wav";
         public static final String EXPLOSION_1 = "sounds/explosion.wav";
-        public static final String EXPLOSION_2 = "sounds/explosion_2.wav";
-        public static final String EXPLOSION_3 = "sounds/explosion_3.wav";
-        public static final String EXPLOSION_4 = "sounds/explosion_4.wav";
+        public static final String EXPLOSION_2 = "sounds/explosion2.wav";
+        public static final String EXPLOSION_3 = "sounds/explosion3.wav";
+        public static final String EXPLOSION_4 = "sounds/explosion4.wav";
     }
     private static final String[] _Sounds = {
             Sounds.PLAYER_DEATH, Sounds.EXPLOSION_1,
