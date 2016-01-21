@@ -172,8 +172,6 @@ public class GameWorld implements Disposable, EntityListener {
             Vector2 worldPos = new Vector2(x, y);
             viewport.unproject(worldPos);
 
-            System.out.println("Unprojected: " + worldPos.toString());
-
             //Set the aim position and invalidate (force re-compute)
             state.set(PlayerComponent.STATE_AIMING);
             playerComponent.aimPosition = worldPos;
