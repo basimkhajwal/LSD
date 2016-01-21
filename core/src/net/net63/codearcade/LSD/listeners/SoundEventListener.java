@@ -26,7 +26,7 @@ public class SoundEventListener implements Listener<GameEvent> {
                 break;
 
             case LAUNCH_PLAYER:
-                sound = SoundManager.Sounds.EXPLOSION;
+                sound = SoundManager.getExplosion();
                 break;
 
             default:
