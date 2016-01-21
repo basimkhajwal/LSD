@@ -25,9 +25,9 @@ public class PlayerComponent implements Component{
 
     public Entity currentSensor = null;
     public Joint sensorJoint = null;
-    public Vector2 colllisionPoint;
+    public Vector2 collisionPoint;
 
-    public int starCollected;
+    public Entity starCollected;
 
     public boolean isFlying = true;
     public boolean isDead = false;
