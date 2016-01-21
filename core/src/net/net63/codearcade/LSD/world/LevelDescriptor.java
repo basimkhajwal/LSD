@@ -15,6 +15,8 @@ public class LevelDescriptor {
 
     private int sensorCount = 0;
     private int sensorsDestroyed = 0;
+    private boolean[] starsCollected = new boolean[3];
+
     private Rectangle worldBounds = new Rectangle();
 
     public void setSensorCount(int sensorCount) {
@@ -40,4 +42,8 @@ public class LevelDescriptor {
     public void setWorldBounds(Rectangle worldBounds) {
         this.worldBounds = worldBounds;
     }
+
+    public boolean isStarCollected(int index) { return starsCollected[index]; }
+
+    public void setStarCollected(int index, boolean value) { starsCollected[index] = value; }
 }
