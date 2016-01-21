@@ -26,10 +26,9 @@ public class PlayerSystem extends IteratingSystem {
     //Various component mappers
     private ComponentMapper<BodyComponent> bodyMapper;
     private ComponentMapper<StateComponent> stateMapper;
-    private ComponentMapper<SensorComponent> sensorMapper;
     private ComponentMapper<PlayerComponent> playerMapper;
-    private ComponentMapper<WallComponent> wallMapper;
     private ComponentMapper<RenderComponent> renderMapper;
+    private ComponentMapper<StarComponent> starMapper;
 
     //Game state
     private LevelDescriptor levelDescriptor;
@@ -59,8 +58,7 @@ public class PlayerSystem extends IteratingSystem {
         bodyMapper = ComponentMapper.getFor(BodyComponent.class);
         stateMapper = ComponentMapper.getFor(StateComponent.class);
         playerMapper = ComponentMapper.getFor(PlayerComponent.class);
-        sensorMapper = ComponentMapper.getFor(SensorComponent.class);
-        wallMapper = ComponentMapper.getFor(WallComponent.class);
+        starMapper = ComponentMapper.getFor(StarComponent.class);
         renderMapper = ComponentMapper.getFor(RenderComponent.class);
     }
 
@@ -99,6 +97,19 @@ public class PlayerSystem extends IteratingSystem {
                 //Explicit death signal (fired by this system)
                 case PLAYER_DEATH:
                     killPlayer(entity);
+                    break;
+
+                //If it collided with a star then update the level descriptor and removed that star
+                case STAR_COLLISION:
+                    //Update the level descriptor
+                    levelDescriptor.setStarCollected(starMapper.get(playerComponent.starCollected).index, true);
+
+                    //Remove that star
+                    getEngine().removeEntity(playerComponent.starCollected);
+
+                    //Remove pointer
+                    playerComponent.starCollected = null;
+
                     break;
 
                 //Don't handle other events
@@ -173,8 +184,8 @@ public class PlayerSystem extends IteratingSystem {
 
         jointDef.bodyA = body;
         jointDef.bodyB = sensorBody;
-        jointDef.localAnchorA.set(body.getLocalPoint(playerComponent.colllisionPoint));
-        jointDef.localAnchorB.set(sensorBody.getLocalPoint(playerComponent.colllisionPoint));
+        jointDef.localAnchorA.set(body.getLocalPoint(playerComponent.collisionPoint));
+        jointDef.localAnchorB.set(sensorBody.getLocalPoint(playerComponent.collisionPoint));
         jointDef.referenceAngle = sensorBody.getAngle() - body.getAngle();
         playerComponent.sensorJoint = world.createJoint(jointDef);
     }
