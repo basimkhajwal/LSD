@@ -3,6 +3,7 @@ package net.net63.codearcade.LSD.managers;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
+import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ArrayMap;
 import net.net63.codearcade.LSD.utils.Settings;
 
@@ -35,6 +36,10 @@ public class SoundManager {
     //Cache for sound effects
     private static final ArrayMap<String, Sound> sounds = new ArrayMap<String, Sound>();
 
+    //Arrays of grouped sounds
+    private static final Array<String> explosions = new Array<String>(
+            new String[]{Sounds.EXPLOSION_1, Sounds.EXPLOSION_2, Sounds.EXPLOSION_3, Sounds.EXPLOSION_4});
+
     /**
      * Load all the sound assets, must be called prior to being used
      */
@@ -54,6 +59,14 @@ public class SoundManager {
     public static void playMusic() {
         backgroundMusic.play();
         backgroundMusic.setLooping(true);
+    }
+
+    /**
+     * Return the string code for a random explosion sound
+     */
+    public static String getExplosion() {
+        explosions.shuffle();
+        return explosions.first();
     }
 
     /**
