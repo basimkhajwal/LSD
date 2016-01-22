@@ -22,6 +22,11 @@ public class SoundManager {
     //Sound effects
     public static class Sounds {
         public static final String PLAYER_DEATH = "sounds/death.wav";
+
+        public static final String CLICK_1 = "sounds/click.wav";
+
+        public static final String STAR_1 = "sounds/star.wav";
+
         public static final String EXPLOSION_1 = "sounds/explosion.wav";
         public static final String EXPLOSION_2 = "sounds/explosion2.wav";
         public static final String EXPLOSION_3 = "sounds/explosion3.wav";
@@ -30,7 +35,8 @@ public class SoundManager {
     private static final String[] _Sounds = {
             Sounds.PLAYER_DEATH, Sounds.EXPLOSION_1,
             Sounds.EXPLOSION_2, Sounds.EXPLOSION_3,
-            Sounds.EXPLOSION_4
+            Sounds.EXPLOSION_4, Sounds.CLICK_1,
+            Sounds.STAR_1
         };
 
     //Cache for sound effects
@@ -39,6 +45,9 @@ public class SoundManager {
     //Arrays of grouped sounds
     private static final Array<String> explosions = new Array<String>(
             new String[]{Sounds.EXPLOSION_1, Sounds.EXPLOSION_2, Sounds.EXPLOSION_3, Sounds.EXPLOSION_4});
+    private static final Array<String> clickSounds = new Array<String>(new String[] { Sounds.CLICK_1 });
+    private static final Array<String> starSounds = new Array<String>(new String[] { Sounds.STAR_1 });
+
 
     /**
      * Load all the sound assets, must be called prior to being used
@@ -64,10 +73,17 @@ public class SoundManager {
     /**
      * Return the string code for a random explosion sound
      */
-    public static String getExplosion() {
-        explosions.shuffle();
-        return explosions.first();
-    }
+    public static String getExplosion() { return explosions.random(); }
+
+    /**
+     * Return the string code for a random click sound
+     */
+    public static String getClick() { return clickSounds.random(); }
+
+    /**
+     * Return the string code for a random star sound
+     */
+    public static String getStar() { return starSounds.random(); }
 
     /**
      * Stop playing the background music
