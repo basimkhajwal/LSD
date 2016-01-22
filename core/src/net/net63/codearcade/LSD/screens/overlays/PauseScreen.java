@@ -6,6 +6,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import net.net63.codearcade.LSD.LSD;
 import net.net63.codearcade.LSD.managers.Assets;
+import net.net63.codearcade.LSD.managers.SoundManager;
 import net.net63.codearcade.LSD.screens.GameScreen;
 import net.net63.codearcade.LSD.utils.GUIBuilder;
 
@@ -37,6 +38,7 @@ public class PauseScreen extends AbstractOverlay {
     public void checkChange() {
         if (Gdx.input.justTouched()) {
             previousScreen.resumeLogic();
+            SoundManager.playSound(SoundManager.getClick());
             game.setScreen(previousScreen);
         }
     }

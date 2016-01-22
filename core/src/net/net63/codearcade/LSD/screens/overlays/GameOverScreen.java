@@ -11,6 +11,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Array;
 import net.net63.codearcade.LSD.LSD;
 import net.net63.codearcade.LSD.managers.Assets;
+import net.net63.codearcade.LSD.managers.SoundManager;
 import net.net63.codearcade.LSD.screens.GameScreen;
 import net.net63.codearcade.LSD.screens.LevelSelectScreen;
 import net.net63.codearcade.LSD.utils.GUIBuilder;
@@ -61,6 +62,7 @@ public class GameOverScreen extends AbstractOverlay {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 replaying = true;
+                SoundManager.playSound(SoundManager.getClick());
             }
 
         });
@@ -73,6 +75,7 @@ public class GameOverScreen extends AbstractOverlay {
             @Override
             public void clicked (InputEvent event, float x, float y) {
                 backToMenu = true;
+                SoundManager.playSound(SoundManager.getClick());
             }
 
         });

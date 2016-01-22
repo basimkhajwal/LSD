@@ -20,6 +20,7 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import net.net63.codearcade.LSD.LSD;
 import net.net63.codearcade.LSD.managers.Assets;
 import net.net63.codearcade.LSD.managers.LevelManager;
+import net.net63.codearcade.LSD.managers.SoundManager;
 import net.net63.codearcade.LSD.screens.overlays.GameOverScreen;
 import net.net63.codearcade.LSD.screens.overlays.LevelCompleteScreen;
 import net.net63.codearcade.LSD.screens.overlays.PauseScreen;
@@ -123,6 +124,7 @@ public class GameScreen extends AbstractScreen {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 pauseClicked = true;
+                SoundManager.playSound(SoundManager.getClick());
                 event.handle();
             }
 

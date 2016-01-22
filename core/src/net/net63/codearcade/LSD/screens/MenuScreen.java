@@ -16,6 +16,7 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import net.net63.codearcade.LSD.LSD;
 import net.net63.codearcade.LSD.managers.Assets;
 import net.net63.codearcade.LSD.managers.ShaderManager;
+import net.net63.codearcade.LSD.managers.SoundManager;
 import net.net63.codearcade.LSD.screens.overlays.SettingsScreen;
 import net.net63.codearcade.LSD.utils.BackgroundRenderer;
 import net.net63.codearcade.LSD.utils.CentreGUI;
@@ -84,7 +85,8 @@ public class MenuScreen extends AbstractScreen{
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 //Apply the change
-                 playClicked = true;
+                playClicked = true;
+                SoundManager.playSound(SoundManager.getClick());
             }
         });
 
@@ -96,6 +98,7 @@ public class MenuScreen extends AbstractScreen{
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 settingsClicked = true;
+                SoundManager.playSound(SoundManager.getClick());
             }
 
         });

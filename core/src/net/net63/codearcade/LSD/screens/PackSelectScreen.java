@@ -14,6 +14,7 @@ import net.net63.codearcade.LSD.LSD;
 import net.net63.codearcade.LSD.managers.Assets;
 import net.net63.codearcade.LSD.managers.LevelManager;
 import net.net63.codearcade.LSD.managers.ShaderManager;
+import net.net63.codearcade.LSD.managers.SoundManager;
 import net.net63.codearcade.LSD.ui.PagedScrollPane;
 import net.net63.codearcade.LSD.utils.BackgroundRenderer;
 import net.net63.codearcade.LSD.utils.CentreGUI;
@@ -73,8 +74,9 @@ public class PackSelectScreen extends AbstractScreen {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 int page = pagedScrollPane.getCurrentPage() - 1;
-
                 if (page >= 1) pagedScrollPane.scrollToPage(page);
+
+                SoundManager.playSound(SoundManager.getClick());
             }
 
         });
@@ -85,6 +87,7 @@ public class PackSelectScreen extends AbstractScreen {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 levelPackNum = pagedScrollPane.getCurrentPage() - 1;
+                SoundManager.playSound(SoundManager.getClick());
             }
 
         });
@@ -95,8 +98,9 @@ public class PackSelectScreen extends AbstractScreen {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 int page = pagedScrollPane.getCurrentPage() + 1;
-
                 if (page <= numLevels) pagedScrollPane.scrollToPage(page);
+
+                SoundManager.playSound(SoundManager.getClick());
             }
 
         });
@@ -117,6 +121,7 @@ public class PackSelectScreen extends AbstractScreen {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 backClicked = true;
+                SoundManager.playSound(SoundManager.getClick());
                 event.handle();
             }
 
