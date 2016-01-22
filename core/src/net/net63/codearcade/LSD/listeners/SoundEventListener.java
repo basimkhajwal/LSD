@@ -29,6 +29,10 @@ public class SoundEventListener implements Listener<GameEvent> {
                 sound = SoundManager.getExplosion();
                 break;
 
+            case STAR_COLLISION:
+                sound = SoundManager.getStar();
+                break;
+
             default:
                 break;
         }
