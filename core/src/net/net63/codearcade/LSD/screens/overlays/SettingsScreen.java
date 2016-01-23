@@ -11,6 +11,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import net.net63.codearcade.LSD.LSD;
 import net.net63.codearcade.LSD.managers.Assets;
+import net.net63.codearcade.LSD.managers.SoundManager;
 import net.net63.codearcade.LSD.screens.AbstractScreen;
 import net.net63.codearcade.LSD.utils.GUIBuilder;
 import net.net63.codearcade.LSD.utils.Settings;
@@ -49,6 +50,7 @@ public class SettingsScreen extends AbstractOverlay {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 crossPressed = true;
+                SoundManager.playSound(SoundManager.getClick());
             }
 
         });
