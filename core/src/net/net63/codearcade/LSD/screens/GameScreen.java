@@ -190,7 +190,7 @@ public class GameScreen extends AbstractScreen {
 
         //Update the drawables for the stars accordingly
         LevelDescriptor levelDescriptor = gameWorld.getLevelDescriptor();
-        for (int i = 0; i < 2; i++) starImages[i].setDrawable(levelDescriptor.isStarCollected(i) ? starCollected : starEmpty);
+        for (int i = 0; i < 3; i++) starImages[i].setDrawable(levelDescriptor.isStarCollected(i) ? starCollected : starEmpty);
 
         //Handle user events and render the GUI
         centreGUI.render(delta);
