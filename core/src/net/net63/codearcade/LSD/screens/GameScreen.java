@@ -233,30 +233,34 @@ public class GameScreen extends AbstractScreen {
         private float zoomRatio = 1f;
         private float currentZoom = 1f;
 
+        private boolean zoomed = false;
+
         @Override
         public boolean touchDown(float x, float y, int pointer, int button) {
             currentZoom *= zoomRatio;
             zoomRatio = 1f;
 
+            zoomed = false;
             gameWorld.aimPlayer((int) x, (int) y);
+
             return true;
         }
 
         @Override
         public boolean pan (float x, float y, float deltaX, float deltaY) {
-            gameWorld.aimPlayer(Gdx.input.getX(), Gdx.input.getY());
+            if (!zoomed) gameWorld.aimPlayer((int) x, (int) y);
             return true;
         }
 
         @Override
         public boolean tap(float x, float y, int count, int button) {
-            gameWorld.launchPlayer();
+            if (!zoomed) gameWorld.launchPlayer();
             return true;
         }
 
         @Override
         public boolean panStop(float x, float y, int pointer, int button) {
-            gameWorld.launchPlayer();
+            if (!zoomed) gameWorld.launchPlayer();
             return true;
         }
 
@@ -264,6 +268,10 @@ public class GameScreen extends AbstractScreen {
         public boolean zoom(float initialDistance, float distance) {
             zoomRatio = initialDistance / distance;
             gameWorld.applyZoom(zoomRatio * currentZoom);
+
+            zoomed = true;
+            gameWorld.restPlayer();
+
             return true;
         }
     }
