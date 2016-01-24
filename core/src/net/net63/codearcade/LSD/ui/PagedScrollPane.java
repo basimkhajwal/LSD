@@ -10,8 +10,9 @@ import com.badlogic.gdx.utils.Array;
 
 public class PagedScrollPane extends ScrollPane {
 
-	private boolean wasPanDragFling = false;
+	private boolean wasPanDragFling = true;
     public boolean preventFirstAndLast = false;
+	private boolean first = true;
 
 	private Table content;
 
@@ -48,6 +49,12 @@ public class PagedScrollPane extends ScrollPane {
 	@Override
 	public void act (float delta) {
 		super.act(delta);
+
+		if (first) {
+			first = false;
+			scrollToPage(1);
+		}
+
 		if (wasPanDragFling && !isPanning() && !isDragging() && !isFlinging()) {
 			wasPanDragFling = false;
 			scrollToPage();
@@ -55,8 +62,8 @@ public class PagedScrollPane extends ScrollPane {
             Array<Actor> pages = content.getChildren();
             int maxPage = pages.size - 2;
             if (preventFirstAndLast) {
-                if (getScrollX() < pages.get(1).getX()) scrollToPage(1);
-                if (getScrollX() > pages.get(maxPage).getX() + pages.get(maxPage).getWidth() * 0.5) scrollToPage(maxPage);
+                if (getScrollX() <= pages.get(1).getX() + pages.get(1).getWidth() * 0.5f) scrollToPage(1);
+                if (getScrollX() >= pages.get(maxPage).getX() + pages.get(maxPage).getWidth() * 0.5f) scrollToPage(maxPage);
             }
 		} else {
 			if (isPanning() || isDragging() || isFlinging()) {
