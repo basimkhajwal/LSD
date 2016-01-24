@@ -7,6 +7,8 @@ import com.badlogic.gdx.utils.ArrayMap;
 import net.net63.codearcade.LSD.managers.LevelManager;
 import net.net63.codearcade.LSD.managers.SoundManager;
 
+import java.util.Arrays;
+
 /**
  * Class to hold the settings (mutable) for the game for
  * the current user
@@ -49,6 +51,12 @@ public class Settings {
             setLevelsUnlocked(LevelManager.LevelPacks[i].name, -1);
         }
 
+        //Set all the default stars (0 for all)
+        starsCollected.clear();
+        for (int i = 0; i < LevelManager.LevelPacks.length; i++) {
+            starsCollected.put(LevelManager.LevelPacks[i].name, new int[16]);
+        }
+
     }
 
 	/**
@@ -65,6 +73,7 @@ public class Settings {
             if (name.equals("soundVolume"))  setSoundVolume(preferences.getFloat(name));
             if (name.equals("debugEnabled")) setDebugEnabled(preferences.getBoolean(name));
             if (name.equals("levelsUnlocked")) loadLevelsUnlocked(preferences.getString(name));
+            if (name.equals("starsCollected"))
         }
 
 	}
@@ -109,6 +118,26 @@ public class Settings {
         return stringVal;
     }
 
+    private static String starsCollectedToString() {
+
+        String stringVal;
+        Array<String> names = starsCollected.keys().toArray(new Array<String>());
+
+        stringVal = names.first() + OBJECT_DELIMITER + arrayToString(starsCollected.get(names.first()));
+        for (int i = 1; i < names.size; i++) {
+            stringVal += ARRAY_DELIMITER + names.get(i) + OBJECT_DELIMITER + arrayToString(starsCollected.get(names.get(i)));
+        }
+
+        return stringVal;
+    }
+
+    private static String arrayToString(int[] arr) {
+        String str = arr[0] + "";
+        for (int i = 1; i < arr.length; i++) str += OBJECT_DELIMITER + arr[i];
+
+        return str;
+    }
+
     private static void loadLevelsUnlocked(String data) {
 
         //Split the string into all the pack-name to level count pairs
@@ -120,6 +149,20 @@ public class Settings {
             //Set the correct pair value
             setLevelsUnlocked(split[0], Integer.parseInt(split[1]));
         }
+    }
+
+    private static void loadStarsCollected(String data) {
+
+        for (String arrayVal: data.split(ARRAY_DELIMITER)) {
+
+            String[] split = arrayVal.split(OBJECT_DELIMITER);
+
+            for (int i = 1; i < split.length; i++) {
+                setStarsCollected(split[0], i - 1, Integer.parseInt(split[i]));
+            }
+
+        }
+
     }
 
     /* ---------------------- Getters & Setters -----------------------------*/
