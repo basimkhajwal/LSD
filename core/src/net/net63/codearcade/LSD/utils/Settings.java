@@ -9,7 +9,7 @@ import net.net63.codearcade.LSD.managers.SoundManager;
 
 /**
  * Class to hold the settings (mutable) for the game for
- * the curren user
+ * the current user
  * 
  * @author Basim
  *
@@ -23,6 +23,9 @@ public class Settings {
     // - A value of -1 means that this particular pack is locked
     // - Otherwise it specifies the maximum index level that is unlocked (levels are unlocked in order)
     private static final ArrayMap<String, Integer> levelsUnlocked = new ArrayMap<String, Integer>();
+
+    //Array map of integer arrays of length 16 which specifies how many stars have been collected per level
+    private static final ArrayMap<String, int[]> starsCollected = new ArrayMap<String, int[]>();
 
     private static float musicVolume;
     private static float soundVolume;
@@ -45,6 +48,7 @@ public class Settings {
         for (int i = 1; i < LevelManager.LevelPacks.length; i++) {
             setLevelsUnlocked(LevelManager.LevelPacks[i].name, -1);
         }
+
     }
 
 	/**
@@ -119,6 +123,10 @@ public class Settings {
     }
 
     /* ---------------------- Getters & Setters -----------------------------*/
+
+    public static int getStarsCollected(String packName, int level) { return starsCollected.get(packName)[level]; }
+
+    public static void setStarsCollected(String packName, int level, int numStars) { starsCollected.get(packName)[level] = numStars; }
 
     public static int getLevelsUnlocked(String packName) { return levelsUnlocked.get(packName); }
 
