@@ -7,8 +7,6 @@ import com.badlogic.gdx.utils.ArrayMap;
 import net.net63.codearcade.LSD.managers.LevelManager;
 import net.net63.codearcade.LSD.managers.SoundManager;
 
-import java.util.Arrays;
-
 /**
  * Class to hold the settings (mutable) for the game for
  * the current user
@@ -73,7 +71,7 @@ public class Settings {
             if (name.equals("soundVolume"))  setSoundVolume(preferences.getFloat(name));
             if (name.equals("debugEnabled")) setDebugEnabled(preferences.getBoolean(name));
             if (name.equals("levelsUnlocked")) loadLevelsUnlocked(preferences.getString(name));
-            if (name.equals("starsCollected"))
+            if (name.equals("starsCollected")) loadStarsCollected(preferences.getString(name));
         }
 
 	}
@@ -93,6 +91,7 @@ public class Settings {
 
         //Set all the serialized values
         preferences.putString("levelsUnlocked", levelsUnlockedToString());
+        preferences.putString("starsCollected", starsCollectedToString());
 
         //Save the preferences
         preferences.flush();
@@ -133,7 +132,10 @@ public class Settings {
 
     private static String arrayToString(int[] arr) {
         String str = arr[0] + "";
-        for (int i = 1; i < arr.length; i++) str += OBJECT_DELIMITER + arr[i];
+
+        for (int i = 1; i < arr.length; i++) {
+            str += OBJECT_DELIMITER + arr[i];
+        }
 
         return str;
     }
@@ -146,6 +148,9 @@ public class Settings {
             //Split each pairing
             String[] split = arrayVal.split(OBJECT_DELIMITER);
 
+            //Make sure it is a valid level description
+            if (! levelsUnlocked.containsKey(split[0]) || split.length < 2) continue;
+
             //Set the correct pair value
             setLevelsUnlocked(split[0], Integer.parseInt(split[1]));
         }
@@ -153,11 +158,17 @@ public class Settings {
 
     private static void loadStarsCollected(String data) {
 
+        //Loop over each pack name
         for (String arrayVal: data.split(ARRAY_DELIMITER)) {
 
+            //Split in to separate components with the first being the name and the rest level data
             String[] split = arrayVal.split(OBJECT_DELIMITER);
 
-            for (int i = 1; i < split.length; i++) {
+            //Check if it is a valid pack name and has the correct number of levels
+            if (! starsCollected.containsKey(split[0]) || split.length < 17) continue;
+
+            //Parse each level
+            for (int i = 1; i < 17; i++) {
                 setStarsCollected(split[0], i - 1, Integer.parseInt(split[i]));
             }
 
