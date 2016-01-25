@@ -62,8 +62,8 @@ public class PagedScrollPane extends ScrollPane {
             Array<Actor> pages = content.getChildren();
             int maxPage = pages.size - 2;
             if (preventFirstAndLast) {
-                if (getScrollX() <= pages.get(1).getX() + pages.get(1).getWidth() * 0.5f) scrollToPage(1);
-                if (getScrollX() >= pages.get(maxPage).getX() + pages.get(maxPage).getWidth() * 0.5f) scrollToPage(maxPage);
+                if (getScrollX() <= pages.get(1).getX() - pages.get(1).getWidth() * 0.5f) scrollToPage(1);
+                if (getScrollX() >= pages.get(maxPage).getX() - pages.get(maxPage).getWidth()) scrollToPage(maxPage);
             }
 		} else {
 			if (isPanning() || isDragging() || isFlinging()) {
