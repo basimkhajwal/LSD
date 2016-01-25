@@ -43,6 +43,12 @@ public class LevelCompleteScreen extends AbstractOverlay {
 
         //Check if the next level is further than previously achieved or if all levels have been achieved
         if (nextLevel > currentUnlock && nextLevel < pack.numLevels) Settings.setLevelsUnlocked(pack.name, nextLevel);
+
+        //Update the stars collected
+        int currentStar = Settings.getStarsCollected(pack.name, previousScreen.getLevelId());
+        int newStar = previousScreen.getStarCount();
+        Settings.setStarsCollected(pack.name, previousScreen.getLevelId(), Math.max(currentStar, newStar));
+
     }
 
     @Override
