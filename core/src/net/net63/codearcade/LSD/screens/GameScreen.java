@@ -110,6 +110,22 @@ public class GameScreen extends AbstractScreen {
      */
     public int getPackId() { return packId; }
 
+    /**
+     * Return how many stars have been collected
+     *
+     * @return The star count
+     */
+    public int getStarCount() {
+        int count = 0;
+        for (int i = 0; i < 3; i++) {
+            if (gameWorld.getLevelDescriptor().isStarCollected(i)) {
+                count++;
+            }
+        }
+
+        return count;
+    }
+
     private void setupUI() {
         //Create and position the score the label at the top centre
         scoreLabel = GUIBuilder.createLabel("", 50, Color.YELLOW);
