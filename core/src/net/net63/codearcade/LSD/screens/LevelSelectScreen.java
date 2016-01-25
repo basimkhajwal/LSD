@@ -175,9 +175,22 @@ public class LevelSelectScreen extends AbstractScreen {
         //Create the button
         ImageButton button = GUIBuilder.createButton(Assets.Buttons.LEVEL_SELECT);
 
-        //Align the label on top on the centre
+        //The contents table
+        Table contents = new Table();
+        contents.add(text).center().colspan(3);
+
+        contents.row();
+        int starsCollected = Settings.getStarsCollected(LevelManager.getPack(levelPack).name, num);
+        Texture star = Assets.getAsset(Assets.Images.STAR, Texture.class);
+        Texture empty = Assets.getAsset(Assets.Images.EMPTY_STAR, Texture.class);
+
+        for (int i = 0; i < 3; i++) {
+            contents.add(new Image(i < starsCollected ? star : empty)).size(20).space(2);
+        }
+
+        //Align the inside on top on the centre
         button.clearChildren();
-        button.stack(button.getImage(), text).expand().fill();
+        button.stack(button.getImage(), contents).expand().fill();
 
         //Add a click listener
         button.addListener(new ButtonClickListener(num));
