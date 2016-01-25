@@ -1,10 +1,12 @@
 package net.net63.codearcade.LSD.screens;
 
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
@@ -19,6 +21,7 @@ import net.net63.codearcade.LSD.ui.PagedScrollPane;
 import net.net63.codearcade.LSD.utils.BackgroundRenderer;
 import net.net63.codearcade.LSD.utils.CentreGUI;
 import net.net63.codearcade.LSD.utils.GUIBuilder;
+import net.net63.codearcade.LSD.utils.Settings;
 
 import java.util.ArrayList;
 
@@ -26,6 +29,8 @@ import java.util.ArrayList;
  * Created by Basim on 31/12/15.
  */
 public class PackSelectScreen extends AbstractScreen {
+
+    private static final Vector3 tmp = new Vector3();
 
     private BackgroundRenderer backgroundRenderer;
     private CentreGUI centreGUI;
@@ -38,9 +43,6 @@ public class PackSelectScreen extends AbstractScreen {
     private int numLevels;
     private int levelPackNum = -1;
     private boolean backClicked = false;
-    private boolean firstTime = true;
-
-    private static final Vector3 tmp = new Vector3();
 
     public PackSelectScreen(LSD game) {
         super(game);
@@ -140,9 +142,18 @@ public class PackSelectScreen extends AbstractScreen {
     private Table createPage(LevelManager.LevelPack levelPack) {
         Table table = new Table();
 
-        Label title = GUIBuilder.createLabel(levelPack.name, Assets.FontSizes.FIFTY, Color.WHITE);
+        int numStars = 0;
+        for (int level = 0; level < 16; level++) {
+            numStars += Settings.getStarsCollected(levelPack.name, level);
+        }
 
-        table.add(title).center();
+        Label title = GUIBuilder.createLabel(levelPack.name, Assets.FontSizes.FIFTY, Color.WHITE);
+        Label starText = GUIBuilder.createLabel(numStars + " / 48", Assets.FontSizes.FORTY, Color.WHITE);
+
+        table.add(title).center().colspan(2);
+        table.row();
+        table.add(new Image(Assets.getAsset(Assets.Images.STAR, Texture.class))).size(35).spaceRight(10);
+        table.add(starText);
 
         return table;
     }
