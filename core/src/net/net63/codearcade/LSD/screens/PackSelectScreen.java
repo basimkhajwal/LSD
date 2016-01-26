@@ -36,6 +36,7 @@ public class PackSelectScreen extends AbstractScreen {
     private CentreGUI centreGUI;
 
     private Table container;
+    private Table starCount;
     private PagedScrollPane pagedScrollPane;
     private ArrayList<ImageButton> buttons = new ArrayList<ImageButton>();
     private ImageButton backButton;
@@ -133,10 +134,15 @@ public class PackSelectScreen extends AbstractScreen {
         Label titleLabel = GUIBuilder.createLabel("Pack Select", Assets.FontSizes.FIFTY, Color.YELLOW);
         titleLabel.setPosition((800 - titleLabel.getWidth()) / 2, 600 - titleLabel.getHeight() - 10);
 
+        starCount = new Table();
+        starCount.add(new Image(Assets.getAsset(Assets.Images.STAR, Texture.class))).size(50).spaceRight(5);
+        starCount.add(GUIBuilder.createLabel(Settings.getStarCount() + "", Assets.FontSizes.FIFTY, Color.WHITE));
+
         stage.addActor(container);
         stage.addActor(buttonTable);
         stage.addActor(titleLabel);
         stage.addActor(backButton);
+        stage.addActor(starCount);
     }
 
     private Table createPage(LevelManager.LevelPack levelPack) {
@@ -171,7 +177,7 @@ public class PackSelectScreen extends AbstractScreen {
         viewport.getCamera().unproject(tmp);
         container.setPosition(tmp.x, tmp.y);
 
-        //Set the back button to the top right
+        //Set the back button to the top left
         tmp.set(0, 0, 0);
         viewport.getCamera().unproject(tmp);
         backButton.setPosition(tmp.x + 10, tmp.y - 10 - backButton.getHeight());
