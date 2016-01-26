@@ -46,8 +46,14 @@ public class LevelCompleteScreen extends AbstractOverlay {
 
         //Update the stars collected
         int currentStar = Settings.getStarsCollected(pack.name, previousScreen.getLevelId());
+        int starCount = Settings.getStarCount();
         int newStar = previousScreen.getStarCount();
+
+        //Update the number of stars in the current leve of the current pack
         Settings.setStarsCollected(pack.name, previousScreen.getLevelId(), Math.max(currentStar, newStar));
+
+        //Increment star count if new stars have been collected
+        Settings.setStarCount(Math.max(starCount, starCount + (newStar - currentStar)));
 
     }
 
