@@ -135,8 +135,8 @@ public class PackSelectScreen extends AbstractScreen {
         titleLabel.setPosition((800 - titleLabel.getWidth()) / 2, 600 - titleLabel.getHeight() - 10);
 
         starCount = new Table();
-        starCount.add(new Image(Assets.getAsset(Assets.Images.STAR, Texture.class))).size(50).spaceRight(5);
-        starCount.add(GUIBuilder.createLabel(Settings.getStarCount() + "", Assets.FontSizes.FIFTY, Color.WHITE));
+        starCount.add(GUIBuilder.createLabel(Settings.getStarCount() + "", Assets.FontSizes.FORTY, Color.WHITE));
+        starCount.add(new Image(Assets.getAsset(Assets.Images.STAR, Texture.class))).size(30).spaceLeft(3);
 
         stage.addActor(container);
         stage.addActor(buttonTable);
@@ -185,7 +185,7 @@ public class PackSelectScreen extends AbstractScreen {
         //Set the star count to the top right
         tmp.set(width - 1, 0, 0);
         viewport.getCamera().unproject(tmp);
-        starCount.setPosition(tmp.x - starCount.getMinWidth() - 10, tmp.y - starCount.getMinHeight() - 10);
+        starCount.setPosition(tmp.x - starCount.getMinWidth() - 2, tmp.y - starCount.getMinHeight() - 2);
 
         //Space pages so only one can be seen at a time
         pagedScrollPane.setPageSpacing(width / 2);
