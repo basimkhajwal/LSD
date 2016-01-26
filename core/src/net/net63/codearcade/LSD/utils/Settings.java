@@ -30,6 +30,7 @@ public class Settings {
     private static float musicVolume;
     private static float soundVolume;
     private static boolean debugEnabled;
+    private static int starCount;
 
     /**
     * Load all the default values for the settings, this is automatically
@@ -177,6 +178,10 @@ public class Settings {
     }
 
     /* ---------------------- Getters & Setters -----------------------------*/
+
+    public static int getStarCount() { return starCount; }
+    
+    public static void setStarCount(int starCount) { Settings.starCount = starCount; }
 
     public static int getStarsCollected(String packName, int level) { return starsCollected.get(packName)[level]; }
 
