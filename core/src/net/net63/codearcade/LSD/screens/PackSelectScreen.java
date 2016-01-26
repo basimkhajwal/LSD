@@ -182,6 +182,11 @@ public class PackSelectScreen extends AbstractScreen {
         viewport.getCamera().unproject(tmp);
         backButton.setPosition(tmp.x + 10, tmp.y - 10 - backButton.getHeight());
 
+        //Set the star count to the top right
+        tmp.set(width - 1, 0, 0);
+        viewport.getCamera().unproject(tmp);
+        starCount.setPosition(tmp.x - starCount.getMinWidth() - 10, tmp.y - starCount.getMinHeight() - 10);
+
         //Space pages so only one can be seen at a time
         pagedScrollPane.setPageSpacing(width / 2);
     }
