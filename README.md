@@ -24,7 +24,6 @@ They should all work but only desktop and HTML5 builds have currently been teste
 - [ ] Improve menu/title colours
 - [ ] Add "reset game" option
 - [ ] Improve level select and pack select (make them look nicer)
-- [ ] Add sounds for button clicks / randomize explosion sounds
 - [ ] Add smooth transitions between screens
 - [ ] Create more levels
 
@@ -71,3 +70,4 @@ They should all work but only desktop and HTML5 builds have currently been teste
 - [x] Add option of having multiple map packs (with a scroll screen in between)
 - [x] Prevent accessing end levels until unlocked
 - [x] Allow incrementing levels unlocked
+- [x] Add sounds for button clicks / randomize explosion sounds
