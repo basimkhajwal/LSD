@@ -42,6 +42,7 @@ public class Settings {
         setMusicVolume(1);
         setSoundVolume(1);
         setDebugEnabled(true);
+        setStarCount(0);
 
         //Set default levels unlocked (all -1 but the first)
         levelsUnlocked.clear();
@@ -73,6 +74,7 @@ public class Settings {
             if (name.equals("debugEnabled")) setDebugEnabled(preferences.getBoolean(name));
             if (name.equals("levelsUnlocked")) loadLevelsUnlocked(preferences.getString(name));
             if (name.equals("starsCollected")) loadStarsCollected(preferences.getString(name));
+            if (name.equals("starCount")) setStarCount(preferences.getInteger(name));
         }
 
 	}
@@ -89,6 +91,7 @@ public class Settings {
         preferences.putFloat("musicVolume", musicVolume);
         preferences.putFloat("soundVolume", soundVolume);
         preferences.putBoolean("debugEnabled", debugEnabled);
+        preferences.putInteger("starCount", starCount);
 
         //Set all the serialized values
         preferences.putString("levelsUnlocked", levelsUnlockedToString());
@@ -180,7 +183,7 @@ public class Settings {
     /* ---------------------- Getters & Setters -----------------------------*/
 
     public static int getStarCount() { return starCount; }
-    
+
     public static void setStarCount(int starCount) { Settings.starCount = starCount; }
 
     public static int getStarsCollected(String packName, int level) { return starsCollected.get(packName)[level]; }
