@@ -19,7 +19,6 @@ They should all work but only desktop and HTML5 builds have currently been teste
 
 #### TODO:
 - [ ] Add zoom option for levels so that the correct amount is visible
-- [ ] Add a 3-star collection per level and a total star count
 - [ ] Add a currency system with stars in order to unlock new packs
 - [ ] Improve menu/title colours
 - [ ] Add "reset game" option
@@ -71,3 +70,4 @@ They should all work but only desktop and HTML5 builds have currently been teste
 - [x] Prevent accessing end levels until unlocked
 - [x] Allow incrementing levels unlocked
 - [x] Add sounds for button clicks / randomize explosion sounds
+- [x] Add a 3-star collection per level and a total star count
