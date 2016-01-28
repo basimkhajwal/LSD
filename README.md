@@ -9,9 +9,10 @@ A casual physics based arcade game where you fire the character around, avoiding
 It can compile to the following platforms:
 - Desktop (requires Java 1.6+ and OpenGL 3+) *Tested current version*
 - Mobile (iOS / Android) *Tested (only android)*
-- HTML5 (any modern browser, Internet Explorer requires Google Chrome Frame) *Tested*
+- HTML5 (any modern browser, Internet Explorer requires Google Chrome Frame) *Tested (Box2D error cropping up for now)*
 
 A compiled (but not regularly updated) HTML5 version is at: [basimkhajwal.freeoda.com] (http://basimkhajwal.freeoda.com)
+Note: The HTML version is currently having physics issues and objects can slide through each other, it is not currently working correctly
 
 They should all work but only desktop and HTML5 builds have currently been tested. For the latest version, download this repository and run the gradle-based projects on your computer -- more [here](https://github.com/libgdx/libgdx/wiki/Gradle-on-the-Commandline).
 
