@@ -24,6 +24,8 @@ They should all work but only desktop and HTML5 builds have currently been teste
 - [ ] Add "reset game" option
 - [ ] Improve level select and pack select (make them look nicer)
 - [ ] Add smooth transitions between screens
+- [ ] Create a generic dialog box screen
+- [ ] Introduce variable level numbers within a pack
 - [ ] Create more levels
 
 #### Currently Working:
