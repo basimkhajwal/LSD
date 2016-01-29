@@ -152,6 +152,7 @@ public class PackSelectScreen extends AbstractScreen {
         for (int level = 0; level < 16; level++) {
             numStars += Settings.getStarsCollected(levelPack.name, level);
         }
+        boolean isUnlocked = Settings.getLevelsUnlocked(levelPack.name) == -1;
 
         Label title = GUIBuilder.createLabel(levelPack.name, Assets.FontSizes.FIFTY, Color.WHITE);
         Label starText = GUIBuilder.createLabel(numStars + " / 48", Assets.FontSizes.FORTY, Color.WHITE);

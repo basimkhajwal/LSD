@@ -110,6 +110,10 @@ public class PagedScrollPane extends ScrollPane {
         return i;
     }
 
+    public Table getContent() {
+        return content;
+    }
+
     public void scrollToPage (int n) {
         Actor page = content.getChildren().get(n);
 
