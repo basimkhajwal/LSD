@@ -1,6 +1,7 @@
 package net.net63.codearcade.LSD.utils;
 
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
@@ -33,5 +34,22 @@ public class GUIBuilder {
 
     public static Label createLabel(String text, int size, Color color) {
         return new Label(text, new Label.LabelStyle(Assets.getFont(Assets.Fonts.DEFAULT, size), color));
+    }
+
+    public static Pixmap createRoundedRectangle(int width, int height, int cornerRadius, Color color) {
+
+        Pixmap pixmap = new Pixmap(width, height, Pixmap.Format.RGBA8888);
+
+        pixmap.setColor(color);
+
+        pixmap.fillCircle(cornerRadius, cornerRadius, cornerRadius);
+        pixmap.fillCircle(width - cornerRadius - 1, cornerRadius, cornerRadius);
+        pixmap.fillCircle(cornerRadius, height - cornerRadius - 1, cornerRadius);
+        pixmap.fillCircle(width - cornerRadius - 1, height - cornerRadius - 1, cornerRadius);
+
+        pixmap.fillRectangle(cornerRadius, 0, width - cornerRadius * 2, height);
+        pixmap.fillRectangle(0, cornerRadius, width, height - cornerRadius * 2);
+
+        return pixmap;
     }
 }
