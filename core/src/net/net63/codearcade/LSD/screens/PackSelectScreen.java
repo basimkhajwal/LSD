@@ -1,6 +1,7 @@
 package net.net63.codearcade.LSD.screens;
 
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.Actor;
@@ -69,7 +70,7 @@ public class PackSelectScreen extends AbstractScreen {
 
         container = new Table();
         container.setFillParent(true);
-        container.add(pagedScrollPane).expand().fill();
+        container.add(pagedScrollPane).expand();
 
         ImageButton prevButton = GUIBuilder.createButton(Assets.Buttons.PREVIOUS_LEVEL);
         prevButton.addListener(new ClickListener() {
@@ -113,7 +114,7 @@ public class PackSelectScreen extends AbstractScreen {
         buttons.add(nextButton);
 
         Table buttonTable = new Table();
-        buttonTable.setPosition((800 - buttonTable.getWidth()) / 2, 150);
+        buttonTable.setPosition((800 - buttonTable.getWidth()) / 2, 130);
         for (ImageButton button: buttons) buttonTable.add(button).size(100, 100).spaceRight(30);
 
         //Back button (positioned in the top left corner)
@@ -146,7 +147,8 @@ public class PackSelectScreen extends AbstractScreen {
     }
 
     private Table createPage(LevelManager.LevelPack levelPack) {
-        Table table = new Table();
+        Table innerTable = new Table();
+        Table outerTable = new Table();
 
         int numStars = 0;
         for (int level = 0; level < 16; level++) {
@@ -157,12 +159,18 @@ public class PackSelectScreen extends AbstractScreen {
         Label title = GUIBuilder.createLabel(levelPack.name, Assets.FontSizes.FIFTY, Color.WHITE);
         Label starText = GUIBuilder.createLabel(numStars + " / 48", Assets.FontSizes.FORTY, Color.WHITE);
 
-        table.add(title).center().colspan(2);
-        table.row();
-        table.add(new Image(Assets.getAsset(Assets.Images.STAR, Texture.class))).size(35).spaceRight(10);
-        table.add(starText);
+        innerTable.add(title).center().colspan(2);
+        innerTable.row();
+        innerTable.add(new Image(Assets.getAsset(Assets.Images.STAR, Texture.class))).size(35).spaceRight(10);
+        innerTable.add(starText);
 
-        return table;
+        Pixmap pixmap = GUIBuilder.createRoundedRectangle(600, 250, 20, Color.DARK_GRAY);
+        Image background = new Image(new Texture(pixmap));
+        pixmap.dispose();
+
+        outerTable.stack(background, innerTable).width(600).height(250);
+
+        return outerTable;
     }
 
     @Override
