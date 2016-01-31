@@ -3,9 +3,11 @@ package net.net63.codearcade.LSD.utils;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import net.net63.codearcade.LSD.managers.Assets;
 
@@ -30,6 +32,27 @@ public class GUIBuilder {
         TextureRegionDrawable btnChecked = new TextureRegionDrawable(new TextureRegion(txtHover));
 
         return new ImageButton(btn, btnDown, btnChecked);
+    }
+
+    public static TextButton createTextButton(String button, String text, int size, Color color) {
+
+        Texture txt = Assets.getAsset(button + ".png", Texture.class);
+        Texture txtDwn = Assets.getAsset(button + "_down.png", Texture.class);
+        Texture txtHover = Assets.getAsset(button + "_hover.png", Texture.class);
+
+        txt.setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
+        txtDwn.setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
+        txtHover.setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
+
+        TextureRegionDrawable btn = new TextureRegionDrawable(new TextureRegion(txt));
+        TextureRegionDrawable btnDown = new TextureRegionDrawable(new TextureRegion(txtDwn));
+        TextureRegionDrawable btnChecked = new TextureRegionDrawable(new TextureRegion(txtHover));
+
+        BitmapFont font = Assets.getFont(Assets.Fonts.DEFAULT, size);
+        TextButton textButton = new TextButton(text, new TextButton.TextButtonStyle(btn, btnDown, btnChecked, font));
+        textButton.setColor(color);
+
+        return textButton;
     }
 
     public static Label createLabel(String text, int size, Color color) {
