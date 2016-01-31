@@ -13,8 +13,8 @@ import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 public class LevelManager {
 
     public static final LevelPack[] LevelPacks = new LevelPack[]{
-            new LevelPack("original", "maps/original/level", 16),
-            new LevelPack("debug", "maps/new/level", 1)
+            new LevelPack("Original", "maps/original/level", 16),
+            new LevelPack("Debug", "maps/new/level", 1)
     };
 
     //Level data caches
