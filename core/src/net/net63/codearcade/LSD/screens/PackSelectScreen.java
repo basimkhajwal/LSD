@@ -45,6 +45,7 @@ public class PackSelectScreen extends AbstractScreen {
     private int numLevels;
     private int levelPackNum = -1;
     private boolean backClicked = false;
+    private boolean firstRender = true;
 
     public PackSelectScreen(LSD game) {
         super(game);
@@ -114,7 +115,7 @@ public class PackSelectScreen extends AbstractScreen {
         buttons.add(nextButton);
 
         Table buttonTable = new Table();
-        buttonTable.setPosition((800 - buttonTable.getWidth()) / 2, 130);
+        buttonTable.setPosition((800 - buttonTable.getWidth()) / 2, 120);
         for (ImageButton button: buttons) buttonTable.add(button).size(100, 100).spaceRight(30);
 
         //Back button (positioned in the top left corner)
@@ -133,7 +134,7 @@ public class PackSelectScreen extends AbstractScreen {
         });
 
         Label titleLabel = GUIBuilder.createLabel("Pack Select", Assets.FontSizes.FIFTY, Color.YELLOW);
-        titleLabel.setPosition((800 - titleLabel.getWidth()) / 2, 600 - titleLabel.getHeight() - 10);
+        titleLabel.setPosition((800 - titleLabel.getWidth()) / 2, 600 - titleLabel.getHeight() - 40);
 
         starCount = new Table();
         starCount.add(GUIBuilder.createLabel(Settings.getStarCount() + "", Assets.FontSizes.FORTY, Color.WHITE));
@@ -212,6 +213,11 @@ public class PackSelectScreen extends AbstractScreen {
 
         if (levelPackNum != -1) game.setScreen(new LevelSelectScreen(game, levelPackNum));
         if (backClicked) game.setScreen(new MenuScreen(game));
+
+        if (firstRender) {
+            firstRender = false;
+            pagedScrollPane.scrollToPage(1);
+        }
     }
 
 }
