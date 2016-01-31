@@ -46,15 +46,15 @@ public class Settings {
 
         //Set default levels unlocked (all -1 but the first)
         levelsUnlocked.clear();
-        setLevelsUnlocked(LevelManager.LevelPacks[0].name, 0);
+        setLevelsUnlocked(LevelManager.LevelPacks[0].name.toLowerCase(), 0);
         for (int i = 1; i < LevelManager.LevelPacks.length; i++) {
-            setLevelsUnlocked(LevelManager.LevelPacks[i].name, -1);
+            setLevelsUnlocked(LevelManager.LevelPacks[i].name.toLowerCase(), -1);
         }
 
         //Set all the default stars (0 for all)
         starsCollected.clear();
         for (int i = 0; i < LevelManager.LevelPacks.length; i++) {
-            starsCollected.put(LevelManager.LevelPacks[i].name, new int[16]);
+            starsCollected.put(LevelManager.LevelPacks[i].name.toLowerCase(), new int[16]);
         }
 
     }
@@ -186,13 +186,13 @@ public class Settings {
 
     public static void setStarCount(int starCount) { Settings.starCount = starCount; }
 
-    public static int getStarsCollected(String packName, int level) { return starsCollected.get(packName)[level]; }
+    public static int getStarsCollected(String packName, int level) { return starsCollected.get(packName.toLowerCase())[level]; }
 
-    public static void setStarsCollected(String packName, int level, int numStars) { starsCollected.get(packName)[level] = numStars; }
+    public static void setStarsCollected(String packName, int level, int numStars) { starsCollected.get(packName.toLowerCase())[level] = numStars; }
 
-    public static int getLevelsUnlocked(String packName) { return levelsUnlocked.get(packName); }
+    public static int getLevelsUnlocked(String packName) { return levelsUnlocked.get(packName.toLowerCase()); }
 
-    public static void setLevelsUnlocked(String packName, int numLevels) { levelsUnlocked.put(packName, numLevels); }
+    public static void setLevelsUnlocked(String packName, int numLevels) { levelsUnlocked.put(packName.toLowerCase(), numLevels); }
 
     public static float getMusicVolume() {
         return musicVolume;
