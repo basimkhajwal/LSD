@@ -173,7 +173,7 @@ public class LevelSelectScreen extends AbstractScreen {
         }
 
         //Create the button
-        ImageButton button = GUIBuilder.createButton(Assets.Buttons.LEVEL_SELECT);
+        ImageButton button = GUIBuilder.createButton(Assets.Buttons.PLAIN);
 
         //The contents table
         Table contents = new Table();
