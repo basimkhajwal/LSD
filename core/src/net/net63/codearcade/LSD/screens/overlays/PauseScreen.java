@@ -35,7 +35,7 @@ public class PauseScreen extends AbstractOverlay {
     }
 
     @Override
-    public void checkChange() {
+    public void update() {
         if (Gdx.input.justTouched()) {
             previousScreen.resumeLogic();
             SoundManager.playSound(SoundManager.getClick());

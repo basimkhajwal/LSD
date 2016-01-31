@@ -138,7 +138,7 @@ public class SettingsScreen extends AbstractOverlay {
     }
 
     @Override
-    public void checkChange() {
+    public void update() {
 
         crossButton.setChecked(crossButton.isOver());
 

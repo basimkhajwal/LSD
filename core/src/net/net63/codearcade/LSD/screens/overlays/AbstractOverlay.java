@@ -67,7 +67,7 @@ public abstract class AbstractOverlay extends AbstractScreen {
     }
 
     public abstract void setupUI(Stage stage);
-    public abstract void checkChange();
+    public abstract void update();
 
     @Override
     public void resize(int width, int height) {
@@ -107,7 +107,7 @@ public abstract class AbstractOverlay extends AbstractScreen {
         stage.draw();
 
         //Call the abstract method for any subclass changes
-        checkChange();
+        update();
     }
 
     @Override

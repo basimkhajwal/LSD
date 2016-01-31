@@ -94,7 +94,7 @@ public class GameOverScreen extends AbstractOverlay {
     }
 
     @Override
-    public void checkChange() {
+    public void update() {
         for (ImageButton button: buttons) button.setChecked(button.isOver());
 
         if (replaying) game.setScreen(new GameScreen(game, previousGame.getPackId(), previousGame.getLevelId()));
