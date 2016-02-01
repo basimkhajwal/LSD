@@ -22,6 +22,9 @@ import net.net63.codearcade.LSD.utils.Settings;
 public class SettingsScreen extends AbstractOverlay {
 
     private ImageButton crossButton;
+    private ImageButton resetButton;
+
+    private boolean resetPressed = false;
     private boolean crossPressed = false;
 
     public SettingsScreen(LSD game, AbstractScreen previousScreen) {
@@ -54,6 +57,8 @@ public class SettingsScreen extends AbstractOverlay {
             }
 
         });
+
+        resetButton = GUIBuilder.createButton()
 
         Label soundTitle = GUIBuilder.createLabel("Sound Effects", Assets.FontSizes.TWENTY, Color.DARK_GRAY);
         soundTitle.setPosition(background.getX() + 50, title.getY() - soundTitle.getHeight() - 30);
