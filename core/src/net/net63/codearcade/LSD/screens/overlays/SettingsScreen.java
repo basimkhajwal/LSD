@@ -22,7 +22,7 @@ import net.net63.codearcade.LSD.utils.Settings;
 public class SettingsScreen extends AbstractOverlay {
 
     private ImageButton crossButton;
-    private ImageButton resetButton;
+    private TextButton resetButton;
 
     private boolean resetPressed = false;
     private boolean crossPressed = false;
@@ -57,8 +57,6 @@ public class SettingsScreen extends AbstractOverlay {
             }
 
         });
-
-        resetButton = GUIBuilder.createButton()
 
         Label soundTitle = GUIBuilder.createLabel("Sound Effects", Assets.FontSizes.TWENTY, Color.DARK_GRAY);
         soundTitle.setPosition(background.getX() + 50, title.getY() - soundTitle.getHeight() - 30);
@@ -121,6 +119,11 @@ public class SettingsScreen extends AbstractOverlay {
             }
         });
 
+        resetButton = GUIBuilder.createTextButton(Assets.Buttons.PLAIN, "Reset Game", Assets.FontSizes.FORTY, Color.BLACK);
+        float scl = 100f / resetButton.getWidth();
+        resetButton.setSize(resetButton.getWidth() * scl, resetButton.getHeight() * scl);
+        resetButton.setPosition(background.getX() + 50, debugCheckBox.getY() - resetButton.getHeight() - 30);
+
         stage.addActor(background);
         stage.addActor(title);
         stage.addActor(soundTitle);
@@ -132,6 +135,7 @@ public class SettingsScreen extends AbstractOverlay {
         stage.addActor(debugCheckBox);
         stage.addActor(debugLabel);
         stage.addActor(crossButton);
+        stage.addActor(resetButton);
     }
 
     private String formatPercent(float percent) {
@@ -146,6 +150,7 @@ public class SettingsScreen extends AbstractOverlay {
     public void update() {
 
         crossButton.setChecked(crossButton.isOver());
+        resetButton.setChecked(resetButton.isOver());
 
         if (crossPressed) {
             previousScreen.resumeLogic();
