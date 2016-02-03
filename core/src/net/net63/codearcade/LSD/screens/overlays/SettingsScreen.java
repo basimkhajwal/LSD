@@ -119,10 +119,13 @@ public class SettingsScreen extends AbstractOverlay {
             }
         });
 
-        resetButton = GUIBuilder.createTextButton(Assets.Buttons.PLAIN, "Reset Game", Assets.FontSizes.FORTY, Color.BLACK);
-        float scl = 100f / resetButton.getWidth();
-        resetButton.setSize(resetButton.getWidth() * scl, resetButton.getHeight() * scl);
+        resetButton = GUIBuilder.createTextButton(Assets.Buttons.PLAIN, "Reset Game", Assets.FontSizes.TWENTY, Color.BLACK);
+        float scl = 150f / resetButton.getWidth();
+        System.out.println(resetButton.getHeight());
+        resetButton.setSize(resetButton.getWidth() * scl, resetButton.getHeight() * scl * 0.5f);
         resetButton.setPosition(background.getX() + 50, debugCheckBox.getY() - resetButton.getHeight() - 30);
+        System.out.println(resetButton.getHeight() + ", " + scl);
+
 
         stage.addActor(background);
         stage.addActor(title);
