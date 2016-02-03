@@ -35,6 +35,9 @@ public abstract class AbstractOverlay extends AbstractScreen {
     private Stage stage;
     private Image overlay;
 
+    private boolean paused = false;
+    private boolean firstTime = true;
+
     public AbstractOverlay(LSD game, AbstractScreen previousScreen) {
         super(game);
 
@@ -61,9 +64,6 @@ public abstract class AbstractOverlay extends AbstractScreen {
         overlay.setScaling(Scaling.stretch);
         stage.addActor(overlay);
         overlayPix.dispose();
-
-        //Call the subclass to add all the other GUI elements
-        setupUI(stage);
     }
 
     public abstract void setupUI(Stage stage);
@@ -95,8 +95,25 @@ public abstract class AbstractOverlay extends AbstractScreen {
     }
 
     @Override
+    public void pauseLogic() {
+        paused = true;
+    }
+
+    @Override
+    public void resumeLogic() {
+        paused = false;
+        Gdx.input.setInputProcessor(stage);
+    }
+
+    @Override
     public void render(float deltaTime) {
         super.render(deltaTime);
+
+        //If it is the first run then setup the ui
+        if (firstTime) {
+            firstTime = false;
+            setupUI(stage);
+        }
 
         //Render the previous game
         previousScreen.render(deltaTime);
@@ -113,7 +130,7 @@ public abstract class AbstractOverlay extends AbstractScreen {
     @Override
     public void hide() {
         super.hide();
-        dispose();
+        if (!paused) dispose();
     }
 
     @Override
