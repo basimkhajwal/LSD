@@ -50,7 +50,7 @@ public class GUIBuilder {
 
         BitmapFont font = Assets.getFont(Assets.Fonts.DEFAULT, size);
         TextButton textButton = new TextButton(text, new TextButton.TextButtonStyle(btn, btnDown, btnChecked, font));
-        textButton.setColor(color);
+        textButton.getLabel().setColor(color);
 
         return textButton;
     }
