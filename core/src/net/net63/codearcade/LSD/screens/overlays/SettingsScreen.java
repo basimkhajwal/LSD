@@ -121,11 +121,16 @@ public class SettingsScreen extends AbstractOverlay {
 
         resetButton = GUIBuilder.createTextButton(Assets.Buttons.PLAIN, "Reset Game", Assets.FontSizes.TWENTY, Color.BLACK);
         float scl = 150f / resetButton.getWidth();
-        System.out.println(resetButton.getHeight());
         resetButton.setSize(resetButton.getWidth() * scl, resetButton.getHeight() * scl * 0.5f);
         resetButton.setPosition(background.getX() + 50, debugCheckBox.getY() - resetButton.getHeight() - 30);
-        System.out.println(resetButton.getHeight() + ", " + scl);
+        resetButton.addListener(new ClickListener() {
 
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                resetPressed = true;
+            }
+
+        });
 
         stage.addActor(background);
         stage.addActor(title);
@@ -158,6 +163,11 @@ public class SettingsScreen extends AbstractOverlay {
         if (crossPressed) {
             previousScreen.resumeLogic();
             game.setScreen(previousScreen);
+        }
+
+        if (resetPressed) {
+            resetPressed = false;
+            game.setScreen(new YesNoDialogScreen(game, previousScreen, "Reset Game", "Are you sure you want to reset? There is no going back"));
         }
     }
 
