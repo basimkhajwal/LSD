@@ -27,10 +27,15 @@ public class YesNoDialogScreen extends AbstractOverlay {
     private TextButton yesButton;
     private TextButton noButton;
 
+    private DialogResultListener listener;
     private boolean reverseColours = false;
 
     public YesNoDialogScreen(LSD game, AbstractScreen previousScreen, String title, String message) {
         super(game, previousScreen);
+
+        if (previousScreen instanceof DialogResultListener) {
+            listener = (DialogResultListener) previousScreen;
+        }
 
         this.title = title;
         this.message = message;
