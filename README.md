@@ -22,10 +22,8 @@ They should all work but only desktop and HTML5 builds have currently been teste
 - [ ] Add zoom option for levels so that the correct amount is visible
 - [ ] Add a currency system with stars in order to unlock new packs
 - [ ] Improve menu/title colours
-- [ ] Add "reset game" option
 - [ ] Improve level select and pack select (make them look nicer)
 - [ ] Add smooth transitions between screens
-- [ ] Create a generic dialog box screen
 - [ ] Introduce variable level numbers within a pack
 - [ ] Create more levels
 
@@ -74,3 +72,5 @@ They should all work but only desktop and HTML5 builds have currently been teste
 - [x] Allow incrementing levels unlocked
 - [x] Add sounds for button clicks / randomize explosion sounds
 - [x] Add a 3-star collection per level and a total star count
+- [x] Add "reset game" option
+- [x] Create a generic dialog box screen
