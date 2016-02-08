@@ -159,7 +159,12 @@ public class SettingsScreen extends AbstractOverlay implements DialogResultListe
 
     @Override
     public void handleResult(DialogResult result) {
-        
+
+        //If reset was pressed then load the defaults once more
+        if (result == DialogResult.YES) {
+            Settings.loadDefaults();
+        }
+
     }
 
     @Override
