@@ -167,7 +167,7 @@ public class SettingsScreen extends AbstractOverlay {
 
         if (resetPressed) {
             resetPressed = false;
-            game.setScreen(new YesNoDialogScreen(game, previousScreen, "Reset Game", "Are you sure you want to reset? There is no going back"));
+            game.setScreen(new YesNoDialogScreen(game, this, "Reset Game", "Are you sure you want to reset? There is no going back"));
         }
     }
 
