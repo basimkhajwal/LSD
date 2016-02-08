@@ -1,4 +1,4 @@
-package net.net63.codearcade.LSD.screens.overlays;
+package net.net63.codearcade.LSD.screens.overlays.dialogs;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
@@ -13,6 +13,7 @@ import com.badlogic.gdx.utils.Align;
 import net.net63.codearcade.LSD.LSD;
 import net.net63.codearcade.LSD.managers.Assets;
 import net.net63.codearcade.LSD.screens.AbstractScreen;
+import net.net63.codearcade.LSD.screens.overlays.AbstractOverlay;
 import net.net63.codearcade.LSD.utils.GUIBuilder;
 
 /**
