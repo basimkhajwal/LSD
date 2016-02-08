@@ -114,7 +114,7 @@ public class YesNoDialogScreen extends AbstractOverlay {
         if (yesClicked || noClicked) {
             previousScreen.resumeLogic();
             listener.handleResult(yesClicked ? DialogResult.YES : DialogResult.NO);
-            
+
             game.setScreen(previousScreen);
         }
     }

@@ -13,6 +13,8 @@ import net.net63.codearcade.LSD.LSD;
 import net.net63.codearcade.LSD.managers.Assets;
 import net.net63.codearcade.LSD.managers.SoundManager;
 import net.net63.codearcade.LSD.screens.AbstractScreen;
+import net.net63.codearcade.LSD.screens.overlays.dialogs.DialogResult;
+import net.net63.codearcade.LSD.screens.overlays.dialogs.DialogResultListener;
 import net.net63.codearcade.LSD.screens.overlays.dialogs.YesNoDialogScreen;
 import net.net63.codearcade.LSD.utils.GUIBuilder;
 import net.net63.codearcade.LSD.utils.Settings;
@@ -20,7 +22,7 @@ import net.net63.codearcade.LSD.utils.Settings;
 /**
  * Created by Basim on 21/12/15.
  */
-public class SettingsScreen extends AbstractOverlay {
+public class SettingsScreen extends AbstractOverlay implements DialogResultListener {
 
     private ImageButton crossButton;
     private TextButton resetButton;
@@ -153,6 +155,11 @@ public class SettingsScreen extends AbstractOverlay {
 
     private Slider createVolumeSlider() {
         return new Slider(0, 1, 0.05f, false, Assets.getAsset(Assets.UI_SKIN, Skin.class));
+    }
+
+    @Override
+    public void handleResult(DialogResult result) {
+        
     }
 
     @Override
