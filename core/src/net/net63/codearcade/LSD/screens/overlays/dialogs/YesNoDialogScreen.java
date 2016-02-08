@@ -1,14 +1,15 @@
 package net.net63.codearcade.LSD.screens.overlays.dialogs;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.NinePatch;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
 import net.net63.codearcade.LSD.LSD;
 import net.net63.codearcade.LSD.managers.Assets;
@@ -29,6 +30,9 @@ public class YesNoDialogScreen extends AbstractOverlay {
 
     private DialogResultListener listener;
     private boolean reverseColours = false;
+
+    private boolean yesClicked = false;
+    private boolean noClicked = false;
 
     public YesNoDialogScreen(LSD game, AbstractScreen previousScreen, String title, String message) {
         super(game, previousScreen);
@@ -68,6 +72,24 @@ public class YesNoDialogScreen extends AbstractOverlay {
         yesButton = GUIBuilder.createTextButton(yesString, "Yes", Assets.FontSizes.TWENTY, Color.WHITE);
         noButton = GUIBuilder.createTextButton(noString, "No", Assets.FontSizes.TWENTY, Color.WHITE);
 
+        yesButton.addListener(new ClickListener() {
+
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                yesClicked = true;
+            }
+
+        });
+
+        noButton.addListener(new ClickListener() {
+
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                noClicked = true;
+            }
+
+        });
+
         float btnwidth = 70f;
         float btnheight = 35f;
 
@@ -79,7 +101,7 @@ public class YesNoDialogScreen extends AbstractOverlay {
         final Image background = new Image(bg);
         background.setSize(contentTable.getWidth(), contentTable.getHeight());
         wrapperTable.stack(background, contentTable);
-        wrapperTable.setPosition( (800 - background.getWidth()) / 2, (600 - background.getHeight()) / 2);
+        wrapperTable.setPosition((800 - background.getWidth()) / 2, (600 - background.getHeight()) / 2);
 
         stage.addActor(wrapperTable);
     }
@@ -89,8 +111,10 @@ public class YesNoDialogScreen extends AbstractOverlay {
         yesButton.setChecked(yesButton.isOver());
         noButton.setChecked(noButton.isOver());
 
-        if (Gdx.input.justTouched()) {
+        if (yesClicked || noClicked) {
             previousScreen.resumeLogic();
+            listener.handleResult(yesClicked ? DialogResult.YES : DialogResult.NO);
+            
             game.setScreen(previousScreen);
         }
     }
