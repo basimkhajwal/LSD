@@ -13,6 +13,7 @@ import net.net63.codearcade.LSD.LSD;
 import net.net63.codearcade.LSD.managers.Assets;
 import net.net63.codearcade.LSD.managers.SoundManager;
 import net.net63.codearcade.LSD.screens.AbstractScreen;
+import net.net63.codearcade.LSD.screens.overlays.dialogs.YesNoDialogScreen;
 import net.net63.codearcade.LSD.utils.GUIBuilder;
 import net.net63.codearcade.LSD.utils.Settings;
 
@@ -167,7 +168,9 @@ public class SettingsScreen extends AbstractOverlay {
 
         if (resetPressed) {
             resetPressed = false;
-            game.setScreen(new YesNoDialogScreen(game, this, "Reset Game", "Are you sure you want to reset? There is no going back"));
+            YesNoDialogScreen dialog = new YesNoDialogScreen(game, this, "Reset Game", "Are you sure you want to reset? There is no going back");
+            dialog.disposeScreen = false;
+            game.setScreen(dialog);
         }
     }
 
