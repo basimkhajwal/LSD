@@ -59,13 +59,16 @@ public class Assets {
         public static final String SETTINGS = "buttons/settings";
         public static final String CROSS = "buttons/cross";
         public static final String BACK = "buttons/back";
+        public static final String RED = "buttons/red";
+        public static final String GREEN = "buttons/green";
     }
     private static final String[] _Buttons = {
             Buttons.MENU_PLAY, Buttons.NEXT_LEVEL,
             Buttons.REPLAY_LEVEL, Buttons.BACK_MENU,
             Buttons.PLAIN, Buttons.PAUSE,
             Buttons.SETTINGS, Buttons.CROSS,
-            Buttons.BACK, Buttons.PREVIOUS_LEVEL
+            Buttons.BACK, Buttons.PREVIOUS_LEVEL,
+            Buttons.RED, Buttons.GREEN
     };
 
     public static class FontSizes {
