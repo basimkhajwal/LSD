@@ -94,8 +94,8 @@ public class YesNoDialogScreen extends AbstractOverlay {
         float btnheight = 35f;
 
         contentTable.row();
-        contentTable.add(yesButton).size(btnwidth, btnheight).padLeft(5).padBottom(20).spaceRight(10);
-        contentTable.add(noButton).size(btnwidth, btnheight).padRight(5).padBottom(20);
+        contentTable.add(noButton).size(btnwidth, btnheight).padLeft(5).padBottom(20).spaceRight(10);
+        contentTable.add(yesButton).size(btnwidth, btnheight).padRight(5).padBottom(20);
 
         NinePatch bg = new NinePatch(Assets.getAsset(Assets.Images.SETTINGS_BACKGROUND, Texture.class), 9, 9, 9, 9);
         final Image background = new Image(bg);
