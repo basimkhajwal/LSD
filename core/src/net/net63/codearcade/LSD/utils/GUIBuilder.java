@@ -62,6 +62,7 @@ public class GUIBuilder {
     public static Pixmap createRoundedRectangle(int width, int height, int cornerRadius, Color color) {
 
         Pixmap pixmap = new Pixmap(width, height, Pixmap.Format.RGBA8888);
+        Pixmap ret = new Pixmap(width, height, Pixmap.Format.RGBA8888);
 
         pixmap.setColor(color);
 
@@ -73,6 +74,14 @@ public class GUIBuilder {
         pixmap.fillRectangle(cornerRadius, 0, width - cornerRadius * 2, height);
         pixmap.fillRectangle(0, cornerRadius, width, height - cornerRadius * 2);
 
-        return pixmap;
+        ret.setColor(color);
+        for (int x = 0; x < width; x++) {
+            for (int y = 0; y < height; y++) {
+                if (pixmap.getPixel(x, y) != 0) ret.drawPixel(x, y);
+            }
+        }
+        pixmap.dispose();
+
+        return ret;
     }
 }
