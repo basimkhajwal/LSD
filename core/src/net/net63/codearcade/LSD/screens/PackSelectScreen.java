@@ -42,6 +42,11 @@ public class PackSelectScreen extends AbstractScreen {
     private ArrayList<ImageButton> buttons = new ArrayList<ImageButton>();
     private ImageButton backButton;
 
+    private static final Color TITLE_ENABLED = Color.WHITE;
+    private static final Color TITLE_DISABLED = new Color(0xffffff99);
+    private static final Color ENABLED_COLOR = Color.DARK_GRAY;
+    private static final Color DISABLED_COLOR = new Color(0x3f3f3f99);
+
     private int numLevels;
     private int levelPackNum = -1;
     private boolean backClicked = false;
@@ -155,17 +160,20 @@ public class PackSelectScreen extends AbstractScreen {
         for (int level = 0; level < 16; level++) {
             numStars += Settings.getStarsCollected(levelPack.name, level);
         }
-        boolean isUnlocked = Settings.getLevelsUnlocked(levelPack.name) == -1;
+        int starsNeeded = levelPack.unlockCost;
+        boolean isUnlocked = Settings.getLevelsUnlocked(levelPack.name) != -1;
 
-        Label title = GUIBuilder.createLabel(levelPack.name, Assets.FontSizes.FIFTY, Color.WHITE);
-        Label starText = GUIBuilder.createLabel(numStars + " / 48", Assets.FontSizes.FORTY, Color.WHITE);
+        String text = isUnlocked ? (numStars + " / 48") : (starsNeeded + " stars to unlock");
+
+        Label title = GUIBuilder.createLabel(levelPack.name, Assets.FontSizes.FIFTY, isUnlocked ? TITLE_ENABLED : TITLE_DISABLED);
+        Label starText = GUIBuilder.createLabel(text, Assets.FontSizes.FORTY, TITLE_ENABLED);
 
         innerTable.add(title).center().colspan(2);
         innerTable.row();
         innerTable.add(new Image(Assets.getAsset(Assets.Images.STAR, Texture.class))).size(35).spaceRight(10);
         innerTable.add(starText);
 
-        Pixmap pixmap = GUIBuilder.createRoundedRectangle(600, 250, 20, Color.DARK_GRAY);
+        Pixmap pixmap = GUIBuilder.createRoundedRectangle(600, 250, 20, isUnlocked ? ENABLED_COLOR : DISABLED_COLOR);
         Image background = new Image(new Texture(pixmap));
         pixmap.dispose();
 
