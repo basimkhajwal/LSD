@@ -40,6 +40,7 @@ public class PackSelectScreen extends AbstractScreen {
     private Table starCount;
     private PagedScrollPane pagedScrollPane;
     private ArrayList<ImageButton> buttons = new ArrayList<ImageButton>();
+    private ImageButton startButton;
     private ImageButton backButton;
 
     private static final Color TITLE_ENABLED = Color.WHITE;
@@ -91,7 +92,7 @@ public class PackSelectScreen extends AbstractScreen {
 
         });
 
-        ImageButton startButton = GUIBuilder.createButton(Assets.Buttons.MENU_PLAY);
+        startButton = GUIBuilder.createButton(Assets.Buttons.MENU_PLAY);
         startButton.addListener(new ClickListener() {
 
             @Override
@@ -219,7 +220,14 @@ public class PackSelectScreen extends AbstractScreen {
         backgroundRenderer.render(deltaTime);
         centreGUI.render(deltaTime);
 
-        if (levelPackNum != -1) game.setScreen(new LevelSelectScreen(game, levelPackNum));
+        if (levelPackNum != -1) {
+            LevelManager.LevelPack levelPack = LevelManager.getPack(levelPackNum);
+            if (levelPack.numLevels == -1) {
+
+            } else {
+                game.setScreen(new LevelSelectScreen(game, levelPackNum));
+            }
+        }
         if (backClicked) game.setScreen(new MenuScreen(game));
 
         if (firstRender) {
