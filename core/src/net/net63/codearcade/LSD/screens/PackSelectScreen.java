@@ -18,6 +18,9 @@ import net.net63.codearcade.LSD.managers.Assets;
 import net.net63.codearcade.LSD.managers.LevelManager;
 import net.net63.codearcade.LSD.managers.ShaderManager;
 import net.net63.codearcade.LSD.managers.SoundManager;
+import net.net63.codearcade.LSD.screens.overlays.dialogs.DialogResult;
+import net.net63.codearcade.LSD.screens.overlays.dialogs.DialogResultListener;
+import net.net63.codearcade.LSD.screens.overlays.dialogs.YesNoDialogScreen;
 import net.net63.codearcade.LSD.ui.PagedScrollPane;
 import net.net63.codearcade.LSD.utils.BackgroundRenderer;
 import net.net63.codearcade.LSD.utils.CentreGUI;
@@ -29,7 +32,7 @@ import java.util.ArrayList;
 /**
  * Created by Basim on 31/12/15.
  */
-public class PackSelectScreen extends AbstractScreen {
+public class PackSelectScreen extends AbstractScreen implements DialogResultListener {
 
     private static final Vector3 tmp = new Vector3();
 
@@ -52,6 +55,7 @@ public class PackSelectScreen extends AbstractScreen {
     private int levelPackNum = -1;
     private boolean backClicked = false;
     private boolean firstRender = true;
+    private boolean dialogMode = false;
 
     public PackSelectScreen(LSD game) {
         super(game);
@@ -211,6 +215,20 @@ public class PackSelectScreen extends AbstractScreen {
     }
 
     @Override
+    public void handleResult(DialogResult data) {
+        dialogMode = false;
+
+        if (data == DialogResult.YES) {
+            LevelManager.LevelPack pack = LevelManager.getPack(levelPackNum);
+
+            Settings.setStarCount(Settings.getStarCount() - pack.unlockCost);
+            Settings.setLevelsUnlocked(pack.name, 0);
+        }
+
+        levelPackNum = -1;
+    }
+
+    @Override
     public void render(float deltaTime) {
         super.render(deltaTime);
 
@@ -220,10 +238,11 @@ public class PackSelectScreen extends AbstractScreen {
         backgroundRenderer.render(deltaTime);
         centreGUI.render(deltaTime);
 
-        if (levelPackNum != -1) {
+        if (levelPackNum != -1 && !dialogMode) {
             LevelManager.LevelPack levelPack = LevelManager.getPack(levelPackNum);
-            if (levelPack.numLevels == -1) {
-
+            if (levelPack.numLevels == -1 && Settings.getStarCount() >= levelPack.unlockCost) {
+                dialogMode = true;
+                game.setScreen(new YesNoDialogScreen(game, this, "Unlock Level", "Do you want to unlock this level for " + levelPack.unlockCost + " stars?"));
             } else {
                 game.setScreen(new LevelSelectScreen(game, levelPackNum));
             }
