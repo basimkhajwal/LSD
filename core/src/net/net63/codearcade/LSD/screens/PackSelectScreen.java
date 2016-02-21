@@ -240,7 +240,7 @@ public class PackSelectScreen extends AbstractScreen implements DialogResultList
 
         if (levelPackNum != -1 && !dialogMode) {
             LevelManager.LevelPack levelPack = LevelManager.getPack(levelPackNum);
-            if (levelPack.numLevels == -1 && Settings.getStarCount() >= levelPack.unlockCost) {
+            if (Settings.getLevelsUnlocked(levelPack.name) == -1 && Settings.getStarCount() >= levelPack.unlockCost) {
                 dialogMode = true;
                 game.setScreen(new YesNoDialogScreen(game, this, "Unlock Level", "Do you want to unlock this level for " + levelPack.unlockCost + " stars?"));
             } else {
