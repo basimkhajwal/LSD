@@ -1,5 +1,6 @@
 package net.net63.codearcade.LSD.screens;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
@@ -218,14 +219,21 @@ public class PackSelectScreen extends AbstractScreen implements DialogResultList
     public void handleResult(DialogResult data) {
         dialogMode = false;
 
+
         if (data == DialogResult.YES) {
             LevelManager.LevelPack pack = LevelManager.getPack(levelPackNum);
 
             Settings.setStarCount(Settings.getStarCount() - pack.unlockCost);
             Settings.setLevelsUnlocked(pack.name, 0);
+        } else {
+            levelPackNum = -1;
         }
 
-        levelPackNum = -1;
+    }
+
+    @Override
+    public void resumeLogic() {
+        Gdx.input.setInputProcessor(centreGUI.getStage());
     }
 
     @Override
