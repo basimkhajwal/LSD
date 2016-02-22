@@ -7,7 +7,6 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.utils.Align;
 import net.net63.codearcade.LSD.LSD;
 import net.net63.codearcade.LSD.managers.Assets;
@@ -23,10 +22,7 @@ public abstract class AbstractDialog extends AbstractOverlay {
     private String title;
     private String message;
 
-    private TextButton yesButton;
-    private TextButton noButton;
-
-    private DialogResultListener listener;
+    protected DialogResultListener listener;
 
     public AbstractDialog(LSD game, AbstractScreen previousScreen, String title, String message) {
         super(game, previousScreen);
