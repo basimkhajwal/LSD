@@ -1,48 +1,30 @@
 package net.net63.codearcade.LSD.screens.overlays.dialogs;
 
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.NinePatch;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
-import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Image;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
-import com.badlogic.gdx.utils.Align;
 import net.net63.codearcade.LSD.LSD;
 import net.net63.codearcade.LSD.managers.Assets;
 import net.net63.codearcade.LSD.screens.AbstractScreen;
-import net.net63.codearcade.LSD.screens.overlays.AbstractOverlay;
 import net.net63.codearcade.LSD.utils.GUIBuilder;
 
 /**
  * Created by Basim on 31/01/16.
  */
-public class YesNoDialogScreen extends AbstractOverlay {
-
-    private String title;
-    private String message;
+public class YesNoDialogScreen extends AbstractDialog {
 
     private TextButton yesButton;
     private TextButton noButton;
 
-    private DialogResultListener listener;
     private boolean reverseColours = false;
 
     private boolean yesClicked = false;
     private boolean noClicked = false;
 
     public YesNoDialogScreen(LSD game, AbstractScreen previousScreen, String title, String message) {
-        super(game, previousScreen);
-
-        if (previousScreen instanceof DialogResultListener) {
-            listener = (DialogResultListener) previousScreen;
-        }
-
-        this.title = title;
-        this.message = message;
+        super(game, previousScreen, title, message);
     }
 
     public YesNoDialogScreen(LSD game, AbstractScreen previousScreen, String title, String message, boolean reverseColours) {
@@ -52,19 +34,7 @@ public class YesNoDialogScreen extends AbstractOverlay {
     }
 
     @Override
-    public void setupUI(Stage stage) {
-
-        Table contentTable = new Table();
-        Table wrapperTable = new Table();
-
-        Label titleLabel = GUIBuilder.createLabel(title, Assets.FontSizes.THIRTY, Color.DARK_GRAY);
-        Label textLabel = GUIBuilder.createLabel(message, Assets.FontSizes.TWENTY, Color.GRAY);
-        textLabel.setWrap(true);
-        textLabel.setAlignment(Align.center);
-
-        contentTable.add(titleLabel).padLeft(50).padRight(50).padTop(20).center().colspan(2);
-        contentTable.row();
-        contentTable.add(textLabel).fillX().center().pad(20).colspan(2);
+    public void setupTable(Table contentTable) {
 
         String yesString = reverseColours ? Assets.Buttons.RED : Assets.Buttons.GREEN;
         String noString = reverseColours ? Assets.Buttons.GREEN : Assets.Buttons.RED;
@@ -93,17 +63,8 @@ public class YesNoDialogScreen extends AbstractOverlay {
         float btnwidth = 70f;
         float btnheight = 35f;
 
-        contentTable.row();
         contentTable.add(noButton).size(btnwidth, btnheight).padLeft(5).padBottom(20).spaceRight(10);
         contentTable.add(yesButton).size(btnwidth, btnheight).padRight(5).padBottom(20);
-
-        NinePatch bg = new NinePatch(Assets.getAsset(Assets.Images.SETTINGS_BACKGROUND, Texture.class), 9, 9, 9, 9);
-        final Image background = new Image(bg);
-        background.setSize(contentTable.getWidth(), contentTable.getHeight());
-        wrapperTable.stack(background, contentTable);
-        wrapperTable.setPosition((800 - background.getWidth()) / 2, (600 - background.getHeight()) / 2);
-
-        stage.addActor(wrapperTable);
     }
 
     @Override
