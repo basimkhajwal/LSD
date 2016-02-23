@@ -19,11 +19,11 @@ They should all work but only desktop and HTML5 builds have currently been teste
 ### Development:
 
 #### TODO:
-- [ ] Add zoom option for levels so that the correct amount is visible
 - [ ] Improve menu/title colours
 - [ ] Improve level select and pack select (make them look nicer)
 - [ ] Add smooth transitions between screens
 - [ ] Introduce variable level numbers within a pack
+- [ ] Change GUI scale so it feels more comfortable on a smaller device 
 - [ ] Create more levels
 
 #### Currently Working:
