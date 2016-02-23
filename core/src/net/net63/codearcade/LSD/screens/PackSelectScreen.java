@@ -21,6 +21,7 @@ import net.net63.codearcade.LSD.managers.ShaderManager;
 import net.net63.codearcade.LSD.managers.SoundManager;
 import net.net63.codearcade.LSD.screens.overlays.dialogs.DialogResult;
 import net.net63.codearcade.LSD.screens.overlays.dialogs.DialogResultListener;
+import net.net63.codearcade.LSD.screens.overlays.dialogs.OkDialogScreen;
 import net.net63.codearcade.LSD.screens.overlays.dialogs.YesNoDialogScreen;
 import net.net63.codearcade.LSD.ui.PagedScrollPane;
 import net.net63.codearcade.LSD.utils.BackgroundRenderer;
@@ -219,7 +220,6 @@ public class PackSelectScreen extends AbstractScreen implements DialogResultList
     public void handleResult(DialogResult data) {
         dialogMode = false;
 
-
         if (data == DialogResult.YES) {
             LevelManager.LevelPack pack = LevelManager.getPack(levelPackNum);
 
@@ -248,9 +248,15 @@ public class PackSelectScreen extends AbstractScreen implements DialogResultList
 
         if (levelPackNum != -1 && !dialogMode) {
             LevelManager.LevelPack levelPack = LevelManager.getPack(levelPackNum);
-            if (Settings.getLevelsUnlocked(levelPack.name) == -1 && Settings.getStarCount() >= levelPack.unlockCost) {
+            if (Settings.getLevelsUnlocked(levelPack.name) == -1) {
                 dialogMode = true;
-                game.setScreen(new YesNoDialogScreen(game, this, "Unlock Level", "Do you want to unlock this level for " + levelPack.unlockCost + " stars?"));
+
+                if (Settings.getStarCount() >= levelPack.unlockCost) {
+                    game.setScreen(new YesNoDialogScreen(game, this, "Unlock Level", "Do you want to unlock this level for " + levelPack.unlockCost + " stars?"));
+                } else {
+                    game.setScreen(new OkDialogScreen(game, this, "Unlock Level", "Not enough stars to unlock this level!"));
+                }
+
             } else {
                 game.setScreen(new LevelSelectScreen(game, levelPackNum));
             }
