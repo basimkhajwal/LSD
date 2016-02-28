@@ -95,7 +95,7 @@ public class Settings {
         preferences.putFloat("soundVolume", soundVolume);
         preferences.putBoolean("debugEnabled", debugEnabled);
         preferences.putInteger("starCount", starCount);
-        preferences.putLong("previousLog", previousLog);
+        preferences.putLong("previousLog", System.currentTimeMillis());
 
         //Set all the serialized values
         preferences.putString("levelsUnlocked", levelsUnlockedToString());
