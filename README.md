@@ -22,7 +22,10 @@ They should all work but only desktop and HTML5 builds have currently been teste
 - [ ] Improve menu/title colours
 - [ ] Improve level select and pack select (make them look nicer)
 - [ ] Add smooth transitions between screens
-- [ ] Change GUI scale so it feels more comfortable on a smaller device 
+- [ ] Change GUI scale so it feels more comfortable on a smaller device
+- [ ] Write Android specific code to run ads
+- [ ] Add the ability to gain stars over a time period (day streaks)
+- [ ] Add ability to buy more stars (Android only again)
 - [ ] Create more levels
 
 #### Currently Working:
