@@ -188,7 +188,7 @@ public class Settings {
 
     public static long getPreviousLog() { return previousLog; }
 
-    public static long setPreviousLog(long previousLog) { Settings.previousLog = previousLog; }
+    public static void setPreviousLog(long previousLog) { Settings.previousLog = previousLog; }
 
     public static int getStarCount() { return starCount; }
 
