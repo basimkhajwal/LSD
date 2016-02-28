@@ -22,7 +22,6 @@ They should all work but only desktop and HTML5 builds have currently been teste
 - [ ] Improve menu/title colours
 - [ ] Improve level select and pack select (make them look nicer)
 - [ ] Add smooth transitions between screens
-- [ ] Introduce variable level numbers within a pack
 - [ ] Change GUI scale so it feels more comfortable on a smaller device 
 - [ ] Create more levels
 
@@ -74,3 +73,4 @@ They should all work but only desktop and HTML5 builds have currently been teste
 - [x] Add "reset game" option
 - [x] Create a generic dialog box screen
 - [x] Add a currency system with stars in order to unlock new packs
+- [x] Introduce variable level numbers within a pack
