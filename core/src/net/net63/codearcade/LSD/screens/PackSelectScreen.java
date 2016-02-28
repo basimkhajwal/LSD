@@ -164,13 +164,13 @@ public class PackSelectScreen extends AbstractScreen implements DialogResultList
         Table outerTable = new Table();
 
         int numStars = 0;
-        for (int level = 0; level < 16; level++) {
+        for (int level = 0; level < levelPack.numLevels; level++) {
             numStars += Settings.getStarsCollected(levelPack.name, level);
         }
         int starsNeeded = levelPack.unlockCost;
         boolean isUnlocked = Settings.getLevelsUnlocked(levelPack.name) != -1;
 
-        String text = isUnlocked ? (numStars + " / 48") : (starsNeeded + " stars to unlock");
+        String text = isUnlocked ? (numStars + " / " + (levelPack.numLevels * 3)) : (starsNeeded + " stars to unlock");
 
         Label title = GUIBuilder.createLabel(levelPack.name, Assets.FontSizes.FIFTY, isUnlocked ? TITLE_ENABLED : TITLE_DISABLED);
         Label starText = GUIBuilder.createLabel(text, Assets.FontSizes.FORTY, TITLE_ENABLED);
