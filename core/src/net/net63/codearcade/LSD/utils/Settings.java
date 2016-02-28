@@ -54,7 +54,7 @@ public class Settings {
         //Set all the default stars (0 for all)
         starsCollected.clear();
         for (int i = 0; i < LevelManager.LevelPacks.length; i++) {
-            starsCollected.put(LevelManager.LevelPacks[i].name.toLowerCase(), new int[16]);
+            starsCollected.put(LevelManager.LevelPacks[i].name.toLowerCase(), new int[LevelManager.getPack(i).numLevels]);
         }
 
     }
@@ -169,10 +169,10 @@ public class Settings {
             String[] split = arrayVal.split(OBJECT_DELIMITER);
 
             //Check if it is a valid pack name and has the correct number of levels
-            if (! starsCollected.containsKey(split[0]) || split.length < 17) continue;
+            if (! starsCollected.containsKey(split[0]) || split.length < starsCollected.get(split[0]).length + 1) continue;
 
             //Parse each level
-            for (int i = 1; i < 17; i++) {
+            for (int i = 1; i <= starsCollected.get(split[0]).length; i++) {
                 setStarsCollected(split[0], i - 1, Integer.parseInt(split[i]));
             }
 
