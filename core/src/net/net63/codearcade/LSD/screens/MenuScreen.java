@@ -92,7 +92,7 @@ public class MenuScreen extends AbstractScreen{
 
         //The settings button to view the settings (positioned in the top right corner)
         settingsButton = GUIBuilder.createButton(Assets.Buttons.SETTINGS);
-        settingsButton.setSize(50, 50);
+        settingsButton.setSize(70, 70);
         settingsButton.addListener(new ClickListener() {
 
             @Override
