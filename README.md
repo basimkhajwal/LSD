@@ -19,7 +19,7 @@ They should all work but only desktop and HTML5 builds have currently been teste
 ### Development:
 
 #### TODO:
-- [ ] Improve menu/title colours
+- [ ] Improve menu/title colours and design
 - [ ] Improve level select and pack select (make them look nicer)
 - [ ] Add smooth transitions between screens
 - [ ] Add a loading screen with delayed / asynchronous resource management
