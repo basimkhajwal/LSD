@@ -32,6 +32,7 @@ public class Settings {
     private static boolean debugEnabled;
     private static int starCount;
     private static long previousLog;
+    private static int inputMethod;
 
     /**
     * Load all the default values for the settings, this is automatically
@@ -45,6 +46,7 @@ public class Settings {
         setDebugEnabled(true);
         setStarCount(0);
         setPreviousLog(0);
+        setInputMethod(0);
 
         //Set default levels unlocked (all -1 but the first)
         levelsUnlocked.clear();
@@ -78,6 +80,7 @@ public class Settings {
             if (name.equals("starsCollected")) loadStarsCollected(preferences.getString(name));
             if (name.equals("starCount")) setStarCount(preferences.getInteger(name));
             if (name.equals("previousLog")) setPreviousLog(preferences.getLong(name));
+            if (name.equals("inputMethod")) setInputMethod(preferences.getInteger(name));
         }
 
 	}
@@ -96,6 +99,7 @@ public class Settings {
         preferences.putBoolean("debugEnabled", debugEnabled);
         preferences.putInteger("starCount", starCount);
         preferences.putLong("previousLog", System.currentTimeMillis());
+        preferences.putInteger("inputMethod", inputMethod);
 
         //Set all the serialized values
         preferences.putString("levelsUnlocked", levelsUnlockedToString());
@@ -185,6 +189,10 @@ public class Settings {
     }
 
     /* ---------------------- Getters & Setters -----------------------------*/
+
+    public static int getInputMethod() { return inputMethod; }
+
+    public static void setInputMethod(int inputMethod) { Settings.inputMethod = inputMethod; }
 
     public static long getPreviousLog() { return previousLog; }
 
