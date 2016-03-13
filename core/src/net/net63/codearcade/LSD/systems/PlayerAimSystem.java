@@ -23,6 +23,9 @@ public class PlayerAimSystem extends IteratingSystem {
     //How much the player moves before the aim is re-calculated
     private static final float INVALIDATE_DISTANCE = 0.02f;
 
+    //How far to move for a launch to be valid
+    private static final float PULL_BACK_DISTANCE = 0.1f;
+
     private ComponentMapper<StateComponent> stateMapper;
     private ComponentMapper<PlayerComponent> playerMapper;
     private ComponentMapper<BodyComponent> bodyMapper;
@@ -60,10 +63,12 @@ public class PlayerAimSystem extends IteratingSystem {
 
                 //The new launch method
                 case 1:
+
                     break;
 
                 default:
-                    directAim(playerComponent, body);
+                    pullBackAim(playerComponent, body);
+                    //directAim(playerComponent, body);
                     break;
 
             }
@@ -74,7 +79,24 @@ public class PlayerAimSystem extends IteratingSystem {
         }
     }
 
+    private void pullBackAim(PlayerComponent playerComponent, Body body) {
 
+        Vector2 pos = body.getPosition();
+        float dst = playerComponent.launchStart.dst(playerComponent.aimPosition);
+
+        //If the aim isn't far enough
+        if (dst < PULL_BACK_DISTANCE) {
+            playerComponent.validLaunch = false;
+            return;
+        }
+
+        playerComponent.validLaunch = true;
+        playerComponent.launchImpulse.set(playerComponent.launchStart)
+                .sub(playerComponent.aimPosition)
+                .nor()
+                .scl(dst * dst);
+
+    }
 
     private void directAim(PlayerComponent playerComponent, Body body) {
         Vector2 pos = body.getPosition();
