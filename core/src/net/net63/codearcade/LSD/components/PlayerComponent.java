@@ -19,7 +19,7 @@ public class PlayerComponent implements Component{
 
     public Vector2 launchStart = new Vector2();
     public Vector2 aimPosition = new Vector2();
-    public Vector2 launchImpulse;
+    public Vector2 launchImpulse = new Vector2();
     public Vector2[] trajectoryPoints;
     public boolean invalidateAim;
     public boolean validLaunch;
