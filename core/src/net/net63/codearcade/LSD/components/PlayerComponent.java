@@ -17,7 +17,8 @@ public class PlayerComponent implements Component{
     public static final int STATE_FALLING   = 4;
     public static final int STATE_DEAD      = 5;
 
-    public Vector2 aimPosition;
+    public Vector2 launchStart = new Vector2();
+    public Vector2 aimPosition = new Vector2();
     public Vector2 launchImpulse;
     public Vector2[] trajectoryPoints;
     public boolean invalidateAim;
