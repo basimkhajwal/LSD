@@ -172,9 +172,14 @@ public class GameWorld implements Disposable, EntityListener {
             Vector2 worldPos = new Vector2(x, y);
             viewport.unproject(worldPos);
 
+            //If it is the first time set the start position as well
+            if (state.get() == PlayerComponent.STATE_STILL) {
+                playerComponent.launchStart.set(worldPos);
+            }
+
             //Set the aim position and invalidate (force re-compute)
             state.set(PlayerComponent.STATE_AIMING);
-            playerComponent.aimPosition = worldPos;
+            playerComponent.aimPosition.set(worldPos);
             playerComponent.invalidateAim = true;
         }
     }
