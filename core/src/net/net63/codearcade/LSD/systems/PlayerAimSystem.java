@@ -13,6 +13,7 @@ import net.net63.codearcade.LSD.components.BodyComponent;
 import net.net63.codearcade.LSD.components.PlayerComponent;
 import net.net63.codearcade.LSD.components.StateComponent;
 import net.net63.codearcade.LSD.utils.Constants;
+import net.net63.codearcade.LSD.utils.Settings;
 
 /**
  * Created by Basim on 16/09/15.
@@ -52,19 +53,37 @@ public class PlayerAimSystem extends IteratingSystem {
         boolean distanceReached = !previousPosition.isZero() && previousPosition.dst(pos) >= INVALIDATE_DISTANCE;
 
         if (state.get() == PlayerComponent.STATE_AIMING && (playerComponent.invalidateAim || distanceReached)) {
+
             if (distanceReached && !playerComponent.invalidateAim) playerComponent.aimPosition.add(pos).sub(previousPosition);
 
-            playerComponent.launchImpulse = calculateLaunchImpulse(pos, playerComponent.aimPosition);
+            switch (Settings.getInputMethod()) {
+
+                //The new launch method
+                case 1:
+                    break;
+
+                default:
+                    directAim(playerComponent, body);
+                    break;
+
+            }
+
             playerComponent.trajectoryPoints = calculateTrajectoryPoints(pos, playerComponent.launchImpulse);
-
-            resetCallback(playerComponent.currentSensor);
-            world.rayCast(aimValididator, body.getWorldCenter(), playerComponent.aimPosition);
-
-            playerComponent.validLaunch = !platformCollision;
             playerComponent.invalidateAim = false;
-
             previousPosition.set(pos);
         }
+    }
+
+
+
+    private void directAim(PlayerComponent playerComponent, Body body) {
+        Vector2 pos = body.getPosition();
+
+        playerComponent.launchImpulse = calculateLaunchImpulse(pos, playerComponent.aimPosition);
+
+        resetCallback(playerComponent.currentSensor);
+        world.rayCast(aimValidator, body.getWorldCenter(), playerComponent.aimPosition);
+        playerComponent.validLaunch = !platformCollision;
     }
 
     public void resetCallback(Entity platform) {
@@ -72,7 +91,7 @@ public class PlayerAimSystem extends IteratingSystem {
         platformCollision = false;
     }
 
-    private final RayCastCallback aimValididator = new RayCastCallback() {
+    private final RayCastCallback aimValidator = new RayCastCallback() {
 
         @Override
         public float reportRayFixture(Fixture fixture, Vector2 point, Vector2 normal, float fraction) {
