@@ -82,7 +82,7 @@ public class WorldBuilder {
         if (layers.getIndex("lasers") != -1) loadLasers(layers.get("lasers"));
 
         bounds.setPosition(bounds.x - Constants.BOUNDS_BUFFER_X, bounds.y - Constants.BOUNDS_BUFFER_Y);
-        bounds.setSize(bounds.width + Constants.BOUNDS_BUFFER_X, bounds.height + Constants.BOUNDS_BUFFER_Y);
+        bounds.setSize(bounds.width + Constants.BOUNDS_BUFFER_X * 2, bounds.height + Constants.BOUNDS_BUFFER_Y * 2);
         levelDescriptor.setWorldBounds(bounds);
     }
 
