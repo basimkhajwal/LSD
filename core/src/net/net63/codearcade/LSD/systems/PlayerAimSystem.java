@@ -94,7 +94,7 @@ public class PlayerAimSystem extends IteratingSystem {
         playerComponent.launchImpulse.set(playerComponent.launchStart)
                 .sub(playerComponent.aimPosition)
                 .nor()
-                .scl(dst * 10);
+                .scl(dst * 4);
 
     }
 
