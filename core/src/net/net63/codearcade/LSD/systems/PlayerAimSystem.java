@@ -63,14 +63,19 @@ public class PlayerAimSystem extends IteratingSystem {
 
                 //The new launch method
                 case 1:
-
+                    pullBackAim(playerComponent, body);
                     break;
 
                 default:
-                    pullBackAim(playerComponent, body);
-                    //directAim(playerComponent, body);
+                    directAim(playerComponent, body);
                     break;
 
+            }
+
+            if (playerComponent.validLaunch) {
+                resetCallback(playerComponent.currentSensor);
+                world.rayCast(aimValidator, body.getWorldCenter(), playerComponent.aimPosition);
+                playerComponent.validLaunch = !platformCollision;
             }
 
             playerComponent.trajectoryPoints = calculateTrajectoryPoints(pos, playerComponent.launchImpulse);
@@ -81,7 +86,6 @@ public class PlayerAimSystem extends IteratingSystem {
 
     private void pullBackAim(PlayerComponent playerComponent, Body body) {
 
-        Vector2 pos = body.getPosition();
         float dst = playerComponent.launchStart.dst(playerComponent.aimPosition);
 
         //If the aim isn't far enough
@@ -99,13 +103,8 @@ public class PlayerAimSystem extends IteratingSystem {
     }
 
     private void directAim(PlayerComponent playerComponent, Body body) {
-        Vector2 pos = body.getPosition();
-
-        playerComponent.launchImpulse = calculateLaunchImpulse(pos, playerComponent.aimPosition);
-
-        resetCallback(playerComponent.currentSensor);
-        world.rayCast(aimValidator, body.getWorldCenter(), playerComponent.aimPosition);
-        playerComponent.validLaunch = !platformCollision;
+        playerComponent.validLaunch = true;
+        playerComponent.launchImpulse = calculateLaunchImpulse(body.getPosition(), playerComponent.aimPosition);
     }
 
     public void resetCallback(Entity platform) {
