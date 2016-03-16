@@ -41,11 +41,11 @@ public class SettingsScreen extends AbstractOverlay implements DialogResultListe
 
         NinePatch bg = new NinePatch(Assets.getAsset(Assets.Images.SETTINGS_BACKGROUND, Texture.class), 9, 9, 9, 9);
         final Image background = new Image(bg);
-        background.setSize(400, 500);
-        background.setPosition(200, 50);
+        background.setSize(600, 500);
+        background.setPosition(100, 50);
 
         Label title = GUIBuilder.createLabel("Settings", Assets.FontSizes.FORTY, Color.MAROON);
-        title.setPosition((800 - title.getWidth()) / 2, 550 - title.getHeight() - 20);
+        title.setPosition((800 - title.getWidth()) / 2, background.getY() + background.getHeight() - title.getHeight() - 20);
 
         crossButton = GUIBuilder.createButton(Assets.Buttons.CROSS);
         crossButton.setSize(30, 30);
@@ -62,10 +62,10 @@ public class SettingsScreen extends AbstractOverlay implements DialogResultListe
         });
 
         Label soundTitle = GUIBuilder.createLabel("Sound Effects", Assets.FontSizes.TWENTY, Color.DARK_GRAY);
-        soundTitle.setPosition(background.getX() + 50, title.getY() - soundTitle.getHeight() - 30);
+        soundTitle.setPosition(background.getX() + 50, title.getY() - soundTitle.getHeight() - 20);
 
         final Slider soundSlider = createVolumeSlider();
-        soundSlider.setPosition(background.getX() + 50, soundTitle.getY() - soundSlider.getHeight() - 20);
+        soundSlider.setPosition(background.getX() + 50, soundTitle.getY() - soundSlider.getHeight() - 15);
         soundSlider.setWidth(background.getWidth() - 100);
         soundSlider.setValue(Settings.getSoundVolume());
 
@@ -83,10 +83,10 @@ public class SettingsScreen extends AbstractOverlay implements DialogResultListe
         });
 
         Label musicTitle = GUIBuilder.createLabel("Music", Assets.FontSizes.TWENTY, Color.DARK_GRAY);
-        musicTitle.setPosition(background.getX() + 50, soundTitle.getY() - musicTitle.getHeight() - 100);
+        musicTitle.setPosition(background.getX() + 50, soundSlider.getY() - musicTitle.getHeight() - 30);
 
         final Slider musicSlider = createVolumeSlider();
-        musicSlider.setPosition(background.getX() + 50, musicTitle.getY() - musicSlider.getHeight() - 20);
+        musicSlider.setPosition(background.getX() + 50, musicTitle.getY() - musicSlider.getHeight() - 15);
         musicSlider.setWidth(background.getWidth() - 100);
         musicSlider.setHeight(musicSlider.getHeight() * 2);
         musicSlider.setValue(Settings.getMusicVolume());
@@ -110,7 +110,7 @@ public class SettingsScreen extends AbstractOverlay implements DialogResultListe
         style.background.setMinHeight(10);
 
         Label debugLabel = GUIBuilder.createLabel("Enable Debug? ", Assets.FontSizes.TWENTY, Color.DARK_GRAY);
-        debugLabel.setPosition(background.getX() + 50, musicSlider.getY() - debugLabel.getHeight() - 30);
+        debugLabel.setPosition(background.getX() + 50, musicSlider.getY() - debugLabel.getHeight() - 25);
 
         final CheckBox debugCheckBox = new CheckBox("", Assets.getAsset(Assets.UI_SKIN, Skin.class));
         debugCheckBox.setPosition(debugLabel.getX() + debugLabel.getWidth(), debugLabel.getY());
@@ -125,7 +125,7 @@ public class SettingsScreen extends AbstractOverlay implements DialogResultListe
         resetButton = GUIBuilder.createTextButton(Assets.Buttons.PLAIN, "Reset Game", Assets.FontSizes.TWENTY, Color.BLACK);
         float scl = 150f / resetButton.getWidth();
         resetButton.setSize(resetButton.getWidth() * scl, resetButton.getHeight() * scl * 0.5f);
-        resetButton.setPosition(background.getX() + 50, debugCheckBox.getY() - resetButton.getHeight() - 30);
+        resetButton.setPosition(background.getX() + (background.getWidth() - resetButton.getWidth()) / 2, debugCheckBox.getY() - resetButton.getHeight() - 30);
         resetButton.addListener(new ClickListener() {
 
             @Override
