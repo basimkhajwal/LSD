@@ -122,6 +122,11 @@ public class SettingsScreen extends AbstractOverlay implements DialogResultListe
             }
         });
 
+        Label inputLabel = GUIBuilder.createLabel("Input Method", Assets.FontSizes.TWENTY, Color.DARK_GRAY);
+        inputLabel.setPosition(background.getX() + (background.getWidth() - inputLabel.getWidth()) / 2, debugCheckBox.getY() - inputLabel.getHeight() - 20);
+
+
+
         resetButton = GUIBuilder.createTextButton(Assets.Buttons.PLAIN, "Reset Game", Assets.FontSizes.TWENTY, Color.BLACK);
         float scl = 150f / resetButton.getWidth();
         resetButton.setSize(resetButton.getWidth() * scl, resetButton.getHeight() * scl * 0.5f);
