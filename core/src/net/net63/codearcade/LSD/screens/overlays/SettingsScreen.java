@@ -125,12 +125,22 @@ public class SettingsScreen extends AbstractOverlay implements DialogResultListe
         Label inputLabel = GUIBuilder.createLabel("Input Method", Assets.FontSizes.TWENTY, Color.DARK_GRAY);
         inputLabel.setPosition(background.getX() + (background.getWidth() - inputLabel.getWidth()) / 2, debugCheckBox.getY() - inputLabel.getHeight() - 20);
 
+        Label directAimLabel = GUIBuilder.createLabel("Direct Aim: ", Assets.FontSizes.TWENTY, Color.DARK_GRAY);
+        directAimLabel.setPosition(background.getX() + 50, inputLabel.getY() - directAimLabel.getHeight() - 25);
 
+        CheckBox directAimCheckBox = new CheckBox("", Assets.getAsset(Assets.UI_SKIN, Skin.class));
+        directAimCheckBox.setPosition(directAimLabel.getX() + directAimLabel.getWidth(), directAimLabel.getY());
+
+        Label pullBackAimLabel = GUIBuilder.createLabel("Direct Aim: ", Assets.FontSizes.TWENTY, Color.DARK_GRAY);
+        pullBackAimLabel.setPosition(background.getX() + background.getWidth() / 2, inputLabel.getY() - pullBackAimLabel.getHeight() - 25);
+
+        CheckBox pullBackAimCheckBox = new CheckBox("", Assets.getAsset(Assets.UI_SKIN, Skin.class));
+        pullBackAimCheckBox.setPosition(pullBackAimLabel.getX() + pullBackAimLabel.getWidth(), pullBackAimLabel.getY());
 
         resetButton = GUIBuilder.createTextButton(Assets.Buttons.PLAIN, "Reset Game", Assets.FontSizes.TWENTY, Color.BLACK);
         float scl = 150f / resetButton.getWidth();
         resetButton.setSize(resetButton.getWidth() * scl, resetButton.getHeight() * scl * 0.5f);
-        resetButton.setPosition(background.getX() + (background.getWidth() - resetButton.getWidth()) / 2, debugCheckBox.getY() - resetButton.getHeight() - 30);
+        resetButton.setPosition(background.getX() + (background.getWidth() - resetButton.getWidth()) / 2, directAimLabel.getY() - resetButton.getHeight() - 30);
         resetButton.addListener(new ClickListener() {
 
             @Override
@@ -150,6 +160,11 @@ public class SettingsScreen extends AbstractOverlay implements DialogResultListe
         stage.addActor(musicValue);
         stage.addActor(debugCheckBox);
         stage.addActor(debugLabel);
+        stage.addActor(inputLabel);
+        stage.addActor(directAimLabel);
+        stage.addActor(directAimCheckBox);
+        stage.addActor(pullBackAimLabel);
+        stage.addActor(pullBackAimCheckBox);
         stage.addActor(crossButton);
         stage.addActor(resetButton);
     }
