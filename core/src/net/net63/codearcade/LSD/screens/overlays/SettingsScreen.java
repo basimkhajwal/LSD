@@ -127,13 +127,11 @@ public class SettingsScreen extends AbstractOverlay implements DialogResultListe
 
         Label directAimLabel = GUIBuilder.createLabel("Direct Aim: ", Assets.FontSizes.TWENTY, Color.DARK_GRAY);
         directAimLabel.setPosition(background.getX() + 50, inputLabel.getY() - directAimLabel.getHeight() - 25);
-
         CheckBox directAimCheckBox = new CheckBox("", Assets.getAsset(Assets.UI_SKIN, Skin.class));
         directAimCheckBox.setPosition(directAimLabel.getX() + directAimLabel.getWidth(), directAimLabel.getY());
 
         Label pullBackAimLabel = GUIBuilder.createLabel("Direct Aim: ", Assets.FontSizes.TWENTY, Color.DARK_GRAY);
         pullBackAimLabel.setPosition(background.getX() + background.getWidth() / 2, inputLabel.getY() - pullBackAimLabel.getHeight() - 25);
-
         CheckBox pullBackAimCheckBox = new CheckBox("", Assets.getAsset(Assets.UI_SKIN, Skin.class));
         pullBackAimCheckBox.setPosition(pullBackAimLabel.getX() + pullBackAimLabel.getWidth(), pullBackAimLabel.getY());
 
