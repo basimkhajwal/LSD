@@ -73,8 +73,16 @@ public class PlayerAimSystem extends IteratingSystem {
             }
 
             if (playerComponent.validLaunch) {
+                Vector2 endPosition = new Vector2();
+
+                if (Settings.getInputMethod() == 0) {
+                    endPosition.set(playerComponent.aimPosition);
+                } else {
+                    endPosition.set(playerComponent.launchImpulse).scl(3).add(body.getWorldCenter());
+                }
+
                 resetCallback(playerComponent.currentSensor);
-                world.rayCast(aimValidator, body.getWorldCenter(), playerComponent.aimPosition);
+                world.rayCast(aimValidator, body.getWorldCenter(), endPosition);
                 playerComponent.validLaunch = !platformCollision;
             }
 
