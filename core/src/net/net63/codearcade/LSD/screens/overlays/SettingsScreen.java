@@ -127,13 +127,45 @@ public class SettingsScreen extends AbstractOverlay implements DialogResultListe
 
         Label directAimLabel = GUIBuilder.createLabel("Direct Aim: ", Assets.FontSizes.TWENTY, Color.DARK_GRAY);
         directAimLabel.setPosition(background.getX() + 50, inputLabel.getY() - directAimLabel.getHeight() - 25);
-        CheckBox directAimCheckBox = new CheckBox("", Assets.getAsset(Assets.UI_SKIN, Skin.class));
+        final CheckBox directAimCheckBox = new CheckBox("", Assets.getAsset(Assets.UI_SKIN, Skin.class));
         directAimCheckBox.setPosition(directAimLabel.getX() + directAimLabel.getWidth(), directAimLabel.getY());
 
-        Label pullBackAimLabel = GUIBuilder.createLabel("Direct Aim: ", Assets.FontSizes.TWENTY, Color.DARK_GRAY);
+        Label pullBackAimLabel = GUIBuilder.createLabel("Pull Back Aim: ", Assets.FontSizes.TWENTY, Color.DARK_GRAY);
         pullBackAimLabel.setPosition(background.getX() + background.getWidth() / 2, inputLabel.getY() - pullBackAimLabel.getHeight() - 25);
-        CheckBox pullBackAimCheckBox = new CheckBox("", Assets.getAsset(Assets.UI_SKIN, Skin.class));
+        final CheckBox pullBackAimCheckBox = new CheckBox("", Assets.getAsset(Assets.UI_SKIN, Skin.class));
         pullBackAimCheckBox.setPosition(pullBackAimLabel.getX() + pullBackAimLabel.getWidth(), pullBackAimLabel.getY());
+
+        directAimCheckBox.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                if (directAimCheckBox.isChecked()) {
+                    Settings.setInputMethod(0);
+                    pullBackAimCheckBox.setChecked(false);
+                } else {
+                    Settings.setInputMethod(1);
+                    pullBackAimCheckBox.setChecked(true);
+                }
+            }
+        });
+
+        pullBackAimCheckBox.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                if (pullBackAimCheckBox.isChecked()) {
+                    Settings.setInputMethod(1);
+                    directAimCheckBox.setChecked(false);
+                } else {
+                    Settings.setInputMethod(0);
+                    directAimCheckBox.setChecked(true);
+                }
+            }
+        });
+
+        if (Settings.getInputMethod() == 0) {
+            directAimCheckBox.setChecked(true);
+        } else {
+            pullBackAimCheckBox.setChecked(true);
+        }
 
         resetButton = GUIBuilder.createTextButton(Assets.Buttons.PLAIN, "Reset Game", Assets.FontSizes.TWENTY, Color.BLACK);
         float scl = 150f / resetButton.getWidth();
