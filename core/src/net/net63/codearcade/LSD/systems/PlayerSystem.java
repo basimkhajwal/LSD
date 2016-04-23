@@ -149,6 +149,7 @@ public class PlayerSystem extends IteratingSystem {
 
         //Apply appropriate launch impulse, set the velocity to zero
         body.setLinearVelocity(0, 0);
+        body.setGravityScale(1);
         body.applyLinearImpulse(playerComponent.launchImpulse, body.getWorldCenter(), true);
 
         //Destroy the sensor on which the player is on
@@ -175,6 +176,7 @@ public class PlayerSystem extends IteratingSystem {
 
         //Set the player state and set the velocity to 0
         body.setLinearVelocity(0, 0);
+        body.setGravityScale(0);
         playerComponent.isFlying = false;
         state.set(PlayerComponent.STATE_STILL);
 
