@@ -24,7 +24,6 @@ They should all work but only desktop and HTML5 builds have currently been teste
 - [ ] Add smooth transitions between screens
 - [ ] Add a loading screen with delayed / asynchronous resource management
 - [ ] Change GUI scale so it feels more comfortable on a smaller device
-- [ ] Create a different launch system and allow a choice between default and new type
 - [ ] Write Android specific code to run ads
 - [ ] Add the ability to gain stars over a time period (day streaks)
 - [ ] Add ability to buy more stars (Android only again)
@@ -79,3 +78,4 @@ They should all work but only desktop and HTML5 builds have currently been teste
 - [x] Create a generic dialog box screen
 - [x] Add a currency system with stars in order to unlock new packs
 - [x] Introduce variable level numbers within a pack
+- [x] Create a different launch system and allow a choice between default and new type
