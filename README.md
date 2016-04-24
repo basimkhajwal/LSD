@@ -3,7 +3,7 @@
 ![](./android/assets/images/icon.png)
 
 ### Game Information:
-A casual physics based arcade game where you fire the character around, avoiding the obstacles, to hit and destroy all the black platforms in order to beat the level.  This is a port of the original game idea (which was written in Lua) but this one is written in Java using the awesome libGDX framework. 
+A casual physics based arcade game where you fire the character around, avoiding the obstacles, to hit and destroy all the black platforms in order to beat the level.  This is a port of the original game idea (which was written in Lua by a friend) but this one is written in Java using the awesome libGDX framework. 
 
 ### Running the current game:
 It can compile to the following platforms:
