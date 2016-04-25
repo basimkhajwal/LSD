@@ -1,26 +1,31 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-up" width="200" height="200" tilewidth="10" tileheight="10" nextobjectid="18">
-	<objectgroup name="walls">
-		<object id="1" name="wall" type="wall" x="660" y="590" width="750" height="70"/>
-		<object id="2" name="wall" type="wall" x="660" y="-180" width="750" height="70"/>
-		<object id="3" name="wall" type="wall" x="990" y="320" width="70" height="270"/>
-		<object id="4" name="wall" type="wall" x="990" y="110" width="70" height="30"/>
-		<object id="5" name="wall" type="wall" x="990" y="90" width="420" height="20"/>
-		<object id="6" name="wall" type="wall" x="1410" y="-180" width="30" height="840"/>
-		<object id="7" name="wall" type="wall" x="630" y="-180" width="30" height="840"/>
-		<object id="8" name="wall" type="wall" x="990" y="70" width="70" height="20"/>
-		<object id="9" name="wall" type="wall" x="990" y="-110" width="70" height="20"/>
-	</objectgroup>
-	<objectgroup name="sensors">
-		<object id="10" name="sensor" type="sensor" x="1080" y="520" width="120" height="50"/>
-		<object id="11" name="sensor" type="sensor" x="1000" y="140" width="50" height="180"/>
-		<object id="12" name="sensor" type="sensor" x="1330" y="140" width="50" height="180"/>
-		<object id="13" name="sensor" type="sensor" x="680" y="520" width="120" height="50"/>
-		<object id="14" name="sensor" type="sensor" x="1000" y="-90" width="50" height="160"/>
-		<object id="15" name="sensor" type="sensor" x="1310" y="-80" width="80" height="140"/>
-		<object id="16" name="sensor" type="sensor" x="680" y="-80" width="80" height="140"/>
-	</objectgroup>
-	<objectgroup name="meta">
-		<object id="17" name="player-position" type="player-position" x="1140" y="470" width="20" height="20"/>
-	</objectgroup>
+<map version="1.0" orientation="orthogonal" renderorder="right-up" width="200" height="200" tilewidth="10" tileheight="10" nextobjectid="21">
+ <objectgroup name="walls">
+  <object id="1" name="wall" type="wall" x="590" y="900" width="750" height="70"/>
+  <object id="2" name="wall" type="wall" x="590" y="130" width="750" height="70"/>
+  <object id="3" name="wall" type="wall" x="920" y="630" width="70" height="270"/>
+  <object id="4" name="wall" type="wall" x="920" y="420" width="70" height="30"/>
+  <object id="5" name="wall" type="wall" x="920" y="400" width="420" height="20"/>
+  <object id="6" name="wall" type="wall" x="1340" y="130" width="30" height="840"/>
+  <object id="7" name="wall" type="wall" x="560" y="130" width="30" height="840"/>
+  <object id="8" name="wall" type="wall" x="920" y="380" width="70" height="20"/>
+  <object id="9" name="wall" type="wall" x="920" y="200" width="70" height="20"/>
+ </objectgroup>
+ <objectgroup name="sensors">
+  <object id="10" name="sensor" type="sensor" x="1010" y="830" width="120" height="50"/>
+  <object id="11" name="sensor" type="sensor" x="930" y="450" width="50" height="180"/>
+  <object id="12" name="sensor" type="sensor" x="1260" y="450" width="50" height="180"/>
+  <object id="13" name="sensor" type="sensor" x="610" y="830" width="120" height="50"/>
+  <object id="14" name="sensor" type="sensor" x="930" y="220" width="50" height="160"/>
+  <object id="15" name="sensor" type="sensor" x="1240" y="230" width="80" height="140"/>
+  <object id="16" name="sensor" type="sensor" x="610" y="230" width="80" height="140"/>
+ </objectgroup>
+ <objectgroup name="meta">
+  <object id="17" name="player-position" type="player-position" x="1070" y="780" width="20" height="20"/>
+ </objectgroup>
+ <objectgroup name="stars">
+  <object id="18" name="star" type="star" x="1200" y="540" width="20" height="20"/>
+  <object id="19" name="star" type="star" x="740" y="620" width="20" height="20"/>
+  <object id="20" name="star" type="star" x="740" y="260" width="20" height="20"/>
+ </objectgroup>
 </map>
