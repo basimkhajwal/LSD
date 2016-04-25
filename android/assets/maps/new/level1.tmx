@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-up" width="200" height="200" tilewidth="10" tileheight="10" nextobjectid="53">
+<map version="1.0" orientation="orthogonal" renderorder="right-up" width="200" height="200" tilewidth="10" tileheight="10" nextobjectid="57">
  <objectgroup name="walls">
   <object id="1" name="wall" type="wall" x="640" y="620" width="250" height="50"/>
   <object id="2" name="wall" type="wall" x="640" y="300" width="250" height="50"/>
@@ -87,5 +87,10 @@
     <property name="interval" value="2000"/>
    </properties>
   </object>
+ </objectgroup>
+ <objectgroup name="stars">
+  <object id="54" name="star" type="star" x="1120" y="240" width="20" height="20"/>
+  <object id="55" name="star" type="star" x="1600" y="410" width="20" height="20"/>
+  <object id="56" name="star" type="star" x="1690" y="180" width="20" height="20"/>
  </objectgroup>
 </map>
