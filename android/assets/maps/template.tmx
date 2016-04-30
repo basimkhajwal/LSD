@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" renderorder="right-up" width="200" height="200" tilewidth="10" tileheight="10" nextobjectid="58">
+ <objectgroup name="walls">
+  <object id="29" name="wall" type="wall" x="750" y="760" width="250" height="50"/>
+  <object id="57" name="wall" type="wall" x="800" y="840" width="160" height="50"/>
+ </objectgroup>
+ <objectgroup name="sensors">
+  <object id="44" name="sensor" type="sensor" x="570" y="760" width="120" height="50"/>
+  <object id="45" name="sensor" type="sensor" x="550" y="840" width="170" height="40"/>
+ </objectgroup>
+ <objectgroup name="meta">
+  <object id="47" name="player-position" type="player-position" x="627" y="704" width="20" height="20"/>
+ </objectgroup>
+ <objectgroup name="moving-sensors">
+  <object id="48" name="moving-sensor" type="moving-sensor" x="1050" y="770" width="120" height="30">
+   <properties>
+    <property name="delay" value="100"/>
+    <property name="nodeX" value="1350"/>
+    <property name="nodeY" value="160"/>
+    <property name="speed" value="50"/>
+   </properties>
+  </object>
+ </objectgroup>
+ <objectgroup name="lasers">
+  <object id="49" name="laser" type="laser" x="870" y="550" width="100" height="30">
+   <properties>
+    <property name="angle" value="180"/>
+    <property name="default" value="on"/>
+    <property name="direction" value="up"/>
+    <property name="interval" value="2000"/>
+   </properties>
+  </object>
+  <object id="51" name="laser" type="laser" x="1080" y="520" width="30" height="60">
+   <properties>
+    <property name="angle" value="90"/>
+    <property name="default" value="on"/>
+    <property name="direction" value="right"/>
+    <property name="interval" value="2000"/>
+   </properties>
+  </object>
+  <object id="52" name="laser" type="laser" x="1020" y="520" width="30" height="60">
+   <properties>
+    <property name="angle" value="270"/>
+    <property name="default" value="on"/>
+    <property name="direction" value="left"/>
+    <property name="interval" value="2000"/>
+   </properties>
+  </object>
+ </objectgroup>
+ <objectgroup name="stars">
+  <object id="54" name="star" type="star" x="650" y="510" width="20" height="20"/>
+  <object id="55" name="star" type="star" x="690" y="510" width="20" height="20"/>
+  <object id="56" name="star" type="star" x="610" y="510" width="20" height="20"/>
+ </objectgroup>
+</map>
