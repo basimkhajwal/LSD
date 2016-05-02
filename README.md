@@ -21,6 +21,8 @@ They should all work but only desktop and HTML5 builds have currently been teste
 
 #### TODO:
 - [ ] Improve menu/title colours and design
+- [ ] Improve the graphics for the laser
+- [ ] Improve the pause menu
 - [ ] Improve level select and pack select (make them look nicer)
 - [ ] Add smooth transitions between screens
 - [ ] Add a loading screen with delayed / asynchronous resource management
@@ -28,7 +30,7 @@ They should all work but only desktop and HTML5 builds have currently been teste
 - [ ] Write Android specific code to run ads
 - [ ] Add the ability to gain stars over a time period (day streaks)
 - [ ] Add ability to buy more stars (Android only again)
-- [ ] Create more levels
+- [ ] Create more levels (on going)
 
 #### Currently Working:
 - [x] Platforms are loaded from a Tiled map (.tmx) format
