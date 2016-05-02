@@ -212,8 +212,8 @@ public class PackSelectScreen extends AbstractScreen implements DialogResultList
         viewport.getCamera().unproject(tmp);
         starCount.setPosition(tmp.x - starCount.getMinWidth() - 2, tmp.y - starCount.getMinHeight() - 2);
 
-        //Space pages so only one can be seen at a time
-        pagedScrollPane.setPageSpacing(width / 2);
+        //Space pages
+        pagedScrollPane.setPageSpacing(width / 4);
     }
 
     @Override
