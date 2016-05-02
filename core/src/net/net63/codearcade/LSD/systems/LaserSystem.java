@@ -42,6 +42,7 @@ public class LaserSystem extends IteratingSystem implements Disposable, ContactL
 
     private ComponentMapper<LaserComponent> laserMapper;
     private ComponentMapper<BodyComponent> bodyMapper;
+    private ComponentMapper<PlayerComponent> playerMapper;
 
     private Signal<GameEvent> gameEventSignal;
     private EventQueue eventQueue;
@@ -61,6 +62,7 @@ public class LaserSystem extends IteratingSystem implements Disposable, ContactL
 
         laserMapper = ComponentMapper.getFor(LaserComponent.class);
         bodyMapper = ComponentMapper.getFor(BodyComponent.class);
+        playerMapper = ComponentMapper.getFor(PlayerComponent.class);
 
         eventQueue = new EventQueue();
         gameEventSignal.add(eventQueue);
@@ -94,6 +96,10 @@ public class LaserSystem extends IteratingSystem implements Disposable, ContactL
         public float reportRayFixture(Fixture fixture, Vector2 point, Vector2 normal, float fraction) {
 
             if ((fixture.getFilterData().categoryBits & Constants.MaskBits.LASER) == 0) {
+                return -1;
+            }
+
+            if (playerMapper.has((Entity) fixture.getBody().getUserData())) {
                 return -1;
             }
 
