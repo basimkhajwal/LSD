@@ -190,7 +190,8 @@ public class LaserSystem extends IteratingSystem implements Disposable, ContactL
             world.rayCast(laserCallBack, laserPos, endPosition);
             laserHitPos.set(laserHit ? laserHitPos : endPosition);
 
-            if (laser.laserEndPos.dst(laserHitPos) > 0.01f) {
+            //Create a new sensor if the distance has changed or there was no laser before
+            if (laser.laserEndPos.dst(laserHitPos) > 0.01f || laser.laserSensorBody == null) {
                 laser.laserEndPos.set(laserHitPos);
 
                 if (laser.laserSensorBody != null) world.destroyBody(laser.laserSensorBody);
