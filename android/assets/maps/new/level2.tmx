@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" renderorder="right-up" width="200" height="200" tilewidth="10" tileheight="10" nextobjectid="65">
+ <objectgroup name="walls">
+  <object id="29" name="wall" type="wall" x="70" y="1060" width="1630" height="50"/>
+  <object id="57" name="wall" type="wall" x="70" y="1510" width="1630" height="30"/>
+  <object id="58" name="wall" type="wall" x="70" y="1110" width="30" height="400"/>
+  <object id="59" name="wall" type="wall" x="100" y="1190" width="1570" height="30"/>
+  <object id="60" name="wall" type="wall" x="1670" y="1110" width="30" height="400"/>
+ </objectgroup>
+ <objectgroup name="sensors">
+  <object id="44" name="sensor" type="sensor" x="130" y="1450" width="140" height="30"/>
+  <object id="45" name="sensor" type="sensor" x="1620" y="1290" width="30" height="160"/>
+  <object id="63" name="sensor" type="sensor" x="1200" y="1350" width="30" height="130"/>
+  <object id="64" name="sensor" type="sensor" x="1400" y="1260" width="30" height="130"/>
+ </objectgroup>
+ <objectgroup name="meta">
+  <object id="47" name="player-position" type="player-position" x="190" y="1270" width="20" height="20"/>
+ </objectgroup>
+ <objectgroup name="moving-sensors">
+  <object id="48" name="moving-sensor" type="moving-sensor" x="350" y="1380" width="120" height="30">
+   <properties>
+    <property name="delay" value="100"/>
+    <property name="nodeX" value="710"/>
+    <property name="nodeY" value="1380"/>
+    <property name="speed" value="50"/>
+   </properties>
+  </object>
+ </objectgroup>
+ <objectgroup name="lasers">
+  <object id="49" name="laser" type="laser" x="570" y="1220" width="100" height="30">
+   <properties>
+    <property name="angle" value="0"/>
+    <property name="default" value="on"/>
+    <property name="direction" value="down"/>
+    <property name="interval" value="2000"/>
+   </properties>
+  </object>
+  <object id="51" name="laser" type="laser" x="890" y="1110" width="30" height="80">
+   <properties>
+    <property name="angle" value="90"/>
+    <property name="default" value="on"/>
+    <property name="direction" value="right"/>
+    <property name="interval" value="2000"/>
+   </properties>
+  </object>
+  <object id="52" name="laser" type="laser" x="860" y="1110" width="30" height="80">
+   <properties>
+    <property name="angle" value="270"/>
+    <property name="default" value="on"/>
+    <property name="direction" value="left"/>
+    <property name="interval" value="2000"/>
+   </properties>
+  </object>
+  <object id="61" name="laser" type="laser" x="830" y="1480" width="100" height="30">
+   <properties>
+    <property name="angle" value="180"/>
+    <property name="default" value="on"/>
+    <property name="direction" value="up"/>
+    <property name="interval" value="2000"/>
+   </properties>
+  </object>
+ </objectgroup>
+ <objectgroup name="stars">
+  <object id="54" name="star" type="star" x="1010" y="1300" width="20" height="20"/>
+  <object id="55" name="star" type="star" x="1560" y="1340" width="20" height="20"/>
+  <object id="56" name="star" type="star" x="450" y="1300" width="20" height="20"/>
+ </objectgroup>
+</map>
