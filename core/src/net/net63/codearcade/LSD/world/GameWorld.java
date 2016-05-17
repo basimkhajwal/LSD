@@ -113,8 +113,8 @@ public class GameWorld implements Disposable, EntityListener {
         if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) gameCamera.translate(-1, 0);
         if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) gameCamera.translate(1, 0);
 
-        if (Gdx.input.isKeyPressed(Input.Keys.Q)) gameCamera.zoom += 0.02f;
-        if (Gdx.input.isKeyPressed(Input.Keys.W)) gameCamera.zoom -= 0.02f;
+        if (Gdx.input.isKeyPressed(Input.Keys.Q)) applyZoom(gameCamera.zoom + 0.02f);
+        if (Gdx.input.isKeyPressed(Input.Keys.W)) applyZoom(gameCamera.zoom - 0.02f);
     }
 
     /**
@@ -123,6 +123,10 @@ public class GameWorld implements Disposable, EntityListener {
      * @param amount The zoom to apply the camera to
      */
     public void applyZoom(float amount) {
+
+        //Bound the zoom to min and max values 0.8 - 2.5
+        amount = Math.max(0.8f, Math.min(2.5f, amount));
+
         //Update the camera
         gameCamera.zoom = amount;
         gameCamera.update();
