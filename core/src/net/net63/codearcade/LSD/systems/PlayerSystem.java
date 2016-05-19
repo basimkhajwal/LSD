@@ -123,11 +123,11 @@ public class PlayerSystem extends IteratingSystem {
             state.set(PlayerComponent.STATE_FALLING);
         }
 
-        //Check if player remains within bounds, appy death otherwise
+        //Check if player remains within bounds, apply death otherwise
         if (playerComponent.isFlying && !playerComponent.isDead) {
             Rectangle bounds = levelDescriptor.getWorldBounds();
 
-            if ((!bounds.contains(position)) && (bounds.y + bounds.height) > position.y) {
+            if (bounds.x > position.x || bounds.x + bounds.width < position.x || bounds.y > position.y ) {
                 applyDeath = true;
             }
         }
