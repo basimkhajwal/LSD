@@ -349,7 +349,6 @@ public class WorldBuilder {
 
         Body body = sensor.getComponent(BodyComponent.class).body;
         body.setType(BodyDef.BodyType.KinematicBody);
-        body.setLinearVelocity(nodes[1].cpy().sub(nodes[0]).nor().scl(speed));
 
         sensor.add(movementComponent);
 

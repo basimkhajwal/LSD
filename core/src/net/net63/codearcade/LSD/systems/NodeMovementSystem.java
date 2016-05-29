@@ -33,6 +33,13 @@ public class NodeMovementSystem extends IteratingSystem {
         if (!node.hasStarted) {
             node.timeRemaining -= deltaTime;
             node.hasStarted = node.timeRemaining <= 0;
+
+            if (node.hasStarted) {
+                //Start the movement
+                body.setLinearVelocity(node.nodes[1].cpy().sub(node.nodes[0]).nor().scl(node.speed));
+            } else {
+                return;
+            }
         }
 
         //Check how far the object has come from the previous node
