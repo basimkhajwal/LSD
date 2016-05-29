@@ -8,6 +8,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
@@ -143,8 +144,15 @@ public class MenuScreen extends AbstractScreen{
 
         //If the button has been clicked start the game
 		if (playClicked) {
-            dispose();
-            game.setScreen(new PackSelectScreen(game));
+            playClicked = false;
+
+            centreGUI.getStage().addAction(Actions.sequence(Actions.moveTo(-centreGUI.getStage().getWidth(),0,0.2f), Actions.run(new Runnable() {
+                @Override
+                public void run() {
+                    MenuScreen.this.dispose();
+                    game.setScreen(new PackSelectScreen(game));
+                }
+            })));
         }
 
         //If the settings button was clicked go to the settings screen
