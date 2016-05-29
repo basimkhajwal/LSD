@@ -1,12 +1,12 @@
 package net.net63.codearcade.LSD;
 
 import com.badlogic.gdx.Game;
+import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.FPSLogger;
 import net.net63.codearcade.LSD.managers.Assets;
 import net.net63.codearcade.LSD.managers.LevelManager;
 import net.net63.codearcade.LSD.managers.ShaderManager;
-import net.net63.codearcade.LSD.managers.SoundManager;
-import net.net63.codearcade.LSD.screens.MenuScreen;
+import net.net63.codearcade.LSD.screens.LoadingScreen;
 import net.net63.codearcade.LSD.utils.Settings;
 
 /**
@@ -18,24 +18,23 @@ import net.net63.codearcade.LSD.utils.Settings;
 public class LSD extends Game {
 
     private FPSLogger fpsLogger;
+    public AssetManager assetManager;
 
 	public LSD() {
         super();
 
+        assetManager = new AssetManager();
         fpsLogger = new FPSLogger();
 	}
 
 	@Override
 	public void create() {
-		Assets.loadAll();
-        LevelManager.loadAll();
-        SoundManager.loadAll();
-        ShaderManager.loadAll();
         Settings.loadSettings();
+        LevelManager.loadAll();
+        ShaderManager.loadAll();
+        Assets.loadFonts();
 
-        SoundManager.playMusic();
-
-		this.setScreen(new MenuScreen(this));
+		this.setScreen(new LoadingScreen(this));
 	}
 
     @Override
@@ -51,7 +50,6 @@ public class LSD extends Game {
 
         Assets.dispose();
         LevelManager.dispose();
-        SoundManager.dispose();
         Settings.saveSettings();
     }
 
