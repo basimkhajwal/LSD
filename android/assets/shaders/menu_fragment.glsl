@@ -32,20 +32,19 @@ void main() {
     vec4 middle = texture2D(u_texture, v_texCoords);
 
     float ratio = 1.0 / 5.0;
-    gl_FragColor = (left + middle + right + top + bottom) * ratio;
+    gl_FragColor = middle;//(left + middle + right + top + bottom) * ratio;
 
     //2. APPLY NOISE
-    vec4 noise = vec4(rand(v_texCoords * time), rand(v_texCoords * (time + 1.0) ), rand(v_texCoords * (time - 1.0) ), 1);
-    gl_FragColor += noise * vec4(0.2, 0.2, 0.2, 0.1);
+    vec4 noise = vec4(rand(v_texCoords * time), rand(v_texCoords * time), rand(v_texCoords * time), 1);
+    gl_FragColor += noise * vec4(0.1, 0.1, 0.1, 0.05);
 
     //3. VIGNETTE
-    gl_FragColor.a *= 0.8;
+    gl_FragColor.a *= 0.83;
 
     vec2 position = (gl_FragCoord.xy / screenSize.xy) - vec2(0.5);
 
     //determine the vector length of the center position
     float len = length(position);
-
 
     //our vignette effect, using smoothstep
     float vignette = smoothstep(RADIUS, RADIUS-SOFTNESS, len);
