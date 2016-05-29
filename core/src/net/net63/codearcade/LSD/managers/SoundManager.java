@@ -1,10 +1,9 @@
 package net.net63.codearcade.LSD.managers;
 
-import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.utils.Array;
-import com.badlogic.gdx.utils.ArrayMap;
 import net.net63.codearcade.LSD.utils.Settings;
 
 /**
@@ -17,7 +16,6 @@ public class SoundManager {
 
     //Background music
     private static final String BACKGROUND_MUSIC = "sounds/music.mp3";
-    private static Music backgroundMusic;
 
     //Sound effects
     public static class Sounds {
@@ -39,35 +37,42 @@ public class SoundManager {
             Sounds.STAR_1
         };
 
-    //Cache for sound effects
-    private static final ArrayMap<String, Sound> sounds = new ArrayMap<String, Sound>();
-
     //Arrays of grouped sounds
     private static final Array<String> explosions = new Array<String>(
             new String[]{Sounds.EXPLOSION_1, Sounds.EXPLOSION_2, Sounds.EXPLOSION_3, Sounds.EXPLOSION_4});
     private static final Array<String> clickSounds = new Array<String>(new String[] { Sounds.CLICK_1 });
     private static final Array<String> starSounds = new Array<String>(new String[] { Sounds.STAR_1 });
 
+    private static AssetManager assetManager;
+
+    private static boolean musicPlaying = false;
 
     /**
      * Load all the sound assets, must be called prior to being used
      */
-    public static void loadAll() {
+    public static void loadAll(AssetManager assetManager) {
+
+        SoundManager.assetManager = assetManager;
+
         //Create the background music from the file
-        backgroundMusic = Gdx.audio.newMusic(Gdx.files.internal(BACKGROUND_MUSIC));
+        assetManager.load(BACKGROUND_MUSIC, Music.class);
 
         //Add each effect to the ArrayMap
-        for (String soundFile: _Sounds) {
-            sounds.put(soundFile, Gdx.audio.newSound(Gdx.files.internal(soundFile)));
-        }
+        for (String soundFile: _Sounds) assetManager.load(soundFile, Sound.class);
+    }
+
+    private static Music getBackgroundMusic() {
+        return assetManager.get(BACKGROUND_MUSIC, Music.class);
     }
 
     /**
      * Start playing the background music
      */
     public static void playMusic() {
-        backgroundMusic.play();
-        backgroundMusic.setLooping(true);
+        getBackgroundMusic().play();
+        getBackgroundMusic().setLooping(true);
+        getBackgroundMusic().setVolume(Settings.getMusicVolume());
+        musicPlaying = true;
     }
 
     /**
@@ -89,7 +94,8 @@ public class SoundManager {
      * Stop playing the background music
      */
     public static void pauseMusic() {
-        backgroundMusic.pause();
+        getBackgroundMusic().pause();
+        musicPlaying = false;
     }
 
     /**
@@ -98,7 +104,7 @@ public class SoundManager {
      * @param sound The path of the sound to play
      */
     public static void playSound(String sound) {
-        sounds.get(sound).play(Settings.getSoundVolume());
+        assetManager.get(sound, Sound.class).play(Settings.getSoundVolume());
     }
 
     /**
@@ -106,22 +112,6 @@ public class SoundManager {
      *
      * @param volume The volume between 0 and 1
      */
-    public static void setMusicVolume(float volume) {
-        backgroundMusic.setVolume(volume);
-    }
-
-    /**
-     * Dispose all the assets, sounds cannot be played after this is called
-     */
-    public static void dispose() {
-        //Dispose the background music
-        if (backgroundMusic != null) backgroundMusic.dispose();
-
-        //Dispose all the other sound effects
-        for (Sound sound: sounds.values()) {
-            sound.dispose();
-        }
-        sounds.clear();
-    }
+    public static void setMusicVolume(float volume) { if (musicPlaying) getBackgroundMusic().setVolume(volume); }
 
 }
