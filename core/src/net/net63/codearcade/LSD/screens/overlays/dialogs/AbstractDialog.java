@@ -42,12 +42,12 @@ public abstract class AbstractDialog extends AbstractOverlay {
         Table contentTable = new Table();
         Table wrapperTable = new Table();
 
-        Label titleLabel = GUIBuilder.createLabel(title, Assets.FontSizes.THIRTY, Color.DARK_GRAY);
-        Label textLabel = GUIBuilder.createLabel(message, Assets.FontSizes.TWENTY, Color.GRAY);
+        Label titleLabel = GUIBuilder.createLabel(title, Assets.FontSizes.FORTY, Color.DARK_GRAY);
+        Label textLabel = GUIBuilder.createLabel(message, Assets.FontSizes.THIRTY, Color.GRAY);
         textLabel.setWrap(true);
         textLabel.setAlignment(Align.center);
 
-        contentTable.add(titleLabel).padLeft(50).padRight(50).padTop(20).center().colspan(2);
+        contentTable.add(titleLabel).padLeft(75).padRight(75).padTop(20).center().colspan(2);
         contentTable.row();
         contentTable.add(textLabel).fillX().center().pad(20).colspan(2);
         contentTable.row();

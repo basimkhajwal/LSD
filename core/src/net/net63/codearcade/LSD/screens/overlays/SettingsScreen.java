@@ -44,7 +44,7 @@ public class SettingsScreen extends AbstractOverlay implements DialogResultListe
         background.setSize(600, 500);
         background.setPosition(100, 50);
 
-        Label title = GUIBuilder.createLabel("Settings", Assets.FontSizes.FORTY, Color.MAROON);
+        Label title = GUIBuilder.createLabel("Settings", Assets.FontSizes.FIFTY, Color.MAROON);
         title.setPosition((800 - title.getWidth()) / 2, background.getY() + background.getHeight() - title.getHeight() - 20);
 
         crossButton = GUIBuilder.createButton(Assets.Buttons.CROSS);
@@ -61,7 +61,7 @@ public class SettingsScreen extends AbstractOverlay implements DialogResultListe
 
         });
 
-        Label soundTitle = GUIBuilder.createLabel("Sound Effects", Assets.FontSizes.TWENTY, Color.DARK_GRAY);
+        Label soundTitle = GUIBuilder.createLabel("Sound Effects", Assets.FontSizes.TWENTY_FIVE, Color.DARK_GRAY);
         soundTitle.setPosition(background.getX() + 50, title.getY() - soundTitle.getHeight() - 20);
 
         final Slider soundSlider = createVolumeSlider();
@@ -82,7 +82,7 @@ public class SettingsScreen extends AbstractOverlay implements DialogResultListe
             }
         });
 
-        Label musicTitle = GUIBuilder.createLabel("Music", Assets.FontSizes.TWENTY, Color.DARK_GRAY);
+        Label musicTitle = GUIBuilder.createLabel("Music", Assets.FontSizes.TWENTY_FIVE, Color.DARK_GRAY);
         musicTitle.setPosition(background.getX() + 50, soundSlider.getY() - musicTitle.getHeight() - 30);
 
         final Slider musicSlider = createVolumeSlider();
@@ -122,15 +122,15 @@ public class SettingsScreen extends AbstractOverlay implements DialogResultListe
             }
         });
 
-        Label inputLabel = GUIBuilder.createLabel("Input Method", Assets.FontSizes.TWENTY, Color.DARK_GRAY);
+        Label inputLabel = GUIBuilder.createLabel("Input Method", Assets.FontSizes.THIRTY, Color.DARK_GRAY);
         inputLabel.setPosition(background.getX() + (background.getWidth() - inputLabel.getWidth()) / 2, debugCheckBox.getY() - inputLabel.getHeight() - 20);
 
-        Label directAimLabel = GUIBuilder.createLabel("Direct Aim: ", Assets.FontSizes.TWENTY, Color.DARK_GRAY);
+        Label directAimLabel = GUIBuilder.createLabel("Direct Aim: ", Assets.FontSizes.TWENTY_FIVE, Color.DARK_GRAY);
         directAimLabel.setPosition(background.getX() + 50, inputLabel.getY() - directAimLabel.getHeight() - 25);
         final CheckBox directAimCheckBox = new CheckBox("", Assets.getAsset(Assets.UI_SKIN, Skin.class));
         directAimCheckBox.setPosition(directAimLabel.getX() + directAimLabel.getWidth(), directAimLabel.getY());
 
-        Label pullBackAimLabel = GUIBuilder.createLabel("Pull Back Aim: ", Assets.FontSizes.TWENTY, Color.DARK_GRAY);
+        Label pullBackAimLabel = GUIBuilder.createLabel("Pull Back Aim: ", Assets.FontSizes.TWENTY_FIVE, Color.DARK_GRAY);
         pullBackAimLabel.setPosition(background.getX() + background.getWidth() / 2, inputLabel.getY() - pullBackAimLabel.getHeight() - 25);
         final CheckBox pullBackAimCheckBox = new CheckBox("", Assets.getAsset(Assets.UI_SKIN, Skin.class));
         pullBackAimCheckBox.setPosition(pullBackAimLabel.getX() + pullBackAimLabel.getWidth(), pullBackAimLabel.getY());
@@ -147,6 +147,7 @@ public class SettingsScreen extends AbstractOverlay implements DialogResultListe
                 }
             }
         });
+        directAimLabel.addListener(directAimCheckBox.getListeners().get(0));
 
         pullBackAimCheckBox.addListener(new ChangeListener() {
             @Override
@@ -160,6 +161,7 @@ public class SettingsScreen extends AbstractOverlay implements DialogResultListe
                 }
             }
         });
+        pullBackAimLabel.addListener(pullBackAimCheckBox.getListeners().get(0));
 
         if (Settings.getInputMethod() == 0) {
             directAimCheckBox.setChecked(true);
