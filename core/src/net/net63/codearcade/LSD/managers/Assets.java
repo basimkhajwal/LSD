@@ -186,20 +186,11 @@ public class Assets {
     public static Animation getAnimation(String animation) {
         return animationList.get(animation);
     }
-
-	/**
-	 * Dispose all the assets but the Asset Manager still remains (re-usable)
-	 */
-	public static void clear() {
-		assetManager.clear();
-        for (ArrayMap<Integer, BitmapFont> caches: fontCache.values()) for (BitmapFont font: caches.values()) font.dispose();
-	}
 	
 	/**
 	 * Dispose all the assets as well as the Asset Manager (not resettable)
 	 */
 	public static void dispose() {
-		assetManager.dispose();
         for (ArrayMap<Integer, BitmapFont> caches: fontCache.values()) for (BitmapFont font: caches.values()) font.dispose();
 	}
 	

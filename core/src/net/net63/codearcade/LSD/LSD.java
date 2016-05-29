@@ -48,6 +48,7 @@ public class LSD extends Game {
     public void dispose() {
         super.dispose();
 
+        assetManager.dispose();
         Assets.dispose();
         LevelManager.dispose();
         Settings.saveSettings();
