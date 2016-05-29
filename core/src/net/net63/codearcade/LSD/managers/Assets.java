@@ -100,7 +100,7 @@ public class Assets {
 
     public static final String UI_SKIN = "skin/uiskin.json";
 
-	private static AssetManager assetManager = new AssetManager();
+	private static AssetManager assetManager;
 	
 	//Private constructor to prevent instantiation
 	private Assets () { }
@@ -108,7 +108,9 @@ public class Assets {
 	/**
 	 *  Static method that loads all the assets in the asset classes
 	 */
-	public static void loadAll() {
+	public static void loadAll(AssetManager manager) {
+
+        assetManager = manager;
 
 		for (String image: _Images) assetManager.load(image, Texture.class);
         for (String animation: _Animations) assetManager.load(animation, Texture.class);
@@ -120,9 +122,12 @@ public class Assets {
         }
 
         assetManager.load(UI_SKIN, Skin.class);
+	}
 
-		assetManager.finishLoading();
-
+    /**
+     * Separate function to load fonts synchronously
+     */
+    public static void loadFonts() {
         //Load fonts separately
         for (String fontName: _Fonts) {
             ArrayMap<Integer, BitmapFont> localCache = new ArrayMap<Integer, BitmapFont>();
@@ -136,7 +141,13 @@ public class Assets {
 
             fontCache.put(fontName, localCache);
         }
+    }
 
+    /**
+     * Handler to be called when the AssetManager finishes
+     * loading all the required assets
+     */
+    public static void finishLoading() {
         //Setup the animations
         for (String animation: _Animations) {
             TextureRegion texture = new TextureRegion(assetManager.get(animation, Texture.class));
@@ -144,7 +155,7 @@ public class Assets {
 
             animationList.put(animation, new Animation(0.1f, regions));
         }
-	}
+    }
 	
 	/**
 	 * Get a loaded asset of type T from the loaded cache
